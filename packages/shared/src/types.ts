@@ -109,6 +109,67 @@ export interface VisitorDto {
   updatedAt: string;
 }
 
+export interface VIPGuestDto {
+  id: string;
+  name: string;
+  designation: string | null;
+  classification: string;
+  arrivalDatetime: string;
+  protocolOfficerId: string | null;
+  status: string;
+  loungeAssignment: string | null;
+  seatAllocation: string | null;
+  mealPreference: string | null;
+  privacyFlag: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface LoungeDto {
+  id: string;
+  name: string;
+  zoneId: string;
+  zone?: Pick<ZoneDto, "id" | "name" | "type">;
+  capacity: number;
+  currentOccupancy: number;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ServiceRequestDto {
+  id: string;
+  partyRef: string;
+  loungeId: string;
+  lounge?: Pick<LoungeDto, "id" | "name">;
+  item: string;
+  status: string;
+  requestedAt: string;
+  updatedAt: string;
+}
+
+export interface OutletDto {
+  id: string;
+  name: string;
+  type: string;
+  zoneId: string;
+  zone?: Pick<ZoneDto, "id" | "name" | "type">;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface OrderDto {
+  id: string;
+  outletId: string;
+  outlet?: Pick<OutletDto, "id" | "name" | "type">;
+  items: { name: string; qty: number }[];
+  amount: string | number;
+  status: string;
+  placedAt: string;
+  updatedAt: string;
+}
+
 export interface AuditLogDto {
   id: string;
   entityType: string;

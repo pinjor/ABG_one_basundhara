@@ -204,9 +204,107 @@ async function main() {
     }
   }
 
+  const protocolOfficer = await prisma.user.findUniqueOrThrow({ where: { email: "protocol@bsc.com.bd" } });
+
+  const vipData = [
+    { name: "H.E. Amb. Laila Rahman", designation: "Ambassador", classification: "Diplomatic", status: "Scheduled", hoursFromNow: 4, lounge: "VIP Lounge Deck", seat: "A-12", meal: "Vegetarian" },
+    { name: "Minister Golam Sarwar", designation: "State Minister for Sports", classification: "Government", status: "Arrived", hoursFromNow: -1, lounge: "VIP Lounge Deck", seat: "A-1", meal: "Standard", privacyFlag: true },
+    { name: "Zahid Karim", designation: "CEO, Delta Sponsors Ltd.", classification: "Corporate", status: "Scheduled", hoursFromNow: 6, lounge: "VIP Lounge Deck", seat: "B-4", meal: "Halal" },
+    { name: "Federation President Aslam Chowdhury", designation: "President, National Sports Federation", classification: "Federation", status: "Departed", hoursFromNow: -6, lounge: "VIP Lounge Deck", seat: "A-2", meal: "Standard" },
+  ];
+  for (const v of vipData) {
+    const existing = await prisma.vIPGuest.findFirst({ where: { name: v.name } });
+    if (!existing) {
+      const arrival = new Date(Date.now() + v.hoursFromNow * 3600_000);
+      await prisma.vIPGuest.create({
+        data: {
+          name: v.name,
+          designation: v.designation,
+          classification: v.classification,
+          arrivalDatetime: arrival,
+          protocolOfficerId: protocolOfficer.id,
+          status: v.status,
+          loungeAssignment: v.lounge,
+          seatAllocation: v.seat,
+          mealPreference: v.meal,
+          privacyFlag: v.privacyFlag ?? false,
+        },
+      });
+    }
+  }
+
+  const loungeData = [
+    { name: "VIP Lounge Deck", zone: "VIP Pavilion & Protocol Wing", capacity: 60, currentOccupancy: 14 },
+    { name: "Federation Hospitality Suite", zone: "VIP Pavilion & Protocol Wing", capacity: 30, currentOccupancy: 30 },
+    { name: "Media Hospitality Room", zone: "Broadcast & Media Compound", capacity: 25, currentOccupancy: 6 },
+  ];
+  for (const l of loungeData) {
+    const existing = await prisma.lounge.findFirst({ where: { name: l.name } });
+    if (!existing) {
+      await prisma.lounge.create({
+        data: {
+          name: l.name,
+          zoneId: zoneByName(l.zone).id,
+          capacity: l.capacity,
+          currentOccupancy: l.currentOccupancy,
+          status: l.currentOccupancy >= l.capacity ? "At Capacity" : "Open",
+        },
+      });
+    }
+  }
+  const lounges = await prisma.lounge.findMany();
+  const loungeByName = (name: string) => lounges.find((l) => l.name === name)!;
+
+  const serviceRequestData = [
+    { lounge: "VIP Lounge Deck", partyRef: "Amb. Laila Rahman party", item: "Sparkling water x4", status: "Delivered" },
+    { lounge: "VIP Lounge Deck", partyRef: "Minister Sarwar party", item: "Coffee service", status: "Preparing" },
+    { lounge: "Federation Hospitality Suite", partyRef: "Federation delegation", item: "Canapés platter", status: "Pending" },
+    { lounge: "Media Hospitality Room", partyRef: "Broadcast crew", item: "Sandwiches x8", status: "Pending" },
+  ];
+  for (const s of serviceRequestData) {
+    const existing = await prisma.serviceRequest.findFirst({ where: { partyRef: s.partyRef, item: s.item } });
+    if (!existing) {
+      await prisma.serviceRequest.create({
+        data: { loungeId: loungeByName(s.lounge).id, partyRef: s.partyRef, item: s.item, status: s.status },
+      });
+    }
+  }
+
+  const outletData = [
+    { name: "Boulevard Grill House", type: "Restaurant", zone: "Retail Boulevard", status: "Open" },
+    { name: "Courtside Food Court", type: "Food Court", zone: "Retail Boulevard", status: "Open" },
+    { name: "Aquatic Centre Café", type: "Café", zone: "Aquatic Centre", status: "Open" },
+    { name: "Stadium Concession Stand C", type: "Concession", zone: "Central Stadium Complex", status: "Closed" },
+  ];
+  for (const o of outletData) {
+    const existing = await prisma.outlet.findFirst({ where: { name: o.name } });
+    if (!existing) {
+      await prisma.outlet.create({ data: { name: o.name, type: o.type, zoneId: zoneByName(o.zone).id, status: o.status } });
+    }
+  }
+  const outlets = await prisma.outlet.findMany();
+  const outletByName = (name: string) => outlets.find((o) => o.name === name)!;
+
+  const orderData = [
+    { outlet: "Boulevard Grill House", items: [{ name: "Grilled Chicken Platter", qty: 2 }], amount: 1400, status: "Preparing" },
+    { outlet: "Courtside Food Court", items: [{ name: "Burger Combo", qty: 3 }], amount: 1050, status: "Order Received" },
+    { outlet: "Aquatic Centre Café", items: [{ name: "Iced Coffee", qty: 2 }, { name: "Croissant", qty: 2 }], amount: 640, status: "Ready for Pickup" },
+    { outlet: "Boulevard Grill House", items: [{ name: "Family Meal Set", qty: 1 }], amount: 2200, status: "Delivered" },
+  ];
+  for (const o of orderData) {
+    const existing = await prisma.order.findFirst({ where: { outletId: outletByName(o.outlet).id, amount: o.amount } });
+    if (!existing) {
+      await prisma.order.create({
+        data: { outletId: outletByName(o.outlet).id, items: o.items, amount: o.amount, status: o.status },
+      });
+    }
+  }
+
   console.log(
     `Seeded ${zoneData.length} zones, ${facilityData.length} facilities, ${gateData.length} gates, ` +
-      `${memberData.length} members, ${visitorData.length} visitors, ${bookingData.length} bookings, 9 users.`,
+      `${memberData.length} members, ${visitorData.length} visitors, ${bookingData.length} bookings, ` +
+      `${vipData.length} VIP guests, ${loungeData.length} lounges, ${serviceRequestData.length} service requests, ` +
+      `${outletData.length} outlets, ${orderData.length} orders, 9 users.`,
   );
   console.log("All seed users share the password: Password123!");
 }

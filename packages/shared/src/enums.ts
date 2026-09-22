@@ -202,6 +202,13 @@ export enum VIPStatus {
   DEPARTED = "Departed",
 }
 
+/** VIP guest status transition graph (Section 4.8). */
+export const VIP_STATUS_TRANSITIONS: Record<string, string[]> = {
+  [VIPStatus.SCHEDULED]: [VIPStatus.ARRIVED],
+  [VIPStatus.ARRIVED]: [VIPStatus.DEPARTED],
+  [VIPStatus.DEPARTED]: [],
+};
+
 // 4.9 Hospitality & Lounges
 export enum LoungeStatus {
   OPEN = "Open",
@@ -213,6 +220,13 @@ export enum ServiceRequestStatus {
   PREPARING = "Preparing",
   DELIVERED = "Delivered",
 }
+
+/** Service request status transition graph (Section 4.9) — a linear kitchen/service pipeline. */
+export const SERVICE_REQUEST_STATUS_TRANSITIONS: Record<string, string[]> = {
+  [ServiceRequestStatus.PENDING]: [ServiceRequestStatus.PREPARING],
+  [ServiceRequestStatus.PREPARING]: [ServiceRequestStatus.DELIVERED],
+  [ServiceRequestStatus.DELIVERED]: [],
+};
 
 // 4.10 Restaurant / Concessions
 export enum OutletType {
@@ -231,6 +245,14 @@ export enum OrderStatus {
   READY_FOR_PICKUP = "Ready for Pickup",
   DELIVERED = "Delivered",
 }
+
+/** Order status transition graph (Section 4.10) — a linear kitchen pipeline. */
+export const ORDER_STATUS_TRANSITIONS: Record<string, string[]> = {
+  [OrderStatus.ORDER_RECEIVED]: [OrderStatus.PREPARING],
+  [OrderStatus.PREPARING]: [OrderStatus.READY_FOR_PICKUP],
+  [OrderStatus.READY_FOR_PICKUP]: [OrderStatus.DELIVERED],
+  [OrderStatus.DELIVERED]: [],
+};
 
 // 4.11 Parking
 export enum ParkingZoneType {

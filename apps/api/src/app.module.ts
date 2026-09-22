@@ -10,6 +10,9 @@ import { BookingsModule } from "./bookings/bookings.module";
 import { MembersModule } from "./members/members.module";
 import { GatesModule } from "./gates/gates.module";
 import { VisitorsModule } from "./visitors/visitors.module";
+import { VipGuestsModule } from "./vip-guests/vip-guests.module";
+import { LoungesModule } from "./lounges/lounges.module";
+import { OutletsModule } from "./outlets/outlets.module";
 
 @Module({
   imports: [
@@ -23,6 +26,9 @@ import { VisitorsModule } from "./visitors/visitors.module";
     MembersModule,
     GatesModule,
     VisitorsModule,
+    VipGuestsModule,
+    LoungesModule,
+    OutletsModule,
     DashboardModule,
   ],
 })

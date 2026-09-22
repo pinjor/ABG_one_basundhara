@@ -1,5 +1,5 @@
 import { Controller, Get, UseGuards } from "@nestjs/common";
-import { BookingStatus, MemberStatus } from "@bsc/shared";
+import { BookingStatus, MemberStatus, ServiceRequestStatus } from "@bsc/shared";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { RolesGuard } from "../auth/roles.guard";
 import { PrismaService } from "../prisma/prisma.service";
@@ -30,6 +30,7 @@ export class DashboardController {
       activeMembers,
       gateEntriesAgg,
       recentAccessByResult,
+      openServiceRequests,
     ] = await Promise.all([
       this.prisma.zone.count(),
       this.prisma.zone.aggregate({ _sum: { capacity: true, liveOccupancy: true } }),
@@ -45,6 +46,7 @@ export class DashboardController {
         where: { timestamp: { gte: startOfToday, lt: endOfToday } },
         _count: true,
       }),
+      this.prisma.serviceRequest.count({ where: { status: { not: ServiceRequestStatus.DELIVERED } } }),
     ]);
 
     return {
@@ -61,8 +63,8 @@ export class DashboardController {
       activeMembers,
       gateEntriesToday: gateEntriesAgg._sum.entriesToday ?? 0,
       accessAttemptsToday: Object.fromEntries(recentAccessByResult.map((row) => [row.result, row._count])),
-      // Placeholders for modules landing in Phases 3-4 (Section 9).
-      openServiceRequests: 0,
+      openServiceRequests,
+      // Placeholder for Phase 4 (Section 9).
       fleetUtilisation: 0,
     };
   }

@@ -37,15 +37,15 @@ export const NAV: NavGroup[] = [
     modules: [
       { key: "gates", label: "Access Control & Gates", path: "/gates", phase: 2, built: true },
       { key: "visitors", label: "Visitors & Guests", path: "/visitors", phase: 2, built: true },
-      { key: "vip", label: "VIP / VVIP & Protocol", path: "/vip", phase: 3, built: false },
+      { key: "vip", label: "VIP / VVIP & Protocol", path: "/vip", phase: 3, built: true },
     ],
   },
   {
     key: "hospitality-retail",
     label: "Hospitality & Retail",
     modules: [
-      { key: "lounges", label: "Hospitality & Lounges", path: "/lounges", phase: 3, built: false },
-      { key: "outlets", label: "Restaurant & Concessions", path: "/outlets", phase: 3, built: false },
+      { key: "lounges", label: "Hospitality & Lounges", path: "/lounges", phase: 3, built: true },
+      { key: "outlets", label: "Restaurant & Concessions", path: "/outlets", phase: 3, built: true },
     ],
   },
   {

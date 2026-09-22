@@ -15,10 +15,10 @@ packages/shared  Design tokens, RBAC roles, domain enums, nav IA, DTOs
                  shared between api and web so both stay in lockstep
 ```
 
-## Delivery status — Phase 2 of 5
+## Delivery status — Phase 3 of 5
 
-This build follows the phased delivery plan. **Phases 1 and 2 are complete
-and fully functional end-to-end**, not a disconnected demo:
+This build follows the phased delivery plan. **Phases 1, 2 and 3 are
+complete and fully functional end-to-end**, not a disconnected demo:
 
 **Phase 1 — Foundation**
 - ✅ JWT auth with role-based access control (9 roles, Section 3 of the spec)
@@ -45,17 +45,29 @@ and fully functional end-to-end**, not a disconnected demo:
 - ✅ **Visitors & Guests** — registration, check-in/check-out state machine,
   QR visitor pass, escort flag
 
+**Phase 3 — Hospitality & commercial**
+- ✅ **VIP/VVIP & Protocol** — arrival-sequence timeline, an
+  Scheduled → Arrived → Departed state machine, and a privacy flag that
+  hides a guest from every role except Protocol Officer and Super Admin
+  (enforced server-side, not just hidden in the UI)
+- ✅ **Hospitality & Lounges** — lounge capacity cards with party
+  check-in/out (occupancy clamps to capacity and flips the lounge to "At
+  Capacity" automatically), a service-request Kanban (Pending → Preparing
+  → Delivered)
+- ✅ **Restaurant & Concessions** — outlet open/closed toggle (closed
+  outlets reject new orders server-side), an order Kanban (Order Received
+  → Preparing → Ready for Pickup → Delivered)
+
 The database schema already models all 12 in-scope modules (surfaces &
-equipment, VIP protocol, lounges & hospitality, restaurant & concessions,
-parking, fleet — see `apps/api/prisma/schema.prisma`), so Phases 3–5 extend
-the same foundation rather than requiring a rewrite. Their nav entries
-render as "Phase N" placeholders in the sidebar until built.
+equipment, parking, fleet — see `apps/api/prisma/schema.prisma`), so Phases
+4–5 extend the same foundation rather than requiring a rewrite. Their nav
+entries render as "Phase N" placeholders in the sidebar until built.
 
 | Phase | Modules | Status |
 |---|---|---|
 | 1 | Auth/RBAC, Zones, Facilities | ✅ Done |
 | 2 | Bookings, Membership, Access Control, Visitors | ✅ Done |
-| 3 | VIP/Protocol, Hospitality/Lounges, Restaurant/Concessions | Not started |
+| 3 | VIP/Protocol, Hospitality/Lounges, Restaurant/Concessions | ✅ Done |
 | 4 | Parking, Fleet, Surfaces & Equipment | Not started |
 | 5 | Real-time (WebSockets), offline-tolerant gates, load/security/a11y hardening | Not started |
 
