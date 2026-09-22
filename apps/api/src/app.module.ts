@@ -6,6 +6,10 @@ import { AuthModule } from "./auth/auth.module";
 import { ZonesModule } from "./zones/zones.module";
 import { FacilitiesModule } from "./facilities/facilities.module";
 import { DashboardModule } from "./dashboard/dashboard.module";
+import { BookingsModule } from "./bookings/bookings.module";
+import { MembersModule } from "./members/members.module";
+import { GatesModule } from "./gates/gates.module";
+import { VisitorsModule } from "./visitors/visitors.module";
 
 @Module({
   imports: [
@@ -15,6 +19,10 @@ import { DashboardModule } from "./dashboard/dashboard.module";
     AuthModule,
     ZonesModule,
     FacilitiesModule,
+    BookingsModule,
+    MembersModule,
+    GatesModule,
+    VisitorsModule,
     DashboardModule,
   ],
 })

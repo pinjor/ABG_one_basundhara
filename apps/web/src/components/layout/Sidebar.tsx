@@ -51,7 +51,7 @@ export function Sidebar() {
                     }
                   >
                     <span>{mod.label}</span>
-                    {mod.phase > 1 && (
+                    {!mod.built && (
                       <span className="rounded border border-border-soft px-1.5 py-0.5 text-[10px] text-text-dimmer">
                         Phase {mod.phase}
                       </span>

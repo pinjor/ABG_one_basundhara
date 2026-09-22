@@ -15,11 +15,12 @@ packages/shared  Design tokens, RBAC roles, domain enums, nav IA, DTOs
                  shared between api and web so both stay in lockstep
 ```
 
-## Delivery status — Phase 1 of 5
+## Delivery status — Phase 2 of 5
 
-This build follows the phased delivery plan. **Phase 1 (Foundation) is
-complete and fully functional end-to-end**, not a disconnected demo:
+This build follows the phased delivery plan. **Phases 1 and 2 are complete
+and fully functional end-to-end**, not a disconnected demo:
 
+**Phase 1 — Foundation**
 - ✅ JWT auth with role-based access control (9 roles, Section 3 of the spec)
 - ✅ Audit logging — every mutating action is attributed to a user and timestamped
 - ✅ Design system matching the brand's dark navy/gold tokens exactly, with
@@ -31,17 +32,29 @@ complete and fully functional end-to-end**, not a disconnected demo:
   (Available → Reserved → In Use → Maintenance, enforced server-side),
   audit trail per facility
 
+**Phase 2 — Core guest journey**
+- ✅ **Bookings & Reservations** — full CRUD, server-side conflict detection
+  (rejects overlapping slots on the same facility/day), a status state
+  machine (Pending → Confirmed → Completed/Cancelled/No-show), payment
+  status tracking, QR confirmation code
+- ✅ **Gym, Pool & Membership** — full CRUD, check-in (increments count,
+  blocked unless Active), renew, a status state machine (Active/Frozen/Expired)
+- ✅ **Access Control & Gates** — gate online/offline toggle, a scan endpoint
+  that denies every credential while a gate is offline, a live merged
+  access-log feed across all gates
+- ✅ **Visitors & Guests** — registration, check-in/check-out state machine,
+  QR visitor pass, escort flag
+
 The database schema already models all 12 in-scope modules (surfaces &
-equipment, bookings, membership, gates & access control, visitors, VIP
-protocol, lounges & hospitality, restaurant & concessions, parking, fleet —
-see `apps/api/prisma/schema.prisma`), so Phases 2–5 extend the same
-foundation rather than requiring a rewrite. Their nav entries render as
-"Phase N" placeholders in the sidebar until built.
+equipment, VIP protocol, lounges & hospitality, restaurant & concessions,
+parking, fleet — see `apps/api/prisma/schema.prisma`), so Phases 3–5 extend
+the same foundation rather than requiring a rewrite. Their nav entries
+render as "Phase N" placeholders in the sidebar until built.
 
 | Phase | Modules | Status |
 |---|---|---|
 | 1 | Auth/RBAC, Zones, Facilities | ✅ Done |
-| 2 | Bookings, Membership, Access Control, Visitors | Not started |
+| 2 | Bookings, Membership, Access Control, Visitors | ✅ Done |
 | 3 | VIP/Protocol, Hospitality/Lounges, Restaurant/Concessions | Not started |
 | 4 | Parking, Fleet, Surfaces & Equipment | Not started |
 | 5 | Real-time (WebSockets), offline-tolerant gates, load/security/a11y hardening | Not started |

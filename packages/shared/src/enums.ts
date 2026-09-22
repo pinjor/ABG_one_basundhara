@@ -116,6 +116,15 @@ export enum PaymentStatus {
   REFUNDED = "Refunded",
 }
 
+/** Booking status transition graph (Section 4.4) — enforced server-side, mirrored here for UI affordance. */
+export const BOOKING_STATUS_TRANSITIONS: Record<string, string[]> = {
+  [BookingStatus.PENDING]: [BookingStatus.CONFIRMED, BookingStatus.CANCELLED],
+  [BookingStatus.CONFIRMED]: [BookingStatus.COMPLETED, BookingStatus.CANCELLED, BookingStatus.NO_SHOW],
+  [BookingStatus.CANCELLED]: [],
+  [BookingStatus.COMPLETED]: [],
+  [BookingStatus.NO_SHOW]: [],
+};
+
 // 4.5 Membership
 export enum MembershipTier {
   INDIVIDUAL = "Individual",
@@ -127,6 +136,13 @@ export enum MemberStatus {
   FROZEN = "Frozen",
   EXPIRED = "Expired",
 }
+
+/** Member status transition graph (Section 4.5). */
+export const MEMBER_STATUS_TRANSITIONS: Record<string, string[]> = {
+  [MemberStatus.ACTIVE]: [MemberStatus.FROZEN, MemberStatus.EXPIRED],
+  [MemberStatus.FROZEN]: [MemberStatus.ACTIVE, MemberStatus.EXPIRED],
+  [MemberStatus.EXPIRED]: [MemberStatus.ACTIVE],
+};
 
 // 4.6 Access Control
 export enum GateType {
@@ -165,6 +181,13 @@ export enum VisitorStatus {
   CHECKED_IN = "Checked In",
   CHECKED_OUT = "Checked Out",
 }
+
+/** Visitor status transition graph (Section 4.7). */
+export const VISITOR_STATUS_TRANSITIONS: Record<string, string[]> = {
+  [VisitorStatus.EXPECTED]: [VisitorStatus.CHECKED_IN],
+  [VisitorStatus.CHECKED_IN]: [VisitorStatus.CHECKED_OUT],
+  [VisitorStatus.CHECKED_OUT]: [],
+};
 
 // 4.8 VIP / VVIP
 export enum VIPClassification {
