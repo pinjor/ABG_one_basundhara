@@ -1,0 +1,405 @@
+// Bashundhara Sports City Digital Management Platform — data model.
+// Covers the 12 in-scope modules (Section 4 of the master build prompt).
+// Status/type fields are stored as String and validated at the API layer
+// against the shared enums in @bsc/shared, rather than duplicated here as
+// native Postgres enums — this keeps the taxonomy in one place as later
+// phases extend it, without a migration for every new status value.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Identity & RBAC (Section 3)
+// ---------------------------------------------------------------------------
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String // Role enum value from @bsc/shared
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  auditLogs AuditLog[]
+
+  @@map("users")
+}
+
+/// Attributes and timestamps every mutating action (Section 3, Section 7 auditability).
+model AuditLog {
+  id         String   @id @default(uuid())
+  entityType String
+  entityId   String
+  action     String
+  before     Json?
+  after      Json?
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  createdAt  DateTime @default(now())
+
+  @@index([entityType, entityId])
+  @@map("audit_logs")
+}
+
+// ---------------------------------------------------------------------------
+// 4.1 Complex Master Data, Zone & Map Management
+// ---------------------------------------------------------------------------
+
+model Zone {
+  id            String   @id @default(uuid())
+  name          String
+  type          String // ZoneType
+  parentZoneId  String?
+  parentZone    Zone?    @relation("ZoneHierarchy", fields: [parentZoneId], references: [id])
+  childZones    Zone[]   @relation("ZoneHierarchy")
+  building      String?
+  floor         String?
+  capacity      Int      @default(0)
+  liveOccupancy Int      @default(0)
+  mapX          Float? // normalized 0-1 position on the complex map
+  mapY          Float?
+  status        String   @default("Operational") // ZoneStatus
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  facilities   Facility[]
+  gates        Gate[]
+  parkingZones ParkingZone[]
+  lounges      Lounge[]
+  outlets      Outlet[]
+
+  @@map("zones")
+}
+
+// ---------------------------------------------------------------------------
+// 4.2 Venue, Facility & Space Management
+// ---------------------------------------------------------------------------
+
+model Facility {
+  id                  String    @id @default(uuid())
+  name                String
+  zoneId              String
+  zone                Zone      @relation(fields: [zoneId], references: [id])
+  type                String // FacilityType
+  capacity            Int       @default(0)
+  operatingHoursStart String    @default("06:00")
+  operatingHoursEnd   String    @default("23:00")
+  status              String    @default("Available") // FacilityStatus
+  currentBookingRef   String?
+  nextBookingRef      String?
+  lastInspectionDate  DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  surfaces Surface[]
+  bookings Booking[]
+
+  @@index([zoneId])
+  @@map("facilities")
+}
+
+// ---------------------------------------------------------------------------
+// 4.3 Playing Surface & Sports Equipment Management
+// ---------------------------------------------------------------------------
+
+model Surface {
+  id               String    @id @default(uuid())
+  facilityId       String
+  facility         Facility  @relation(fields: [facilityId], references: [id])
+  surfaceType      String // SurfaceType
+  condition        String    @default("Good") // SurfaceCondition
+  moisturePercent  Float?
+  lastInspection   DateTime?
+  nextMaintenance  DateTime?
+  closureStatus    String    @default("Open") // ClosureStatus
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([facilityId])
+  @@map("surfaces")
+}
+
+model Equipment {
+  id        String   @id @default(uuid())
+  name      String
+  category  String // EquipmentCategory
+  quantity  Int      @default(0)
+  status    String   @default("In Stock") // EquipmentStatus
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("equipment")
+}
+
+// ---------------------------------------------------------------------------
+// 4.4 Booking & Reservation Management
+// ---------------------------------------------------------------------------
+
+model Booking {
+  id                String   @id @default(uuid())
+  facilityId        String
+  facility          Facility @relation(fields: [facilityId], references: [id])
+  customerName      String
+  memberId          String?
+  type              String // BookingType
+  date              DateTime
+  timeSlotStart     String
+  timeSlotEnd       String
+  status            String   @default("Pending") // BookingStatus
+  amount            Decimal  @default(0) @db.Decimal(10, 2)
+  paymentStatus     String   @default("Unpaid") // PaymentStatus
+  qrConfirmationCode String  @unique @default(uuid())
+  createdById       String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([facilityId, date])
+  @@map("bookings")
+}
+
+// ---------------------------------------------------------------------------
+// 4.5 Gym, Pool & Membership Management
+// ---------------------------------------------------------------------------
+
+model Member {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  phone         String?
+  tier          String // MembershipTier
+  joinDate      DateTime  @default(now())
+  expiryDate    DateTime
+  status        String    @default("Active") // MemberStatus
+  checkInCount  Int       @default(0)
+  lastCheckIn   DateTime?
+  lockerId      String?
+  billingCycle  String    @default("Monthly")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("members")
+}
+
+// ---------------------------------------------------------------------------
+// 4.6 Access Control & Gate Management
+// ---------------------------------------------------------------------------
+
+model Gate {
+  id           String   @id @default(uuid())
+  name         String
+  zoneId       String
+  zone         Zone     @relation(fields: [zoneId], references: [id])
+  type         String // GateType
+  status       String   @default("Online") // GateStatus
+  entriesToday Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  accessLogs AccessLogEntry[]
+
+  @@index([zoneId])
+  @@map("gates")
+}
+
+model AccessLogEntry {
+  id            String   @id @default(uuid())
+  gateId        String
+  gate          Gate     @relation(fields: [gateId], references: [id])
+  personRef     String
+  credentialRef String?
+  method        String // AccessMethod
+  result        String // AccessResult
+  timestamp     DateTime @default(now())
+
+  @@index([gateId, timestamp])
+  @@map("access_log_entries")
+}
+
+// ---------------------------------------------------------------------------
+// 4.7 Visitor & Guest Management
+// ---------------------------------------------------------------------------
+
+model Visitor {
+  id             String    @id @default(uuid())
+  name           String
+  host           String
+  purpose        String
+  category       String // VisitorCategory
+  checkInTime    DateTime?
+  checkOutTime   DateTime?
+  status         String    @default("Expected") // VisitorStatus
+  escortRequired Boolean   @default(false)
+  qrPassCode     String    @unique @default(uuid())
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@map("visitors")
+}
+
+// ---------------------------------------------------------------------------
+// 4.8 VIP/VVIP & Protocol Management
+// ---------------------------------------------------------------------------
+
+model VIPGuest {
+  id                String    @id @default(uuid())
+  name              String
+  designation       String?
+  classification    String // VIPClassification
+  arrivalDatetime   DateTime
+  protocolOfficerId String?
+  status            String    @default("Scheduled") // VIPStatus
+  loungeAssignment  String?
+  seatAllocation    String?
+  mealPreference    String?
+  privacyFlag       Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@map("vip_guests")
+}
+
+// ---------------------------------------------------------------------------
+// 4.9 Hospitality, Lounge & Refreshment Management
+// ---------------------------------------------------------------------------
+
+model Lounge {
+  id               String   @id @default(uuid())
+  name             String
+  zoneId           String
+  zone             Zone     @relation(fields: [zoneId], references: [id])
+  capacity         Int      @default(0)
+  currentOccupancy Int      @default(0)
+  status           String   @default("Open") // LoungeStatus
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  serviceRequests ServiceRequest[]
+
+  @@index([zoneId])
+  @@map("lounges")
+}
+
+model ServiceRequest {
+  id          String   @id @default(uuid())
+  partyRef    String
+  loungeId    String
+  lounge      Lounge   @relation(fields: [loungeId], references: [id])
+  item        String
+  status      String   @default("Pending") // ServiceRequestStatus
+  requestedAt DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([loungeId])
+  @@map("service_requests")
+}
+
+// ---------------------------------------------------------------------------
+// 4.10 Restaurant, Catering & Concession Management
+// ---------------------------------------------------------------------------
+
+model Outlet {
+  id        String   @id @default(uuid())
+  name      String
+  type      String // OutletType
+  zoneId    String
+  zone      Zone     @relation(fields: [zoneId], references: [id])
+  status    String   @default("Open") // OutletStatus
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orders Order[]
+
+  @@index([zoneId])
+  @@map("outlets")
+}
+
+model Order {
+  id        String   @id @default(uuid())
+  outletId  String
+  outlet    Outlet   @relation(fields: [outletId], references: [id])
+  items     Json
+  amount    Decimal  @default(0) @db.Decimal(10, 2)
+  status    String   @default("Order Received") // OrderStatus
+  placedAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([outletId])
+  @@map("orders")
+}
+
+// ---------------------------------------------------------------------------
+// 4.11 Parking Management
+// ---------------------------------------------------------------------------
+
+model ParkingZone {
+  id       String @id @default(uuid())
+  name     String
+  type     String // ParkingZoneType
+  zoneId   String?
+  zone     Zone?  @relation(fields: [zoneId], references: [id])
+  capacity Int    @default(0)
+  occupied Int    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  vehicleLogs VehicleLogEntry[]
+
+  @@index([zoneId])
+  @@map("parking_zones")
+}
+
+model VehicleLogEntry {
+  id            String       @id @default(uuid())
+  plateNumber   String
+  vehicleRef    String?
+  parkingZoneId String
+  parkingZone   ParkingZone  @relation(fields: [parkingZoneId], references: [id])
+  type          String // ParkingZoneType (category the vehicle is parked under)
+  entryTime     DateTime     @default(now())
+  exitTime      DateTime?
+
+  @@index([parkingZoneId])
+  @@map("vehicle_log_entries")
+}
+
+// ---------------------------------------------------------------------------
+// 4.12 Transport, Fleet & Buggy Management
+// ---------------------------------------------------------------------------
+
+model FleetVehicle {
+  id              String   @id @default(uuid())
+  type            String // FleetVehicleType
+  driverName      String?
+  status          String   @default("Available") // FleetVehicleStatus
+  currentLocation String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  trips Trip[]
+
+  @@map("fleet_vehicles")
+}
+
+model Trip {
+  id             String       @id @default(uuid())
+  vehicleId      String
+  vehicle        FleetVehicle @relation(fields: [vehicleId], references: [id])
+  passengerRef   String
+  fromLocation   String
+  toLocation     String
+  status         String       @default("Requested") // TripStatus
+  requestedAt    DateTime     @default(now())
+  completedAt    DateTime?
+
+  @@index([vehicleId])
+  @@map("trips")
+}

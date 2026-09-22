@@ -1,0 +1,17 @@
+{
+  "name": "basundhara-sports-city",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.33.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "pnpm --filter @bsc/api dev",
+    "dev:web": "pnpm --filter @bsc/web dev",
+    "build": "pnpm --filter @bsc/shared build && pnpm --filter @bsc/api build && pnpm --filter @bsc/web build",
+    "db:migrate": "pnpm --filter @bsc/api prisma:migrate",
+    "db:seed": "pnpm --filter @bsc/api prisma:seed"
+  }
+}
