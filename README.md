@@ -15,10 +15,11 @@ packages/shared  Design tokens, RBAC roles, domain enums, nav IA, DTOs
                  shared between api and web so both stay in lockstep
 ```
 
-## Delivery status — Phase 3 of 5
+## Delivery status — Phase 4 of 5
 
-This build follows the phased delivery plan. **Phases 1, 2 and 3 are
-complete and fully functional end-to-end**, not a disconnected demo:
+This build follows the phased delivery plan. **Phases 1 through 4 are
+complete and fully functional end-to-end** — all 12 in-scope modules are
+built and live, not a disconnected demo:
 
 **Phase 1 — Foundation**
 - ✅ JWT auth with role-based access control (9 roles, Section 3 of the spec)
@@ -58,17 +59,26 @@ complete and fully functional end-to-end**, not a disconnected demo:
   outlets reject new orders server-side), an order Kanban (Order Received
   → Preparing → Ready for Pickup → Delivered)
 
-The database schema already models all 12 in-scope modules (surfaces &
-equipment, parking, fleet — see `apps/api/prisma/schema.prisma`), so Phases
-4–5 extend the same foundation rather than requiring a rewrite. Their nav
-entries render as "Phase N" placeholders in the sidebar until built.
+**Phase 4 — Logistics & surface ops**
+- ✅ **Parking** — zone occupancy cards, vehicle entry/exit logging that
+  clamps to capacity and rejects entry once a zone is full
+- ✅ **Transport & Fleet** — vehicle status cards, a trip request that
+  auto-dispatches the nearest Available vehicle and rejects the request if
+  none are free, a trip Kanban (Requested → In Progress → Completed) that
+  returns the vehicle to Available on completion
+- ✅ **Surfaces & Equipment** — per-facility surface condition and closure
+  state machine (Open ↔ Closed for Maintenance/Recovery, enforced
+  server-side), an equipment inventory table
+
+All 12 in-scope modules (Section 4 of the spec) are now built — only
+Phase 5's real-time layer and hardening pass remain.
 
 | Phase | Modules | Status |
 |---|---|---|
 | 1 | Auth/RBAC, Zones, Facilities | ✅ Done |
 | 2 | Bookings, Membership, Access Control, Visitors | ✅ Done |
 | 3 | VIP/Protocol, Hospitality/Lounges, Restaurant/Concessions | ✅ Done |
-| 4 | Parking, Fleet, Surfaces & Equipment | Not started |
+| 4 | Parking, Fleet, Surfaces & Equipment | ✅ Done |
 | 5 | Real-time (WebSockets), offline-tolerant gates, load/security/a11y hardening | Not started |
 
 ## Running locally

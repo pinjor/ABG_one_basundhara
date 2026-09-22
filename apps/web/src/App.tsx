@@ -14,6 +14,9 @@ import { VisitorsPage } from "./pages/visitors/VisitorsPage";
 import { VipPage } from "./pages/vip/VipPage";
 import { LoungesPage } from "./pages/lounges/LoungesPage";
 import { OutletsPage } from "./pages/outlets/OutletsPage";
+import { ParkingPage } from "./pages/parking/ParkingPage";
+import { FleetPage } from "./pages/fleet/FleetPage";
+import { SurfacesPage } from "./pages/surfaces/SurfacesPage";
 import { PlaceholderModule } from "./pages/PlaceholderModule";
 
 function RequireAuth({ children }: { children: ReactNode }) {
@@ -43,6 +46,9 @@ const MODULE_PAGES: Record<string, () => JSX.Element> = {
   "/vip": VipPage,
   "/lounges": LoungesPage,
   "/outlets": OutletsPage,
+  "/parking": ParkingPage,
+  "/fleet": FleetPage,
+  "/surfaces": SurfacesPage,
 };
 
 function ModulePage({ path, children }: { path: string; children: ReactNode }) {

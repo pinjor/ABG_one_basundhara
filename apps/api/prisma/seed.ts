@@ -300,11 +300,121 @@ async function main() {
     }
   }
 
+  const parkingZoneData = [
+    { name: "North Public Parking", type: "Public", zone: "Parking Precinct A", capacity: 1500, occupied: 640 },
+    { name: "VIP Parking Court", type: "VIP", zone: "Parking Precinct B (VIP)", capacity: 200, occupied: 90 },
+    { name: "Staff Parking Yard", type: "Staff", zone: "Back-of-House Services Yard", capacity: 300, occupied: 210 },
+    { name: "Team Bus Bay", type: "Team", zone: "North Training Grounds", capacity: 20, occupied: 4 },
+  ];
+  for (const p of parkingZoneData) {
+    const existing = await prisma.parkingZone.findFirst({ where: { name: p.name } });
+    if (!existing) {
+      await prisma.parkingZone.create({
+        data: { name: p.name, type: p.type, zoneId: zoneByName(p.zone).id, capacity: p.capacity, occupied: p.occupied },
+      });
+    }
+  }
+  const parkingZones = await prisma.parkingZone.findMany();
+  const parkingZoneByName = (name: string) => parkingZones.find((p) => p.name === name)!;
+
+  const vehicleLogData = [
+    { zone: "North Public Parking", plate: "DHK-GA-1234", type: "Public", open: true },
+    { zone: "VIP Parking Court", plate: "DHK-VIP-0007", type: "VIP", open: true },
+    { zone: "Staff Parking Yard", plate: "DHK-STF-5521", type: "Staff", open: false },
+  ];
+  for (const v of vehicleLogData) {
+    const existing = await prisma.vehicleLogEntry.findFirst({ where: { plateNumber: v.plate } });
+    if (!existing) {
+      await prisma.vehicleLogEntry.create({
+        data: {
+          parkingZoneId: parkingZoneByName(v.zone).id,
+          plateNumber: v.plate,
+          type: v.type,
+          entryTime: new Date(Date.now() - 2 * 3600_000),
+          exitTime: v.open ? undefined : new Date(Date.now() - 3600_000),
+        },
+      });
+    }
+  }
+
+  const fleetData = [
+    { type: "Buggy", driverName: "Milon Sheikh", status: "Available", currentLocation: "Central Stadium Complex" },
+    { type: "Buggy", driverName: "Habibur Rahman", status: "On Trip", currentLocation: "Retail Boulevard" },
+    { type: "Shuttle", driverName: "Aktar Hossain", status: "Available", currentLocation: "Parking Precinct A" },
+    { type: "VIP Car", driverName: "Selim Reza", status: "Charging", currentLocation: "VIP Pavilion & Protocol Wing" },
+  ];
+  for (const f of fleetData) {
+    const existing = await prisma.fleetVehicle.findFirst({ where: { driverName: f.driverName } });
+    if (!existing) {
+      await prisma.fleetVehicle.create({ data: f });
+    }
+  }
+  const fleetVehicles = await prisma.fleetVehicle.findMany();
+  const fleetByDriver = (name: string) => fleetVehicles.find((v) => v.driverName === name)!;
+
+  const tripData = [
+    { driver: "Habibur Rahman", passengerRef: "Zahid Karim (VIP)", from: "VIP Gate 1", to: "VIP Pavilion & Protocol Wing", status: "In Progress" },
+    { driver: "Milon Sheikh", passengerRef: "Farah Diba (Member)", from: "Main Gate North", to: "Racquet Sports Pavilion", status: "Requested" },
+  ];
+  for (const t of tripData) {
+    const existing = await prisma.trip.findFirst({ where: { passengerRef: t.passengerRef } });
+    if (!existing) {
+      await prisma.trip.create({
+        data: {
+          vehicleId: fleetByDriver(t.driver).id,
+          passengerRef: t.passengerRef,
+          fromLocation: t.from,
+          toLocation: t.to,
+          status: t.status,
+        },
+      });
+    }
+  }
+
+  const surfaceData = [
+    { facility: "Main Stadium Pitch", surfaceType: "Hybrid Turf", condition: "Excellent", moisturePercent: 42, closureStatus: "Open" },
+    { facility: "International Cricket Ground", surfaceType: "Natural Grass", condition: "Good", moisturePercent: 38, closureStatus: "Open" },
+    { facility: "Diving Pool", surfaceType: "Pool Water", condition: "Needs Attention", moisturePercent: null, closureStatus: "Closed for Maintenance" },
+    { facility: "Hockey Turf", surfaceType: "Synthetic Turf", condition: "Fair", moisturePercent: 25, closureStatus: "Closed for Recovery" },
+  ];
+  for (const s of surfaceData) {
+    const existing = await prisma.surface.findFirst({ where: { facilityId: facilityByName(s.facility).id } });
+    if (!existing) {
+      await prisma.surface.create({
+        data: {
+          facilityId: facilityByName(s.facility).id,
+          surfaceType: s.surfaceType,
+          condition: s.condition,
+          moisturePercent: s.moisturePercent ?? undefined,
+          closureStatus: s.closureStatus,
+          lastInspection: new Date(Date.now() - 2 * 86400000),
+          nextMaintenance: new Date(Date.now() + 5 * 86400000),
+        },
+      });
+    }
+  }
+
+  const equipmentData = [
+    { name: "Match Footballs (FIFA Quality Pro)", category: "Balls", quantity: 40, status: "In Stock" },
+    { name: "Full-size Goals", category: "Goals", quantity: 8, status: "Deployed" },
+    { name: "Padel Rackets", category: "Protective Gear", quantity: 24, status: "In Stock" },
+    { name: "Pool Lane Ropes", category: "Pool Equipment", quantity: 12, status: "Under Repair" },
+    { name: "Pitch Roller", category: "Maintenance Tools", quantity: 2, status: "In Stock" },
+  ];
+  for (const e of equipmentData) {
+    const existing = await prisma.equipment.findFirst({ where: { name: e.name } });
+    if (!existing) {
+      await prisma.equipment.create({ data: e });
+    }
+  }
+
   console.log(
     `Seeded ${zoneData.length} zones, ${facilityData.length} facilities, ${gateData.length} gates, ` +
       `${memberData.length} members, ${visitorData.length} visitors, ${bookingData.length} bookings, ` +
       `${vipData.length} VIP guests, ${loungeData.length} lounges, ${serviceRequestData.length} service requests, ` +
-      `${outletData.length} outlets, ${orderData.length} orders, 9 users.`,
+      `${outletData.length} outlets, ${orderData.length} orders, ${parkingZoneData.length} parking zones, ` +
+      `${vehicleLogData.length} vehicle logs, ${fleetData.length} fleet vehicles, ${tripData.length} trips, ` +
+      `${surfaceData.length} surfaces, ${equipmentData.length} equipment items, 9 users.`,
   );
   console.log("All seed users share the password: Password123!");
 }

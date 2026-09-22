@@ -11,6 +11,7 @@ interface DashboardSummary {
   activeMembers: number;
   gateEntriesToday: number;
   openServiceRequests: number;
+  fleetUtilisation: number;
 }
 
 interface AuditLogRow {
@@ -42,13 +43,14 @@ export function CommandCentre() {
     <div>
       <ModuleHeader purpose="Complex-wide status across every operational module, scoped to what your role can act on." />
 
-      <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+      <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
         <StatTile label="Zones" value={summary?.zones.total ?? 0} tone="gold" />
         <StatTile label="Live Occupancy" value={occupancyPct} suffix="%" tone="teal" />
         <StatTile label="Facilities" value={summary?.facilities.total ?? 0} tone="blue" />
         <StatTile label="Bookings Today" value={summary?.bookingsToday ?? 0} />
         <StatTile label="Active Members" value={summary?.activeMembers ?? 0} />
         <StatTile label="Open Service Requests" value={summary?.openServiceRequests ?? 0} />
+        <StatTile label="Fleet Utilisation" value={summary?.fleetUtilisation ?? 0} suffix="%" tone="blue" />
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">

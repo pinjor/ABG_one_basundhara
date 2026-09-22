@@ -26,7 +26,7 @@ export const NAV: NavGroup[] = [
     modules: [
       { key: "zones", label: "Zones & Complex Map", path: "/zones", phase: 1, built: true },
       { key: "facilities", label: "Venues & Facilities", path: "/facilities", phase: 1, built: true },
-      { key: "surfaces", label: "Surfaces & Equipment", path: "/surfaces", phase: 4, built: false },
+      { key: "surfaces", label: "Surfaces & Equipment", path: "/surfaces", phase: 4, built: true },
       { key: "bookings", label: "Bookings & Reservations", path: "/bookings", phase: 2, built: true },
       { key: "membership", label: "Gym, Pool & Membership", path: "/membership", phase: 2, built: true },
     ],
@@ -52,8 +52,8 @@ export const NAV: NavGroup[] = [
     key: "logistics",
     label: "Logistics",
     modules: [
-      { key: "parking", label: "Parking", path: "/parking", phase: 4, built: false },
-      { key: "fleet", label: "Transport & Fleet", path: "/fleet", phase: 4, built: false },
+      { key: "parking", label: "Parking", path: "/parking", phase: 4, built: true },
+      { key: "fleet", label: "Transport & Fleet", path: "/fleet", phase: 4, built: true },
     ],
   },
 ];

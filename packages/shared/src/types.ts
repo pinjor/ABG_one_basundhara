@@ -170,6 +170,75 @@ export interface OrderDto {
   updatedAt: string;
 }
 
+export interface SurfaceDto {
+  id: string;
+  facilityId: string;
+  facility?: Pick<FacilityDto, "id" | "name" | "type">;
+  surfaceType: string;
+  condition: string;
+  moisturePercent: number | null;
+  lastInspection: string | null;
+  nextMaintenance: string | null;
+  closureStatus: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface EquipmentDto {
+  id: string;
+  name: string;
+  category: string;
+  quantity: number;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ParkingZoneDto {
+  id: string;
+  name: string;
+  type: string;
+  zoneId: string | null;
+  zone?: Pick<ZoneDto, "id" | "name" | "type">;
+  capacity: number;
+  occupied: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface VehicleLogEntryDto {
+  id: string;
+  plateNumber: string;
+  vehicleRef: string | null;
+  parkingZoneId: string;
+  parkingZone?: Pick<ParkingZoneDto, "id" | "name" | "type">;
+  type: string;
+  entryTime: string;
+  exitTime: string | null;
+}
+
+export interface FleetVehicleDto {
+  id: string;
+  type: string;
+  driverName: string | null;
+  status: string;
+  currentLocation: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TripDto {
+  id: string;
+  vehicleId: string;
+  vehicle?: Pick<FleetVehicleDto, "id" | "type" | "driverName">;
+  passengerRef: string;
+  fromLocation: string;
+  toLocation: string;
+  status: string;
+  requestedAt: string;
+  completedAt: string | null;
+}
+
 export interface AuditLogDto {
   id: string;
   entityType: string;

@@ -1,5 +1,5 @@
 import { Controller, Get, UseGuards } from "@nestjs/common";
-import { BookingStatus, MemberStatus, ServiceRequestStatus } from "@bsc/shared";
+import { BookingStatus, MemberStatus, ServiceRequestStatus, FleetVehicleStatus } from "@bsc/shared";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { RolesGuard } from "../auth/roles.guard";
 import { PrismaService } from "../prisma/prisma.service";
@@ -31,6 +31,7 @@ export class DashboardController {
       gateEntriesAgg,
       recentAccessByResult,
       openServiceRequests,
+      fleetByStatus,
     ] = await Promise.all([
       this.prisma.zone.count(),
       this.prisma.zone.aggregate({ _sum: { capacity: true, liveOccupancy: true } }),
@@ -47,7 +48,11 @@ export class DashboardController {
         _count: true,
       }),
       this.prisma.serviceRequest.count({ where: { status: { not: ServiceRequestStatus.DELIVERED } } }),
+      this.prisma.fleetVehicle.groupBy({ by: ["status"], _count: true }),
     ]);
+
+    const fleetTotal = fleetByStatus.reduce((sum, row) => sum + row._count, 0);
+    const onTrip = fleetByStatus.find((row) => row.status === FleetVehicleStatus.ON_TRIP)?._count ?? 0;
 
     return {
       zones: {
@@ -64,8 +69,7 @@ export class DashboardController {
       gateEntriesToday: gateEntriesAgg._sum.entriesToday ?? 0,
       accessAttemptsToday: Object.fromEntries(recentAccessByResult.map((row) => [row.result, row._count])),
       openServiceRequests,
-      // Placeholder for Phase 4 (Section 9).
-      fleetUtilisation: 0,
+      fleetUtilisation: fleetTotal > 0 ? Math.round((onTrip / fleetTotal) * 100) : 0,
     };
   }
 }

@@ -13,6 +13,9 @@ import { VisitorsModule } from "./visitors/visitors.module";
 import { VipGuestsModule } from "./vip-guests/vip-guests.module";
 import { LoungesModule } from "./lounges/lounges.module";
 import { OutletsModule } from "./outlets/outlets.module";
+import { ParkingModule } from "./parking/parking.module";
+import { FleetModule } from "./fleet/fleet.module";
+import { SurfacesModule } from "./surfaces/surfaces.module";
 
 @Module({
   imports: [
@@ -29,6 +32,9 @@ import { OutletsModule } from "./outlets/outlets.module";
     VipGuestsModule,
     LoungesModule,
     OutletsModule,
+    ParkingModule,
+    FleetModule,
+    SurfacesModule,
     DashboardModule,
   ],
 })

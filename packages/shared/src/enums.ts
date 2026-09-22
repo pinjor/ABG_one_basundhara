@@ -77,6 +77,13 @@ export enum ClosureStatus {
   CLOSED_FOR_MAINTENANCE = "Closed for Maintenance",
   CLOSED_FOR_RECOVERY = "Closed for Recovery",
 }
+
+/** Surface closure transition graph (Section 4.3) — reopening always goes through Open. */
+export const CLOSURE_STATUS_TRANSITIONS: Record<string, string[]> = {
+  [ClosureStatus.OPEN]: [ClosureStatus.CLOSED_FOR_MAINTENANCE, ClosureStatus.CLOSED_FOR_RECOVERY],
+  [ClosureStatus.CLOSED_FOR_MAINTENANCE]: [ClosureStatus.OPEN],
+  [ClosureStatus.CLOSED_FOR_RECOVERY]: [ClosureStatus.OPEN],
+};
 export enum EquipmentCategory {
   BALLS = "Balls",
   NETS = "Nets",
@@ -280,3 +287,18 @@ export enum TripStatus {
   IN_PROGRESS = "In Progress",
   COMPLETED = "Completed",
 }
+
+/** Trip status transition graph (Section 4.12) — a linear dispatch pipeline. */
+export const TRIP_STATUS_TRANSITIONS: Record<string, string[]> = {
+  [TripStatus.REQUESTED]: [TripStatus.IN_PROGRESS],
+  [TripStatus.IN_PROGRESS]: [TripStatus.COMPLETED],
+  [TripStatus.COMPLETED]: [],
+};
+
+/** Fleet vehicle status transition graph — a trip drives Available<->On Trip; Charging/Maintenance are manual. */
+export const FLEET_VEHICLE_STATUS_TRANSITIONS: Record<string, string[]> = {
+  [FleetVehicleStatus.AVAILABLE]: [FleetVehicleStatus.CHARGING, FleetVehicleStatus.MAINTENANCE],
+  [FleetVehicleStatus.ON_TRIP]: [],
+  [FleetVehicleStatus.CHARGING]: [FleetVehicleStatus.AVAILABLE, FleetVehicleStatus.MAINTENANCE],
+  [FleetVehicleStatus.MAINTENANCE]: [FleetVehicleStatus.AVAILABLE],
+};
