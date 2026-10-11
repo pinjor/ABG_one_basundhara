@@ -1,4 +1,4 @@
-import { ArrayMinSize, IsArray, IsNumber, IsString, Min, ValidateNested } from "class-validator";
+import { ArrayMinSize, IsArray, IsNumber, IsOptional, IsString, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 class OrderItemDto {
@@ -23,4 +23,8 @@ export class CreateOrderDto {
   @IsNumber()
   @Min(0)
   amount!: number;
+
+  @IsOptional()
+  @IsString()
+  eventPackId?: string;
 }

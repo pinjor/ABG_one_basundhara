@@ -28,9 +28,9 @@ export function StatusKanban<T>({
       {columns.map((col) => {
         const colItems = items.filter((item) => statusOf(item) === col);
         return (
-          <div key={col} className="rounded-lg border border-border bg-surface p-3">
+          <div key={col} className="rounded-lg border border-gold/20 bg-surface-2 p-3">
             <div className="mb-3 flex items-center justify-between">
-              <h4 className="text-xs font-semibold uppercase tracking-wide text-text-dimmer">{col}</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-[0.16em] text-gold/70">{col}</h4>
               <span className="rounded-full bg-surface-2 px-2 py-0.5 text-xs text-text-dim">{colItems.length}</span>
             </div>
             <div className="space-y-2">

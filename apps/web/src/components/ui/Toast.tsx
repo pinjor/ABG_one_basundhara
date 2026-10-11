@@ -13,9 +13,9 @@ interface ToastContextValue {
 const ToastContext = createContext<ToastContextValue | null>(null);
 
 const TONE_CLASSES: Record<Toast["tone"], string> = {
-  success: "border-teal/40 bg-surface text-teal",
-  danger: "border-red/40 bg-surface text-red",
-  info: "border-blue/40 bg-surface text-blue",
+  success: "border-teal/40 bg-surface-2 text-teal",
+  danger: "border-red/40 bg-surface-2 text-red",
+  info: "border-blue/40 bg-surface-2 text-blue",
 };
 
 export function ToastProvider({ children }: { children: ReactNode }) {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FleetVehicleStatus, TripStatus, TRIP_STATUS_TRANSITIONS, FLEET_VEHICLE_STATUS_TRANSITIONS, Role, type TripDto } from "@bsc/shared";
 import { ModuleHeader } from "../../components/layout/ModuleHeader";
+import { useFeaturePreset } from "../../lib/featurePresets";
 import { Button } from "../../components/ui/Button";
 import { StatusBadge } from "../../components/ui/StatusBadge";
 import { StatTile } from "../../components/ui/StatTile";
@@ -14,8 +15,15 @@ import { useToast } from "../../components/ui/Toast";
 export function FleetPage() {
   const [createVehicleOpen, setCreateVehicleOpen] = useState(false);
   const [requestTripOpen, setRequestTripOpen] = useState(false);
+  const [type, setType] = useState("");
+  const [status, setStatus] = useState("");
+  useFeaturePreset((preset) => {
+    setType(preset.type ?? "");
+    setStatus(preset.status ?? "");
+  });
 
-  const { data: vehicles = [], isLoading } = useFleetVehicles();
+  const { data: vehiclesRaw = [], isLoading } = useFleetVehicles();
+  const vehicles = vehiclesRaw.filter((v) => (!type || v.type === type) && (!status || v.status === status));
   const { data: trips = [] } = useTrips();
   const setVehicleStatus = useSetFleetVehicleStatus();
   const advanceTrip = useAdvanceTrip();
@@ -63,7 +71,7 @@ export function FleetPage() {
           {vehicles.map((vehicle) => {
             const nextStatuses = FLEET_VEHICLE_STATUS_TRANSITIONS[vehicle.status] ?? [];
             return (
-              <div key={vehicle.id} className="rounded-lg border border-border bg-surface p-4">
+              <div key={vehicle.id} className="rounded-lg border border-border bg-surface-2 p-4">
                 <div className="mb-2 flex items-start justify-between">
                   <div>
                     <div className="font-medium text-text">{vehicle.type}</div>

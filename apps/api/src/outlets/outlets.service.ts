@@ -74,7 +74,12 @@ export class OutletsService {
       throw new BadRequestException("This outlet is closed and cannot take new orders");
     }
     const order = await this.prisma.order.create({
-      data: { outletId: dto.outletId, items: dto.items as any, amount: dto.amount },
+      data: {
+        outletId: dto.outletId,
+        items: dto.items as any,
+        amount: dto.amount,
+        eventPackId: dto.eventPackId,
+      },
     });
     await this.audit.record({ entityType: "Order", entityId: order.id, action: "CREATE", userId, after: order });
     return order;

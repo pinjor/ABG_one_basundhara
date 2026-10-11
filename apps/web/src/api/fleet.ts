@@ -39,11 +39,12 @@ export function useTrips(params: { vehicleId?: string; status?: string } = {}) {
 export function useCreateTrip() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async (payload: { vehicleId?: string; passengerRef: string; fromLocation: string; toLocation: string }) =>
+    mutationFn: async (payload: { vehicleId?: string; passengerRef: string; fromLocation: string; toLocation: string; eventPackId?: string }) =>
       (await api.post<TripDto>("/trips", payload)).data,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["trips"] });
       qc.invalidateQueries({ queryKey: ["fleet"] });
+      qc.invalidateQueries({ queryKey: ["event-board"] });
     },
   });
 }

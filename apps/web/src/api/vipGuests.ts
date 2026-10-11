@@ -35,7 +35,10 @@ export function useCreateVipGuest() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (payload: Record<string, unknown>) => (await api.post<VIPGuestDto>("/vip-guests", payload)).data,
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["vip-guests"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["vip-guests"] });
+      qc.invalidateQueries({ queryKey: ["event-board"] });
+    },
   });
 }
 
@@ -44,6 +47,9 @@ export function useSetVipGuestStatus() {
   return useMutation({
     mutationFn: async ({ id, status }: { id: string; status: string }) =>
       (await api.post<VIPGuestDto>(`/vip-guests/${id}/status`, { status })).data,
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["vip-guests"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["vip-guests"] });
+      qc.invalidateQueries({ queryKey: ["event-board"] });
+    },
   });
 }

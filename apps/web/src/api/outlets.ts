@@ -37,9 +37,12 @@ export function useOrders(params: { outletId?: string; status?: string } = {}) {
 export function useCreateOrder() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async (payload: { outletId: string; items: { name: string; qty: number }[]; amount: number }) =>
+    mutationFn: async (payload: { outletId: string; items: { name: string; qty: number }[]; amount: number; eventPackId?: string }) =>
       (await api.post<OrderDto>("/orders", payload)).data,
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["orders"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["orders"] });
+      qc.invalidateQueries({ queryKey: ["event-board"] });
+    },
   });
 }
 

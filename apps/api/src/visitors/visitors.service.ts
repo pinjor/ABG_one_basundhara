@@ -56,8 +56,13 @@ export class VisitorsService {
     return this.transition(id, VisitorStatus.CHECKED_IN, userId, { checkInTime: new Date() });
   }
 
-  checkOut(id: string, userId: string) {
-    return this.transition(id, VisitorStatus.CHECKED_OUT, userId, { checkOutTime: new Date() });
+  async checkOut(id: string, userId: string) {
+    const visitor = await this.transition(id, VisitorStatus.CHECKED_OUT, userId, { checkOutTime: new Date() });
+    await this.prisma.credential.updateMany({
+      where: { visitorId: id },
+      data: { status: "Expired" },
+    });
+    return visitor;
   }
 
   auditTrail(id: string) {

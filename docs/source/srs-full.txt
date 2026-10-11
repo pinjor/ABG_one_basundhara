@@ -1,0 +1,2265 @@
+
+
+ 
+Bashundhara SMART SPORTS CITY OPERATING SYSTEM 
+(Bashundhara-SSCOS) 
+Enterprise User Requirement Specification (URS) & Software Requirement 
+Specification (SRS) 
+ 
+Document Classification: Confidential 
+Prepared For: Bashundhara Sports City 
+Revision: v2.0 — updated with expanded testing/security acceptance criteria and new Food, Beverage & Retail 
+Ordering module 
+
+Document Control 
+Distribution List 
+● Bashundhara Sports City — Project Steering Committee 
+● Anvir Bashundhara Group — Project ABG-W Team 
+● Shortlisted Vendors / System Integrators (RFP recipients) 
+● IT, Security, Legal & Procurement Departments 
+Revision History 
+Version Date Summary of Change 
+v1.0 — Original Enterprise URS/SRS issued for RFP. 
+v2.0 Current 
+Added critical-defect (P1) testing/security acceptance 
+requirements (Sections 31, 33); added new Section 22A — 
+Smart Food, Beverage & Retail Ordering, with supporting 
+updates to Sections 4, 6, 7, 11, 13, 17, 22, 23, 24, 26, 27, 28, 
+29, 30, 31 and 33. All new IDs verified against the existing ID 
+register to avoid duplication (see Appendix A). 
+Purpose of This Document 
+This document expands the original ABG-SSCOS vision statement into a vendor-ready 
+Enterprise User Requirement Specification (URS) and Software Requirement Specification (SRS). 
+It is intended to be issued as part of a Request for Proposal (RFP) so that prospective system 
+integrators and technology vendors can size, design, cost, and commit contractually to the 
+delivery of the Bashundhara Smart Sports City Operating System. 
+Scope of This Document 
+This document covers: business and technical context, the target system architecture, module-
+by-module functional requirements, user stories, formal use cases, business process flows, 
+screen/UI requirements, API and integration requirements, data architecture, key performance 
+indicators, acceptance criteria, service level agreements, and cybersecurity requirements. It 
+also defines the vendor evaluation approach to be used during procurement. 
+How Vendors Should Use This Document 
+● Respond to every functional requirement (FR) with a compliance status: Comply / Comply with 
+Configuration / Comply with Customization / Not Compliant / Roadmap. 
+● Reference requirement IDs (e.g., FR-TCK-004, UC-SEC-02) directly in the technical and commercial 
+proposal. 
+● Provide a mapping of proposed product modules against each layer of the reference architecture in 
+Section 3. 
+● Complete the acceptance criteria and SLA sections as binding commitments in the contract schedule. 
+
+Table of Contents 
+Document Control........................................................................................................................... 2 
+Distribution List ........................................................................................................................... 2 
+Revision History .......................................................................................................................... 2 
+Purpose of This Document .......................................................................................................... 2 
+Scope of This Document ............................................................................................................. 2 
+How Vendors Should Use This Document .................................................................................. 2 
+Table of Contents ............................................................................................................................ 3 
+1. Vision & Business Context........................................................................................................... 6 
+1.1 Vision Statement ................................................................................................................... 6 
+1.2 Business Objectives ............................................................................................................... 6 
+1.3 Stakeholders ......................................................................................................................... 6 
+1.4 Guiding Design Principles ...................................................................................................... 7 
+2. Scope ........................................................................................................................................... 8 
+2.1 In Scope ................................................................................................................................. 8 
+2.2 Out of Scope (unless separately contracted) ........................................................................ 8 
+3. Reference System Architecture .................................................................................................. 9 
+3.1 Non-Functional Architecture Requirements ....................................................................... 10 
+FUNCTIONAL REQUIREMENTS ...................................................................................................... 11 
+4. Functional Requirements — e-Ticketing & Smart Access ......................................................... 12 
+5. Functional Requirements — AI-Based Access Control ............................................................. 13 
+6. Functional Requirements — Smart Security Operations Center (SOC) .................................... 14 
+7. Functional Requirements — AI Incident Response Management ............................................ 15 
+8. Functional Requirements — Command & Control Center ....................................................... 16 
+9. Functional Requirements — Sports Operations Management ................................................ 17 
+10. Functional Requirements — Smart Facility Management ...................................................... 18 
+11. Functional Requirements — Building Management System (BMS) ....................................... 19 
+12. Functional Requirements — Power Station Management ..................................................... 20 
+13. Functional Requirements — Parking & Traffic Management ................................................. 21 
+14. Functional Requirements — Employee Management Suite .................................................. 22 
+15. Functional Requirements — Vendor & Business Partner Management ................................ 23 
+16. Functional Requirements — Event & Sponsor Management ................................................. 24 
+
+17. Functional Requirements — Customer Experience Platform (AI Concierge) ......................... 25 
+18. Functional Requirements — Hospitality & Accommodation Management ........................... 26 
+19. Functional Requirements — Digital Twin & Virtual Tour ....................................................... 27 
+20. Functional Requirements — Finance & Accounting ERP ........................................................ 28 
+21. Functional Requirements — Procurement & Inventory ......................................................... 29 
+22. Functional Requirements — Business Intelligence & AI Copilot ............................................ 30 
+22A. Functional Requirements — Smart Food, Beverage & Retail Ordering (NEW) .................... 31 
+23. User Stories ............................................................................................................................. 33 
+24. Use Cases ................................................................................................................................ 35 
+UC-TCK-01 — Purchase a Sports Ticket and Gain Venue Access .......................................... 35 
+UC-SEC-01 — Detect and Respond to an Unauthorized Access Attempt ............................ 35 
+UC-INC-01 — Automated Fire Detection and Emergency Response ................................... 36 
+UC-FAC-01 — Scheduled Facility Maintenance with Escalation ........................................... 37 
+UC-BI-01 — Executive Natural-Language Query via AI Copilot ............................................ 38 
+UC-VND-01 — Automated Vendor Revenue-Share Settlement ........................................... 38 
+UC-FNB-01 — Order Food & Beverage via Location-Aware Ordering (NEW) ...................... 39 
+25. Business Process Diagrams ..................................................................................................... 41 
+25.1 e-Ticketing & Smart Access Process ................................................................................. 41 
+25.2 AI Incident Detection & Response Process ....................................................................... 41 
+25.3 Data Flow: Source Systems to Executive Insight .............................................................. 41 
+26. Screen / UI Requirements ....................................................................................................... 42 
+26.1 Visitor Mobile App (iOS/Android) ..................................................................................... 42 
+26.2 Web Portal (Public & Corporate) ...................................................................................... 42 
+26.3 Self-Service Kiosk .............................................................................................................. 43 
+26.4 Command & Control Center (Operator Consoles) ............................................................ 43 
+26.5 Back-Office / Admin Consoles ........................................................................................... 44 
+26.6 General UI/UX Requirements ........................................................................................... 44 
+27. API Requirements ................................................................................................................... 45 
+27.1 API Design Standards ........................................................................................................ 45 
+27.2 Representative API Endpoints .......................................................................................... 45 
+27.3 API Non-Functional Requirements ................................................................................... 46 
+28. Integration Architecture ......................................................................................................... 48 
+28.1 Mandatory Integrations .................................................................................................... 48 
+
+28.2 Integration Principles ........................................................................................................ 49 
+29. Data Architecture .................................................................................................................... 50 
+29.1 Core Data Domains ........................................................................................................... 50 
+29.2 Master Data Management (MDM) ................................................................................... 51 
+29.3 Data Governance & Privacy .............................................................................................. 51 
+29.4 Reporting & Analytics Layer .............................................................................................. 51 
+30. Key Performance Indicators (KPIs) .......................................................................................... 52 
+30.1 Operational KPIs ................................................................................................................ 52 
+30.2 Commercial KPIs ............................................................................................................... 52 
+30.3 Customer Experience & AI KPIs ........................................................................................ 53 
+31. Acceptance Criteria ................................................................................................................. 54 
+31.1 Acceptance Stages ............................................................................................................ 54 
+31.2 Module-Level Acceptance Criteria (Representative) ........................................................ 55 
+32. Service Level Agreement (SLA) Requirements ........................................................................ 56 
+32.1 Availability SLA .................................................................................................................. 56 
+32.2 Incident Severity & Response/Resolution SLA.................................................................. 56 
+32.3 Support & Maintenance.................................................................................................... 57 
+32.4 Data Protection & Continuity SLA ..................................................................................... 57 
+33. Cybersecurity Requirements................................................................................................... 58 
+33.1 Compliance Standards ...................................................................................................... 58 
+33.2 Identity & Access Management ........................................................................................ 58 
+33.3 Data Protection ................................................................................................................. 58 
+33.4 Application & Infrastructure Security ............................................................................... 59 
+33.5 Monitoring, Detection & Response .................................................................................. 59 
+33.6 Third-Party & Supply Chain Security ................................................................................. 59 
+33.7 Governance & Assurance .................................................................................................. 59 
+34. Vendor Evaluation Framework ............................................................................................... 61 
+34.1 Proposal Submission Requirements ................................................................................. 61 
+34.2 Recommended Procurement Timeline ............................................................................. 62 
+Appendix A — Requirement Traceability Index ............................................................................ 63 
+Appendix B — Glossary ................................................................................................................. 64 
+ 
+
+1. Vision & Business Context 
+1.1 Vision Statement 
+ABG-SSCOS shall be a fully integrated, Artificial-Intelligence-powered Smart Sports City 
+Operating System capable of operating, monitoring, automating, securing, analysing, and 
+optimizing every aspect of Bashundhara Sports City from a single unified platform, delivering 
+“One System, One Dashboard, One Source of Truth” 
+The platform shall simultaneously function as an ERP, Command Center, Security Platform, 
+Stadium Management Platform, Facility Management Platform, Customer Experience Platform, 
+Digital Twin Platform, AI Decision Engine, Revenue Management Platform, and Enterprise Data 
+Platform. 
+1.2 Business Objectives 
+Objective Description 
+Unified Operations 
+Eliminate departmental silos by operating stadium, retail, 
+hospitality, security, and facility functions from one platform. 
+Revenue Growth 
+Increase ticketing, membership, retail, and sponsorship revenue 
+through pricing, upsell, and analytics. 
+Visitor Experience 
+Deliver frictionless, contactless, personalized experiences across 
+booking, entry, and on-site services. 
+Safety & Security 
+Provide proactive, AI-assisted threat detection and incident 
+response across the entire city's footprint. 
+Operational Efficiency 
+Reduce manual effort and downtime through predictive 
+maintenance and automated workflows. 
+Data-Driven Governance 
+Give executives real-time, trustworthy KPIs for evidence-based 
+decision-making. 
+1.3 Stakeholders 
+Stakeholder Group Representative Roles Primary Interest 
+Executive Sponsors 
+Bashundhara Sports City Board, 
+ABG-W Project Leadership 
+ROI, strategic control, brand 
+reputation 
+Operations 
+Facility Managers, Venue Managers, 
+Event Managers 
+Day-to-day system usability 
+and reliability 
+Security 
+SOC Officers, Security Managers, 
+Emergency Response Teams 
+Real-time detection, 
+response SLAs 
+
+Stakeholder Group Representative Roles Primary Interest 
+Finance & Commercial 
+Finance Controller, Revenue 
+Manager, Vendor Partners 
+Accurate billing, settlement, 
+forecasting 
+HR HR Manager, Payroll Officer 
+Workforce management and 
+compliance 
+Visitors & Members 
+Public visitors, season ticket holders, 
+corporate guests 
+Convenience, safety, 
+personalization 
+IT & Cybersecurity CTO, IT Infrastructure Team, CISO 
+System integrity, uptime, 
+compliance 
+Regulators & Auditors 
+Government bodies, certification 
+auditors 
+Legal, safety, and data-
+protection compliance 
+1.4 Guiding Design Principles 
+● Modular, API-first architecture that allows phased rollout and future extensibility. 
+● Single source of truth: no duplicate master data across modules. 
+● Security and privacy by design, aligned to ISO 27001 / ISO 27701 / SOC 2 / OWASP. 
+● AI-assisted, human-supervised automation — no fully autonomous action on life-safety 
+events without human confirmation, except where explicitly approved SOPs allow it. 
+● Cloud-ready, on-premises-capable hybrid deployment to satisfy data residency 
+requirements. 
+● Vendor-agnostic integration layer to avoid lock-in on IoT, CCTV, and access-control 
+hardware. 
+
+2. Scope 
+2.1 In Scope 
+● Design, development/configuration, integration, testing, deployment, and warranty 
+support of ABG-SSCOS across all layers described in Section 3. 
+● Integration with third-party hardware and software systems listed in Section 28 
+(Integration Architecture). 
+● Data migration of existing visitor, membership, and asset records (where applicable). 
+● Training, documentation, and knowledge transfer to ABG operational staff. 
+2.2 Out of Scope (unless separately contracted) 
+● Supply and installation of physical CCTV cameras, turnstiles, and IoT sensors (integration 
+only, unless the vendor is also the hardware supplier). 
+● Civil, electrical, and mechanical works for the Building Management System field 
+devices. 
+● Content creation for marketing, sponsorship media, or event production. 
+
+3. Reference System Architecture 
+The platform shall be structured into six architectural layers. Each layer is independently 
+scalable but exposes and consumes standardized APIs through the integration bus described in 
+Section 28. 
+ 
+Figure 3.1 — ABG-SSCOS Six-Layer Reference Architecture 
+Layer Components Primary Responsibility 
+Layer 1: User 
+Experience 
+Web Portal, Android App, iOS App, 
+Self-Service Kiosk, Visitor Portal, 
+Corporate Portal 
+All human-facing interaction 
+channels 
+Layer 2: Business 
+Operations 
+ERP, HRM, CRM, Finance, 
+Procurement 
+Core enterprise transaction 
+processing 
+Layer 3: Sports City 
+Management 
+Venue Management, Sports 
+Management, Stadium Operations, 
+Event Management 
+Domain-specific operational 
+management 
+Layer 4: Smart 
+Infrastructure 
+IoT, CCTV, Access Control, HVAC, 
+Power Systems 
+Physical asset connectivity 
+and telemetry 
+
+Layer Components Primary Responsibility 
+Layer 5: AI Layer 
+AI Agents, Predictive Analytics, 
+Computer Vision, LLM Assistant, 
+Incident Detection 
+Intelligence, automation, and 
+decisioning 
+Layer 6: Executive 
+Command Center 
+Real-Time Control Room, SOC, BI 
+Center, Emergency Response Center 
+Cross-domain situational 
+awareness and control 
+3.1 Non-Functional Architecture Requirements 
+Attribute Requirement 
+Availability 
+99.9% uptime for Layer 1/2/3 transactional systems; 99.95% for Layer 
+4/6 life-safety and security functions (see SLA Section 32). 
+Scalability 
+Support horizontal scaling to a minimum of 100,000 registered visitor 
+profiles and 20,000 concurrent app/portal sessions during peak events. 
+Latency 
+Access-control decision (face/QR/RFID scan to turnstile release) shall 
+complete in ≤ 1.5 seconds at the 95th percentile. 
+Interoperability 
+All modules shall expose RESTful JSON APIs and support webhook-based 
+event publishing (see Section 27). 
+Deployment Model 
+Hybrid: Cloud-hosted application tier with on-premises edge nodes for 
+CCTV/IoT processing and local failover. 
+Data Residency 
+Personally identifiable information (PII) of Bangladeshi citizens shall be 
+stored in-country unless otherwise approved by ABG legal/compliance. 
+Disaster Recovery 
+RPO ≤ 15 minutes, RTO ≤ 4 hours for core transactional systems; RPO ≤ 1 
+hour, RTO ≤ 1 hour for SOC/life-safety systems. 
+
+FUNCTIONAL REQUIREMENTS 
+Requirement priority follows the MoSCoW method: Must (mandatory for go-live), Should (high 
+value, next release acceptable), Could (desirable, roadmap acceptable). Vendors shall state 
+compliance against every ID individually. 
+
+4. Functional Requirements — e-Ticketing & Smart Access 
+The ticketing platform is the primary access-control mechanism for Bashundhara Sports City 
+and shall govern all visitors, members, and staff entry. 
+ID Requirement Priority 
+FR-TCK-001 
+The system shall allow visitor self-registration via Web, App, and 
+Kiosk capturing Name, NID/Passport, Mobile, Email, Date of Birth. 
+Must 
+FR-TCK-002 
+The system shall support face registration and optional biometric 
+profile capture at the point of ticket issuance. 
+Must 
+FR-TCK-003 
+The system shall support sale of Sports Tickets (Football, Futsal, 
+Padel, Cricket, Tennis, Swimming, Gym, Academy). 
+Must 
+FR-TCK-004 
+The system shall support free passes for Visitor (Tourist Visit, Gallery 
+Visit, Restaurant Access, Shopping Access). 
+Must 
+FR-TCK-005 
+The system shall support Premium Ticket categories (VIP, VVIP, 
+Corporate, Media) with distinct pricing and access rules. 
+Must 
+FR-TCK-006 
+The system shall support Membership types (Annual, Family, 
+Student, Corporate) including renewal and auto-billing. 
+Must 
+FR-TCK-007 
+The system shall generate a unique QR/RFID/NFC credential per 
+ticket or membership, valid for a configurable time window. 
+Must 
+FR-TCK-008 
+The system shall allow refunds, cancellations, and ticket transfers 
+subject to configurable business rules. 
+Should 
+FR-TCK-009 
+The system shall support dynamic and promotional pricing rules 
+(early-bird, off-peak, bundle) configurable by admin. 
+Should 
+FR-TCK-010 
+The system shall reconcile ticketing revenue with Finance ERP 
+General Ledger on a daily automated batch. 
+Must 
+FR-TCK-011 
+(NEW) 
+In addition to the QR/RFID/NFC credential in FR-TCK-007, the system 
+shall support an optional wearable wristband/tag as a physical 
+credential and cashless payment instrument, linked to the same 
+visitor wallet used for ticketing and in-facility purchases (see FR-FNB-
+005). The wristband shall operate via the RFID/NFC modalities 
+already defined for turnstile authentication in FR-ACC-005 — no 
+separate access-control mechanism is introduced. 
+Should 
+FR-TCK-011 is new in v2.0. It extends the existing credential/payment model rather than 
+duplicating FR-ACC-005 (multi-modal turnstile authentication), which already supports 
+RFID/NFC as a scan method. 
+
+5. Functional Requirements — AI-Based Access Control 
+Access decisions across all restricted zones shall be automated and auditable. 
+ID Requirement Priority 
+FR-ACC-001 
+The system shall perform real-time face recognition against the 
+enrolled visitor/employee database at all configured access points. 
+Must 
+FR-ACC-002 
+The system shall check every access attempt against a blacklist 
+database and deny/flag matches within 1 second. 
+Must 
+FR-ACC-003 
+The system shall recognize VIP/VVIP profiles and trigger a 
+configurable concierge notification workflow. 
+Should 
+FR-ACC-004 
+The system shall recognize repeat visitors and surface visit-history 
+context to front-desk/concierge staff. 
+Could 
+FR-ACC-005 
+The system shall support multi-modal turnstile authentication: Face 
+Scan, QR Scan, RFID, NFC, selectable per gate. 
+Must 
+FR-ACC-006 
+The system shall enforce role-based restricted-area access for 
+Players, Coaches, Employees, Vendors, Visitors, VIP Guests based on 
+configurable zone permissions. 
+Must 
+FR-ACC-007 
+The system shall log every access grant/denial event with timestamp, 
+identity, zone, and method for audit purposes for a minimum of 12 
+months. 
+Must 
+FR-ACC-008 
+The system shall allow security operators to manually override an 
+automated access decision, with mandatory reason capture. 
+Must 
+
+6. Functional Requirements — Smart Security Operations Center (SOC) 
+The SOC module shall aggregate all security-relevant sensors and video feeds into unified, AI-
+assisted monitoring. 
+ID Requirement Priority 
+FR-SOC-001 
+The system shall display live CCTV feeds from all connected cameras 
+on a unified video wall interface with configurable layouts. 
+Must 
+FR-SOC-002 
+The system shall run video analytics for facial recognition, intruder 
+detection, suspicious object detection, and violence detection. 
+Must 
+FR-SOC-003 
+The system shall provide AI-based crowd density estimation and 
+generate alerts when configurable thresholds are breached. 
+Must 
+FR-SOC-004 
+The system shall detect fire and smoke through video analytics 
+and/or integrated fire-alarm sensor feeds. 
+Must 
+FR-SOC-005 
+The system shall flag unauthorized access attempts in real time to 
+SOC operators with location and camera reference. 
+Must 
+FR-SOC-006 
+The system shall provide an emergency call management console 
+linking incoming emergency calls to nearest camera/incident context. 
+Should 
+FR-SOC-007 
+The system shall retain video analytics metadata (not necessarily raw 
+footage) for a minimum of 90 days for investigation. 
+Must 
+FR-SOC-008 
+(NEW) 
+The system shall provide a Lost & Found register allowing staff to log 
+a found item with its location, timestamp, and linked CCTV reference, 
+and allow visitors to search/report a lost item via the app or help 
+desk. 
+Should 
+FR-SOC-009 
+(NEW) 
+The system shall support an optional child-safety mode in which a 
+minor's wristband/tag (see FR-TCK-011) is paired to a guardian's 
+profile; the system shall alert staff and the guardian if the pair 
+separates beyond a configurable zone boundary. 
+Could 
+ 
+
+7. Functional Requirements — AI Incident Response Management 
+Incident detection, response, and closure shall follow a consistent, trackable workflow across 
+incident types. 
+ID Requirement Priority 
+FR-INC-001 
+(UPDATED) 
+The system shall automatically detect and classify incidents: Fire, 
+Medical Emergency, Crowd Stampede, Security Breach, Vehicle 
+Collision, and Severe Weather Event (see FR-INC-008). 
+Must 
+FR-INC-002 
+The system shall automatically trigger the configured SOP workflow 
+for each incident classification. 
+Must 
+FR-INC-003 
+The system shall dispatch alerts to the relevant team (Security, Fire, 
+Medical) via app push, SMS, and/or radio integration. 
+Must 
+FR-INC-004 
+The system shall send stakeholder notifications (management, PR, 
+safety officer) based on incident severity tier. 
+Should 
+FR-INC-005 
+The system shall track response time (detection to first responder 
+dispatch) and resolution time (dispatch to closure). 
+Must 
+FR-INC-006 
+The system shall require a closure report with root cause, actions 
+taken, and responsible officer before an incident can be marked 
+closed. 
+Must 
+FR-INC-007 
+The system shall provide a post-incident analytics dashboard showing 
+incident trends by type, location, and time. 
+Should 
+FR-INC-008 
+(NEW) 
+The system shall ingest a live weather data feed (see Section 28.1) 
+and automatically trigger the Severe Weather SOP for outdoor 
+facilities (football, cricket, swimming, tennis, padel) when lightning, 
+storm, or extreme-heat thresholds configured by ABG are breached. 
+Should 
+ 
+
+8. Functional Requirements — Command & Control Center 
+A unified 24/7 dashboard suite for executive and operational decision-making. 
+ID Requirement Priority 
+FR-CCC-001 
+The system shall provide a Security Dashboard showing live CCTV 
+thumbnails, active alerts, and real-time visitor flow heatmaps. 
+Must 
+FR-CCC-002 
+The system shall provide a Facility Dashboard showing live electricity, 
+water, and HVAC consumption and status. 
+Must 
+FR-CCC-003 
+The system shall provide a Revenue Dashboard showing ticket sales, 
+venue revenue, and retail revenue in real time. 
+Must 
+FR-CCC-004 
+The system shall provide an Executive Dashboard showing 
+occupancy, revenue, open incidents, and configurable KPIs. 
+Must 
+FR-CCC-005 
+All dashboards shall support role-based visibility and drill-down from 
+summary KPI to transaction-level detail. 
+Must 
+FR-CCC-006 
+Dashboards shall be accessible on large-format video-wall displays as 
+well as desktop and tablet browsers. 
+Should 
+
+9. Functional Requirements — Sports Operations Management 
+Covers booking, tournaments, and academy operations across all sports facilities. 
+ID Requirement Priority 
+FR-SPT-001 
+The system shall support court, ground, and slot booking with real-
+time availability calendars. 
+Must 
+FR-SPT-002 
+The system shall support tournament fixture creation, referee 
+assignment, team registration, and match scheduling. 
+Must 
+FR-SPT-003 
+The system shall support academy student enrollment, coach 
+assignment, and attendance tracking. 
+Must 
+FR-SPT-004 
+The system shall track athlete performance data, health data (subject 
+to consent and data-protection controls), equipment usage, and 
+training plans. 
+Should 
+FR-SPT-005 
+The system shall send automated reminders for upcoming bookings, 
+tournaments, and academy sessions. 
+Should 
+FR-SPT-006 
+The system shall prevent double-booking of any court, ground, or slot 
+resource. 
+Must 
+
+10. Functional Requirements — Smart Facility Management 
+Covers maintenance and operational SOPs for stadiums, courts, pools, gyms, accommodation, 
+and restaurants. 
+ID Requirement Priority 
+FR-FAC-001 
+The system shall maintain a maintenance schedule per asset 
+(stadium, courts, pools, gym, accommodation, restaurants). 
+Must 
+FR-FAC-002 
+The system shall support SOP-driven cleaning schedules and daily 
+inspection checklists with photo evidence capture. 
+Must 
+FR-FAC-003 
+The system shall support work-order creation, assignment, tracking, 
+and closure with SLA timers. 
+Must 
+FR-FAC-004 
+The system shall automatically escalate overdue 
+maintenance/cleaning tasks to the next management tier. 
+Must 
+FR-FAC-005 
+Example workflow: for swimming pool cleaning, the system shall 
+create the schedule, assign staff, verify completion (via 
+checklist/photo), and issue escalation if overdue. 
+Must 
+
+11. Functional Requirements — Building Management System (BMS) 
+Integration with HVAC, generator, UPS, lift, escalator, water pump, and lighting systems. 
+ID Requirement Priority 
+FR-BMS-001 
+The system shall provide live monitoring of HVAC, Generator, UPS, 
+Lift, Escalator, Water Pump, and Lighting systems. 
+Must 
+FR-BMS-002 
+The system shall allow authorized operators to remotely control 
+supported BMS equipment (start/stop/setpoint change). 
+Should 
+FR-BMS-003 
+The system shall provide energy optimization recommendations 
+based on occupancy and usage patterns. 
+Should 
+FR-BMS-004 
+The system shall provide predictive maintenance alerts for BMS 
+equipment based on runtime hours and sensor trends. 
+Should 
+FR-BMS-005 
+(NEW) 
+Building on the consumption data used for the energy-optimization 
+recommendations in FR-BMS-003, the system shall consolidate 
+energy, water, and waste data into a Sustainability/ESG reporting 
+dashboard (see Section 26.4) with configurable reduction targets and 
+period-over-period trend reporting suitable for external ESG 
+disclosure. 
+Should 
+ 
+
+12. Functional Requirements — Power Station Management 
+Covers substation, transformer, and generator monitoring across the site. 
+ID Requirement Priority 
+FR-PWR-001 
+The system shall monitor substation and transformer health 
+parameters (load, temperature, voltage) in real time. 
+Must 
+FR-PWR-002 
+The system shall monitor generator status and fuel consumption with 
+low-fuel alerting. 
+Must 
+FR-PWR-003 
+The system shall provide load-balancing recommendations across 
+available power sources. 
+Should 
+FR-PWR-004 
+The system shall provide predictive failure analysis for electrical 
+infrastructure based on historical trend data. 
+Should 
+
+13. Functional Requirements — Parking & Traffic Management 
+AI-based vehicle recognition, allocation, and congestion analytics. 
+ID Requirement Priority 
+FR-PRK-001 
+The system shall perform ANPR-based vehicle recognition at all 
+parking entry/exit points. 
+Must 
+FR-PRK-002 
+The system shall provide smart parking allocation and real-time slot 
+availability to visitors via app/kiosk. 
+Must 
+FR-PRK-003 
+The system shall support advance parking reservations tied to event 
+or ticket bookings. 
+Should 
+FR-PRK-004 
+The system shall manage parking revenue including tariff 
+configuration and automated billing. 
+Must 
+FR-PRK-005 
+The system shall provide traffic congestion analytics and suggest 
+alternate routing during peak events. 
+Could 
+FR-PRK-006 
+(NEW) 
+The system shall integrate with third-party ride-hailing platforms 
+(e.g., Pathao, Uber) to offer a coordinated pickup point and 
+suggested pickup time aligned to event end-times, to reduce egress 
+congestion. 
+Could 
+
+14. Functional Requirements — Employee Management Suite 
+HRM, payroll, and workforce-tracking functions for all Bashundhara Sports City staff. 
+ID Requirement Priority 
+FR-HRM-001 
+The system shall support recruitment, onboarding, and full employee 
+lifecycle management. 
+Must 
+FR-HRM-002 
+The system shall support payroll processing including statutory 
+deductions applicable in Bangladesh. 
+Must 
+FR-HRM-003 
+The system shall support leave management with configurable 
+approval workflows. 
+Must 
+FR-HRM-004 
+The system shall support performance management including goal-
+setting and periodic review cycles. 
+Should 
+FR-HRM-005 
+The system shall capture attendance via Face Recognition, GPS, and 
+Biometric devices. 
+Must 
+FR-HRM-006 
+The system shall track field employee location, assigned duty, and 
+task progress in real time where applicable. 
+Should 
+
+15. Functional Requirements — Vendor & Business Partner 
+Management 
+Supports revenue-share commercial models with food courts, shops, and brand partners. 
+ID Requirement Priority 
+FR-VND-001 
+The system shall track vendor sales/revenue for food courts, shops, 
+sports stores, and brand partners. 
+Must 
+FR-VND-002 
+The system shall support automated revenue-share settlement 
+calculation and reporting. 
+Must 
+FR-VND-003 
+The system shall maintain vendor contract records including terms, 
+renewal dates, and commission rates. 
+Must 
+FR-VND-004 
+The system shall provide vendor performance analytics (footfall 
+conversion, average sale, category trends, etc). 
+Should 
+ 
+
+16. Functional Requirements — Event & Sponsor Management 
+Covers event bookings, sponsorships, and ROI tracking. 
+ID Requirement Priority 
+FR-EVT-001 
+The system shall support event booking including venue, date/time, 
+resource, and vendor coordination. 
+Must 
+FR-EVT-002 
+The system shall manage sponsorship packages, inventory, and 
+allocation to sponsors. 
+Must 
+FR-EVT-003 
+The system shall track ticket allocation tied to specific events and 
+sponsor entitlements. 
+Must 
+FR-EVT-004 
+The system shall provide brand-visibility and sponsor ROI analytics 
+post-event. 
+Should 
+
+17. Functional Requirements — Customer Experience Platform (AI 
+Concierge) 
+Conversational and self-service support across digital channels. 
+ID Requirement Priority 
+FR-CXP-001 
+The system shall provide an AI concierge capable of ticket support, 
+facility guidance, event information, and venue navigation. 
+Must 
+FR-CXP-002 
+The AI concierge shall be available via App, Website, WhatsApp, 
+Messenger, and Voice Bot. 
+Should 
+FR-CXP-003 
+The AI concierge shall escalate unresolved queries to a human agent 
+with full conversation context. 
+Must 
+FR-CXP-004 The AI concierge shall support Bengali and English at minimum. Must 
+FR-CXP-005 
+(NEW) 
+In addition to the Bengali/English minimum in FR-CXP-004, the AI 
+concierge shall support additional languages as configurable add-ons 
+for major international events (e.g., international tournaments, 
+corporate/sponsor delegations). 
+Could 
+
+18. Functional Requirements — Hospitality & Accommodation 
+Management 
+Applicable where guest housing exists on site. 
+ID Requirement Priority 
+FR-HSP-001 
+The system shall support room reservation, check-in, and check-out 
+workflows. 
+Should 
+FR-HSP-002 
+The system shall generate consolidated guest billing across room, 
+F&B, and facility usage. 
+Should 
+FR-HSP-003 
+The system shall manage housekeeping task assignment and 
+completion tracking. 
+Should 
+ 
+
+19. Functional Requirements — Digital Twin & Virtual Tour 
+A 3D virtual replica of Bashundhara Sports City for navigation, planning, and simulation. 
+ID Requirement Priority 
+FR-DGT-001 
+The system shall maintain an interactive 3D map of the Sports City 
+accessible via web/app. 
+Should 
+FR-DGT-002 The system shall provide visitor route planning within the 3D map. Could 
+FR-DGT-003 
+The system shall support emergency evacuation simulation for staff 
+training and planning. 
+Should 
+FR-DGT-004 The system shall support event-layout simulation prior to live events. Could 
+ 
+
+20. Functional Requirements — Finance & Accounting ERP 
+Core financial modules with AI-assisted controls. 
+ID Requirement Priority 
+FR-FIN-001 
+The system shall provide General Ledger, Accounts Payable, Accounts 
+Receivable, Budgeting, Cost Centers, and Fixed Assets modules. 
+Must 
+FR-FIN-002 
+The system shall support bank reconciliation and VAT/taxation 
+calculation per Bangladesh NBR requirements. 
+Must 
+FR-FIN-003 
+The system shall provide AI-based auto voucher suggestion from 
+source transactions. 
+Should 
+FR-FIN-004 
+The system shall provide AI-based fraud and anomaly detection on 
+financial transactions. 
+Should 
+FR-FIN-005 
+The system shall provide AI-assisted revenue forecasting by revenue 
+stream. 
+Should 
+
+21. Functional Requirements — Procurement & Inventory 
+End-to-end procure-to-pay and stock management. 
+ID Requirement Priority 
+FR-PRC-001 
+The system shall support purchase requisition, RFQ, vendor selection, 
+and purchase order issuance. 
+Must 
+FR-PRC-002 
+The system shall support Goods Receipt Note (GRN) and three-way 
+match against PO and invoice. 
+Must 
+FR-PRC-003 
+The system shall maintain stock management with reorder-point 
+alerts. 
+Must 
+FR-PRC-004 
+The system shall track equipment lifecycle from procurement to 
+disposal. 
+Should 
+
+22. Functional Requirements — Business Intelligence & AI Copilot 
+Predictive analytics and natural-language query capability for operational and executive users. 
+ID Requirement Priority 
+FR-BI-001 
+The system shall provide footfall, revenue, event-demand, and utility-
+consumption forecasts. 
+Must 
+FR-BI-002 
+The system shall provide an AI Copilot capable of answering natural-
+language questions such as “How much revenue did we earn today?”, 
+“How many visitors are currently inside?”, and “Which facilities need 
+maintenance?” with sourced, auditable answers. 
+Must 
+FR-BI-003 
+The AI Copilot shall restrict its answers to data the requesting user's 
+role is authorized to view. 
+Must 
+FR-BI-004 
+(NEW) 
+Building on the footfall forecasting in FR-BI-001, the system shall 
+provide real-time predicted wait-times at concessions, restrooms, 
+and access gates, surfaced on the visitor app, kiosks, and Command 
+Center dashboards (Section 26.4). 
+Should 
+ 
+
+22A. Functional Requirements — Smart Food, Beverage & Retail 
+Ordering (NEW) 
+This is a new module added in v2.0. Physical access to restaurants and shops is already 
+governed by the free-pass rules in Section 4 (FR-TCK-004); this section defines the in-facility 
+ordering, fulfillment, and payment experience once a visitor is inside the venue — for example, 
+ordering food from any restaurant or food court in the facility from wherever the visitor 
+currently is, with the system determining the visitor's location via its own indoor map and 
+routing the order accordingly. 
+ID Requirement Priority 
+FR-FNB-001 
+The system shall display all active restaurants and food-court outlets 
+available for ordering, filtered and ranked by the visitor's current in-
+venue location. 
+Must 
+FR-FNB-002 
+The system shall determine the visitor's in-venue location using the 
+platform's own indoor positioning (Wi-Fi/BLE beacon or Digital Twin 
+zone mapping per FR-DGT-001), rather than device GPS alone, given 
+the accuracy needed indoors. 
+Must 
+FR-FNB-003 
+The system shall route each order to the correct outlet's kitchen/POS 
+queue and provide the visitor a live order-status timeline (received → 
+preparing → ready → delivered/picked up). 
+Must 
+FR-FNB-004 
+The system shall support two fulfillment modes, configurable per 
+outlet: pickup (with a designated collection point/QR) and seat- or 
+location-delivery (via staff or delivery-robot integration, where 
+available). 
+Must 
+FR-FNB-005 
+The system shall process payment through the same wallet/payment 
+gateway used for ticketing (Section 4) and the optional wearable 
+credential (FR-TCK-011), with a single consolidated visitor transaction 
+history. 
+Must 
+FR-FNB-006 
+The system shall reconcile food and retail order revenue per outlet 
+automatically with the Vendor Revenue-Share module (FR-VND-001, 
+FR-VND-002); order-level sales shall not be recorded a second time 
+outside that module. 
+Must 
+FR-FNB-007 
+The system shall allow outlets to mark menu/catalog items out-of-
+stock or set prep-time estimates in real time, reflected instantly to 
+the visitor. 
+Should 
+FR-FNB-008 
+The system shall notify the visitor and offer reassignment or refund if 
+an outlet cannot fulfill an order within a configurable SLA window. 
+Should 
+
+ID Requirement Priority 
+FR-FNB-009 
+The AI Concierge (FR-CXP-001) shall be able to take a food or retail 
+order conversationally as an alternative to browsing the outlet list. 
+Could 
+FR-FNB-010 
+The system shall extend the same ordering experience to 
+merchandise and retail shops (sports stores, brand partners) already 
+tracked under FR-VND-001, allowing browsing and purchase of retail 
+items through the app/kiosk. 
+Should 
+FR-FNB-011 
+The system shall support in-venue pickup-counter or locker 
+fulfillment for merchandise orders placed under FR-FNB-010. 
+Should 
+ 
+
+23. User Stories 
+User stories are expressed in the standard “As a ... I want ... so that ...” format and are traceable 
+to the functional requirement IDs in the preceding sections. Vendors should use these to 
+validate that proposed configurations meet real operational intent, not just literal requirement 
+text. 
+ID Persona I want... So that... Traceability 
+US-01 Visitor 
+book a swimming pool slot 
+from the mobile app and pay 
+online 
+secure my preferred 
+time without visiting 
+the counter in person 
+FR-TCK-
+001, FR-
+TCK-007, 
+FR-SPT-001 
+US-02 Visitor 
+enter the venue by simply 
+scanning my face at the gate 
+not carry a physical 
+ticket or card 
+FR-TCK-
+002, FR-
+ACC-001, 
+FR-ACC-005 
+US-03 
+Security 
+Operator 
+see an automatic alert with 
+camera reference when an 
+intruder is detected in a 
+restricted zone 
+dispatch a response 
+team immediately 
+FR-SOC-
+002, FR-
+SOC-005, 
+FR-INC-003 
+US-04 SOC Manager 
+see crowd density heatmaps in 
+real time during a major match 
+proactively prevent 
+stampede risk 
+FR-SOC-
+003, FR-
+CCC-001 
+US-05 
+Facility 
+Manager 
+have the system auto-escalate 
+an overdue pool-cleaning task 
+to my supervisor 
+hygiene SOPs are never 
+silently missed 
+FR-FAC-
+002, FR-
+FAC-004, 
+FR-FAC-005 
+US-06 
+Academy 
+Coordinator 
+enroll a new academy student 
+and assign a coach in one 
+workflow 
+onboarding is fast and 
+error-free 
+FR-SPT-003 
+US-07 
+Finance 
+Controller 
+have daily ticketing revenue 
+reconcile automatically with 
+the General Ledger 
+not need manual 
+journal entries every 
+day 
+FR-TCK-
+010, FR-
+FIN-001 
+US-08 
+Vendor 
+Partner (Food 
+Court) 
+see my daily sales and 
+revenue-share settlement in a 
+partner portal 
+trust the commission 
+calculation without 
+disputes 
+FR-VND-
+001, FR-
+VND-002 
+US-09 Executive 
+see a single dashboard 
+showing today's revenue, 
+make decisions without 
+calling five different 
+departments 
+FR-CCC-004 
+
+ID Persona I want... So that... Traceability 
+current occupancy, and open 
+incidents 
+US-10 Executive 
+ask “Which facilities need 
+maintenance?” in plain 
+language and get an instant 
+answer 
+not navigate multiple 
+reports 
+FR-BI-002 
+US-11 HR Manager 
+have field staff attendance 
+captured via GPS and face 
+recognition automatically 
+payroll input requires 
+no manual timesheets 
+FR-HRM-
+005, FR-
+HRM-002 
+US-12 
+Parking 
+Attendant 
+have the system recognize a 
+vehicle's plate and allocate the 
+nearest available slot 
+traffic doesn't back up 
+at the gate during 
+events 
+FR-PRK-
+001, FR-
+PRK-002 
+US-13 
+Event 
+Manager 
+allocate sponsor tickets 
+automatically against the 
+sponsorship package inventory 
+never oversell sponsor 
+entitlements 
+FR-EVT-
+002, FR-
+EVT-003 
+US-14 
+Visitor 
+(Emergency) 
+reach a real person via 
+WhatsApp concierge and have 
+them see my whole booking 
+history 
+not repeat my problem 
+FR-CXP-
+001, FR-
+CXP-003 
+US-15 
+Emergency 
+Response 
+Officer 
+have the system automatically 
+alert the medical team and log 
+the response time when a 
+medical emergency is detected 
+response performance 
+can be measured and 
+improved 
+FR-INC-001, 
+FR-INC-003, 
+FR-INC-005 
+US-16 
+IT 
+Administrator 
+have role-based access 
+enforced on every dashboard 
+and API 
+sensitive financial and 
+security data is never 
+exposed to 
+unauthorized users 
+FR-CCC-
+005, FR-BI-
+003, 
+Section 33 
+US-17 
+(NEW) 
+Visitor 
+order food from any restaurant 
+in the facility without leaving 
+my seat or current location 
+I don't lose time 
+queuing during a match 
+or event 
+FR-FNB-
+001, FR-
+FNB-002, 
+FR-FNB-
+003, FR-
+FNB-005 
+
+24. Use Cases 
+The following formal use cases illustrate end-to-end system behavior for the highest-risk and 
+highest-value scenarios. Vendors shall confirm their proposed solution can execute each flow, 
+including all listed alternate/exception paths, during the proof-of-concept stage. 
+UC-TCK-01 — Purchase a Sports Ticket and Gain Venue Access 
+Field Detail 
+Actors Visitor (Primary); Payment Gateway, Access Control System (Supporting) 
+Trigger Visitors want to play a sport (e.g., Padel) at Bashundhara Sports City. 
+Preconditions Visitor has a registered account or completes registration during booking. 
+Main Flow: 
+● 1. Visitor opens the App/Web Portal and selects the desired sport and slot. 
+● 2. System displays available slots and pricing. 
+● 3. Visitor selects a slot and proceeds to payment. 
+● 4. System processes payment through the integrated payment gateway. 
+● 5. System issues a digital ticket with QR/RFID credential and sends confirmation via 
+SMS/Email. 
+● 6. On the day of visit, visitor presents the QR code or face at the turnstile. 
+● 7. System verifies identity/credential, checks blacklist status, and confirms booking 
+validity. 
+● 8. System grants access and logs entry with timestamp. 
+Alternate / Exception Flows: 
+● 3a. Payment fails → system retains slot hold for 10 minutes and prompts retry. 
+● 7a. Blacklist match found → system denies access and alerts SOC immediately (see UC-
+SEC-01). 
+● 7b. Booking expired or slot mismatch → system denies entry and directs visitors to help 
+desk / AI concierge. 
+Postconditions: 
+Visitor is inside the venue; entry is logged; revenue is recorded against the correct sport and 
+cost center. 
+UC-SEC-01 — Detect and Respond to an Unauthorized Access Attempt 
+Field Detail 
+Actors 
+AI Access Control Engine (Primary); SOC Operator, Security Field Team 
+(Supporting) 
+
+Field Detail 
+Trigger 
+An individual attempts to enter a restricted zone without valid credentials, 
+or a blacklisted identity is recognized at any access point. 
+Preconditions 
+Face recognition and blacklist databases are active and synced; access 
+point is online. 
+Main Flow: 
+● 1. Individual presents at an access point (turnstile, restricted door). 
+● 2. System scans identity via face/QR/RFID/NFC. 
+● 3. System checks identity against permission rules and blacklist database. 
+● 4. System determines the individual is not authorized for the zone. 
+● 5. System denies physical access and raises a real-time alert to the SOC dashboard with 
+camera feed reference. 
+● 6. SOC operator reviews the alert and dispatches the nearest security field team. 
+● 7. Field team resolves the situation and logs the outcome in the incident module. 
+Alternate / Exception Flows: 
+● 4a. Individual is a recognized VIP without pre-registered zone access → system prompts 
+SOC for manual override with reason capture. 
+● 6a. No field team available within SLA → system auto-escalates to duty manager. 
+Postconditions: 
+Access denial and resolution are logged; incident record created if escalated; blacklist database 
+updated if new threat identified. 
+UC-INC-01 — Automated Fire Detection and Emergency Response 
+Field Detail 
+Actors 
+AI Incident Detection Engine (Primary); Fire Team, Command Center, 
+Visitors (Supporting) 
+Trigger 
+Smoke/fire signature detected via CCTV video analytics or integrated fire-
+alarm sensor. 
+Preconditions 
+Fire detection sensors and/or video analytics are operational and 
+integrated. 
+Main Flow: 
+● 1. System detects a fire/smoke signature above the confidence threshold. 
+● 2. System classifies the incident as “Fire” and determines the affected zone. 
+● 3. System automatically triggers the Fire SOP workflow. 
+
+● 4. System alerts the Fire Team, Security, and Command Center simultaneously via app 
+push and SMS. 
+● 5. System displays the incident on the Executive/Security dashboard with live camera 
+feed and evacuation zone map. 
+● 6. Field teams respond; system tracks response time from detection to first responder 
+arrival. 
+● 7. Once resolved, the responsible officer files a closure report with root cause and 
+actions taken. 
+● 8. System logs resolution time and closes the incident. 
+Alternate / Exception Flows: 
+● 1a. False positive suspected → SOC operator can downgrade/cancel the alert with 
+mandatory justification, logged for audit. 
+● 4a. Primary responder team does not acknowledge within SLA → system auto-escalates 
+to secondary responder and management. 
+Postconditions: 
+Incident fully logged with timestamps, responders, and resolution; feeds into post-incident 
+analytics (FR-INC-007). 
+UC-FAC-01 — Scheduled Facility Maintenance with Escalation 
+Field Detail 
+Actors 
+Facility Management System (Primary); Maintenance Staff, Facility 
+Manager (Supporting) 
+Trigger 
+Scheduled maintenance/cleaning task becomes due (e.g., swimming pool 
+cleaning). 
+Preconditions Maintenance schedule and SOP checklist configured for the asset. 
+Main Flow: 
+● 1. System auto-generates the task per the configured schedule. 
+● 2. System assigns the task to the designated staff member and sends a notification. 
+● 3. Staff member performs the task and submits completion evidence (checklist + photo) 
+via mobile app. 
+● 4. System verifies completion against the SOP checklist. 
+● 5. System marks the task complete and updates the asset maintenance history. 
+Alternate / Exception Flows: 
+● 3a. Task not completed within the SLA window → system sends a reminder, then 
+escalates to the Facility Manager if still overdue. 
+
+● 4a. Submitted evidence fails verification (e.g., incomplete checklist) → system reopens 
+the task and notifies the assigned staff. 
+Postconditions: 
+Asset maintenance history updated; overdue-task escalation log available for audit and vendor 
+SLA reporting. 
+UC-BI-01 — Executive Natural-Language Query via AI Copilot 
+Field Detail 
+Actors Executive User (Primary); AI Copilot / BI Engine (Supporting) 
+Trigger 
+Executive wants an operational answer without navigating multiple 
+reports. 
+Preconditions 
+User is authenticated with an executive role profile; underlying data 
+pipelines are current. 
+Main Flow: 
+● 1. Executive opens the AI Copilot chat panel on the Executive Dashboard. 
+● 2. Executive types a natural-language question, e.g., “How much revenue did we earn 
+today?” 
+● 3. System interprets intent, checks the user's data-access permissions, and queries the 
+curated data warehouse. 
+● 4. System returns a direct answer with the supporting figure, time range, and a link to 
+the underlying report. 
+● 5. Executive may ask a follow-up question in the same context (e.g., “Break that down 
+by revenue stream”). 
+Alternate / Exception Flows: 
+● 3a. Requested data is outside the user's authorization → system declines and logs the 
+attempt. 
+● 3b. Underlying data pipeline is delayed → system states the data's last-refreshed time 
+rather than presenting stale data as current. 
+Postconditions: 
+Executive receives an accurate, permission-scoped answer; query is logged for AI Copilot quality 
+monitoring. 
+UC-VND-01 — Automated Vendor Revenue-Share Settlement 
+Field Detail 
+Actors Finance System (Primary); Vendor Partner, Finance Controller (Supporting) 
+Trigger End of settlement period (e.g., daily or monthly, per contract) is reached. 
+
+Field Detail 
+Preconditions 
+Vendor contract terms (commission %, settlement frequency) are 
+configured in the system. 
+Main Flow: 
+● 1. System aggregates the vendor's recorded sales for the settlement period. 
+● 2. System applies the contracted commission/revenue-share formula. 
+● 3. System generates a settlement statement and posts it to the vendor's partner portal. 
+● 4. System notifies the vendor and Finance Controller of the settlement outcome. 
+● 5. Finance Controller reviews and approves the payment run. 
+Alternate / Exception Flows: 
+● 1a. Vendor disputes a sales figure → vendor raises a dispute in-portal; settlement is held 
+pending Finance review. 
+Postconditions: 
+Settlement statement archived; payment instruction generated for Finance/banking 
+integration. 
+UC-FNB-01 — Order Food & Beverage via Location-Aware Ordering (NEW) 
+Field Detail 
+Actors 
+Visitor (Primary); Indoor Positioning System, Outlet POS, Payment 
+Gateway (Supporting) 
+Trigger 
+Visitor wants to order food or a drink without leaving their seat or current 
+location inside the venue. 
+Preconditions 
+Visitor is inside the venue with an active session; at least one outlet near 
+the visitor's zone is open and accepting orders. 
+Main Flow: 
+● 1. Visitor opens the Food & Beverage Ordering screen in the app. 
+● 2. System determines the visitor's current zone via indoor positioning (FR-FNB-002) and 
+lists nearby open outlets (FR-FNB-001). 
+● 3. Visitor selects an outlet, browses the menu, and adds items to the cart. 
+● 4. Visitor chooses a fulfillment mode: pickup point or location-delivery (FR-FNB-004). 
+● 5. Visitor pays via the shared wallet/payment gateway (FR-FNB-005). 
+● 6. System routes the order to the outlet's POS queue and displays a live status timeline 
+(FR-FNB-003). 
+● 7. Outlet prepares and marks the order ready; the visitor is notified. 
+
+● 8. Order is fulfilled (collected or delivered); revenue reconciles automatically to the 
+vendor's settlement record (FR-FNB-006). 
+Alternate / Exception Flows: 
+● 3a. An item goes out of stock while browsing → system reflects the outlet's real-time 
+update (FR-FNB-007) and removes the item from the cart. 
+● 7a. Outlet cannot fulfill within the SLA window → system offers reassignment to a 
+comparable outlet or an automatic refund (FR-FNB-008). 
+Postconditions: 
+Order is logged end-to-end with timestamps and location; revenue is recorded once against the 
+correct outlet, with no duplicate entry in the vendor settlement ledger. 
+
+25. Business Process Diagrams 
+The diagrams below illustrate the three business processes with the greatest operational and 
+safety impact. Additional process diagrams (booking cancellation, work-order lifecycle, vendor 
+settlement, procurement-to-pay, and the new food/retail ordering flow) shall be jointly 
+finalized with the selected vendor during the design phase. 
+25.1 e-Ticketing & Smart Access Process 
+ 
+Figure 25.1 — End-to-end visitor ticketing and access flow, from booking to logged entry. 
+25.2 AI Incident Detection & Response Process  
+ 
+Figure 25.2 — Automated incident classification, SOP trigger, response, and closure tracking. 
+25.3 Data Flow: Source Systems to Executive Insight 
+ 
+Figure 25.3 — Data ingestion, governance, and consumption path referenced in Section 29 (Data Architecture). 
+
+26. Screen / UI Requirements 
+The screen inventory below defines the minimum set of screens each portal/console shall 
+provide. Vendors shall submit wireframes or existing product screenshots mapped against this 
+inventory as part of the technical proposal. Final UI/UX shall follow the visual identity guidelines 
+to be supplied separately by Bashundhara Sports City. 
+26.1 Visitor Mobile App (iOS/Android) 
+Screen Key Content / Function 
+Onboarding & Registration 
+Sign-up, NID/passport capture, face enrolment, consent 
+capture. 
+Home / Discover Featured sports, events, promotions; quick-book shortcuts. 
+Booking & Slot Selection 
+Calendar view, sport/facility filter, real-time availability, price 
+display. 
+Payment & Checkout 
+Payment method selection, promo code entry, order 
+summary, and receipt. 
+My Tickets / Wallet 
+QR/RFID credential display, membership card, booking 
+history. 
+Digital Twin / Navigation 3D map, indoor wayfinding, points of interest. 
+Food & Beverage / Retail 
+Ordering (NEW) 
+Nearby outlet list ranked by current location (FR-FNB-
+001/002), menu/catalog browsing, cart, live order-status 
+tracker, pickup/delivery choice (Section 22A). 
+AI Concierge Chat 
+Text/voice chat, quick-action buttons, human hand-off; 
+conversational ordering per FR-FNB-009. 
+Notifications 
+Booking reminders, incident/safety alerts, promotions, 
+order-ready alerts. 
+Profile & Settings 
+Personal data, payment methods, wearable-credential 
+linkage (FR-TCK-011), and privacy controls. 
+26.2 Web Portal (Public & Corporate) 
+Screen Key Content / Function 
+Public Landing Page Facility showcase, event calendar, membership plans. 
+Booking Engine 
+Same capability as app, optimized for desktop/kiosk-scale 
+screens. 
+
+Screen Key Content / Function 
+Corporate Portal 
+Corporate membership management, bulk ticket allocation, 
+invoicing. 
+Sponsor Portal 
+Sponsorship package status, brand-visibility reports, ROI 
+dashboard. 
+Vendor / Partner Portal 
+Sales dashboard, settlement statements (incl. food/retail 
+orders per FR-FNB-006), contract documents, dispute raising. 
+26.3 Self-Service Kiosk 
+Screen Key Content / Function 
+Walk-in Ticket Purchase 
+Simplified touch flow: sport/event select → pay → print/QR 
+issue. 
+Membership Check-in 
+Face/QR scan for existing members and season-ticket 
+holders. 
+Wayfinding 
+Static map with “you are here” indicator and directions to 
+key facilities. 
+26.4 Command & Control Center (Operator Consoles) 
+Screen Key Content / Function 
+Security Dashboard 
+Live CCTV grid, active alert feed, visitor-flow heatmap, gate 
+status. 
+Facility Dashboard 
+Electricity/water/HVAC live gauges, active work orders, BMS 
+equipment status. 
+Revenue Dashboard 
+Ticket sales, venue revenue, retail revenue (incl. F&B/retail 
+orders), trend charts, target vs actual. 
+Executive Dashboard 
+Occupancy, revenue, open incidents, configurable KPI tiles, 
+AI Copilot panel, predicted wait-times (FR-BI-004). 
+Incident Console 
+Active incident queue (incl. Severe Weather per FR-INC-008), 
+SOP checklist execution, response/resolution timers. 
+Sustainability Dashboard 
+(NEW) 
+Energy, water, and waste consumption vs. ESG targets, trend 
+reporting (FR-BMS-005). 
+Video Wall Layout Manager 
+Camera grouping, layout presets, priority-camera override 
+during incidents. 
+
+26.5 Back-Office / Admin Consoles 
+Screen Key Content / Function 
+Ticketing & Pricing Admin 
+Ticket type setup, pricing rules, promo configuration, refund 
+approval. 
+Access & Zone Permission 
+Admin 
+Role-to-zone mapping, blacklist management, override audit 
+log. 
+HRM & Payroll Console 
+Employee records, attendance review, leave approval, 
+payroll run. 
+Finance & ERP Console GL, AP/AR, budgeting, bank reconciliation, VAT reporting. 
+Procurement Console 
+Requisition approval, RFQ management, PO issuance, GRN 
+matching. 
+Vendor & Sponsor Admin 
+Contract setup, commission configuration, settlement 
+approval. 
+Food & Retail Outlet Admin 
+(NEW) 
+Outlet onboarding, menu/catalog management, stock/prep-
+time toggles (FR-FNB-007), order queue view. 
+Maintenance & Work Order 
+Console 
+Schedule configuration, task assignment, SLA and escalation 
+rules. 
+System Administration 
+User & role management, audit logs, integration health 
+monitor, AI model configuration. 
+26.6 General UI/UX Requirements 
+● All visitor-facing screens shall support Bengali and English, switchable by the user, with 
+additional languages configurable per FR-CXP-005 for major events. 
+● All screens shall meet WCAG 2.1 AA (Web Content Accessibility Guidelines) accessibility 
+guidelines at minimum. 
+● Operator consoles shall support both dark and light mode for extended SOC shift usage. 
+● Response layouts shall support desktop, tablet, and large-format video-wall resolutions. 
+● Every admin action that changes access rights, pricing, or financial data shall require an 
+audit-logged confirmation step. 
+
+27. API Requirements 
+27.1 API Design Standards 
+● All modules shall expose RESTful APIs using JSON payloads over HTTPS (TLS 1.2 or 
+higher). 
+● APIs shall be versioned (e.g., /api/v1/...) with a documented deprecation policy of at 
+least 12 months' notice. 
+● Authentication shall use OAuth 2.0 / OpenID Connect with short-lived access tokens and 
+refresh tokens. 
+● All APIs shall be documented using the OpenAPI 3.x specification and published to a 
+developer portal. 
+● Event-driven integrations shall be supported via webhooks and/or a message broker 
+(e.g., Kafka/RabbitMQ) for high-volume telemetry (IoT, CCTV analytics). 
+● All APIs shall implement rate limiting and quota management per consuming 
+application. 
+● Sensitive endpoints (access control, financial, PII) shall log every call with caller identity, 
+timestamp, and payload hash for audit. 
+27.2 Representative API Endpoints 
+Endpoint (illustrative) Method(s) Purpose Module 
+/tickets POST 
+Create a new ticket booking 
+(sport/visitor/premium/membership). 
+TCK 
+/tickets/{id}/checkin POST 
+Validate a ticket credential at an 
+access point and log entry/exit. 
+ACC 
+/visitors GET/POST 
+Retrieve or register visitor profile and 
+consent records. 
+TCK 
+/access/verify POST 
+Real-time identity/credential 
+verification for a given access point 
+and zone. 
+ACC 
+/blacklist GET/POST/DELETE 
+Manage blacklist entries used by the 
+access-control engine. 
+ACC 
+/incidents POST/GET 
+Create, retrieve, and update incident 
+records and closure reports (incl. 
+weather-triggered per FR-INC-008). 
+INC 
+/incidents/{id}/escalate POST 
+Trigger manual or SLA-based 
+escalation of an open incident. 
+INC 
+
+Endpoint (illustrative) Method(s) Purpose Module 
+/facility/workorders POST/GET 
+Create and track 
+maintenance/cleaning work orders. 
+FAC 
+/bms/devices/{id}/status GET 
+Retrieve live status/telemetry for a 
+BMS-connected device. 
+BMS 
+/bms/devices/{id}/command POST 
+Send a remote control command to a 
+BMS device (authorized roles only). 
+BMS 
+/parking/anpr/event POST 
+Receive ANPR read events from 
+parking hardware. 
+PRK 
+/hrm/attendance POST 
+Submit face/GPS/biometric 
+attendance events. 
+HRM 
+/finance/vouchers POST/GET 
+Create or retrieve financial 
+voucher/journal entries. 
+FIN 
+/vendors/{id}/settlement GET 
+Retrieve computed revenue-share 
+settlement for a vendor/period (incl. 
+F&B/retail orders). 
+VND 
+/dashboards/kpi GET 
+Retrieve current KPI values for a given 
+dashboard/role. 
+CCC 
+/ai/copilot/query POST 
+Submit a natural-language question 
+and receive a permission-scoped 
+answer. 
+BI 
+/food/outlets GET 
+Retrieve outlets available for 
+ordering, filtered by the visitor's 
+current zone (NEW). 
+FNB 
+/food/orders POST/GET 
+Create or retrieve a food/retail order 
+(NEW). 
+FNB 
+/food/orders/{id}/status GET 
+Retrieve the live status timeline for an 
+order (NEW). 
+FNB 
+/webhooks/subscribe POST 
+Register a webhook endpoint for a 
+given event type (e.g., 
+incident.created). 
+ALL 
+27.3 API Non-Functional Requirements 
+
+Attribute Requirement 
+Response Time 
+95th percentile response time ≤ 500 ms for read APIs; ≤ 1.5 s for access-
+control verification APIs. 
+Throughput 
+Access-verification API shall sustain a minimum of 50 requests/second 
+per gate cluster during peak ingress. 
+Idempotency 
+All state-changing POST endpoints shall support idempotency keys to 
+safely handle retries. 
+Error Handling 
+APIs shall return standardized error envelopes with machine-readable 
+error codes and human-readable messages. 
+Backward 
+Compatibility 
+Non-breaking changes only within a major version; breaking changes 
+require a new version. 
+Sandbox 
+A sandbox/UAT environment with representative test data shall be 
+available to vendor integration teams and ABG QA. 
+
+28. Integration Architecture 
+ABG-SSCOS shall adopt a hub-and-spoke integration model centered on an Integration Bus / API 
+Gateway. This avoids point-to-point spaghetti integration and allows physical hardware vendors 
+(CCTV, turnstiles, BMS) to be replaced independently of the core platform. 
+ 
+Figure 28.1 — Hub-and-spoke integration architecture via the central Integration Bus / API Gateway. 
+ 
+28.1 Mandatory Integrations 
+System Integration Requirement 
+Face Recognition Platforms 
+Real-time identity match callback (≤ 1 second) to the Access 
+Control module; enrolment sync API. 
+CCTV / VMS Systems 
+RTSP/ONVIF video stream access for AI analytics; 
+event/metadata push to SOC module. 
+Turnstiles / Access Control 
+Hardware 
+Bi-directional: credential verification request/response and 
+physical open/deny command. 
+RFID / NFC Devices 
+Read-event ingestion and credential lifecycle sync (issue, 
+suspend, revoke), including wearable credentials (FR-TCK-
+011). 
+
+System Integration Requirement 
+Payment Gateways / Banking 
+Systems 
+Payment initiation, callback/webhook confirmation, refund 
+API, settlement file reconciliation. 
+SMS Gateway 
+Outbound transactional and alert messaging with delivery-
+status callback. 
+Email Gateway 
+Transactional email (SMTP/API) with bounce/delivery 
+tracking. 
+ERP Modules (Finance, HRM, 
+Procurement) 
+Native or API-based integration; no duplicate master data 
+with the core platform. 
+Mobile Apps (iOS/Android) 
+Full REST API coverage plus push-notification service 
+(FCM/APNs). 
+IoT Devices (environmental, 
+occupancy sensors) 
+MQTT or equivalent lightweight telemetry protocol into the 
+ingestion layer. 
+Power Systems (substation, 
+generator, UPS) 
+SCADA/Modbus/BACnet gateway integration into the 
+BMS/Power module. 
+Fire Alarm Systems 
+Hard-wired or IP-based alarm signal integration into the 
+Incident Response module, with fail-safe direct alarm 
+sounding independent of software. 
+Indoor Positioning / BLE 
+Beacon System (NEW) 
+Real-time visitor zone/location events feeding FR-FNB-002 
+(food/retail ordering) and reused by FR-DGT-001 (digital 
+twin) — a single positioning integration, not a separate one 
+per module. 
+Weather Data Feed (NEW) 
+Live lightning/storm/extreme-heat feed into the Incident 
+Response module to trigger the Severe Weather SOP (FR-
+INC-008). 
+Ride-Hailing Platforms (NEW) 
+API integration (e.g., Pathao, Uber) for coordinated pickup-
+point suggestion at event end-times (FR-PRK-006). 
+28.2 Integration Principles 
+● Life-safety systems (fire alarm, emergency lighting) shall retain independent, hard-wired failure-
+safe operation regardless of software/network status. 
+● All integrations shall be resilient to transient network loss with local buffering/replay for at least 
+30 minutes of data at the edge. 
+● No single third-party hardware vendor shall require proprietary, closed-protocol integration; 
+ONVIF, BACnet, Modbus, MQTT, and REST/Webhook standards shall be preferred. 
+● A sandbox integration environment shall be provided per Section 27.3 to validate each 
+integration prior to production cutover. 
+
+29. Data Architecture 
+Data architecture governs how information moves from source systems into a single, 
+trustworthy set of curated data used for dashboards, AI models, and the AI Copilot. The 
+reference flow is shown below; the selected vendor shall propose the specific technology stack 
+(cloud or on-premise) that satisfies the non-functional requirements in Section 3.1. 
+ 
+Figure 29.1 — Data architecture from source systems through governance to BI/AI consumption. 
+ 
+29.1 Core Data Domains 
+Domain Representative Entities 
+Identity & Access 
+Visitor, Member, Employee, Vendor Contact, Credential (incl. 
+Wearable), Blacklist Entry, Zone Permission. 
+Ticketing & Commerce Ticket, Booking, Membership, Payment, Refund, Promotion, Invoice. 
+Facility & Asset 
+Asset, Maintenance Schedule, Work Order, Inspection Checklist, 
+BMS Device, Sustainability/ESG Reading. 
+Security & Incident 
+Camera, Alert, Incident (incl. Severe Weather), SOP Workflow, 
+Response Log, Blacklist Match Log, Lost & Found Item. 
+Sports & Events 
+Facility/Court, Slot, Tournament, Fixture, Team, Athlete, Event, 
+Sponsorship Package. 
+Finance 
+General Ledger Account, Journal Entry, Cost Center, Budget, Vendor 
+Settlement, Tax Record. 
+HR 
+Employee, Attendance Record, Leave Request, Payroll Run, 
+Performance Review. 
+IoT & Telemetry 
+Sensor Reading, Power Meter Reading, Environmental Reading, 
+Device Health Event, Indoor Position Event. 
+
+Domain Representative Entities 
+Food, Beverage & Retail 
+(NEW) 
+Outlet, Menu/Catalog Item, Order, Order Status Event, Fulfillment 
+Record — reconciled into, not duplicated with, the Vendor 
+Settlement entity above. 
+29.2 Master Data Management (MDM) 
+● Visitor/Member identity shall be governed as a single master record across ticketing, 
+access control, CRM, hospitality, and food/retail ordering — no duplicate identity silos. 
+● Employee identity shall be mastered in HRM and referenced (not duplicated) by 
+attendance, access control, and payroll. 
+● Asset/Facility records shall be mastered in the Facility Management module and 
+referenced by BMS, Finance (fixed assets), and Procurement. 
+● Outlet/vendor records shall be mastered in the Vendor & Business Partner module 
+(Section 15) and referenced, not duplicated, by the Food, Beverage & Retail Ordering 
+module (Section 22A). 
+● A data-quality rule set (mandatory fields, format validation, de-duplication matching) 
+shall be enforced at the point of ingestion. 
+29.3 Data Governance & Privacy 
+● PII fields (NID/passport, biometric templates, health data) shall be encrypted at rest 
+with field-level access controls, independent of general database encryption. 
+● Biometric templates shall be stored as non-reversible mathematical representations, 
+never as raw images, wherever the underlying face-recognition vendor supports it. 
+● Data retention periods shall be explicitly configurable per domain (e.g., video analytics 
+metadata 90 days per FR-SOC-007, access logs 12 months per FR-ACC-007) with 
+automated purge. 
+● Data lineage shall be traceable from any BI dashboard figure or AI Copilot answer back 
+to its source system record. 
+● Consent capture and withdrawal (e.g., for health/performance data under FR-SPT-004, 
+or a minor's wristband pairing under FR-SOC-009) shall be recorded and enforced at the 
+query layer. 
+29.4 Reporting & Analytics Layer 
+● A curated data warehouse (or equivalent data-mart layer) shall serve all dashboards to 
+avoid placing analytical load on transactional databases. 
+● Near-real-time refresh (≤ 5 minutes) shall be supported for Command Center 
+dashboards; batch refresh (daily) is acceptable for deep historical/financial reporting. 
+● The AI Copilot (FR-BI-002) shall query only the governed, permission-tagged data layer 
+— never raw source tables directly. 
+
+30. Key Performance Indicators (KPIs) 
+The KPIs below shall be available on the relevant dashboards (Section 26.4) and, where noted, 
+referenced in the SLA (Section 32). Targets are initial baselines to be finalized jointly with the 
+selected vendor during design. 
+30.1 Operational KPIs 
+Category KPI Target (Baseline) Dashboard 
+Access 
+Average gate transaction time (scan to 
+turnstile open) 
+≤ 2 seconds Security 
+Access False rejection rate (face recognition) ≤ 1% 
+Security / 
+SOC 
+Access False acceptance rate (face recognition) ≤ 0.1% 
+Security / 
+SOC 
+Security 
+Mean time to detect (MTTD) a security 
+incident 
+≤ 30 seconds Security 
+Security Mean time to first responder dispatch ≤ 3 minutes 
+Incident 
+Console 
+Security 
+Mean time to resolution (by incident 
+severity) 
+Per SLA tier (Section 
+32) 
+Incident 
+Console 
+Facility 
+Maintenance task on-time completion 
+rate 
+≥ 95% Facility 
+Facility Overdue task escalation compliance 
+100% of overdue 
+tasks escalated within 
+SOP window 
+Facility 
+Facility 
+Unplanned equipment downtime 
+(BMS/Power) 
+≤ 0.5% of operating 
+hours 
+Facility 
+Facility 
+Utility consumption vs. sustainability 
+target (energy/water/waste) (NEW) 
+Reduction target set 
+jointly with vendor at 
+design stage 
+Sustainability 
+30.2 Commercial KPIs 
+Category KPI Target (Baseline) Dashboard 
+Revenue 
+Daily ticketing revenue reconciliation 
+accuracy 
+100% match to GL 
+within 24 hours 
+Revenue / 
+Finance 
+
+Category KPI Target (Baseline) Dashboard 
+Revenue Online booking conversion rate 
+≥ 60% of started 
+bookings completed 
+Revenue 
+Revenue Membership renewal rate ≥ 75% annual renewal Revenue 
+Revenue 
+Food/retail order fulfillment accuracy 
+(NEW) 
+≥ 98% of orders 
+fulfilled without 
+reassignment/refund 
+Revenue 
+Vendor Revenue-share settlement accuracy 
+100% (zero disputed 
+settlements per 
+quarter target) 
+Vendor Portal 
+Vendor Settlement processing time 
+≤ 3 business days 
+after period close 
+Vendor Portal 
+Sponsorship Sponsor ROI report delivery time 
+Within 10 business 
+days of event close 
+Event/Sponsor 
+30.3 Customer Experience & AI KPIs 
+Category KPI Target (Baseline) Dashboard 
+CX AI Concierge first-contact resolution rate ≥ 70% CX Analytics 
+CX 
+AI Concierge escalation-to-human 
+handoff time 
+≤ 60 seconds CX Analytics 
+CX 
+Predicted wait-time accuracy 
+(concessions/restrooms/gates) (NEW) 
+Within ± 20% of 
+actual observed wait 
+CX Analytics 
+AI Copilot 
+Query answer accuracy (validated 
+sample audit) 
+≥ 98% 
+BI / AI 
+Governance 
+AI Copilot Average response latency ≤ 5 seconds 
+BI / AI 
+Governance 
+Platform System-wide uptime (transactional) ≥ 99.9% monthly IT Ops 
+Platform 
+System-wide uptime (security/life-
+safety) 
+≥ 99.95% monthly IT Ops 
+
+31. Acceptance Criteria 
+Acceptance shall proceed in staged gates. Each gate requires formal sign-off by the ABG Project 
+Steering Committee before the next stage or payment milestone is released. All acceptance 
+testing shall be conducted against documented test scripts traceable to the Functional 
+Requirement IDs in Sections 4–22A. 
+31.1 Acceptance Stages 
+Stage Scope Exit Criteria 
+Design Acceptance 
+Solution design document, 
+architecture mapping, data 
+model, integration design 
+100% of Must-priority FRs mapped 
+and approved; no open critical design 
+gaps. 
+System Integration 
+Testing (SIT) 
+All modules and third-party 
+integrations (Section 28) tested 
+end-to-end 
+≥ 98% of test cases pass; zero open 
+Critical/High defects. 
+User Acceptance 
+Testing (UAT) 
+Business users execute 
+scenario-based test scripts 
+derived from Use Cases 
+(Section 24) 
+100% of Must-priority use cases pass; 
+zero open Critical defects; ≤ 5 open 
+Medium defects with agreed 
+remediation dates. 
+Critical (P1) Defect 
+Closure (NEW) 
+All defects logged across SIT, 
+UAT, Security Testing, and Load 
+Testing, classified by severity 
+P1–P4 
+Zero open P1 (Critical) defects of any 
+kind — functional, performance, or 
+security — before go-live approval. 
+P1 is defined as: system-down, data-
+loss, security-breach, or life-safety-
+function failure. P1 remediation shall 
+be independently re-verified, not 
+self-certified by the vendor, before 
+this gate is signed off (see also FR 
+SEC-GOV-08 in Section 33.7). 
+Security & 
+Penetration Testing 
+Independent third-party 
+penetration test and 
+vulnerability assessment, 
+including targeted P1-severity 
+bug hunting across all modules 
+Zero unresolved Critical/High 
+vulnerabilities per OWASP/CVSS 
+scoring prior to go-live; any finding 
+scored P1 shall be remediated and re-
+tested prior to go-live, not deferred 
+to the warranty/hypercare period. 
+Performance & 
+Load Testing 
+Simulated peak-event load 
+(Section 3.1 targets) 
+All latency/throughput targets met at 
+120% of projected peak load. 
+
+Stage Scope Exit Criteria 
+Go-Live Readiness 
+Review 
+Cutover plan, rollback plan, 
+training completion, support 
+readiness 
+All prior gates signed off, including 
+the Critical (P1) Defect Closure gate; 
+rollback plan tested; support desk 
+operational. 
+Warranty / 
+Hypercare 
+Acceptance 
+Post-go-live stabilization period 
+(minimum 60 days) 
+SLA targets (Section 32) met for two 
+consecutive full calendar months; 
+zero new P1 defects introduced by 
+warranty-period patches. 
+ 
+31.2 Module-Level Acceptance Criteria (Representative) 
+Module Acceptance Criteria 
+e-Ticketing & Access 
+100 consecutive test transactions across all ticket types complete with correct 
+pricing, credential issuance, and successful gate entry; blacklist test entries are 
+correctly denied every time. 
+Security & SOC 
+Video analytics correctly detect 95% of staged test events (intrusion, object left 
+behind, crowd density breach) within the defined MTTD target. 
+Incident Response 
+Each incident type (fire, medical, stampede, security, collision, severe weather) 
+is demonstrated end-to-end from simulated detection to logged closure, with 
+accurate response/resolution time capture. 
+Facility Management 
+A full maintenance cycle (schedule → assignment → completion → verification) 
+is demonstrated, plus a deliberately overdue task correctly auto-escalates. 
+Finance & ERP 
+Daily ticketing revenue reconciles to the General Ledger with zero variance 
+across a 10-business-day test window. 
+Food, Beverage & 
+Retail Ordering (NEW) 
+50 consecutive test orders across at least 3 outlets complete with correct 
+outlet routing by simulated location, correct wallet payment, and revenue that 
+reconciles to the vendor settlement record with zero duplicate or missing 
+entries. 
+AI Copilot / BI 
+A defined question set (minimum 30 representative executive questions) is 
+answered with ≥ 98% factual accuracy against source data, with correct 
+permission scoping demonstrated for at least two different roles. 
+Cybersecurity 
+MFA, SSO, and encryption controls verified; penetration test closure report 
+accepted with zero unresolved Critical/High findings and zero unresolved P1 
+items. 
+
+32. Service Level Agreement (SLA) Requirements 
+The selected vendor shall commit to the following SLA framework for the production system, 
+effective from the end of the warranty/hypercare period described in Section 31.1. SLA 
+credits/penalties shall be defined in the commercial contract schedule. 
+32.1 Availability SLA 
+System Tier 
+Uptime 
+Target 
+Measurement 
+Window 
+Excludes 
+Tier 1 — Life-Safety & Security (SOC, 
+Incident Response, Access Control) 
+99.95% Monthly 
+Pre-approved 
+maintenance 
+windows ≤ 4 
+hrs/month 
+Tier 2 — Core Transactional 
+(Ticketing, Finance, HRM, 
+Food/Retail Ordering) 
+99.9% Monthly 
+Pre-approved 
+maintenance 
+windows ≤ 4 
+hrs/month 
+Tier 3 — Supporting Services (Digital 
+Twin, BI Copilot, Reporting, 
+Sustainability Dashboard) 
+99.5% Monthly 
+Pre-approved 
+maintenance 
+windows ≤ 6 
+hrs/month 
+32.2 Incident Severity & Response/Resolution SLA 
+Severity Definition Response Time Resolution Time 
+Critical (S1) 
+Total outage of Tier 1 system, or 
+life-safety function unavailable 
+≤ 15 minutes, 
+24/7 
+≤ 4 hours 
+High (S2) 
+Major function of Tier 1/Tier 2 
+degraded; no workaround 
+≤ 30 minutes, 
+24/7 
+≤ 8 hours 
+Medium (S3) 
+Partial degradation with 
+workaround available 
+≤ 2 hours 
+(business hours) 
+≤ 2 business days 
+Low (S4) 
+Cosmetic or minor issue, no 
+operational impact 
+≤ 1 business day ≤ 5 business days 
+ 
+  
+
+32.3 Support & Maintenance 
+● 24/7/365 Tier-1/Tier-2 support desk for Critical and High severity issues; business-hours 
+support acceptable for Medium/Low. 
+● A dedicated technical account manager shall be assigned for the first 12 months post 
+go-live. 
+● Quarterly security patching cadence at minimum, with emergency patching for actively 
+exploited vulnerabilities within 72 hours of vendor patch release. 
+● Monthly SLA performance reports shall be submitted to the ABG Project Steering 
+Committee, including root-cause analysis for any S1/S2 incident. 
+● Backup verification (restore test) shall be performed and evidenced at least quarterly. 
+32.4 Data Protection & Continuity SLA 
+System Tier RPO RTO 
+Tier 1 — Life-Safety & Security ≤ 1 hour ≤ 1 hour 
+Tier 2 — Core Transactional ≤ 15 minutes ≤ 4 hours 
+Tier 3 — Supporting Services ≤ 24 hours ≤ 24 hours 
+
+33. Cybersecurity Requirements 
+Given the platform's role as a security, financial, and life-safety system, cybersecurity 
+requirements are treated as first-class, non-negotiable requirements rather than a generic 
+checklist. 
+33.1 Compliance Standards 
+Standard Applicability 
+ISO/IEC 27001 
+Information Security Management System (ISMS) covering the 
+vendor's development and hosting operations. 
+ISO/IEC 27701 
+Privacy Information Management, applicable given the 
+volume of visitor/employee PII and biometric data processed. 
+SOC 2 Type II 
+Required for any cloud-hosted component, covering security, 
+availability, and confidentiality trust principles. 
+OWASP Top 10 / ASVS 
+Secure application development lifecycle for all 
+web/mobile/API components. 
+PCI DSS 
+Required if the vendor's platform directly touches card 
+payment data rather than fully tokenizing via the payment 
+gateway (applies equally to the wallet used for ticketing and 
+food/retail ordering). 
+Bangladesh Data Protection 
+Act (as applicable/enacted) & 
+sector regulations 
+Data residency and citizen-data handling obligations. 
+33.2 Identity & Access Management 
+● Multi-Factor Authentication (MFA) shall be enforced for all administrative, financial, and 
+SOC operator accounts. 
+● Single Sign-On (SSO) via SAML 2.0 / OIDC shall be supported for enterprise identity 
+provider integration (e.g., Azure AD). 
+● Role-Based Access Control (RBAC) shall be enforced at both the UI and API layer, with 
+least-privilege default profiles. 
+● Privileged account activity (super-admin, database admin) shall be recorded and subject 
+to periodic access review (minimum quarterly). 
+● Session timeout, password complexity, and account lockout policies shall be 
+configurable to ABG's security policy. 
+33.3 Data Protection 
+● Encryption at rest (AES-256 or equivalent) for all databases, file stores, and backups. 
+
+● Encryption in transit (TLS 1.2+) for all internal and external network communication, 
+including IoT/edge device links where technically feasible. 
+● Field-level encryption and access segregation for NID/passport numbers, biometric 
+templates, and health data, per Section 29.3. 
+● Key management via a dedicated Hardware Security Module (HSM) or cloud KMS, with 
+documented key-rotation procedures. 
+33.4 Application & Infrastructure Security 
+● Secure Software Development Lifecycle (SSDLC) including static (SAST) and dynamic 
+(DAST) application security testing prior to each major release. 
+● Dependency/software composition analysis (SCA) to detect vulnerable third-party 
+libraries. 
+● Network segmentation separating Tier 1 life-safety/security systems, Tier 2 
+transactional systems, IoT/OT networks, and public-facing DMZ components. 
+● Web Application Firewall (WAF) and DDoS mitigation for all public-facing endpoints. 
+● Endpoint protection and hardening baselines for all operator workstations in the 
+Command Center and SOC. 
+33.5 Monitoring, Detection & Response 
+● A Security Information and Event Management (SIEM) platform shall aggregate logs 
+across application, infrastructure, and network layers. 
+● SOC monitoring (cyber, distinct from the physical Security Operations Center in Section 
+6) shall provide 24/7 threat monitoring with defined escalation procedures. 
+● AI-based threat analytics shall be used to detect anomalous access patterns, credential 
+stuffing, and insider-threat indicators. 
+● A documented Incident Response Plan (cyber) shall define roles, communication 
+protocols, and regulator/customer notification timelines consistent with applicable law. 
+● Immutable audit logs shall be retained for a minimum of 12 months (or per Section 29.3 
+domain-specific retention) and protected from tampering. 
+33.6 Third-Party & Supply Chain Security 
+● All third-party hardware/software integrations (Section 28) shall undergo a security 
+review prior to production connection. 
+● Vendor personnel with access to production systems shall be subject to background 
+checks and signed confidentiality/NDA agreements. 
+● The vendor shall disclose its own subcontractors and hosting providers, including data-
+center locations, for ABG's data-residency assessment. 
+33.7 Governance & Assurance 
+
+● Independent penetration testing shall be conducted at least annually and after any 
+major release, per Section 31.1. 
+● The vendor shall provide a right-to-audit clause allowing ABG or its appointed auditor to 
+review security controls. 
+● A responsible-disclosure / bug-bounty channel shall be established for reporting 
+vulnerabilities. 
+● Security awareness training shall be provided to ABG operational staff as part of the 
+knowledge-transfer deliverables. 
+ 
+Important Note: 
+SEC-GOV-08  (NEW):  The  vendor  shall  maintain  a  P1  (Critical)  defect  and  vulnerability  register 
+spanning every test cycle — SIT, UAT, penetration testing, and load testing. No release, including 
+go-live,  shall  proceed with  an  open P1  item. P1  remediation  shall  be  independently re-verified 
+(not self-certified by the vendor) before closure sign-off by the ABG Project Steering Committee, 
+consistent with the Critical (P1) Defect Closure gate in Section 31.1. 
+
+34. Vendor Evaluation Framework 
+This section defines how vendor proposals will be scored. Vendors are strongly encouraged to 
+structure their proposal response in the same order as this document to simplify evaluation. 
+Evaluation Category Weight What Is Assessed 
+Functional Compliance (Sections 
+4–22A) 
+25% 
+Coverage and compliance status against every 
+FR-ID, including configuration vs. 
+customization effort. 
+Technical Architecture & 
+Integration (Sections 3, 27–29) 
+20% 
+Architecture soundness, API maturity, 
+integration approach, data governance 
+capability. 
+Security & Compliance (Section 
+33) 
+15% 
+Certifications held, security architecture, 
+audit history, breach disclosure record, and 
+P1-defect handling track record. 
+AI & Automation Capability 
+(Sections 5–7, 21–22) 
+15% 
+Maturity of face recognition, video analytics, 
+predictive maintenance, and AI Copilot 
+capability, with reference deployments. 
+Implementation Plan, SLA & 
+Support (Sections 31–32) 
+10% 
+Realism of timeline, staffing plan, SLA 
+commitments, support model. 
+Commercial Proposal 10% 
+Total cost of ownership over 5 years, licensing 
+model, payment milestones. 
+Vendor Track Record & References 5% 
+Comparable smart-city/stadium/sports-
+complex deployments, client references. 
+34.1 Proposal Submission Requirements 
+● Point-by-point compliance matrix against every FR-ID, US-ID, and UC-ID in this 
+document (including the new FR-TCK-011, FR-SOC-008/009, FR-INC-008, FR-BMS-005, 
+FR-PRK-006, FR-CXP-005, FR-BI-004, and the FR-FNB series). 
+● Proposed solution architecture diagram mapped to the six-layer reference architecture 
+(Section 3). 
+● Sample API documentation (OpenAPI spec) for at least three representative modules. 
+● Security certifications (copies) and most recent penetration test executive summary 
+(redacted as needed). 
+● Implementation project plan with phasing, milestones, and resourcing. 
+● Minimum three reference clients with comparable scale, contactable for due diligence. 
+● Commercial proposal broken down by module/layer, with clear distinction between 
+one-time and recurring costs. 
+
+34.2 Recommended Procurement Timeline 
+Milestone Indicative Timing 
+RFP Issuance Week 0 
+Vendor Q&A Period Week 1–2 
+Proposal Submission Deadline Week 5 
+Technical Evaluation & Shortlisting Week 6–7 
+Vendor Demonstrations / Proof of Concept Week 8–9 
+Commercial Negotiation & Contracting Week 10–12 
+Design Acceptance Kickoff Week 13 
+
+Appendix A — Requirement Traceability Index 
+A full traceability matrix (Functional Requirement → User Story → Use Case → Test Script → 
+Acceptance Criterion) shall be maintained as a living spreadsheet artifact alongside this 
+document and issued to the selected vendor at Design Acceptance kickoff. The ID conventions 
+used throughout this document (FR-xxx-###, US-##, UC-xxx-##) are structured to support direct 
+import into the vendor's and ABG's requirements management tooling (e.g., Jira, Azure DevOps, 
+or a dedicated RTM spreadsheet). 
+v2.0 ID register check: all new IDs introduced in this revision — FR-TCK-011; FR-SOC-008/009; 
+FR-INC-008 (with FR-INC-001 edited in place); FR-BMS-005; FR-PRK-006; FR-CXP-005; FR-BI-004; 
+FR-FNB-001 through FR-FNB-011; US-17; UC-FNB-01; and SEC-GOV-08 — were checked against 
+the full existing ID sequence in Sections 4–22 and 33 before assignment. No ID collides with an 
+existing one, and no new ID restates a requirement already owned by another section; each 
+new item either extends an existing FR by explicit cross-reference or introduces a genuinely 
+new capability. 
+
+Appendix B — Glossary 
+Term Definition 
+ANPR Automatic Number Plate Recognition 
+BMS Building Management System 
+ESG 
+Environmental, Social and Governance — used here for the sustainability 
+reporting dashboard (FR-BMS-005) 
+FNB 
+Food, Beverage & Retail Ordering module prefix used for requirement IDs 
+in Section 22A 
+MTTD / MTTR Mean Time to Detect / Mean Time to Resolve 
+P1 
+Priority/Severity 1 (Critical) — a defect or vulnerability representing 
+system-down, data-loss, security-breach, or life-safety-function failure; see 
+Section 31.1 
+RPO / RTO Recovery Point Objective / Recovery Time Objective 
+SOC Security Operations Center (physical/cyber, as noted per section) 
+SOP Standard Operating Procedure 
+SIEM Security Information and Event Management 
+RTM Requirement Traceability Matrix 
+ 

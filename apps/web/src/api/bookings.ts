@@ -39,6 +39,7 @@ export function useCreateBooking() {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["bookings"] });
       qc.invalidateQueries({ queryKey: ["dashboard-summary"] });
+      qc.invalidateQueries({ queryKey: ["event-packs"] });
     },
   });
 }
@@ -51,6 +52,8 @@ export function useSetBookingStatus() {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["bookings"] });
       qc.invalidateQueries({ queryKey: ["dashboard-summary"] });
+      qc.invalidateQueries({ queryKey: ["event-packs"] });
+      qc.invalidateQueries({ queryKey: ["event-board"] });
     },
   });
 }

@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { ZoneType, ZoneStatus, Role, type ZoneDto } from "@bsc/shared";
 import { ModuleHeader } from "../../components/layout/ModuleHeader";
+import { useFeaturePreset } from "../../lib/featurePresets";
 import { Button } from "../../components/ui/Button";
-import { SelectInput, TextInput } from "../../components/ui/Field";
+import { Field, SelectInput, TextInput } from "../../components/ui/Field";
 import { DataTable, type Column } from "../../components/ui/DataTable";
 import { StatusBadge } from "../../components/ui/StatusBadge";
 import { StatTile } from "../../components/ui/StatTile";
@@ -16,6 +17,11 @@ export function ZonesPage() {
   const [type, setType] = useState("");
   const [status, setStatus] = useState("");
   const [search, setSearch] = useState("");
+  useFeaturePreset((preset) => {
+    setType(preset.type ?? "");
+    setStatus(preset.status ?? "");
+    setSearch(preset.search ?? "");
+  });
   const [createOpen, setCreateOpen] = useState(false);
   const [editingZone, setEditingZone] = useState<ZoneDto | null>(null);
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
@@ -54,22 +60,25 @@ export function ZonesPage() {
         <StatTile label="Restricted zones" value={restrictedCount} tone="red" />
       </div>
 
-      <div className="mb-4 grid gap-4 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <ZoneMap zones={zones} onSelect={(z) => setSelectedZoneId(z.id)} />
-        </div>
-        <div className="flex flex-col gap-3 rounded-lg border border-border bg-surface p-4">
-          <h3 className="font-display text-base font-semibold text-text">Filters</h3>
+      <div className="mb-4">
+        <ZoneMap zones={zones} onSelect={(z) => setSelectedZoneId(z.id)} />
+      </div>
+      <div className="mb-4 grid gap-3 rounded-lg border border-border bg-surface-2 p-4 sm:grid-cols-3">
+        <Field label="Search">
           <TextInput placeholder="Search zones…" value={search} onChange={(e) => setSearch(e.target.value)} />
+        </Field>
+        <Field label="Type">
           <SelectInput value={type} onChange={(e) => setType(e.target.value)}>
             <option value="">All types</option>
             {Object.values(ZoneType).map((t) => <option key={t} value={t}>{t}</option>)}
           </SelectInput>
+        </Field>
+        <Field label="Status">
           <SelectInput value={status} onChange={(e) => setStatus(e.target.value)}>
             <option value="">All statuses</option>
             {Object.values(ZoneStatus).map((s) => <option key={s} value={s}>{s}</option>)}
           </SelectInput>
-        </div>
+        </Field>
       </div>
 
       {isLoading ? (

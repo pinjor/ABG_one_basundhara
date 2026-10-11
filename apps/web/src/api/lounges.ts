@@ -55,9 +55,12 @@ export function useServiceRequests(params: { loungeId?: string; status?: string 
 export function useCreateServiceRequest() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async (payload: { loungeId: string; partyRef: string; item: string }) =>
+    mutationFn: async (payload: { loungeId: string; partyRef: string; item: string; eventPackId?: string }) =>
       (await api.post<ServiceRequestDto>("/service-requests", payload)).data,
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["service-requests"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["service-requests"] });
+      qc.invalidateQueries({ queryKey: ["event-board"] });
+    },
   });
 }
 

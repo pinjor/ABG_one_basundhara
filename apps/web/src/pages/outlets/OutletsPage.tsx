@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { OutletStatus, OrderStatus, ORDER_STATUS_TRANSITIONS, Role, type OrderDto } from "@bsc/shared";
 import { ModuleHeader } from "../../components/layout/ModuleHeader";
+import { useFeaturePreset } from "../../lib/featurePresets";
 import { Button } from "../../components/ui/Button";
 import { StatusBadge } from "../../components/ui/StatusBadge";
 import { StatTile } from "../../components/ui/StatTile";
@@ -15,8 +16,13 @@ import { useToast } from "../../components/ui/Toast";
 export function OutletsPage() {
   const [createOutletOpen, setCreateOutletOpen] = useState(false);
   const [createOrderOpen, setCreateOrderOpen] = useState(false);
+  const [type, setType] = useState("");
+  useFeaturePreset((preset) => {
+    setType(preset.type ?? "");
+  });
 
-  const { data: outlets = [], isLoading } = useOutlets();
+  const { data: outletsRaw = [], isLoading } = useOutlets();
+  const outlets = type ? outletsRaw.filter((o) => o.type === type) : outletsRaw;
   const { data: orders = [] } = useOrders();
   const { data: zones = [] } = useZones({});
   const toggleOutlet = useToggleOutlet();
@@ -64,7 +70,7 @@ export function OutletsPage() {
       ) : (
         <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {outlets.map((outlet) => (
-            <div key={outlet.id} className="rounded-lg border border-border bg-surface p-4">
+            <div key={outlet.id} className="rounded-lg border border-border bg-surface-2 p-4">
               <div className="mb-2 flex items-start justify-between">
                 <div>
                   <div className="font-medium text-text">{outlet.name}</div>

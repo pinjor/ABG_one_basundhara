@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BookingStatus, Role } from "@bsc/shared";
 import { ModuleHeader } from "../../components/layout/ModuleHeader";
+import { useFeaturePreset } from "../../lib/featurePresets";
 import { Button } from "../../components/ui/Button";
 import { SelectInput, TextInput } from "../../components/ui/Field";
 import { DataTable, type Column } from "../../components/ui/DataTable";
@@ -16,10 +17,17 @@ import type { BookingDto } from "@bsc/shared";
 export function BookingsPage() {
   const [status, setStatus] = useState("");
   const [search, setSearch] = useState("");
+  const [type, setType] = useState("");
+  useFeaturePreset((preset) => {
+    setType(preset.type ?? "");
+    setStatus(preset.status ?? "");
+    setSearch(preset.search ?? "");
+  });
   const [createOpen, setCreateOpen] = useState(false);
   const [selectedBookingId, setSelectedBookingId] = useState<string | null>(null);
 
-  const { data: bookings = [], isLoading } = useBookings({ status: status || undefined, search: search || undefined });
+  const { data: bookingsRaw = [], isLoading } = useBookings({ status: status || undefined, search: search || undefined });
+  const bookings = type ? bookingsRaw.filter((b) => b.type === type) : bookingsRaw;
   const { data: facilities = [] } = useFacilities({});
   const role = useAuthStore((s) => s.user?.role);
   const canManage = role === Role.SUPER_ADMIN || role === Role.BOOKINGS_OFFICER;
@@ -56,7 +64,7 @@ export function BookingsPage() {
         <StatTile label="Revenue (excl. cancelled)" value={revenue} prefix="৳" />
       </div>
 
-      <div className="mb-4 grid gap-3 rounded-lg border border-border bg-surface p-4 sm:grid-cols-3">
+      <div className="mb-4 grid gap-3 rounded-lg border border-border bg-surface-2 p-4 sm:grid-cols-3">
         <TextInput placeholder="Search by customer…" value={search} onChange={(e) => setSearch(e.target.value)} />
         <SelectInput value={status} onChange={(e) => setStatus(e.target.value)}>
           <option value="">All statuses</option>

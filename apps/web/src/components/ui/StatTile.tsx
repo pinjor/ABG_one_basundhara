@@ -46,8 +46,8 @@ export function StatTile({ label, value, suffix = "", prefix = "", tone = "defau
   }, [value]);
 
   return (
-    <div className="animate-stat-in rounded-lg border border-border bg-surface p-4">
-      <div className="text-xs uppercase tracking-wider text-text-dimmer">{label}</div>
+    <div className="animate-stat-in rounded-lg border border-gold/20 bg-surface-2 p-4 shadow-gold-sm">
+      <div className="text-xs uppercase tracking-[0.16em] text-gold/70">{label}</div>
       <div className={`mt-1.5 font-display text-3xl font-bold leading-none ${TONE_TEXT[tone]}`}>
         {prefix}
         {display.toLocaleString()}

@@ -16,10 +16,10 @@ interface DataTableProps<T> {
 
 export function DataTable<T>({ columns, rows, keyFor, onRowClick, emptyLabel = "No records found." }: DataTableProps<T>) {
   return (
-    <div className="overflow-x-auto rounded-lg border border-border bg-surface">
+    <div className="overflow-x-auto rounded-lg border border-gold/20 bg-surface-2 shadow-gold-sm">
       <table className="w-full min-w-[640px] border-collapse text-sm">
         <thead>
-          <tr className="border-b border-border-soft bg-surface-2 text-left text-xs uppercase tracking-wider text-text-dimmer">
+          <tr className="border-b border-gold/15 bg-surface-2 text-left text-xs uppercase tracking-[0.16em] text-gold/80">
             {columns.map((col) => (
               <th key={col.header} className="px-4 py-3 font-medium">
                 {col.header}
@@ -48,7 +48,7 @@ export function DataTable<T>({ columns, rows, keyFor, onRowClick, emptyLabel = "
                     : undefined
                 }
                 className={`border-b border-border-soft last:border-0 ${
-                  onRowClick ? "cursor-pointer hover:bg-surface-2 focus-visible:bg-surface-2" : ""
+                  onRowClick ? "cursor-pointer hover:bg-hover focus-visible:bg-gold/10" : ""
                 }`}
               >
                 {columns.map((col) => (

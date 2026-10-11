@@ -16,6 +16,9 @@ import { OutletsModule } from "./outlets/outlets.module";
 import { ParkingModule } from "./parking/parking.module";
 import { FleetModule } from "./fleet/fleet.module";
 import { SurfacesModule } from "./surfaces/surfaces.module";
+import { EventsModule } from "./events/events.module";
+import { OperationsModule } from "./operations/operations.module";
+import { TicketingModule } from "./ticketing/ticketing.module";
 
 @Module({
   imports: [
@@ -25,6 +28,8 @@ import { SurfacesModule } from "./surfaces/surfaces.module";
     AuthModule,
     ZonesModule,
     FacilitiesModule,
+    EventsModule,
+    OperationsModule,
     BookingsModule,
     MembersModule,
     GatesModule,
@@ -36,6 +41,7 @@ import { SurfacesModule } from "./surfaces/surfaces.module";
     FleetModule,
     SurfacesModule,
     DashboardModule,
+    TicketingModule,
   ],
 })
 export class AppModule {}

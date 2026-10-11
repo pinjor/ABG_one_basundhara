@@ -13,4 +13,8 @@ export class CreateTripDto {
 
   @IsString()
   toLocation!: string;
+
+  @IsOptional()
+  @IsString()
+  eventPackId?: string;
 }

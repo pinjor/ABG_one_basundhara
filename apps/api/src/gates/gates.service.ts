@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { AccessResult, GateStatus } from "@bsc/shared";
+import { AccessResult, GateStatus, MemberStatus, VisitorStatus } from "@bsc/shared";
 import { PrismaService } from "../prisma/prisma.service";
 import { AuditService } from "../audit/audit.service";
 import { CreateGateDto } from "./dto/create-gate.dto";
@@ -60,7 +60,19 @@ export class GatesService {
    */
   async scan(id: string, dto: ScanGateDto, userId: string) {
     const gate = await this.getOne(id);
-    const result = gate.status === GateStatus.ONLINE ? AccessResult.APPROVED : AccessResult.DENIED;
+    let result = AccessResult.APPROVED;
+    let reason: string | undefined;
+
+    if (gate.status !== GateStatus.ONLINE) {
+      result = AccessResult.DENIED;
+      reason = "Gate offline";
+    } else {
+      const entitlement = await this.resolveEntitlement(dto.personRef, dto.credentialRef);
+      if (!entitlement.allowed) {
+        result = AccessResult.DENIED;
+        reason = entitlement.reason;
+      }
+    }
 
     const entry = await this.prisma.accessLogEntry.create({
       data: {
@@ -69,6 +81,7 @@ export class GatesService {
         credentialRef: dto.credentialRef,
         method: dto.method,
         result,
+        reason,
       },
     });
 
@@ -85,6 +98,41 @@ export class GatesService {
     });
 
     return entry;
+  }
+
+  private async resolveEntitlement(personRef: string, credentialRef?: string) {
+    if (credentialRef) {
+      const credential = await this.prisma.credential.findFirst({
+        where: { OR: [{ code: credentialRef }, { holderRef: credentialRef }] },
+      });
+      if (credential && credential.status !== "Active") {
+        return { allowed: false, reason: `Credential ${credential.status}` };
+      }
+    }
+
+    const member = await this.prisma.member.findFirst({
+      where: { OR: [{ name: { equals: personRef, mode: "insensitive" } }, { email: { equals: personRef, mode: "insensitive" } }] },
+    });
+    if (member && member.status !== MemberStatus.ACTIVE) {
+      return { allowed: false, reason: `Membership ${member.status}` };
+    }
+
+    const visitor = await this.prisma.visitor.findFirst({
+      where: { OR: [{ name: { equals: personRef, mode: "insensitive" } }, { qrPassCode: personRef }] },
+    });
+    if (visitor && (visitor.status === VisitorStatus.CHECKED_OUT || visitor.status === "Cancelled")) {
+      return { allowed: false, reason: `Visit ${visitor.status}` };
+    }
+
+    const namedCredential = await this.prisma.credential.findFirst({
+      where: { holderRef: { equals: personRef, mode: "insensitive" } },
+      orderBy: { createdAt: "desc" },
+    });
+    if (namedCredential && namedCredential.status !== "Active") {
+      return { allowed: false, reason: `Credential ${namedCredential.status}` };
+    }
+
+    return { allowed: true };
   }
 
   recentAccessLog(take = 30) {

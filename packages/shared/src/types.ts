@@ -52,6 +52,17 @@ export interface BookingDto {
   createdById: string;
   createdAt: string;
   updatedAt: string;
+  eventPack?: EventPackDto | null;
+}
+
+export interface EventPackDto {
+  id: string;
+  bookingId?: string;
+  title: string;
+  status: string;
+  expectedCount: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface MemberDto {
@@ -91,6 +102,7 @@ export interface AccessLogEntryDto {
   credentialRef: string | null;
   method: string;
   result: string;
+  reason?: string | null;
   timestamp: string;
 }
 

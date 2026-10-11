@@ -1,3 +1,5 @@
+@import "./styles/tokens.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -12,20 +14,243 @@
 }
 
 :focus-visible {
-  outline: 2px solid #C9A24B;
+  outline: 2px solid var(--brand-gold-bright);
   outline-offset: 2px;
+}
+
+html,
+body,
+#root {
+  height: 100%;
 }
 
 body {
   -webkit-font-smoothing: antialiased;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: "Inter", "Noto Sans Bengali", system-ui, sans-serif;
 }
+
+:lang(bn) body,
+[lang="bn"] {
+  font-family: "Noto Sans Bengali", "Inter", system-ui, sans-serif;
+}
+
+.sr-only-focusable:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.thin-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--brand-gold) 30%, transparent) transparent;
+}
+.thin-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.thin-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.thin-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--brand-gold) 30%, transparent);
+  border-radius: 999px;
+}
+
+/* ---------- Surfaces ---------- */
+
+.app-shell {
+  background:
+    radial-gradient(1100px 520px at 18% -12%, color-mix(in srgb, var(--brand-gold) 7%, transparent), transparent 60%),
+    radial-gradient(900px 480px at 100% 0%, color-mix(in srgb, var(--data-teal) 5%, transparent), transparent 50%),
+    var(--bg-primary);
+}
+
+/* Left menu uses the same gold-lit match photograph as the reference rail. */
+.nav-rail {
+  background-color: #070605;
+  background-image: url("/sidebar-bg.png");
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: cover;
+  color: #f6f3ea;
+  border-right: 1px solid rgba(212, 168, 58, 0.28);
+}
+
+.nav-rail-mark {
+  color: #e8c15a;
+  font-family: "Barlow Condensed", "Noto Sans Bengali", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.05;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.72);
+}
+
+.panel {
+  border: 1px solid var(--border-subtle);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface-primary) 92%, var(--data-teal) 8%), var(--surface-primary));
+  box-shadow: var(--shadow-card);
+  border-radius: 10px;
+}
+
+.panel-gold {
+  border: 1px solid color-mix(in srgb, var(--border-gold) 80%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface-primary) 90%, var(--brand-gold) 10%), var(--surface-primary));
+  box-shadow: var(--shadow-card);
+  border-radius: 10px;
+}
+
+.panel-interactive {
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+.panel-interactive:hover {
+  border-color: color-mix(in srgb, var(--brand-gold) 55%, transparent);
+  transform: translateY(-1px);
+}
+
+.gold-panel {
+  border: 1px solid var(--border-gold);
+  background: var(--surface-primary);
+  border-radius: 10px;
+}
+
+.hero-photo {
+  background-size: cover;
+  background-position: center;
+}
+.hero-photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--hero-fade);
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ---------- Gold treatments ---------- */
+
+.gold-foil {
+  background-image: linear-gradient(100deg, #f6d27a 0%, #f4c45b 30%, #d5a32b 62%, #f4c45b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+[data-theme="light"] .gold-foil:not(.on-photo) {
+  background-image: none;
+  color: var(--brand-gold);
+}
+
+.gold-line {
+  background: linear-gradient(90deg, transparent, var(--brand-gold), var(--brand-gold-bright), var(--brand-gold), transparent);
+}
+
+.gold-btn {
+  background-image: var(--gold-metal);
+  color: var(--text-on-gold);
+  font-weight: 600;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 240, 200, 0.45),
+    inset 0 -1px 0 rgba(70, 48, 8, 0.35),
+    0 6px 18px color-mix(in srgb, var(--brand-gold) 18%, transparent);
+  transition: filter 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+.gold-btn:hover:not(:disabled) {
+  filter: brightness(1.07);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 240, 200, 0.55),
+    inset 0 -1px 0 rgba(70, 48, 8, 0.35),
+    0 8px 24px color-mix(in srgb, var(--brand-gold) 28%, transparent);
+}
+.gold-btn:active:not(:disabled) {
+  transform: translateY(1px);
+  filter: brightness(0.95);
+}
+
+/* ---------- Legacy component classes (restyled to tokens) ---------- */
+
+.demo-chip {
+  border: 1px solid var(--border-strong);
+  background: var(--surface-secondary);
+  color: var(--text-primary);
+}
+.demo-chip:hover:not(:disabled) {
+  border-color: var(--brand-gold);
+  background: var(--hover-bg);
+}
+.demo-chip-active {
+  border-color: var(--brand-gold);
+  background: var(--hover-bg);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand-gold) 30%, transparent);
+}
+
+.topbar-search {
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+}
+.topbar-search::placeholder {
+  color: var(--text-secondary);
+}
+.topbar-link:hover {
+  background: var(--hover-bg);
+}
+.topbar-results {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-pop);
+}
+.topbar-results a:hover,
+.topbar-results a:focus-visible {
+  background: var(--hover-bg);
+}
+
+.feature-hero {
+  padding-bottom: 1.15rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.hub-card {
+  border: 1px solid var(--border-subtle);
+  background:
+    linear-gradient(165deg, color-mix(in srgb, var(--brand-gold) 8%, transparent), transparent 42%),
+    var(--surface-primary);
+  border-radius: 10px;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+.hub-card:hover {
+  border-color: color-mix(in srgb, var(--brand-gold) 60%, transparent);
+  transform: translateY(-1px);
+}
+
+.action-rail {
+  position: sticky;
+  top: 1.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--brand-gold) 9%, transparent), transparent 32%),
+    var(--surface-primary);
+}
+
+/* ---------- Motion ---------- */
 
 @keyframes count-up-fade {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .animate-stat-in {
-  animation: count-up-fade 420ms ease-out;
+  animation: count-up-fade 240ms ease-out;
 }
 
 @keyframes toast-in {
@@ -33,5 +258,47 @@ body {
   to { opacity: 1; transform: translateX(0); }
 }
 .animate-toast-in {
-  animation: toast-in 220ms ease-out;
+  animation: toast-in 200ms ease-out;
+}
+
+@keyframes login-kenburns {
+  from { transform: scale(1.06); }
+  to { transform: scale(1); }
+}
+.login-hero {
+  animation: login-kenburns 18s ease-out forwards;
+}
+
+@keyframes login-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.login-rise {
+  animation: login-rise 480ms ease-out both;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 0.9; }
+}
+.skeleton {
+  background: var(--surface-secondary);
+  border-radius: 6px;
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes chart-rise {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.chart-in {
+  animation: chart-rise 320ms ease-out both;
+}
+
+@keyframes scan-flash {
+  from { opacity: 0.6; }
+  to { opacity: 1; }
+}
+.scan-result {
+  animation: scan-flash 160ms ease-out;
 }

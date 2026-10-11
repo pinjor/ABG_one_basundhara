@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FacilityType, FacilityStatus, Role, type FacilityDto } from "@bsc/shared";
 import { ModuleHeader } from "../../components/layout/ModuleHeader";
+import { useFeaturePreset } from "../../lib/featurePresets";
 import { Button } from "../../components/ui/Button";
 import { SelectInput, TextInput } from "../../components/ui/Field";
 import { DataTable, type Column } from "../../components/ui/DataTable";
@@ -17,6 +18,11 @@ export function FacilitiesPage() {
   const [type, setType] = useState("");
   const [status, setStatus] = useState("");
   const [search, setSearch] = useState("");
+  useFeaturePreset((preset) => {
+    setType(preset.type ?? "");
+    setStatus(preset.status ?? "");
+    setSearch(preset.search ?? "");
+  });
   const [createOpen, setCreateOpen] = useState(false);
   const [editingFacility, setEditingFacility] = useState<FacilityDto | null>(null);
   const [selectedFacilityId, setSelectedFacilityId] = useState<string | null>(null);
@@ -56,7 +62,7 @@ export function FacilitiesPage() {
         <StatTile label="In maintenance" value={byStatus(FacilityStatus.MAINTENANCE)} tone="red" />
       </div>
 
-      <div className="mb-4 grid gap-3 rounded-lg border border-border bg-surface p-4 sm:grid-cols-4">
+      <div className="mb-4 grid gap-3 rounded-lg border border-border bg-surface-2 p-4 sm:grid-cols-4">
         <TextInput placeholder="Search facilities…" value={search} onChange={(e) => setSearch(e.target.value)} />
         <SelectInput value={zoneId} onChange={(e) => setZoneId(e.target.value)}>
           <option value="">All zones</option>

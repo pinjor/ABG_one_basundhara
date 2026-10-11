@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { VisitorCategory, VisitorStatus, Role, type VisitorDto } from "@bsc/shared";
 import { ModuleHeader } from "../../components/layout/ModuleHeader";
+import { useFeaturePreset } from "../../lib/featurePresets";
 import { Button } from "../../components/ui/Button";
 import { SelectInput, TextInput } from "../../components/ui/Field";
 import { DataTable, type Column } from "../../components/ui/DataTable";
@@ -15,6 +16,11 @@ export function VisitorsPage() {
   const [category, setCategory] = useState("");
   const [status, setStatus] = useState("");
   const [search, setSearch] = useState("");
+  useFeaturePreset((preset) => {
+    setCategory(preset.category ?? "");
+    setStatus(preset.status ?? "");
+    setSearch(preset.search ?? "");
+  });
   const [createOpen, setCreateOpen] = useState(false);
   const [selectedVisitorId, setSelectedVisitorId] = useState<string | null>(null);
 
@@ -47,7 +53,7 @@ export function VisitorsPage() {
         <StatTile label="Checked out" value={byStatus(VisitorStatus.CHECKED_OUT)} />
       </div>
 
-      <div className="mb-4 grid gap-3 rounded-lg border border-border bg-surface p-4 sm:grid-cols-3">
+      <div className="mb-4 grid gap-3 rounded-lg border border-border bg-surface-2 p-4 sm:grid-cols-3">
         <TextInput placeholder="Search visitors…" value={search} onChange={(e) => setSearch(e.target.value)} />
         <SelectInput value={category} onChange={(e) => setCategory(e.target.value)}>
           <option value="">All categories</option>

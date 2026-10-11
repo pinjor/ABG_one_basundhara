@@ -8,10 +8,14 @@
     "packages/*"
   ],
   "scripts": {
-    "dev:api": "pnpm --filter @bsc/api dev",
-    "dev:web": "pnpm --filter @bsc/web dev",
-    "build": "pnpm --filter @bsc/shared build && pnpm --filter @bsc/api build && pnpm --filter @bsc/web build",
-    "db:migrate": "pnpm --filter @bsc/api prisma:migrate",
-    "db:seed": "pnpm --filter @bsc/api prisma:seed"
+    "dev": "bun run --filter @bsc/shared build && bun run --filter @bsc/api --filter @bsc/web --parallel dev",
+    "dev:api": "bun run --filter @bsc/api dev",
+    "dev:web": "bun run --filter @bsc/web dev",
+    "build": "bun run --filter @bsc/shared build && bun run --filter @bsc/api build && bun run --filter @bsc/web build",
+    "db:migrate": "bun run --filter @bsc/api prisma:migrate",
+    "db:seed": "bun run --filter @bsc/api prisma:seed"
+  },
+  "devDependencies": {
+    "pdf-parse": "1.1.1"
   }
 }

@@ -35,7 +35,10 @@ export function useCreateVisitor() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (payload: Record<string, unknown>) => (await api.post<VisitorDto>("/visitors", payload)).data,
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["visitors"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["visitors"] });
+      qc.invalidateQueries({ queryKey: ["event-board"] });
+    },
   });
 }
 
@@ -43,7 +46,10 @@ export function useCheckInVisitor() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => (await api.post<VisitorDto>(`/visitors/${id}/check-in`)).data,
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["visitors"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["visitors"] });
+      qc.invalidateQueries({ queryKey: ["event-board"] });
+    },
   });
 }
 
@@ -51,6 +57,9 @@ export function useCheckOutVisitor() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => (await api.post<VisitorDto>(`/visitors/${id}/check-out`)).data,
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["visitors"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["visitors"] });
+      qc.invalidateQueries({ queryKey: ["event-board"] });
+    },
   });
 }

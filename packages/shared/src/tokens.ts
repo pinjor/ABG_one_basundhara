@@ -1,26 +1,31 @@
 /**
  * Design tokens — Bashundhara Sports City Digital Management Platform.
- * Section 2.1 of the master build prompt. Use exactly; do not substitute.
+ * Title-bar palette: black chrome + #F0AE43 gold.
  */
+/** Semantic palette. CSS custom properties in apps/web/src/styles/tokens.css are authoritative at runtime. */
 export const colors = {
-  bg: "#0A0E17",
-  surface: "#111827",
-  surface2: "#17202F",
-  border: "#232D40",
-  borderSoft: "#1B2434",
-  gold: "#C9A24B",
-  goldSoft: "#E4C878",
-  teal: "#35B99C",
-  red: "#E1685E",
-  blue: "#5B9FE1",
-  text: "#F2EFE8",
-  textDim: "#99A2B5",
-  textDimmer: "#5C6579",
+  bg: "#080B0C",
+  surface: "#111A1B",
+  surface2: "#182324",
+  border: "#70551F",
+  borderSoft: "#293532",
+  gold: "#D5A32B",
+  goldSoft: "#F4C45B",
+  goldMuted: "#A97C21",
+  teal: "#43C77B",
+  red: "#F06464",
+  blue: "#4E9AC8",
+  dataTeal: "#27AFA9",
+  text: "#F7F5EE",
+  textDim: "#A9B3B0",
+  textDimmer: "#A9B3B0",
+  textOnGold: "#080B0C",
 } as const;
 
 export const fonts = {
-  display: "'Big Shoulders Display', sans-serif",
-  body: "'Inter', sans-serif",
+  display: "'Rajdhani', 'Noto Sans Bengali', sans-serif",
+  body: "'Inter', 'Noto Sans Bengali', sans-serif",
+  promo: "'Barlow Condensed', 'Noto Sans Bengali', sans-serif",
 } as const;
 
 export type StatusTone = "success" | "warning" | "danger" | "info" | "neutral";

@@ -24,7 +24,7 @@ export function Modal({ open, title, onClose, children, footer }: ModalProps) {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-navbar/80 p-4" onClick={onClose}>
       <div
         ref={dialogRef}
         role="dialog"
@@ -32,10 +32,10 @@ export function Modal({ open, title, onClose, children, footer }: ModalProps) {
         aria-label={title}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
-        className="motion-safe:animate-[count-up-fade_180ms_ease-out] w-full max-w-lg rounded-lg border border-border bg-surface p-6 shadow-2xl"
+        className="motion-safe:animate-[count-up-fade_180ms_ease-out] w-full max-w-lg rounded-lg border border-gold/30 bg-surface-2 p-6 shadow-gold"
       >
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="font-display text-xl font-semibold text-text">{title}</h2>
+          <h2 className="font-display text-xl font-semibold text-gold">{title}</h2>
           <button
             onClick={onClose}
             aria-label="Close dialog"

@@ -17,4 +17,8 @@ export class CreateVisitorDto {
   @IsOptional()
   @IsBoolean()
   escortRequired?: boolean;
+
+  @IsOptional()
+  @IsString()
+  eventPackId?: string;
 }

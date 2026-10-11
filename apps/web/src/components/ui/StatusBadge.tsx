@@ -11,10 +11,10 @@ const TONE_CLASSES: Record<StatusTone, string> = {
 /** Maps a domain status string (Section 4) to one of the five semantic tones (Section 2.1). */
 export function toneForStatus(status: string): StatusTone {
   const s = status.toLowerCase();
-  if (["available", "confirmed", "active", "approved", "online", "open", "operational", "delivered", "completed", "paid"].includes(s)) {
+  if (["available", "confirmed", "active", "approved", "online", "open", "operational", "delivered", "completed", "paid", "ready", "live", "playable", "done"].includes(s)) {
     return "success";
   }
-  if (["maintenance", "pending", "reserved", "preparing", "scheduled", "requested", "frozen", "deposit paid"].includes(s)) {
+  if (["maintenance", "pending", "reserved", "preparing", "scheduled", "requested", "frozen", "deposit paid", "planning", "attention"].includes(s)) {
     return "warning";
   }
   if (["cancelled", "denied", "offline", "closed", "expired", "no-show", "under repair", "restricted", "closed for maintenance", "closed for recovery"].includes(s)) {

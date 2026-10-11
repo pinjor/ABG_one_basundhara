@@ -83,6 +83,7 @@ export class FleetService {
         passengerRef: dto.passengerRef,
         fromLocation: dto.fromLocation,
         toLocation: dto.toLocation,
+        eventPackId: dto.eventPackId,
       },
     });
     await this.prisma.fleetVehicle.update({ where: { id: vehicle.id }, data: { status: FleetVehicleStatus.ON_TRIP } });

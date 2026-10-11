@@ -33,6 +33,9 @@ export class MembersService {
     const member = await this.prisma.member.create({
       data: { ...dto, expiryDate: new Date(dto.expiryDate) },
     });
+    await this.prisma.credential.create({
+      data: { holderRef: member.name, type: "Member", memberId: member.id, validTo: new Date(dto.expiryDate) },
+    });
     await this.audit.record({ entityType: "Member", entityId: member.id, action: "CREATE", userId, after: member });
     return member;
   }
@@ -54,6 +57,11 @@ export class MembersService {
       throw new BadRequestException(`Cannot move a ${before.status} member to ${status}`);
     }
     const member = await this.prisma.member.update({ where: { id }, data: { status } });
+    const credentialStatus = status === MemberStatus.ACTIVE ? "Active" : "Suspended";
+    await this.prisma.credential.updateMany({
+      where: { memberId: id },
+      data: { status: credentialStatus },
+    });
     await this.audit.record({
       entityType: "Member",
       entityId: id,
@@ -89,6 +97,7 @@ export class MembersService {
       where: { id },
       data: { expiryDate: nextExpiry, status: MemberStatus.ACTIVE },
     });
+    await this.prisma.credential.updateMany({ where: { memberId: id }, data: { status: "Active" } });
     await this.audit.record({ entityType: "Member", entityId: id, action: "RENEW", userId, before, after: member });
     return member;
   }

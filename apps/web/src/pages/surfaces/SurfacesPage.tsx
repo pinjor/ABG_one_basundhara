@@ -85,7 +85,7 @@ export function SurfacesPage() {
           {surfaces.map((surface) => {
             const nextStatuses = CLOSURE_STATUS_TRANSITIONS[surface.closureStatus] ?? [];
             return (
-              <div key={surface.id} className="rounded-lg border border-border bg-surface p-4">
+              <div key={surface.id} className="rounded-lg border border-border bg-surface-2 p-4">
                 <div className="mb-2 flex items-start justify-between">
                   <div>
                     <div className="font-medium text-text">{surface.facility?.name}</div>

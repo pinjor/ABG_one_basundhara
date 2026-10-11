@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { CLOSURE_STATUS_TRANSITIONS } from "@bsc/shared";
+import { BookingStatus, ClosureStatus, CLOSURE_STATUS_TRANSITIONS } from "@bsc/shared";
 import { PrismaService } from "../prisma/prisma.service";
 import { AuditService } from "../audit/audit.service";
 import { CreateSurfaceDto } from "./dto/create-surface.dto";
@@ -63,6 +63,35 @@ export class SurfacesService {
       throw new BadRequestException(`Cannot move a ${before.closureStatus} surface to ${closureStatus}`);
     }
     const surface = await this.prisma.surface.update({ where: { id }, data: { closureStatus } });
+    if (closureStatus !== ClosureStatus.OPEN) {
+      const affected = await this.prisma.booking.findMany({
+        where: { facilityId: before.facilityId, status: { in: [BookingStatus.PENDING, BookingStatus.CONFIRMED] } },
+        include: { eventPack: true },
+      });
+      for (const booking of affected) {
+        if (!booking.eventPack) continue;
+        await this.prisma.opsIncident.create({
+          data: {
+            eventPackId: booking.eventPack.id,
+            title: `${surface.surfaceType} closed — ${booking.customerName}`,
+            severity: "High",
+            relatedType: "Surface",
+            relatedId: surface.id,
+            notes: `Surface is ${closureStatus}. Confirmed inventory must be relocated or the booking flagged.`,
+          },
+        });
+        await this.prisma.opsTask.create({
+          data: {
+            eventPackId: booking.eventPack.id,
+            title: `Relocate or hold ${booking.customerName} — surface ${closureStatus}`,
+            area: "Surface",
+            priority: "High",
+            relatedType: "Surface",
+            relatedId: surface.id,
+          },
+        });
+      }
+    }
     await this.audit.record({
       entityType: "Surface",
       entityId: id,

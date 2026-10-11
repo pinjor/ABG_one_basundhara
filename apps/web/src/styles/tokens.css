@@ -1,0 +1,88 @@
+/*
+ * BSSC design tokens. Single source for colour, type, radius and motion.
+ * Dark is the primary theme; light exists for operator consoles (SRS §26.6).
+ * Contrast ratios are documented in docs/design/01-design-system-and-mapping.md §B.2.
+ */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg-primary: #080b0c;
+  --bg-secondary: #0e1415;
+  --surface-primary: #111a1b;
+  --surface-secondary: #182324;
+  --surface-elevated: #202a2a;
+
+  --brand-gold: #d5a32b;
+  --brand-gold-bright: #f4c45b;
+  --brand-gold-muted: #a97c21;
+
+  --border-subtle: #293532;
+  --border-gold: #70551f;
+  --border-strong: #5e6b68;
+
+  --text-primary: #f7f5ee;
+  --text-secondary: #a9b3b0;
+  --text-on-gold: #080b0c;
+
+  --status-success: #43c77b;
+  --status-warning: #f3b64a;
+  --status-danger: #f06464;
+  --status-info: #4e9ac8;
+
+  --data-teal: #27afa9;
+  --data-blue: #4e9ac8;
+
+  --overlay-scrim: rgba(4, 6, 7, 0.78);
+  --hero-fade: linear-gradient(90deg, rgba(8, 11, 12, 0.96) 0%, rgba(8, 11, 12, 0.82) 38%, rgba(8, 11, 12, 0.35) 72%, rgba(8, 11, 12, 0.6) 100%);
+  --gold-metal: linear-gradient(180deg, #f6d27a 0%, #e2b240 38%, #d5a32b 62%, #b5861f 100%);
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 10px 30px rgba(0, 0, 0, 0.35);
+  --shadow-pop: 0 18px 50px rgba(0, 0, 0, 0.55);
+
+  /* Legacy aliases used by modules built before the token system. */
+  --navbar-bg: var(--bg-secondary);
+  --search-bg: var(--surface-secondary);
+  --primary-gold: var(--brand-gold);
+  --primary-text: var(--text-primary);
+  --secondary-text: var(--text-secondary);
+  --divider: var(--border-subtle);
+  --hover-bg: #1d1a12;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --bg-primary: #f4f2ec;
+  --bg-secondary: #ffffff;
+  --surface-primary: #ffffff;
+  --surface-secondary: #f1eee6;
+  --surface-elevated: #ffffff;
+
+  --brand-gold: #8a6410;
+  --brand-gold-bright: #6e4f0b;
+  --brand-gold-muted: #a97c21;
+
+  --border-subtle: #ddd8cc;
+  --border-gold: #c9a75a;
+  --border-strong: #8c8676;
+
+  --text-primary: #14181a;
+  --text-secondary: #4d5653;
+  --text-on-gold: #ffffff;
+
+  --status-success: #1d7a45;
+  --status-warning: #8a5a00;
+  --status-danger: #b42318;
+  --status-info: #1f5f8b;
+
+  --data-teal: #137c77;
+  --data-blue: #1f5f8b;
+
+  --overlay-scrim: rgba(20, 24, 26, 0.55);
+  --hero-fade: linear-gradient(90deg, rgba(8, 11, 12, 0.94) 0%, rgba(8, 11, 12, 0.8) 40%, rgba(8, 11, 12, 0.4) 100%);
+  --gold-metal: linear-gradient(180deg, #a77a17 0%, #8a6410 100%);
+  --shadow-card: 0 1px 2px rgba(20, 24, 26, 0.06), 0 6px 18px rgba(20, 24, 26, 0.06);
+  --shadow-pop: 0 18px 40px rgba(20, 24, 26, 0.18);
+
+  --hover-bg: #f6efdc;
+}

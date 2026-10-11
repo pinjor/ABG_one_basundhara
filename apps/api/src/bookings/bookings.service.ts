@@ -1,8 +1,14 @@
 import { BadRequestException, ConflictException, Injectable, NotFoundException } from "@nestjs/common";
-import { BOOKING_STATUS_TRANSITIONS, BookingStatus } from "@bsc/shared";
+import { BOOKING_STATUS_TRANSITIONS, BookingStatus, ClosureStatus } from "@bsc/shared";
 import { PrismaService } from "../prisma/prisma.service";
 import { AuditService } from "../audit/audit.service";
+import { EventsService } from "../events/events.service";
 import { CreateBookingDto } from "./dto/create-booking.dto";
+
+const BOOKING_INCLUDE = {
+  facility: { select: { id: true, name: true, type: true, zoneId: true, capacity: true } },
+  eventPack: { select: { id: true, title: true, status: true, expectedCount: true } },
+} as const;
 
 /** Whole-day UTC range for a "YYYY-MM-DD" string — dates are compared by day, never by exact instant. */
 function dayRange(dateStr: string): { gte: Date; lt: Date } {
@@ -17,6 +23,7 @@ export class BookingsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly audit: AuditService,
+    private readonly events: EventsService,
   ) {}
 
   list(params: { facilityId?: string; status?: string; date?: string; search?: string }) {
@@ -27,7 +34,7 @@ export class BookingsService {
         date: params.date ? dayRange(params.date) : undefined,
         customerName: params.search ? { contains: params.search, mode: "insensitive" } : undefined,
       },
-      include: { facility: { select: { id: true, name: true, type: true } } },
+      include: BOOKING_INCLUDE,
       orderBy: { date: "desc" },
     });
   }
@@ -35,10 +42,68 @@ export class BookingsService {
   async getOne(id: string) {
     const booking = await this.prisma.booking.findUnique({
       where: { id },
-      include: { facility: { select: { id: true, name: true, type: true } } },
+      include: BOOKING_INCLUDE,
     });
     if (!booking) throw new NotFoundException("Booking not found");
     return booking;
+  }
+
+  /** A closed or recovering surface must block new and confirmed bookings. */
+  private async assertSurfaceOpen(facilityId: string) {
+    const closed = await this.prisma.surface.findFirst({
+      where: { facilityId, closureStatus: { not: ClosureStatus.OPEN } },
+    });
+    if (closed) {
+      throw new BadRequestException(
+        `Cannot book this facility: ${closed.surfaceType} is ${closed.closureStatus}`,
+      );
+    }
+  }
+
+  private packStatusFor(booking: { status: string; date: Date }) {
+    if (
+      booking.status === BookingStatus.COMPLETED ||
+      booking.status === BookingStatus.CANCELLED ||
+      booking.status === BookingStatus.NO_SHOW
+    ) {
+      return "Closed";
+    }
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    const day = new Date(booking.date);
+    day.setUTCHours(0, 0, 0, 0);
+    if (booking.status === BookingStatus.CONFIRMED && day.getTime() <= today.getTime()) return "Live";
+    return "Planning";
+  }
+
+  private async ensureEventPack(bookingId: string) {
+    const booking = await this.prisma.booking.findUnique({
+      where: { id: bookingId },
+      include: { facility: { select: { name: true, capacity: true } } },
+    });
+    if (!booking) return null;
+    if (booking.status !== BookingStatus.CONFIRMED && booking.status !== BookingStatus.COMPLETED) {
+      const existing = await this.prisma.eventPack.findUnique({ where: { bookingId } });
+      if (existing) {
+        return this.prisma.eventPack.update({
+          where: { id: existing.id },
+          data: { status: this.packStatusFor(booking) },
+        });
+      }
+      return null;
+    }
+    const title = `${booking.customerName} · ${booking.facility.name}`;
+    const status = this.packStatusFor(booking);
+    return this.prisma.eventPack.upsert({
+      where: { bookingId },
+      create: {
+        bookingId,
+        title,
+        status,
+        expectedCount: booking.facility.capacity,
+      },
+      update: { title, status, expectedCount: booking.facility.capacity },
+    });
   }
 
   /** Conflict detection (Section 4.4): reject overlapping slots on the same facility/day. */
@@ -59,6 +124,7 @@ export class BookingsService {
   }
 
   async create(dto: CreateBookingDto, userId: string) {
+    await this.assertSurfaceOpen(dto.facilityId);
     await this.assertNoConflict(dto.facilityId, dto.date, dto.timeSlotStart, dto.timeSlotEnd);
     const booking = await this.prisma.booking.create({
       data: {
@@ -74,7 +140,7 @@ export class BookingsService {
       },
     });
     await this.audit.record({ entityType: "Booking", entityId: booking.id, action: "CREATE", userId, after: booking });
-    return booking;
+    return this.getOne(booking.id);
   }
 
   async setStatus(id: string, status: string, userId: string) {
@@ -83,7 +149,15 @@ export class BookingsService {
     if (!allowed.includes(status)) {
       throw new BadRequestException(`Cannot move a ${before.status} booking to ${status}`);
     }
+    if (status === BookingStatus.CONFIRMED) {
+      await this.assertSurfaceOpen(before.facilityId);
+      await this.assertNoConflict(before.facilityId, before.date.toISOString().slice(0, 10), before.timeSlotStart, before.timeSlotEnd, id);
+    }
     const booking = await this.prisma.booking.update({ where: { id }, data: { status } });
+    const pack = await this.ensureEventPack(id);
+    if (status === BookingStatus.CONFIRMED && pack) {
+      await this.events.provisionOperationalChain(pack.id);
+    }
     await this.audit.record({
       entityType: "Booking",
       entityId: id,
@@ -92,7 +166,7 @@ export class BookingsService {
       before,
       after: booking,
     });
-    return booking;
+    return this.getOne(id);
   }
 
   async setPaymentStatus(id: string, paymentStatus: string, userId: string) {
@@ -106,7 +180,7 @@ export class BookingsService {
       before,
       after: booking,
     });
-    return booking;
+    return this.getOne(id);
   }
 
   auditTrail(id: string) {

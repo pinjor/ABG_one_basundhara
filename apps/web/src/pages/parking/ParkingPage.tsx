@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ParkingZoneType, Role } from "@bsc/shared";
 import { ModuleHeader } from "../../components/layout/ModuleHeader";
+import { useFeaturePreset } from "../../lib/featurePresets";
 import { Button } from "../../components/ui/Button";
 import { SelectInput } from "../../components/ui/Field";
 import { StatTile } from "../../components/ui/StatTile";
@@ -12,6 +13,9 @@ import { ParkingZoneDetailModal } from "./ParkingZoneDetailModal";
 
 export function ParkingPage() {
   const [type, setType] = useState("");
+  useFeaturePreset((preset) => {
+    setType(preset.type ?? "");
+  });
   const [createOpen, setCreateOpen] = useState(false);
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
 
@@ -56,7 +60,7 @@ export function ParkingPage() {
               <button
                 key={zone.id}
                 onClick={() => setSelectedZoneId(zone.id)}
-                className="rounded-lg border border-border bg-surface p-4 text-left hover:border-gold/40"
+                className="rounded-lg border border-border bg-surface-2 p-4 text-left hover:border-gold/40"
               >
                 <div className="mb-1 font-medium text-text">{zone.name}</div>
                 <div className="mb-3 text-xs text-text-dimmer">{zone.type} · {zone.zone?.name}</div>

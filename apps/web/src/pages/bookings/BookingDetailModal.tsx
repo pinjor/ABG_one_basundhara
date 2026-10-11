@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { BOOKING_STATUS_TRANSITIONS, PaymentStatus } from "@bsc/shared";
 import { Modal } from "../../components/ui/Modal";
 import { StatusBadge } from "../../components/ui/StatusBadge";
@@ -21,8 +22,9 @@ export function BookingDetailModal({ bookingId, onClose }: { bookingId: string |
     try {
       await setStatus.mutateAsync({ id: booking!.id, status });
       push(`Booking moved to ${status}.`);
-    } catch {
-      push("That transition isn't allowed from the current status.", "danger");
+    } catch (err: unknown) {
+      const message = (err as { response?: { data?: { message?: string | string[] } } })?.response?.data?.message;
+      push(Array.isArray(message) ? message[0] : message ?? "That transition isn't allowed from the current status.", "danger");
     }
   }
 
@@ -51,6 +53,23 @@ export function BookingDetailModal({ bookingId, onClose }: { bookingId: string |
           <div className="mb-1.5 text-xs uppercase tracking-wide text-text-dimmer">QR confirmation code</div>
           <code className="block rounded-md bg-surface-2 px-3 py-1.5 text-xs text-text-dim">{booking.qrConfirmationCode}</code>
         </div>
+
+        {booking.eventPack ? (
+          <div className="rounded-md border border-gold/25 bg-gold/10 p-3">
+            <div className="text-xs uppercase tracking-wide text-gold">Event operations pack</div>
+            <div className="mt-1 flex items-center justify-between gap-2">
+              <div>
+                <div className="text-sm text-text">{booking.eventPack.title}</div>
+                <StatusBadge status={booking.eventPack.status} />
+              </div>
+              <Link to={`/?event=${booking.eventPack.id}`} className="text-sm text-gold hover:text-gold-soft" onClick={onClose}>
+                Open command board
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <p className="text-xs text-text-dim">Confirm this booking to create the operational event pack.</p>
+        )}
 
         <div>
           <div className="mb-1.5 text-xs uppercase tracking-wide text-text-dimmer">Payment status</div>

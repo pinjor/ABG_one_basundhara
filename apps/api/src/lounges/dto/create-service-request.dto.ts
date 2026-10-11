@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsOptional, IsString } from "class-validator";
 
 export class CreateServiceRequestDto {
   @IsString()
@@ -9,4 +9,8 @@ export class CreateServiceRequestDto {
 
   @IsString()
   item!: string;
+
+  @IsOptional()
+  @IsString()
+  eventPackId?: string;
 }

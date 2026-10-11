@@ -34,4 +34,8 @@ export class CreateVipGuestDto {
   @IsOptional()
   @IsBoolean()
   privacyFlag?: boolean;
+
+  @IsOptional()
+  @IsString()
+  eventPackId?: string;
 }
