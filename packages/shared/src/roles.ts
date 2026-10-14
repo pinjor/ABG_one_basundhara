@@ -77,7 +77,7 @@ export const ROLE_MODULE_ACCESS: Record<Role, { modules: string[] | "*"; readOnl
     readOnly: false,
   },
   [Role.FINANCE_CONTROLLER]: {
-    modules: ["ticketing-overview", "ticketing-orders", "ticketing-payments", "ticketing-reports"],
+    modules: ["ticketing-overview", "ticketing-orders", "ticketing-payments", "ticketing-reports", "finance"],
     readOnly: false,
   },
 };

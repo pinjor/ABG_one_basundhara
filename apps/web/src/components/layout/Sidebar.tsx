@@ -14,6 +14,9 @@ const ICONS: Record<string, IconName> = {
   "ticketing-payments": "card",
   "ticketing-scan": "gate",
   "ticketing-reports": "chart",
+  finance: "card",
+  procurement: "chart",
+  hrm: "users",
   calendar: "calendar",
   approvals: "check",
   tasks: "bell",
@@ -54,9 +57,8 @@ export function Sidebar({
         mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
       } ${collapsed ? "w-[248px] lg:w-[76px]" : "w-[248px]"}`}
     >
-      <div className="flex items-center gap-2 px-3 py-4">
-        <BrandLogo size="xs" align="start" />
-        {!collapsed && <span className="font-display text-sm uppercase leading-tight tracking-wide text-[#e8c15a]">Sports City</span>}
+      <div className="flex items-center px-3 py-4">
+        <BrandLogo size={collapsed ? "xs" : "sm"} align="start" className={collapsed ? "max-w-[3.25rem] overflow-hidden" : ""} />
       </div>
       <nav className="thin-scroll min-h-0 flex-1 overflow-y-auto px-2 py-3" aria-label="Operations">
         {ROLE_MODULE_ACCESS[role as Role]?.modules === "*" && (

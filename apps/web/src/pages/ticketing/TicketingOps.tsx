@@ -21,7 +21,24 @@ import { StatusBadge } from "../../components/ui/StatusBadge";
 import { apiErrorMessage } from "../../lib/apiError";
 import { useI18n } from "../../lib/i18n";
 import { formatBdt, formatWhen } from "../../lib/money";
+import { useActiveFeature } from "../../hooks/useActiveFeature";
+import { FeatureRegister } from "../platform/FeatureRegister";
 import { useAuthStore } from "../../store/auth";
+
+function FeatureStrip() {
+  const { feature, module } = useActiveFeature();
+  const role = useAuthStore((s) => s.user?.role);
+  if (!feature) return null;
+  return (
+    <FeatureRegister
+      key={feature.key}
+      module="ticketing"
+      featureKey={feature.key}
+      featureLabel={feature.label}
+      canWrite={canWriteModule(role, module?.key ?? "")}
+    />
+  );
+}
 
 function LiveNote() {
   const { t } = useI18n();
@@ -128,6 +145,7 @@ export function TicketingEventsPage() {
 
   return (
     <div>
+      <FeatureStrip />
       <div className="mb-4 flex items-center justify-between gap-3">
         <h1 className="font-display text-3xl uppercase text-[var(--brand-gold)]">{t("ops.events")}</h1>
         {canWrite && <Button type="button" onClick={() => setOpen(true)}>New event</Button>}
@@ -197,6 +215,7 @@ export function TicketingOrdersPage() {
   const orders = useStaffOrders(search, status);
   return (
     <div>
+      <FeatureStrip />
       <h1 className="font-display text-3xl uppercase text-[var(--brand-gold)]">{t("ops.orders")}</h1>
       <LiveNote />
       <div className="mb-3 flex flex-wrap gap-2">
@@ -237,6 +256,7 @@ export function TicketingPaymentsPage() {
   const rows = useMemo(() => refunds.data ?? [], [refunds.data]);
   return (
     <div>
+      <FeatureStrip />
       <h1 className="font-display text-3xl uppercase text-[var(--brand-gold)]">{t("ops.payments")}</h1>
       <LiveNote />
       <p className="mb-3 text-sm text-text-dim">Refunds are sandbox reversals. Approving one revokes the tickets. Ticket Administrators cannot approve refunds.</p>
@@ -300,6 +320,7 @@ export function TicketingReportsPage() {
   }
   return (
     <div>
+      <FeatureStrip />
       <div className="mb-2 flex items-center justify-between">
         <h1 className="font-display text-3xl uppercase text-[var(--brand-gold)]">{t("ops.reports")}</h1>
         <Button type="button" variant="secondary" onClick={download} disabled={!data}>Export CSV</Button>

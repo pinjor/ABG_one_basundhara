@@ -24,6 +24,7 @@ import {
   ZoneType,
 } from "@bsc/shared";
 import { useActiveFeature } from "../hooks/useActiveFeature";
+import { BookingBoard, bookingExtraLabel, facilityTypesFor } from "./BookingBoard";
 import { buildFeatureDesk, FeatureKpis, FeatureRegister } from "./FeatureDesk";
 import { featureStage } from "./featureStage";
 import { resolveFlow, type FlowDef } from "./flows";
@@ -267,6 +268,7 @@ function FlowBody({
   const [start, setStart] = useState("18:00");
   const [end, setEnd] = useState("19:00");
   const [amount, setAmount] = useState(2500);
+  const [detail, setDetail] = useState("");
   const [email, setEmail] = useState("");
   const [person, setPerson] = useState("");
   const [host, setHost] = useState("");
@@ -411,7 +413,11 @@ function FlowBody({
       <FeatureKpis items={desk.kpis} />
       <div className="grid items-start gap-6 lg:grid-cols-12">
         <div className="lg:col-span-8">
-          <FeatureRegister title={stage.boardTitle} rows={desk.rows} selectedId={selectedId || vehicleId} onSelect={selectDeskRow} />
+          {flow.kind.startsWith("booking") ? (
+            <BookingBoard featureKey={featureKey} bookings={bookings} selectedId={selectedId} onSelect={selectDeskRow} />
+          ) : (
+            <FeatureRegister title={stage.boardTitle} rows={desk.rows} selectedId={selectedId || vehicleId} onSelect={selectDeskRow} />
+          )}
         </div>
         <aside className="lg:col-span-4">
           <div className="action-rail rounded-xl p-5">
@@ -614,11 +620,16 @@ function FlowBody({
               <Field label="Facility">
                 <SelectInput value={selectedId} onChange={(e) => setSelectedId(e.target.value)}>
                   <option value="">Select facility</option>
-                  {facilities.map((f) => (
-                    <option key={f.id} value={f.id}>
-                      {f.name}
-                    </option>
-                  ))}
+                  {(() => {
+                    const types = facilityTypesFor(featureKey);
+                    const matched = types ? facilities.filter((f) => types.includes(f.type)) : facilities;
+                    const choices = matched.length > 0 ? matched : facilities;
+                    return choices.map((f) => (
+                      <option key={f.id} value={f.id}>
+                        {f.name}
+                      </option>
+                    ));
+                  })()}
                 </SelectInput>
               </Field>
               <Field label="Date">
@@ -650,6 +661,11 @@ function FlowBody({
               <Field label="Amount (৳)">
                 <TextInput type="number" value={amount} onChange={(e) => setAmount(Number(e.target.value))} />
               </Field>
+              {bookingExtraLabel(featureKey) && (
+                <Field label={bookingExtraLabel(featureKey) ?? "Detail"}>
+                  <TextInput value={detail} onChange={(e) => setDetail(e.target.value)} />
+                </Field>
+              )}
               <Actions onBack={() => setStep(0)} onNext={() => setStep(2)} nextDisabled={!customer} />
             </>
           )}
@@ -670,6 +686,8 @@ function FlowBody({
                       timeSlotStart: start,
                       timeSlotEnd: end,
                       amount,
+                      featureKey: featureKey || undefined,
+                      detail: detail.trim() || undefined,
                     });
                     setSelectedId(created.id);
                     setResultExtra(created.qrConfirmationCode);

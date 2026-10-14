@@ -17,7 +17,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
       <header className="border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)]">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-3">
           <Link to="/tickets" className="mr-auto flex items-center gap-3">
-            <BrandLogo size="xs" align="start" />
+            <BrandLogo size="sm" align="start" />
             <span className="hidden font-display text-lg uppercase tracking-wide text-[var(--brand-gold)] sm:block">Bashundhara Sports City</span>
           </Link>
           <nav className="flex flex-wrap items-center gap-1" aria-label="Tickets">

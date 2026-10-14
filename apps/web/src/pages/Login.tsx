@@ -68,7 +68,7 @@ export function Login() {
       <div className="relative z-10 flex min-h-screen flex-col lg:flex-row">
         <section className="flex flex-1 flex-col justify-center px-6 py-8 sm:px-10 lg:px-14 lg:py-12 xl:px-20">
           <div className="login-rise">
-            <BrandLogo size="sm" align="start" className="mb-8 drop-shadow-lg lg:mb-10" />
+            <BrandLogo size="lg" align="start" className="mb-8 drop-shadow-lg lg:mb-10" />
             <p className="gold-foil mb-3 text-[11px] font-semibold uppercase tracking-[0.32em]">Command Centre</p>
             <h1 className="font-display text-[2.75rem] font-extrabold leading-[0.9] tracking-wide drop-shadow-[0_8px_28px_rgba(0,0,0,0.55)] sm:text-6xl lg:text-7xl xl:text-[5.25rem]">
               <span className="gold-foil">BASHUNDHARA</span>

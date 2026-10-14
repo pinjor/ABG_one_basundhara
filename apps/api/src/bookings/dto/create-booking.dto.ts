@@ -1,4 +1,4 @@
-import { IsDateString, IsIn, IsNumber, IsOptional, IsString, Matches, Min } from "class-validator";
+import { IsDateString, IsIn, IsNumber, IsOptional, IsString, Matches, MaxLength, Min } from "class-validator";
 import { BookingType } from "@bsc/shared";
 
 const TIME_PATTERN = /^([01]\d|2[0-3]):[0-5]\d$/;
@@ -29,4 +29,14 @@ export class CreateBookingDto {
   @IsNumber()
   @Min(0)
   amount!: number;
+
+  @IsOptional()
+  @IsString()
+  @Matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
+  featureKey?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(240)
+  detail?: string;
 }

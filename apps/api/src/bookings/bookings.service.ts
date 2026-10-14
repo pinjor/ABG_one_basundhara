@@ -136,6 +136,8 @@ export class BookingsService {
         timeSlotStart: dto.timeSlotStart,
         timeSlotEnd: dto.timeSlotEnd,
         amount: dto.amount,
+        featureKey: dto.featureKey ?? "",
+        detail: dto.detail?.trim() ?? "",
         createdById: userId,
       },
     });

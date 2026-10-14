@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import { canWriteModule } from "@bsc/shared";
 import { useGates } from "../../api/gates";
 import { scanDeviceId, verifyTicket, type ScanDecision } from "../../api/ticketing";
 import { Button } from "../../components/ui/Button";
+import { useActiveFeature } from "../../hooks/useActiveFeature";
+import { FeatureRegister } from "../platform/FeatureRegister";
+import { useAuthStore } from "../../store/auth";
 import { useI18n } from "../../lib/i18n";
 import { apiErrorMessage } from "../../lib/apiError";
 import axios from "axios";
@@ -105,8 +109,20 @@ export function GateScanPage() {
 
   const visual = result ? COPY[result.reason] ?? COPY.CREDENTIAL_INVALID : null;
 
+  const { feature, module } = useActiveFeature();
+  const role = useAuthStore((s) => s.user?.role);
+
   return (
     <div className="mx-auto max-w-3xl">
+      {feature && (
+        <FeatureRegister
+          key={feature.key}
+          module="ticketing"
+          featureKey={feature.key}
+          featureLabel={feature.label}
+          canWrite={canWriteModule(role, module?.key ?? "")}
+        />
+      )}
       <h1 className="font-display text-3xl uppercase text-[var(--brand-gold)]">{t("ops.scan")}</h1>
       <p className="mt-1 text-sm text-text-dim">Offline admission is not enabled. A lost connection is manual review, not an allow.</p>
       <div className="mt-4 flex flex-wrap gap-3">

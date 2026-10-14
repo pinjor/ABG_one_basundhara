@@ -19,6 +19,7 @@ import { SurfacesModule } from "./surfaces/surfaces.module";
 import { EventsModule } from "./events/events.module";
 import { OperationsModule } from "./operations/operations.module";
 import { TicketingModule } from "./ticketing/ticketing.module";
+import { DeskModule } from "./desk/desk.module";
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { TicketingModule } from "./ticketing/ticketing.module";
     SurfacesModule,
     DashboardModule,
     TicketingModule,
+    DeskModule,
   ],
 })
 export class AppModule {}

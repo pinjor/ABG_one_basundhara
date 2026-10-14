@@ -48,6 +48,8 @@ export interface BookingDto {
   status: string;
   amount: string | number;
   paymentStatus: string;
+  featureKey?: string;
+  detail?: string;
   qrConfirmationCode: string;
   createdById: string;
   createdAt: string;

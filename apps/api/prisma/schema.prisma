@@ -264,6 +264,8 @@ model Booking {
   status            String   @default("Pending") // BookingStatus
   amount            Decimal  @default(0) @db.Decimal(10, 2)
   paymentStatus     String   @default("Unpaid") // PaymentStatus
+  featureKey        String   @default("")
+  detail            String   @default("")
   qrConfirmationCode String  @unique @default(uuid())
   createdById       String
   createdAt         DateTime @default(now())
@@ -717,6 +719,25 @@ model AccessVerification {
   @@unique([deviceId, scanId])
   @@index([createdAt])
   @@map("access_verifications")
+}
+
+model ModuleDeskRecord {
+  id          String   @id @default(uuid())
+  moduleKey   String
+  featureKey  String
+  reference   String   @unique
+  title       String
+  party       String
+  notes       String   @default("")
+  amountBdt   Decimal? @db.Decimal(14, 2)
+  details     Json     @default("{}")
+  status      String
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([moduleKey, featureKey])
+  @@map("module_desk_records")
 }
 
 model IdempotencyRecord {

@@ -30,6 +30,7 @@ import { CheckoutPage } from "./pages/tickets/CheckoutPage";
 import { HelpPage, MyBookingsPage, OrderPage } from "./pages/tickets/OrderPages";
 import { TicketingEventsPage, TicketingOrdersPage, TicketingOverview, TicketingPaymentsPage, TicketingReportsPage } from "./pages/ticketing/TicketingOps";
 import { GateScanPage } from "./pages/ticketing/GateScanPage";
+import { SpecModulePage } from "./pages/platform/SpecModulePage";
 
 function RequireAuth({ children }: { children: ReactNode }) {
   const token = useAuthStore((s) => s.token);
@@ -70,6 +71,9 @@ const MODULE_PAGES: Record<string, () => JSX.Element> = {
   "/ticketing/payments": TicketingPaymentsPage,
   "/ticketing/scan": GateScanPage,
   "/ticketing/reports": TicketingReportsPage,
+  "/finance": SpecModulePage,
+  "/procurement": SpecModulePage,
+  "/hrm": SpecModulePage,
 };
 
 function RequireModule({ path, children }: { path: string; children: ReactNode }) {
@@ -86,7 +90,14 @@ function ModulePage({ path, children }: { path: string; children: ReactNode }) {
   const { feature, featureKey } = useActiveFeature();
   const base = MODULE_TITLES[path] ?? "";
   const title = feature?.label ? `${base} · ${feature.label}` : base;
-  const commandDesk = path === "/calendar" || path === "/tasks" || path === "/approvals" || path.startsWith("/ticketing");
+  const commandDesk =
+    path === "/calendar" ||
+    path === "/tasks" ||
+    path === "/approvals" ||
+    path.startsWith("/ticketing") ||
+    path === "/finance" ||
+    path === "/procurement" ||
+    path === "/hrm";
   return (
     <AppShell title={title}>
       {path === "/" ? (

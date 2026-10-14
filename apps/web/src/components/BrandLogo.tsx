@@ -9,19 +9,21 @@ export function BrandLogo({
 }) {
   const box =
     size === "xs"
-      ? "h-8 max-h-8 max-w-[88px]"
+      ? "h-8 max-w-[7.5rem]"
       : size === "sm"
-        ? "h-14 max-w-[148px]"
+        ? "h-11 max-w-[12.5rem]"
         : size === "lg"
-          ? "h-24 max-w-[220px]"
-          : "h-[72px] max-w-[180px]";
+          ? "h-20 max-w-[22rem]"
+          : "h-16 max-w-[18rem]";
   const alignment = align === "start" ? "mx-0" : "mx-auto";
 
   return (
-    <img
-      src="/bsc-logo.png"
-      alt="Bashundhara Sports City"
-      className={`w-auto object-contain object-center ${box} ${alignment} ${className}`.trim()}
-    />
+    <span className={`inline-flex shrink-0 items-center rounded-md bg-white px-1.5 py-1 ${alignment} ${className}`.trim()}>
+      <img
+        src="/abg-logo.png"
+        alt="ABG Sports City"
+        className={`w-auto object-contain object-left ${box}`}
+      />
+    </span>
   );
 }
