@@ -1,8 +1,11 @@
 import { useState, type ReactNode } from "react";
+import { useLocation } from "react-router-dom";
+import { PageMotion } from "../../lib/motion";
 import { Sidebar } from "./Sidebar";
 import { TopBar } from "./TopBar";
 
 export function AppShell({ title, children }: { title: string; children: ReactNode }) {
+  const { pathname, search } = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(() => localStorage.getItem("bsc-sidebar") === "collapsed");
 
@@ -24,7 +27,9 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
       <Sidebar collapsed={collapsed} mobileOpen={mobileOpen} onNavigate={() => setMobileOpen(false)} onToggleCollapse={toggleCollapsed} />
       <div className="flex min-w-0 flex-1 flex-col">
         <TopBar title={title} onMenu={() => setMobileOpen(true)} />
-        <main id="content" className="thin-scroll min-w-0 flex-1 overflow-y-auto px-4 py-4 sm:px-6">{children}</main>
+        <main id="content" className="thin-scroll min-w-0 flex-1 overflow-y-auto px-4 py-4 sm:px-6">
+          <PageMotion id={pathname + search}>{children}</PageMotion>
+        </main>
       </div>
     </div>
   );

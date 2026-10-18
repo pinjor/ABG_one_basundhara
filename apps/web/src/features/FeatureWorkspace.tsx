@@ -148,8 +148,8 @@ export function FeatureWorkspace() {
 
   return (
     <div>
-      <header className="feature-hero mb-6 flex items-start justify-between gap-4">
-        <div>
+      <header className="feature-hero mb-6 flex flex-wrap items-start justify-between gap-4">
+        <div className="min-w-0">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-gold">
             {module?.label}
             <span className="mx-2 text-gold/40">·</span>
@@ -412,14 +412,14 @@ function FlowBody({
     <div>
       <FeatureKpis items={desk.kpis} />
       <div className="grid items-start gap-6 lg:grid-cols-12">
-        <div className="lg:col-span-8">
+        <div className="min-w-0 lg:col-span-8">
           {flow.kind.startsWith("booking") ? (
             <BookingBoard featureKey={featureKey} bookings={bookings} selectedId={selectedId} onSelect={selectDeskRow} />
           ) : (
             <FeatureRegister title={stage.boardTitle} rows={desk.rows} selectedId={selectedId || vehicleId} onSelect={selectDeskRow} />
           )}
         </div>
-        <aside className="lg:col-span-4">
+        <aside className="min-w-0 lg:col-span-4">
           <div className="action-rail rounded-xl p-5">
             <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-gold/70">Action</p>
             <h3 className="mb-4 mt-1 font-display text-lg font-semibold text-text">{stage.actionTitle}</h3>

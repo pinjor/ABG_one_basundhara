@@ -1,10 +1,11 @@
 import { useEffect, useState, type ReactNode, type SVGProps } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ROLE_LABELS, Role } from "@bsc/shared";
+import { ROLE_LABELS, Role, canAccessModule, findModuleByPath } from "@bsc/shared";
 import { useAuthStore } from "../../store/auth";
 import { useNotifications, useSearch } from "../../api/operations";
 import { useI18n } from "../../lib/i18n";
 import { usePrefs } from "../../lib/prefs";
+import { displayName } from "../../lib/user";
 import { Icon as Glyph } from "../ui/Icon";
 
 function Icon({ children, ...props }: SVGProps<SVGSVGElement> & { children: ReactNode }) {
@@ -98,7 +99,7 @@ export function TopBar({ title, onMenu }: { title: string; onMenu?: () => void }
     return () => clearInterval(id);
   }, []);
 
-  const hits = results
+  const hits = (results
     ? [
         ...results.bookings.map((b) => ({ to: b.eventPack ? `/?event=${b.eventPack.id}` : "/bookings", label: `${b.customerName} · booking` })),
         ...results.facilities.map((f) => ({ to: "/facilities", label: `${f.name} · ${f.type}` })),
@@ -108,21 +109,27 @@ export function TopBar({ title, onMenu }: { title: string; onMenu?: () => void }
         ...results.equipment.map((e) => ({ to: "/surfaces", label: `${e.name} · equipment` })),
         ...results.vehicles.map((v) => ({ to: "/fleet", label: `${v.type} · ${v.driverName ?? "vehicle"}` })),
       ]
-    : [];
+    : []
+  ).filter((hit) => {
+    const path = hit.to.split("?")[0] || "/";
+    const module = findModuleByPath(path);
+    return module ? canAccessModule(user?.role, module.key) : false;
+  });
+  const showOpsLinks = canAccessModule(user?.role, "tasks") && canAccessModule(user?.role, "approvals");
 
   return (
-    <header className="relative flex h-16 items-center gap-3 border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-3 sm:px-5">
+    <header className="relative flex min-h-16 flex-wrap items-center gap-3 border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-3 py-2 sm:px-5 lg:flex-nowrap lg:py-0">
       {onMenu && (
         <button type="button" className="inline-flex h-11 w-11 items-center justify-center rounded-md text-[var(--brand-gold)] lg:hidden" aria-label={t("shell.menu")} onClick={onMenu}>
           <Glyph name="menu" className="h-5 w-5" />
         </button>
       )}
-      <div className="min-w-0 shrink">
+      <div className="min-w-0 flex-1 lg:flex-none lg:shrink">
         <p className="truncate text-[10px] uppercase tracking-[0.16em] text-text-dim">{location.pathname}</p>
         <h1 className="truncate font-display text-xl font-semibold uppercase leading-none tracking-wide text-[var(--brand-gold)]">{title}</h1>
       </div>
 
-      <div className="relative min-w-0 flex-1">
+      <div className="relative min-w-0 basis-full lg:basis-auto lg:flex-1">
         <SearchIcon className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--primary-gold)]" />
         <input
           value={q}
@@ -151,22 +158,26 @@ export function TopBar({ title, onMenu }: { title: string; onMenu?: () => void }
         )}
       </div>
 
-      <div className="flex shrink-0 items-center gap-1 text-[var(--primary-gold)]">
-        <Link to="/tasks" className="topbar-link relative inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-sm">
-          <InboxIcon className="h-4 w-4" />
-          Inbox
-          {unread > 0 && (
-            <span className="absolute -right-0.5 -top-1 min-w-[16px] rounded-full bg-[var(--primary-gold)] px-1 text-center text-[10px] font-semibold text-[var(--navbar-bg)]">
-              {unread}
-            </span>
-          )}
-        </Link>
-        <span className="h-5 w-px bg-[var(--divider)]" />
-        <Link to="/approvals" className="topbar-link inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-sm">
-          <ApprovalsIcon className="h-4 w-4" />
-          Approvals
-        </Link>
-        <span className="h-5 w-px bg-[var(--divider)]" />
+      <div className="flex min-w-0 flex-wrap items-center gap-1 text-[var(--primary-gold)] lg:shrink-0 lg:flex-nowrap">
+        {showOpsLinks && (
+          <>
+            <Link to="/tasks" className="topbar-link relative inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-sm">
+              <InboxIcon className="h-4 w-4" />
+              Inbox
+              {unread > 0 && (
+                <span className="absolute -right-0.5 -top-1 min-w-[16px] rounded-full bg-[var(--primary-gold)] px-1 text-center text-[10px] font-semibold text-[var(--navbar-bg)]">
+                  {unread}
+                </span>
+              )}
+            </Link>
+            <span className="h-5 w-px bg-[var(--divider)]" />
+            <Link to="/approvals" className="topbar-link inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-sm">
+              <ApprovalsIcon className="h-4 w-4" />
+              Approvals
+            </Link>
+            <span className="h-5 w-px bg-[var(--divider)]" />
+          </>
+        )}
         <span className="px-2.5 font-display text-sm tabular-nums tracking-wide" suppressHydrationWarning>
           {now.toLocaleTimeString("en-GB", { hour12: false })}
         </span>
@@ -181,22 +192,24 @@ export function TopBar({ title, onMenu }: { title: string; onMenu?: () => void }
         <button type="button" className="topbar-link inline-flex h-10 w-10 items-center justify-center rounded-full" aria-label={theme === "dark" ? t("theme.light") : t("theme.dark")} onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
           <Glyph name={theme === "dark" ? "sun" : "moon"} className="h-4 w-4" />
         </button>
-        <button type="button" className="topbar-link flex items-center gap-2 rounded-full px-2 py-1 text-left" aria-expanded={menuOpen} aria-haspopup="menu" onClick={() => setMenuOpen((open) => !open)}>
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[var(--border-gold)]">
-            <UserIcon className="h-4 w-4" />
-          </span>
-          <span className="leading-tight">
-            <span className="block text-sm font-medium text-[var(--primary-gold)]">{user?.name ?? "Guest"}</span>
-            <span className="block text-[11px] text-[var(--secondary-text)]">{ROLE_LABELS[(user?.role as Role) ?? Role.READ_ONLY_EXECUTIVE]}</span>
-          </span>
-          <ChevronIcon className="h-4 w-4 text-[var(--secondary-text)]" />
-        </button>
-        {menuOpen && (
-          <div role="menu" className="absolute right-3 top-14 z-40 min-w-44 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-elevated)] p-1 shadow-[var(--shadow-pop)]">
-            <Link role="menuitem" to="/tickets" className="block rounded-md px-3 py-2 text-sm" onClick={() => setMenuOpen(false)}>{t("nav.tickets")}</Link>
-            <button role="menuitem" type="button" className="block w-full rounded-md px-3 py-2 text-left text-sm" onClick={logout}>{t("shell.signout")}</button>
-          </div>
-        )}
+        <div className="relative">
+          <button type="button" className="topbar-link flex items-center gap-2 rounded-full px-2 py-1 text-left" aria-expanded={menuOpen} aria-haspopup="menu" onClick={() => setMenuOpen((open) => !open)}>
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[var(--border-gold)]">
+              <UserIcon className="h-4 w-4" />
+            </span>
+            <span className="leading-tight">
+              <span className="block text-sm font-medium text-[var(--primary-gold)]">{displayName(user, "Guest")}</span>
+              <span className="block text-[11px] text-[var(--secondary-text)]">{ROLE_LABELS[(user?.role as Role) ?? Role.READ_ONLY_EXECUTIVE]}</span>
+            </span>
+            <ChevronIcon className="h-4 w-4 text-[var(--secondary-text)]" />
+          </button>
+          {menuOpen && (
+            <div role="menu" className="absolute right-0 top-full z-40 mt-2 min-w-44 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-elevated)] p-1 shadow-[var(--shadow-pop)]">
+              <Link role="menuitem" to="/tickets" className="block rounded-md px-3 py-2 text-sm" onClick={() => setMenuOpen(false)}>{t("nav.tickets")}</Link>
+              <button role="menuitem" type="button" className="block w-full rounded-md px-3 py-2 text-left text-sm" onClick={logout}>{t("shell.signout")}</button>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );

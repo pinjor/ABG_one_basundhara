@@ -43,11 +43,13 @@ export function FeatureRegister({
   featureKey,
   featureLabel,
   canWrite,
+  showTitle = true,
 }: {
   module: DeskModule;
   featureKey: string;
   featureLabel: string;
   canWrite: boolean;
+  showTitle?: boolean;
 }) {
   const form = featureForm(featureKey);
   const { lang } = useI18n();
@@ -119,7 +121,7 @@ export function FeatureRegister({
 
   return (
     <section className="mb-6">
-      <h2 className="font-display text-2xl uppercase text-[var(--brand-gold)]">{featureLabel}</h2>
+      {showTitle && <h2 className="font-display text-2xl uppercase text-[var(--brand-gold)]">{featureLabel}</h2>}
       <p className="mt-1 max-w-3xl text-sm text-text-dim">{desk.blurb}</p>
       {canWrite && (
         <form className="panel mt-3 grid gap-3 p-4 md:grid-cols-2" onSubmit={(event) => void submit(event)}>

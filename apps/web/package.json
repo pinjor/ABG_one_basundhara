@@ -13,9 +13,10 @@
     "@bsc/shared": "workspace:*",
     "@tanstack/react-query": "^5.62.7",
     "axios": "^1.7.9",
+    "framer-motion": "^11",
+    "qrcode": "^1.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "qrcode": "^1.5.4",
     "react-router-dom": "^6.28.1",
     "zustand": "^5.0.2"
   },

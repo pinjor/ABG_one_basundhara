@@ -83,28 +83,34 @@ Phase 5's real-time layer and hardening pass remain.
 
 ## Running locally
 
-### 1. Infrastructure
+One command builds the images and starts Postgres, Redis, the API, and the web app. It also migrates and seeds an empty database.
+
+Host ports stay off 80, 3306, and 5432:
+
+| Service | URL |
+|---|---|
+| Web | http://localhost:18480 |
+| API | http://localhost:18481/api |
+| Postgres | localhost:18432 |
+| Redis | localhost:18479 |
 
 ```bash
-docker compose up -d       # Postgres 16 + Redis 7
+npm run docker:up
 ```
 
-(If Docker isn't available in your environment, point `DATABASE_URL` at any
-Postgres 16 instance instead.)
+Stop with `npm run docker:down`.
 
-### 2. Install & configure
+### Host dev servers (optional)
 
 ```bash
-pnpm install
-cp apps/api/.env.example apps/api/.env   # adjust if your DB differs
+cp apps/api/.env.example apps/api/.env
+bun install
+bun run db:migrate
+bun run db:seed
+bun run dev
 ```
 
-### 3. Database
-
-```bash
-pnpm db:migrate   # prisma migrate dev
-pnpm db:seed      # realistic BSC zones/facilities + one user per role
-```
+`bun run dev` uses the same web port 18480 and API port 18481. Do not run it while `docker:up` is serving those ports. Postgres for that path is `localhost:18432` in `apps/api/.env.example`.
 
 Seed accounts (password for all: `Password123!`):
 
@@ -119,13 +125,6 @@ Seed accounts (password for all: `Password123!`):
 | parking@bsc.com.bd | Parking Marshal |
 | fleet@bsc.com.bd | Fleet Dispatcher |
 | executive@bsc.com.bd | Read-only Executive |
-
-### 4. Run
-
-```bash
-pnpm dev:api   # http://localhost:4000/api
-pnpm dev:web   # http://localhost:5173
-```
 
 ## Design system
 

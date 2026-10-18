@@ -53,7 +53,7 @@ export function MemberDetailModal({ memberId, onClose }: { memberId: string | nu
           <span className="text-text-dim">{member.tier} · {member.email}</span>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div className="rounded-md bg-surface-2 p-3">
             <div className="text-xs uppercase text-text-dimmer">Expiry date</div>
             <div className={`font-display text-lg ${isExpired ? "text-red" : "text-text"}`}>

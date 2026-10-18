@@ -3,7 +3,7 @@ import { Prisma } from "@prisma/client";
 import { Role } from "@bsc/shared";
 import { AuditService } from "../audit/audit.service";
 import { PrismaService } from "../prisma/prisma.service";
-import { RequestUser } from "../auth/current-user.decorator";
+import type { RequestUser } from "../auth/current-user.decorator";
 import { CreateDeskRecordDto } from "./desk.dto";
 
 const MODULES = ["finance", "procurement", "hrm", "ticketing"] as const;
@@ -79,9 +79,10 @@ export class DeskService {
 
   private assert(user: RequestUser, moduleKey: DeskModule, write: boolean) {
     if (user.role === Role.SUPER_ADMIN) return;
-    if (!write && user.role === Role.READ_ONLY_EXECUTIVE) return;
-    if (moduleKey === "finance" && user.role === Role.FINANCE_CONTROLLER) return;
-    if (moduleKey === "ticketing" && (user.role === Role.TICKET_ADMINISTRATOR || user.role === Role.FINANCE_CONTROLLER || user.role === Role.GATE_SECURITY_OFFICER)) return;
+    if (!write && (user.role === Role.READ_ONLY_EXECUTIVE || user.role === Role.CHAIRMAN)) return;
+    if ((moduleKey === "finance" || moduleKey === "procurement") && user.role === Role.FINANCE_CONTROLLER) return;
+    if (moduleKey === "hrm" && user.role === Role.HR_MANAGER) return;
+    if (moduleKey === "ticketing" && (user.role === Role.BOOKINGS_OFFICER || user.role === Role.TICKET_ADMINISTRATOR || user.role === Role.GATE_SECURITY_OFFICER)) return;
     throw new ForbiddenException(`Role ${user.role} cannot ${write ? "update" : "view"} ${moduleKey}`);
   }
 

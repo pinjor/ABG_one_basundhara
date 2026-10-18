@@ -1,3 +1,7 @@
+# Host ports stay off 80, 3306, and 5432, which are already taken on this machine.
+# Web 18480 · API 18481 · Postgres 18432 · Redis 18479
+name: basundhara-sports-city
+
 services:
   postgres:
     image: postgres:16-alpine
@@ -7,22 +11,62 @@ services:
       POSTGRES_PASSWORD: bsc_dev_password
       POSTGRES_DB: bsc
     ports:
-      - "5432:5432"
+      - "18432:5432"
     volumes:
       - bsc_postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U bsc"]
+      test: ["CMD-SHELL", "pg_isready -U bsc -d bsc"]
       interval: 5s
       timeout: 5s
-      retries: 10
+      retries: 20
 
   redis:
     image: redis:7-alpine
     restart: unless-stopped
     ports:
-      - "6379:6379"
+      - "18479:6379"
     volumes:
       - bsc_redis_data:/data
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://bsc:bsc_dev_password@postgres:5432/bsc?schema=public
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: change-me-in-production
+      PORT: "4000"
+      TICKETING_SANDBOX_PAYMENTS: "true"
+    ports:
+      - "18481:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "bun",
+          "-e",
+          "fetch('http://127.0.0.1:4000/api').then(()=>process.exit(0)).catch(()=>process.exit(1))",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 40s
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "18480:80"
+    depends_on:
+      api:
+        condition: service_healthy
 
 volumes:
   bsc_postgres_data:

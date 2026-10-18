@@ -32,6 +32,7 @@ export function SpecModulePage() {
             featureKey={feature.key}
             featureLabel={feature.label}
             canWrite={canWrite}
+            showTitle={false}
           />
           <Link to={path} className="inline-flex min-h-11 items-center text-sm text-[var(--brand-gold)]">All features</Link>
         </>

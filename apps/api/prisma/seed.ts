@@ -19,8 +19,29 @@ async function main() {
       { name: "Shahriar Kabir", email: "executive@bsc.com.bd", role: "READ_ONLY_EXECUTIVE", passwordHash },
       { name: "Imtiaz Ahmed", email: "tickets@bsc.com.bd", role: "TICKET_ADMINISTRATOR", passwordHash },
       { name: "Lamia Rahman", email: "finance@bsc.com.bd", role: "FINANCE_CONTROLLER", passwordHash },
+      { name: "HR Manager", email: "hrm@bsc.com.bd", role: "HR_MANAGER", passwordHash },
+      { name: "Security Manager", email: "security@bsc.com.bd", role: "SECURITY_MANAGER", passwordHash },
+      { name: "Ahmed Akbar Sobhan", email: "chairman@bsc.com.bd", role: "CHAIRMAN", passwordHash },
     ],
     skipDuplicates: true,
+  });
+
+  await prisma.user.updateMany({
+    where: {
+      email: {
+        in: [
+          "venue.manager@bsc.com.bd",
+          "gate.officer@bsc.com.bd",
+          "protocol@bsc.com.bd",
+          "hospitality@bsc.com.bd",
+          "parking@bsc.com.bd",
+          "fleet@bsc.com.bd",
+          "executive@bsc.com.bd",
+          "tickets@bsc.com.bd",
+        ],
+      },
+    },
+    data: { active: false },
   });
 
   const admin = await prisma.user.findUniqueOrThrow({ where: { email: "admin@bsc.com.bd" } });

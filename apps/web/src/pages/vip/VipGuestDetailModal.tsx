@@ -43,7 +43,7 @@ export function VipGuestDetailModal({ guestId, onClose }: { guestId: string | nu
           <div className="font-display text-lg text-text">{new Date(guest.arrivalDatetime).toLocaleString()}</div>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 text-xs">
+        <div className="grid grid-cols-1 gap-3 text-xs sm:grid-cols-3">
           <div className="rounded-md bg-surface-2 p-3">
             <div className="uppercase text-text-dimmer">Lounge</div>
             <div className="mt-1 text-text">{guest.loungeAssignment ?? "—"}</div>

@@ -1,4 +1,5 @@
 import { useEffect, useRef, type ReactNode } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface ModalProps {
   open: boolean;
@@ -21,18 +22,27 @@ export function Modal({ open, title, onClose, children, footer }: ModalProps) {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
-  if (!open) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-navbar/80 p-4" onClick={onClose}>
-      <div
+    <AnimatePresence>
+    {open && (
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-navbar/80 p-4"
+      onClick={onClose}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0, transition: { duration: 0.18 } }}
+    >
+      <motion.div
         ref={dialogRef}
+        initial={{ opacity: 0, y: 24, scale: 0.96 }}
+        animate={{ opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 380, damping: 32 } }}
+        exit={{ opacity: 0, y: 12, scale: 0.97, transition: { duration: 0.15 } }}
         role="dialog"
         aria-modal="true"
         aria-label={title}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
-        className="motion-safe:animate-[count-up-fade_180ms_ease-out] w-full max-w-lg rounded-lg border border-gold/30 bg-surface-2 p-6 shadow-gold"
+        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg border border-gold/30 bg-surface-2 p-6 shadow-gold"
       >
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-display text-xl font-semibold text-gold">{title}</h2>
@@ -46,7 +56,9 @@ export function Modal({ open, title, onClose, children, footer }: ModalProps) {
         </div>
         <div>{children}</div>
         {footer && <div className="mt-6 flex justify-end gap-2">{footer}</div>}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
+    )}
+    </AnimatePresence>
   );
 }

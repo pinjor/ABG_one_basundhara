@@ -1,6 +1,6 @@
 import { Body, Controller, createParamDecorator, ExecutionContext, Get, Param, Post, Query, UseGuards } from "@nestjs/common";
 import { Role } from "@bsc/shared";
-import { CurrentUser, RequestUser } from "../auth/current-user.decorator";
+import { CurrentUser, type RequestUser } from "../auth/current-user.decorator";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { Roles } from "../auth/roles.decorator";
 import { RolesGuard } from "../auth/roles.guard";
@@ -95,19 +95,19 @@ export class TicketingOpsController {
   constructor(private readonly ticketing: TicketingService) {}
 
   @Get("analytics")
-  @Roles(Role.TICKET_ADMINISTRATOR, Role.FINANCE_CONTROLLER)
+  @Roles(Role.BOOKINGS_OFFICER, Role.TICKET_ADMINISTRATOR)
   analytics() {
     return this.ticketing.analytics();
   }
 
   @Get("events")
-  @Roles(Role.TICKET_ADMINISTRATOR, Role.FINANCE_CONTROLLER)
+  @Roles(Role.BOOKINGS_OFFICER, Role.TICKET_ADMINISTRATOR)
   events() {
     return this.ticketing.listEvents("staff");
   }
 
   @Post("events")
-  @Roles(Role.TICKET_ADMINISTRATOR)
+  @Roles(Role.BOOKINGS_OFFICER, Role.TICKET_ADMINISTRATOR)
   async createEvent(
     @Body() dto: CreateMatchEventDto,
     @CurrentUser() user: RequestUser,
@@ -117,31 +117,31 @@ export class TicketingOpsController {
   }
 
   @Post("events/:id/sales-status")
-  @Roles(Role.TICKET_ADMINISTRATOR)
+  @Roles(Role.BOOKINGS_OFFICER, Role.TICKET_ADMINISTRATOR)
   setSales(@Param("id") id: string, @Body() dto: SetSalesStatusDto, @CurrentUser() user: RequestUser) {
     return this.ticketing.setSalesStatus(id, dto.salesStatus, user.id);
   }
 
   @Get("orders")
-  @Roles(Role.TICKET_ADMINISTRATOR, Role.FINANCE_CONTROLLER)
+  @Roles(Role.BOOKINGS_OFFICER, Role.TICKET_ADMINISTRATOR)
   orders(@Query("search") search?: string, @Query("status") status?: string) {
     return this.ticketing.listOrders(search, status);
   }
 
   @Get("orders/:reference")
-  @Roles(Role.TICKET_ADMINISTRATOR, Role.FINANCE_CONTROLLER)
+  @Roles(Role.BOOKINGS_OFFICER, Role.TICKET_ADMINISTRATOR)
   order(@Param("reference") reference: string) {
     return this.ticketing.getOrder(reference, undefined, true);
   }
 
   @Get("refunds")
-  @Roles(Role.FINANCE_CONTROLLER, Role.TICKET_ADMINISTRATOR)
+  @Roles(Role.BOOKINGS_OFFICER, Role.TICKET_ADMINISTRATOR)
   refunds() {
     return this.ticketing.listRefunds();
   }
 
   @Post("refunds/:id/decision")
-  @Roles(Role.FINANCE_CONTROLLER)
+  @Roles(Role.BOOKINGS_OFFICER)
   async decide(
     @Param("id") id: string,
     @Body() dto: DecideRefundDto,
@@ -158,7 +158,7 @@ export class AccessVerificationController {
   constructor(private readonly ticketing: TicketingService) {}
 
   @Post("verifications")
-  @Roles(Role.GATE_SECURITY_OFFICER)
+  @Roles(Role.BOOKINGS_OFFICER, Role.GATE_SECURITY_OFFICER)
   async verify(
     @Body() dto: VerifyAccessDto,
     @Idempotency() idem: IdempotencyHandle,

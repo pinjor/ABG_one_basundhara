@@ -142,7 +142,7 @@ export function GateScanPage() {
       <video ref={videoRef} className="mt-4 h-40 w-full rounded-lg bg-black object-cover" muted playsInline aria-label="QR camera preview" />
       {cameraNote && <p className="mt-2 text-sm text-text-dim">{cameraNote}</p>}
       <form className="mt-4 flex flex-wrap gap-2" onSubmit={(event) => { event.preventDefault(); void submit(token); }}>
-        <label className="min-w-[240px] flex-1 text-sm">Manual code
+        <label className="min-w-0 w-full text-sm sm:min-w-[240px] sm:w-auto sm:flex-1">Manual code
           <input value={token} onChange={(event) => setToken(event.target.value)} autoComplete="off" className="mt-1 min-h-12 w-full rounded-md border border-[var(--border-strong)] bg-[var(--surface-secondary)] px-3 font-mono" />
         </label>
         <Button type="submit" className="mt-6">Check</Button>

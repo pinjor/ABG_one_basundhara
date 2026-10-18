@@ -32,7 +32,7 @@ export function ZoneDetailModal({ zoneId, onClose, onEdit }: { zoneId: string | 
           <span className="text-text-dim">{zone.type}{zone.building ? ` · ${zone.building}` : ""}</span>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div className="rounded-md bg-surface-2 p-3">
             <div className="text-xs uppercase text-text-dimmer">Capacity</div>
             <div className="font-display text-xl text-text">{zone.capacity.toLocaleString()}</div>

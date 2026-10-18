@@ -47,7 +47,7 @@ export function BookingFormModal({ open, onClose, facilities }: { open: boolean;
         <Field label="Date">
           <TextInput type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
         </Field>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Field label="Start time">
             <TextInput type="time" value={timeSlotStart} onChange={(e) => setTimeSlotStart(e.target.value)} required />
           </Field>

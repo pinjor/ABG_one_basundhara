@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { NAV, COMMAND_CENTRE, ROLE_MODULE_ACCESS, Role, canAccessModule } from "@bsc/shared";
 import { BrandLogo } from "../BrandLogo";
 import { Icon, type IconName } from "../ui/Icon";
@@ -104,15 +105,23 @@ export function Sidebar({
                         </button>
                       )}
                     </div>
+                    <AnimatePresence initial={false}>
                     {expanded && (
-                      <div className="ml-7 border-l border-[#e8c15a]/35 pl-2">
+                      <motion.div
+                        className="ml-7 overflow-hidden border-l border-[#e8c15a]/35 pl-2"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                      >
                         {mod.features.map((feature) => (
                           <NavLink key={feature.key} to={`${mod.path}?feature=${feature.key}`} onClick={onNavigate} className={`block truncate rounded-md px-2 py-1.5 text-[12px] ${moduleActive && activeFeature === feature.key ? "text-[#e8c15a]" : "text-[#f6f3ea]/80 hover:text-[#f6f3ea]"}`}>
                             {feature.label}
                           </NavLink>
                         ))}
-                      </div>
+                      </motion.div>
                     )}
+                    </AnimatePresence>
                   </div>
                 );
               })}

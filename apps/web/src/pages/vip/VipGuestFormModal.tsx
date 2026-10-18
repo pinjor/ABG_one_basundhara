@@ -63,7 +63,7 @@ export function VipGuestFormModal({ open, onClose }: { open: boolean; onClose: (
         <Field label="Lounge assignment">
           <TextInput value={loungeAssignment} onChange={(e) => setLoungeAssignment(e.target.value)} placeholder="Optional" />
         </Field>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Field label="Seat allocation">
             <TextInput value={seatAllocation} onChange={(e) => setSeatAllocation(e.target.value)} placeholder="Optional" />
           </Field>

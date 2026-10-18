@@ -13,7 +13,9 @@
     "dev:web": "bun run --filter @bsc/web dev",
     "build": "bun run --filter @bsc/shared build && bun run --filter @bsc/api build && bun run --filter @bsc/web build",
     "db:migrate": "bun run --filter @bsc/api prisma:migrate",
-    "db:seed": "bun run --filter @bsc/api prisma:seed"
+    "db:seed": "bun run --filter @bsc/api prisma:seed",
+    "docker:up": "sh scripts/docker-up.sh",
+    "docker:down": "sh scripts/docker-down.sh"
   },
   "devDependencies": {
     "pdf-parse": "1.1.1"

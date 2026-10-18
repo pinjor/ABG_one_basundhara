@@ -3,7 +3,7 @@ import { Role } from "@bsc/shared";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { RolesGuard } from "../auth/roles.guard";
 import { Roles } from "../auth/roles.decorator";
-import { CurrentUser, RequestUser } from "../auth/current-user.decorator";
+import { CurrentUser, type RequestUser } from "../auth/current-user.decorator";
 import { FleetService } from "./fleet.service";
 import { CreateFleetVehicleDto } from "./dto/create-fleet-vehicle.dto";
 import { SetFleetVehicleStatusDto } from "./dto/set-fleet-vehicle-status.dto";

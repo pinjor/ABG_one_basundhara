@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ROLE_LABELS, ROLE_SCOPE, Role, roleHomePath, type LoginResponseDto } from "@bsc/shared";
+import { ROLE_LABELS, Role, roleHomePath, type LoginResponseDto } from "@bsc/shared";
 import { api } from "../lib/api";
 import { useAuthStore } from "../store/auth";
 import { BrandLogo } from "../components/BrandLogo";
@@ -10,17 +10,12 @@ const JOURNEY = ["Play", "Move", "Shop", "Relax", "Connect"] as const;
 const DEMO_PASSWORD = "Password123!";
 
 const DEMO_ACCOUNTS = [
+  { email: "chairman@bsc.com.bd", role: Role.CHAIRMAN },
   { email: "admin@bsc.com.bd", role: Role.SUPER_ADMIN },
-  { email: "venue.manager@bsc.com.bd", role: Role.VENUE_FACILITY_MANAGER },
   { email: "bookings@bsc.com.bd", role: Role.BOOKINGS_OFFICER },
-  { email: "gate.officer@bsc.com.bd", role: Role.GATE_SECURITY_OFFICER },
-  { email: "protocol@bsc.com.bd", role: Role.PROTOCOL_OFFICER },
-  { email: "hospitality@bsc.com.bd", role: Role.HOSPITALITY_LEAD },
-  { email: "parking@bsc.com.bd", role: Role.PARKING_MARSHAL },
-  { email: "fleet@bsc.com.bd", role: Role.FLEET_DISPATCHER },
-  { email: "executive@bsc.com.bd", role: Role.READ_ONLY_EXECUTIVE },
-  { email: "tickets@bsc.com.bd", role: Role.TICKET_ADMINISTRATOR },
+  { email: "hrm@bsc.com.bd", role: Role.HR_MANAGER },
   { email: "finance@bsc.com.bd", role: Role.FINANCE_CONTROLLER },
+  { email: "security@bsc.com.bd", role: Role.SECURITY_MANAGER },
 ] as const;
 
 export function Login() {
@@ -56,7 +51,7 @@ export function Login() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-bg text-text">
+    <div className="relative min-h-screen overflow-x-hidden bg-bg text-text">
       <img
         src="/login-hero.jpg"
         alt=""
@@ -67,29 +62,32 @@ export function Login() {
 
       <div className="relative z-10 flex min-h-screen flex-col lg:flex-row">
         <section className="flex flex-1 flex-col justify-center px-6 py-8 sm:px-10 lg:px-14 lg:py-12 xl:px-20">
-          <div className="login-rise">
-            <BrandLogo size="lg" align="start" className="mb-8 drop-shadow-lg lg:mb-10" />
-            <p className="gold-foil mb-3 text-[11px] font-semibold uppercase tracking-[0.32em]">Command Centre</p>
-            <h1 className="font-display text-[2.75rem] font-extrabold leading-[0.9] tracking-wide drop-shadow-[0_8px_28px_rgba(0,0,0,0.55)] sm:text-6xl lg:text-7xl xl:text-[5.25rem]">
+          <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.09, delayChildren: 0.1 } } }}>
+            <motion.div variants={RISE}><BrandLogo size="lg" align="start" className="mb-8 drop-shadow-lg lg:mb-10" /></motion.div>
+            <motion.p variants={RISE} className="gold-foil mb-3 text-[11px] font-semibold uppercase tracking-[0.32em]">Command Centre</motion.p>
+            <motion.h1 variants={RISE} className="font-display text-[2.75rem] font-extrabold leading-[0.9] tracking-wide drop-shadow-[0_8px_28px_rgba(0,0,0,0.55)] sm:text-6xl lg:text-7xl xl:text-[5.25rem]">
               <span className="gold-foil">BASHUNDHARA</span>
               <span className="gold-foil mt-1 block">SPORTS CITY</span>
-            </h1>
-            <p className="gold-foil mt-5 max-w-xl font-display text-lg font-semibold tracking-wide sm:text-2xl">
+            </motion.h1>
+            <motion.p variants={RISE} className="gold-foil mt-5 max-w-xl font-display text-lg font-semibold tracking-wide sm:text-2xl">
               One App. One City. Endless Possibilities.
-            </p>
-            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm font-semibold tracking-wide">
+            </motion.p>
+            <motion.div variants={RISE} className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm font-semibold tracking-wide">
               {JOURNEY.map((item, i) => (
                 <span key={item} className="flex items-center gap-4">
                   <span className="gold-foil">{item}</span>
                   {i < JOURNEY.length - 1 && <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-gold-soft" />}
                 </span>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </section>
 
         <aside className="flex items-end justify-center px-4 pb-8 sm:px-8 lg:w-[440px] lg:items-center lg:border-l lg:border-gold/20 lg:bg-navbar/90 lg:px-10 lg:pb-0 lg:backdrop-blur-2xl xl:w-[480px]">
-          <div className="login-rise w-full max-w-md rounded-2xl border border-gold/25 bg-navbar/90 p-7 shadow-gold lg:max-w-none lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-0">
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0, transition: { duration: 0.7, ease: EASE, delay: 0.25 } }}
+            className="w-full max-w-md rounded-2xl border border-gold/25 bg-navbar/90 p-7 shadow-gold lg:max-w-none lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-0">
             <div className="mb-7">
               <div className="gold-line mb-4 h-px w-14" />
               <h2 className="font-display text-3xl font-bold tracking-wide text-text">Staff access</h2>
@@ -132,34 +130,37 @@ export function Login() {
               </button>
             </form>
 
-            <div className="mt-7">
-              <div className="mb-3 flex items-end justify-between gap-3">
+            <div className="mt-5">
+              <div className="mb-2 flex items-end justify-between gap-3">
                 <p className="gold-foil text-[11px] font-semibold uppercase tracking-[0.18em]">Demo login</p>
                 <p className="text-[11px] text-text-dim">
                   Password <span className="text-gold-soft">{DEMO_PASSWORD}</span>
                 </p>
               </div>
-              <div className="grid max-h-56 grid-cols-1 gap-2 overflow-y-auto pr-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+              <motion.div className="grid grid-cols-2 gap-1.5" initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.035, delayChildren: 0.6 } } }}>
                 {DEMO_ACCOUNTS.map((account) => {
                   const active = email === account.email;
+                  const label = ROLE_LABELS[account.role];
                   return (
-                    <button
+                    <motion.button
                       key={account.email}
+                      variants={RISE}
+                      whileHover={{ y: -2 }}
+                      whileTap={{ scale: 0.96 }}
                       type="button"
                       disabled={loading}
+                      title={`${label} · ${account.email}`}
+                      aria-label={`${label}, ${account.email}`}
                       onClick={() => void signIn(account.email, DEMO_PASSWORD)}
-                      className={`demo-chip rounded-lg px-3 py-2 text-left disabled:cursor-not-allowed disabled:opacity-50 ${active ? "demo-chip-active" : ""}`}
+                      className={`demo-chip flex min-h-9 items-center rounded-md px-2.5 text-left text-xs font-semibold leading-tight disabled:cursor-not-allowed disabled:opacity-50 ${active ? "demo-chip-active" : ""}`}
                     >
-                      <div className="text-xs font-semibold text-text">{ROLE_LABELS[account.role]}</div>
-                      <div className="mt-0.5 truncate text-[11px] text-gold-soft/80">{ROLE_SCOPE[account.role]}</div>
-                      <div className="mt-0.5 truncate text-[11px] text-text-dimmer">{account.email}</div>
-                    </button>
+                      <span className="truncate">{label}</span>
+                    </motion.button>
                   );
                 })}
-              </div>
-              <p className="mt-3 text-[11px] text-text-dimmer">Click a role to sign in instantly.</p>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </aside>
       </div>
     </div>

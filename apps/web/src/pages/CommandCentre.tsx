@@ -126,7 +126,7 @@ export function CommandCentre() {
           <h3 className="font-display text-lg font-semibold text-text">Event operations pack</h3>
           <p className="text-sm text-text-dim">A confirmed booking is the commercial and operational anchor.</p>
         </div>
-        <SelectInput className="min-w-[280px]" value={activeId ?? ""} onChange={(e) => selectEvent(e.target.value)}>
+        <SelectInput className="w-full min-w-0 sm:min-w-[280px] sm:w-auto" value={activeId ?? ""} onChange={(e) => selectEvent(e.target.value)}>
           {packs.length === 0 && <option value="">No confirmed event packs yet</option>}
           {packs.map((pack) => (
             <option key={pack.id} value={pack.id}>

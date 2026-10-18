@@ -36,7 +36,7 @@ export function BookingDetailModal({ bookingId, onClose }: { bookingId: string |
           <span className="text-text-dim">{booking.type} · {booking.facility?.name}</span>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div className="rounded-md bg-surface-2 p-3">
             <div className="text-xs uppercase text-text-dimmer">Date & time</div>
             <div className="font-display text-lg text-text">

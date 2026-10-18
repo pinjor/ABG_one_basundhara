@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import type { ReactNode } from "react";
-import { NAV, COMMAND_CENTRE, canAccessModule, findModuleByPath, roleHomePath } from "@bsc/shared";
+import { NAV, COMMAND_CENTRE, Role, canAccessModule, findModuleByPath, roleHomePath } from "@bsc/shared";
 import { useAuthStore } from "./store/auth";
 import { AppShell } from "./components/layout/AppShell";
 import { useActiveFeature } from "./hooks/useActiveFeature";
@@ -31,6 +31,16 @@ import { HelpPage, MyBookingsPage, OrderPage } from "./pages/tickets/OrderPages"
 import { TicketingEventsPage, TicketingOrdersPage, TicketingOverview, TicketingPaymentsPage, TicketingReportsPage } from "./pages/ticketing/TicketingOps";
 import { GateScanPage } from "./pages/ticketing/GateScanPage";
 import { SpecModulePage } from "./pages/platform/SpecModulePage";
+import { DashFrame } from "./pages/dashboards/DashFrame";
+import { DashSettings } from "./pages/dashboards/DashSettings";
+import { RevenueDashboard } from "./pages/dashboards/RevenueDashboard";
+import { HrDashboard } from "./pages/dashboards/HrDashboard";
+import { BookingDashboard } from "./pages/dashboards/BookingDashboard";
+import { SecurityDashboard } from "./pages/dashboards/SecurityDashboard";
+import { ChairmanDashboard } from "./pages/dashboards/ChairmanDashboard";
+import { ReadOnlyContext } from "./pages/dashboards/widgets";
+
+const DASH_ROLES = new Set<string>([Role.BOOKINGS_OFFICER, Role.FINANCE_CONTROLLER, Role.HR_MANAGER, Role.SECURITY_MANAGER, Role.CHAIRMAN]);
 
 function RequireAuth({ children }: { children: ReactNode }) {
   const token = useAuthStore((s) => s.token);
@@ -78,7 +88,12 @@ const MODULE_PAGES: Record<string, () => JSX.Element> = {
 
 function RequireModule({ path, children }: { path: string; children: ReactNode }) {
   const role = useAuthStore((s) => s.user?.role);
-  if (path === "/") return <>{children}</>;
+  if (path === "/security") {
+    if (role === Role.SECURITY_MANAGER || role === Role.SUPER_ADMIN || role === Role.CHAIRMAN) return <>{children}</>;
+    return <Navigate to={roleHomePath(role)} replace />;
+  }
+  if (path === "/" && canAccessModule(role, "command-centre")) return <>{children}</>;
+  if (path === "/") return <Navigate to={roleHomePath(role)} replace />;
   const module = findModuleByPath(path);
   if (module && !canAccessModule(role, module.key)) {
     return <Navigate to={roleHomePath(role)} replace />;
@@ -87,9 +102,14 @@ function RequireModule({ path, children }: { path: string; children: ReactNode }
 }
 
 function ModulePage({ path, children }: { path: string; children: ReactNode }) {
+  const role = useAuthStore((s) => s.user?.role);
   const { feature, featureKey } = useActiveFeature();
+  const { search } = useLocation();
+  const view = new URLSearchParams(search).get("view");
   const base = MODULE_TITLES[path] ?? "";
   const title = feature?.label ? `${base} · ${feature.label}` : base;
+  const dash = !!role && DASH_ROLES.has(role);
+  if (role === Role.CHAIRMAN && path === "/") return <Navigate to="/chairman" replace />;
   const commandDesk =
     path === "/calendar" ||
     path === "/tasks" ||
@@ -98,18 +118,76 @@ function ModulePage({ path, children }: { path: string; children: ReactNode }) {
     path === "/finance" ||
     path === "/procurement" ||
     path === "/hrm";
+  const board =
+    dash &&
+    !featureKey &&
+    ((view === "settings" || view === "help") ||
+      (path === "/finance" && role === Role.FINANCE_CONTROLLER) ||
+      (path === "/hrm" && role === Role.HR_MANAGER) ||
+      (path === "/bookings" && role === Role.BOOKINGS_OFFICER));
+  let body: ReactNode;
+  if (dash && (view === "settings" || view === "help") && !featureKey) body = <DashSettings kind={view} />;
+  else if (dash && path === "/finance" && role === Role.FINANCE_CONTROLLER && !featureKey) body = <RevenueDashboard />;
+  else if (dash && path === "/hrm" && role === Role.HR_MANAGER && !featureKey) body = <HrDashboard />;
+  else if (dash && path === "/bookings" && role === Role.BOOKINGS_OFFICER && !featureKey) body = <BookingDashboard />;
+  else if (path === "/" || commandDesk) body = children;
+  else if (featureKey) body = <FeatureWorkspace key={featureKey} />;
+  else body = <ModuleHub />;
+  if (dash && role === Role.CHAIRMAN)
+    return (
+      <ReadOnlyContext.Provider value>
+        <DashFrame light={!(view === "settings" || view === "help")}>{body}</DashFrame>
+      </ReadOnlyContext.Provider>
+    );
+  if (dash) return <DashFrame light={!board}>{body}</DashFrame>;
+  return <AppShell title={title}>{body}</AppShell>;
+}
+
+function SecurityHome() {
+  const role = useAuthStore((s) => s.user?.role);
+  const frameRole = role === Role.SUPER_ADMIN ? Role.SECURITY_MANAGER : role;
+  const view = new URLSearchParams(useLocation().search).get("view");
   return (
-    <AppShell title={title}>
-      {path === "/" ? (
-        children
-      ) : commandDesk ? (
-        children
-      ) : featureKey ? (
-        <FeatureWorkspace key={featureKey} />
-      ) : (
-        <ModuleHub />
-      )}
-    </AppShell>
+    <ReadOnlyContext.Provider value={role === Role.CHAIRMAN}>
+      <DashFrame roleKey={frameRole}>
+        {view === "settings" || view === "help" ? <DashSettings kind={view} roleKey={frameRole} /> : <SecurityDashboard />}
+      </DashFrame>
+    </ReadOnlyContext.Provider>
+  );
+}
+
+function RequireChair({ children }: { children: ReactNode }) {
+  const role = useAuthStore((s) => s.user?.role);
+  if (role === Role.CHAIRMAN || role === Role.SUPER_ADMIN) return <>{children}</>;
+  return <Navigate to={roleHomePath(role)} replace />;
+}
+
+function ChairHome() {
+  const view = new URLSearchParams(useLocation().search).get("view");
+  if (view === "settings" || view === "help")
+    return (
+      <DashFrame roleKey={Role.CHAIRMAN}>
+        <DashSettings kind={view} roleKey={Role.CHAIRMAN} />
+      </DashFrame>
+    );
+  return <ChairmanDashboard />;
+}
+
+const DRILLS: Record<string, { Page: () => JSX.Element; photo: boolean }> = {
+  revenue: { Page: RevenueDashboard, photo: false },
+  hr: { Page: HrDashboard, photo: true },
+  booking: { Page: BookingDashboard, photo: true },
+  security: { Page: SecurityDashboard, photo: true },
+};
+
+function ChairDrill({ name }: { name: string }) {
+  const { Page, photo } = DRILLS[name];
+  return (
+    <ReadOnlyContext.Provider value>
+      <DashFrame roleKey={Role.CHAIRMAN} photo={photo}>
+        <Page />
+      </DashFrame>
+    </ReadOnlyContext.Provider>
   );
 }
 
@@ -152,6 +230,39 @@ export default function App() {
           />
         );
       })}
+      <Route
+        path="/security"
+        element={
+          <RequireAuth>
+            <RequireModule path="/security">
+              <SecurityHome />
+            </RequireModule>
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/chairman"
+        element={
+          <RequireAuth>
+            <RequireChair>
+              <ChairHome />
+            </RequireChair>
+          </RequireAuth>
+        }
+      />
+      {Object.keys(DRILLS).map((name) => (
+        <Route
+          key={name}
+          path={`/chairman/${name}`}
+          element={
+            <RequireAuth>
+              <RequireChair>
+                <ChairDrill name={name} />
+              </RequireChair>
+            </RequireAuth>
+          }
+        />
+      ))}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

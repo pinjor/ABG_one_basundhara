@@ -29,9 +29,9 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    if (user.role === Role.READ_ONLY_EXECUTIVE) {
+    if (user.role === Role.READ_ONLY_EXECUTIVE || user.role === Role.CHAIRMAN) {
       if (request.method === "GET") return true;
-      throw new ForbiddenException("Read-only Executive cannot perform write actions");
+      throw new ForbiddenException("View-only roles cannot perform write actions");
     }
 
     if (!requiredRoles.includes(user.role)) {

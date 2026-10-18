@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, Query, UseGuards } from "@nestjs/common";
-import { CurrentUser, RequestUser } from "../auth/current-user.decorator";
+import { CurrentUser, type RequestUser } from "../auth/current-user.decorator";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { RolesGuard } from "../auth/roles.guard";
 import { CreateDeskRecordDto, DeskActionDto, SetDeskStatusDto } from "./desk.dto";
