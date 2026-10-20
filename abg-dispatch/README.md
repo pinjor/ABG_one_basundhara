@@ -12,8 +12,8 @@ desk is never mistaken for being received.
 
 | | |
 |---|---|
-| **Mobile app** (Flutter · Android & iOS) | Employees book parcels and receive them; couriers scan, take custody, move and deliver; guest carriers sign in with a phone code. English and Bangla. Works offline. |
-| **Admin control centre** (React) | Live control room, parcel views and search, audited admin actions, analytics, registers and chain-of-custody reports, QR labels, offices / SLA / courier configuration, people and roles, audit log. |
+| **Mobile app** (Flutter · Android & iOS) | Employees book parcels and receive them; couriers scan, take custody, move and deliver; guest carriers sign in with a phone code; anyone can **report an incident** with a photo and follow it to Done. English and Bangla. Works offline. |
+| **Admin control centre** (React) | Live control room, parcel views and search, audited admin actions, analytics, registers and chain-of-custody reports, QR labels, **incident reports** inbox, offices / SLA / courier configuration, people and roles, audit log. |
 | **API** (NestJS · PostgreSQL) | Object-level authorisation on every request, state machine enforced in code *and* in the database, notifications (in-app, push, SMS), SLA escalation, courier adapters (Pathao, REDX, Steadfast). |
 
 <p>
@@ -43,6 +43,26 @@ Booked ─▶ Awaiting Pickup ─▶ Picked Up ─▶ In Transit ─▶ Arrived 
   redacts contents from those who only move the parcel — including
   lock-screen notifications and printed labels.
 - **SLA rules** remind, then escalate, and mark parcels overdue.
+
+## Incident reports
+
+Any employee who sees a problem — a cracked or leaking wall, a dirty floor, an
+unhygienic cafeteria, a washroom without water, exposed wiring, misconduct —
+opens **Report an incident**, picks the kind of problem, adds a title and up
+to three photos, says where and how urgent, and submits (anonymously if they
+wish). The office's admins and head office are notified at once; misconduct
+goes to head office only. Admins move each report **Pending → Processing →
+Done** (or Declined, with a reason) from the portal, with a message and photos
+of the fix, and the reporter is notified and sees every step in *My reports*.
+Details: [workflows §13](docs/workflows.md#13-incident-reports).
+
+<p>
+  <img src="docs/screenshots/mobile-12-report-incident.png" width="190" alt="Report an incident" />
+  <img src="docs/screenshots/mobile-13-incident-done.png" width="190" alt="Report resolved" />
+  <img src="docs/screenshots/mobile-14-my-reports.png" width="190" alt="My reports" />
+</p>
+
+![Incident reports in the portal](docs/screenshots/portal-11-incident-reports.png)
 
 ## Quick start
 
@@ -75,7 +95,7 @@ abg-dispatch/
 ## Checks
 
 ```bash
-bun run test                                   # 20 shared + 40 API tests (all 20 acceptance tests)
+bun run test                                   # 23 shared + 51 API tests (all 20 acceptance tests, 11 incident tests)
 cd apps/admin && bun run typecheck
 cd apps/mobile && flutter analyze && flutter test
 ```
@@ -112,6 +132,7 @@ cd apps/mobile && flutter analyze && flutter test
 | <img src="docs/screenshots/mobile-01-sign-in.png" width="240" /> | <img src="docs/screenshots/mobile-06-book-parcel.png" width="240" /> |
 | <img src="docs/screenshots/mobile-07-booked-qr-pin.png" width="240" /> | <img src="docs/screenshots/mobile-04-receive.png" width="240" /> |
 | <img src="docs/screenshots/mobile-05-custody-timeline.png" width="240" /> | <img src="docs/screenshots/mobile-09-guest-carrier.png" width="240" /> |
+| <img src="docs/screenshots/mobile-11-report-card.png" width="240" /> | <img src="docs/screenshots/mobile-13-incident-done.png" width="240" /> |
 
 Admin control centre: [parcels](docs/screenshots/portal-03-parcels.png) ·
 [parcel detail](docs/screenshots/portal-04-parcel-detail.png) ·
@@ -121,4 +142,6 @@ Admin control centre: [parcels](docs/screenshots/portal-03-parcels.png) ·
 [QR label](docs/screenshots/portal-08-qr-label.png) ·
 [SLA rules](docs/screenshots/portal-09-sla-rules.png) ·
 [people & roles](docs/screenshots/portal-10-people-roles.png) ·
+[incident reports](docs/screenshots/portal-11-incident-reports.png) ·
+[incident detail](docs/screenshots/portal-12-incident-detail.png) ·
 [sign-in](docs/screenshots/portal-01-sign-in.png)

@@ -33,6 +33,8 @@ import { AdminParcelsController } from "./admin/admin-parcels.controller";
 import { AdminInsightsController } from "./admin/admin-insights.controller";
 import { AdminConfigController } from "./admin/admin-config.controller";
 import { HealthController } from "./health/health.controller";
+import { IncidentsController } from "./incidents/incidents.controller";
+import { IncidentsService } from "./incidents/incidents.service";
 
 @Module({
   imports: [PrismaModule, AuditModule, RealtimeModule, JwtModule.register({})],
@@ -47,8 +49,10 @@ import { HealthController } from "./health/health.controller";
     AdminParcelsController,
     AdminInsightsController,
     AdminConfigController,
+    IncidentsController,
   ],
   providers: [
+    IncidentsService,
     { provide: APP_CONFIG, useFactory: loadConfig },
     { provide: APP_GUARD, useClass: AuthGuard },
     RateLimitGuard,

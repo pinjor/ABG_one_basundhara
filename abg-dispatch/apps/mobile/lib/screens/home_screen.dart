@@ -28,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ParcelSummary? _summary;
   List<ParcelRow> _attention = [];
   List<ParcelRow> _recent = [];
+  int? _openReports;
   Object? _error;
   bool _loading = true;
 
@@ -65,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _loading = false;
       });
       unawaited(context.read<NotificationBadge>().refresh());
+      unawaited(_loadReports(repo));
     } catch (e) {
       if (mounted) {
         setState(() {
@@ -72,6 +74,19 @@ class _HomeScreenState extends State<HomeScreen> {
           _loading = false;
         });
       }
+    }
+  }
+
+  Future<void> _loadReports(DispatchRepository repo) async {
+    if (!(context.read<SessionController>().profile?.can('incident.report') ??
+        false)) {
+      return;
+    }
+    try {
+      final open = await repo.myIncidents(state: 'open');
+      if (mounted) setState(() => _openReports = open.items.length);
+    } catch (_) {
+      // The card still works without the count.
     }
   }
 
@@ -192,6 +207,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     courier: courier,
                     loading: _loading,
                   ),
+                  if (profile?.can('incident.report') ?? false) ...[
+                    const SizedBox(height: 14),
+                    _ReportCard(
+                      openReports: _openReports,
+                      onReport: () async {
+                        await context.push('/incidents/new');
+                        if (mounted) unawaited(_load());
+                      },
+                      onMyReports: () async {
+                        await context.push('/incidents');
+                        if (mounted) unawaited(_load());
+                      },
+                    ),
+                  ],
                   const SizedBox(height: 22),
                   if (_error != null)
                     ErrorPanel(error: _error!, onRetry: _load)
@@ -542,6 +571,113 @@ class _StatTile extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Entry point for workplace incident reports, under the activity tiles.
+class _ReportCard extends StatelessWidget {
+  const _ReportCard({
+    required this.openReports,
+    required this.onReport,
+    required this.onMyReports,
+  });
+
+  final int? openReports;
+  final VoidCallback onReport;
+  final VoidCallback onMyReports;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    return SectionCard(
+      padding: EdgeInsets.zero,
+      child: Column(
+        children: [
+          InkWell(
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(AbgRadii.lg),
+            ),
+            onTap: onReport,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(14, 14, 10, 12),
+              child: Row(
+                children: [
+                  Container(
+                    width: 46,
+                    height: 46,
+                    decoration: BoxDecoration(
+                      gradient: AbgGradients.hero,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.campaign_rounded,
+                      color: AbgColors.platinum,
+                    ),
+                  ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l.incReport,
+                          style: AbgText.h3.copyWith(fontSize: 16),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(l.incReportHint, style: AbgText.caption),
+                      ],
+                    ),
+                  ),
+                  const Icon(
+                    Icons.add_a_photo_outlined,
+                    color: AbgColors.navy500,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const Divider(height: 1),
+          InkWell(
+            borderRadius: const BorderRadius.vertical(
+              bottom: Radius.circular(AbgRadii.lg),
+            ),
+            onTap: onMyReports,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 10, 12),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.fact_check_outlined,
+                    size: 19,
+                    color: AbgColors.navy500,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    l.incMyReports,
+                    style: AbgText.bodyStrong.copyWith(fontSize: 14),
+                  ),
+                  const Spacer(),
+                  if (openReports != null)
+                    Text(
+                      l.incOpenCount(openReports!),
+                      style: AbgText.caption.copyWith(
+                        color: openReports! > 0
+                            ? AbgColors.pending
+                            : AbgColors.inkSubtle,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  const Icon(
+                    Icons.chevron_right_rounded,
+                    color: AbgColors.borderStrong,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

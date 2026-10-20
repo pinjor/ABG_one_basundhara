@@ -8,6 +8,7 @@ import {
   FileSpreadsheet,
   LayoutDashboard,
   LogOut,
+  Megaphone,
   Menu,
   Package,
   PlugZap,
@@ -24,12 +25,14 @@ import { toast } from "./toast";
 import { useAuth } from "../lib/auth";
 import { api } from "../lib/api";
 import { cx } from "./ui";
+import { useIncidentSummary } from "../lib/lookups";
 
 interface NavItem {
   to: string;
   label: string;
   icon: LucideIcon;
   cap?: string;
+  badge?: "incidents";
 }
 
 const NAV: { section: string; items: NavItem[] }[] = [
@@ -38,6 +41,7 @@ const NAV: { section: string; items: NavItem[] }[] = [
     items: [
       { to: "/", label: "Control room", icon: LayoutDashboard, cap: Capability.DASHBOARD_VIEW },
       { to: "/parcels", label: "Parcels", icon: Package, cap: Capability.DASHBOARD_VIEW },
+      { to: "/incidents", label: "Incident reports", icon: Megaphone, cap: Capability.INCIDENT_VIEW, badge: "incidents" },
     ],
   },
   {
@@ -73,6 +77,8 @@ export function Layout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const caps = new Set(profile.capabilities);
+  const incidents = useIncidentSummary(undefined, caps.has(Capability.INCIDENT_VIEW));
+  const pending = incidents.data?.counts.PENDING ?? 0;
   const initials = profile.displayName
     .split(" ")
     .map((p) => p[0])
@@ -119,6 +125,11 @@ export function Layout({ children }: { children: ReactNode }) {
                     >
                       <item.icon className="h-[18px] w-[18px]" aria-hidden />
                       {item.label}
+                      {item.badge === "incidents" && pending > 0 && (
+                        <span className="tabular ml-auto rounded-full bg-pending px-1.5 text-[11px] font-bold leading-[18px] text-white" aria-label={`${pending} pending`}>
+                          {pending}
+                        </span>
+                      )}
                     </NavLink>
                   </li>
                 ))}

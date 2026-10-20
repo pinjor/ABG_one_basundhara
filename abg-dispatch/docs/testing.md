@@ -15,10 +15,11 @@ do. PostgreSQL triggers are part of what is tested.
 
 | Suite | File | Count |
 |---|---|---|
-| Shared domain (state machine, permissions, tracking numbers, redaction) | `packages/shared/src/domain.test.ts` | 20 |
+| Shared domain (state machine, permissions, tracking numbers, redaction) | `packages/shared/src/domain.test.ts` | 23 |
 | Mandatory acceptance tests | `apps/api/test/acceptance.test.ts` | 20 |
 | Authorisation, integrity and courier mapping | `apps/api/test/authorization.test.ts` | 20 |
-| Mobile (status tones and icons, status chips, Bangla labels, parcel card, timeline, viewer actions) | `apps/mobile/test/widget_test.dart` | 6 |
+| Incident reports (reporting with photos, who is notified, signed photo links, status rules, anonymity, misconduct routing, scope, image checks, idempotency, append-only history, summary) | `apps/api/test/incidents.test.ts` | 11 |
+| Mobile (status tones and icons, status chips, Bangla labels, parcel card, timeline, viewer actions, incident status chip, incident parsing) | `apps/mobile/test/widget_test.dart` | 8 |
 
 ## The 20 acceptance tests
 
@@ -60,6 +61,21 @@ status changes are rejected even by direct SQL; `RECEIVED` requires receiver,
 time and verification; proofs and audit entries cannot be altered; event
 sequences are gap-free; each provider's vocabulary maps onto ABG statuses.
 
+## Incident report tests
+
+An employee reports with a photo and only that office's admins and head
+office are told; photos open only for people involved or through an
+unforged, unexpired signed link; Pending → Processing → Done notifies the
+reporter each time and the history reads back in order; a closed report
+cannot be declined, declining needs a reason, and Done can be reopened; an
+anonymous report never reveals the reporter to handlers — not in the report,
+the list, search or notifications — while the reporter still follows it;
+misconduct reaches head office only; unrelated employees and other offices'
+admins get 404, auditors read but cannot change; non-images and a fourth
+photo are refused; a repeated `Idempotency-Key` files once; the history
+cannot be changed even by direct SQL; the summary counts the viewer's
+offices.
+
 ## UI verification
 
 The mobile app (web build) and the admin portal were driven with Playwright
@@ -70,3 +86,9 @@ and checked at phone width for overflow. The Docker stack was brought up in
 production mode and verified: migrations applied, seeding, admin MFA
 enrolment enforced, TOTP sign-in, live feed through nginx, and no
 Content-Security-Policy violations.
+
+Incident reports were driven the same way: Farhana reported a dirty floor
+with a photo on the phone, Sabina (Factory A branch admin) saw it in the
+portal, moved it to Processing and Done with messages and a fix photo, and
+Farhana's app showed each status, the admin's note and the alerts; Arif saw
+the confidential misconduct report that Sabina cannot.

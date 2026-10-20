@@ -11,12 +11,22 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import * as bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
+import { existsSync } from "fs";
+import { mkdir, readFile, writeFile } from "fs/promises";
+import { join, resolve } from "path";
 import {
+  ANONYMOUS_REPORTER,
   ActorType,
   AssignmentStatus,
   CarrierType,
   Classification,
   EventType,
+  INCIDENT_CATEGORY_LABEL,
+  IncidentCategory,
+  IncidentPhotoKind,
+  IncidentSeverity,
+  IncidentStatus,
+  IncidentUpdateType,
   ParcelStatus,
   Priority,
   ProofType,
@@ -26,6 +36,7 @@ import {
   SlaStage,
   VerificationMethod,
   dhakaDateStamp,
+  formatIncidentNumber,
   formatTrackingNumber,
 } from "@abg-dispatch/shared";
 
@@ -925,9 +936,185 @@ export async function seed(prisma: PrismaClient, opts: { now?: Date; history?: b
   await notify("ABG-3550", "exception", "ACTION_REQUIRED", EventType.EXCEPTION_RECORDED, "Delivery exception", `${await tn("exception")}: Office closed. Reported by Karim Ahmed.`, 80);
   await notify("ABG-1001", "overdue", "ACTION_REQUIRED", EventType.SLA_ESCALATED, "Dispatch SLA breached", `${await tn("overdue")} is overdue at the destination.`, 115);
 
+  await seedIncidents(prisma, { now, branches, locations, users });
+
   await prisma.auditLog.create({ data: { actorType: ActorType.SYSTEM, actorName: "Seed", action: "system.seeded", objectType: "system", objectId: "seed", summary: "Demo data loaded", actorUserId: admin.id } });
 
   return { org, branches, employees, users, categories, providers, guests, parcels: createdParcels, departments, locations };
+}
+
+// ── Workplace incident reports ──
+
+interface IncidentSeed {
+  key: string;
+  branch: string;
+  loc?: string;
+  detail?: string;
+  title: string;
+  description: string;
+  category: IncidentCategory;
+  severity: IncidentSeverity;
+  reporter: string;
+  anonymous?: boolean;
+  photo?: string;
+  minutesAgo: number;
+  steps?: { to?: IncidentStatus; note: string; by: string; minutesAgo: number }[];
+}
+
+const INCIDENTS: IncidentSeed[] = [
+  {
+    key: "leak", branch: "HO", loc: "L7", detail: "Beside lift 2, outside the Legal Department",
+    title: "Water leaking from the ceiling near the Level 7 lift",
+    description: "Water is dripping from a stained ceiling tile onto the corridor floor. People are walking around it.",
+    category: IncidentCategory.BUILDING_DAMAGE, severity: IncidentSeverity.HIGH, reporter: "ABG-2041", photo: "ceiling-leak.jpg", minutesAgo: 185,
+    steps: [{ to: IncidentStatus.PROCESSING, note: "Maintenance informed — a plumber is on the way and the area is cordoned off.", by: "ABG-1001", minutesAgo: 150 }],
+  },
+  {
+    key: "canteen", branch: "FCA", loc: "ADMINBLK", detail: "Staff canteen, ground floor",
+    title: "Cafeteria serving counter not cleaned after lunch",
+    description: "Leftover food and flies on the serving counter at 3 pm. Trays stacked next to the bin.",
+    category: IncidentCategory.CAFETERIA_HYGIENE, severity: IncidentSeverity.MEDIUM, reporter: "ABG-7310", anonymous: true, minutesAgo: 40,
+  },
+  {
+    key: "crack", branch: "FCB", loc: "PROD", detail: "Store room, north wall behind the racks",
+    title: "Crack spreading across the store-room wall",
+    description: "The crack has grown over the last week and plaster has fallen near the racks.",
+    category: IncidentCategory.BUILDING_DAMAGE, severity: IncidentSeverity.MEDIUM, reporter: "ABG-7420", photo: "cracked-wall.jpg", minutesAgo: 130,
+  },
+  {
+    key: "wires", branch: "FCA", loc: "PROD", detail: "Switchboard by the north entrance",
+    title: "Exposed wires at the production-floor switchboard",
+    description: "The switchboard cover is missing and wires are exposed at hand height.",
+    category: IncidentCategory.ELECTRICAL, severity: IncidentSeverity.URGENT, reporter: "ABG-4870", minutesAgo: 55,
+    steps: [{ to: IncidentStatus.PROCESSING, note: "Electrician called; the area is closed until it is made safe.", by: "ABG-5120", minutesAgo: 45 }],
+  },
+  {
+    key: "wetfloor", branch: "HO", loc: "RECEPTION", detail: "Main entrance, near the visitor sofas",
+    title: "Wet floor at reception with no warning sign",
+    description: "Rainwater tracked in from the entrance. A visitor nearly slipped.",
+    category: IncidentCategory.SAFETY_HAZARD, severity: IncidentSeverity.HIGH, reporter: "ABG-2055", photo: "wet-floor.jpg", minutesAgo: 1500,
+    steps: [
+      { to: IncidentStatus.PROCESSING, note: "Housekeeping alerted.", by: "ABG-1001", minutesAgo: 1490 },
+      { to: IncidentStatus.DONE, note: "Floor dried and a caution sign placed. Housekeeping will check every hour when it rains.", by: "ABG-1001", minutesAgo: 1440 },
+    ],
+  },
+  {
+    key: "washroom", branch: "CO", loc: "RECEPTION", detail: "2nd floor washroom",
+    title: "No water in the 2nd floor washroom",
+    description: "Taps and flush have had no water since morning.",
+    category: IncidentCategory.WASHROOM, severity: IncidentSeverity.MEDIUM, reporter: "ABG-6021", minutesAgo: 4300,
+    steps: [
+      { to: IncidentStatus.PROCESSING, note: "Building management contacted about the pump.", by: "ABG-1001", minutesAgo: 4200 },
+      { to: IncidentStatus.DONE, note: "Water pump repaired; supply restored.", by: "ABG-1001", minutesAgo: 3000 },
+    ],
+  },
+  {
+    key: "supplier", branch: "HO", loc: "L5", detail: "Procurement",
+    title: "Supplier asking staff for cash to speed up deliveries",
+    description: "A supplier's representative has twice suggested a cash payment to move our orders up the queue.",
+    category: IncidentCategory.MISCONDUCT, severity: IncidentSeverity.HIGH, reporter: "ABG-2305", anonymous: true, minutesAgo: 1600,
+    steps: [{ to: IncidentStatus.PROCESSING, note: "Thank you for reporting this. Head office is reviewing it confidentially.", by: "ABG-1001", minutesAgo: 1380 }],
+  },
+  {
+    key: "drawer", branch: "DHK", loc: "DESK", detail: "Front-desk drawer",
+    title: "Broken lock on the front-desk drawer",
+    description: "The drawer where visitor passes are kept no longer locks.",
+    category: IncidentCategory.SECURITY, severity: IncidentSeverity.LOW, reporter: "ABG-6150", minutesAgo: 2900,
+    steps: [{ to: IncidentStatus.DECLINED, note: "Visitor passes have moved to the locked cabinet; the old drawer is being removed with the desk refit.", by: "ABG-1001", minutesAgo: 2700 }],
+  },
+];
+
+async function seedIncidents(
+  prisma: PrismaClient,
+  ctx: { now: Date; branches: Record<string, { id: string; name: string; code: string }>; locations: Record<string, { id: string }>; users: Record<string, { id: string; name: string }> },
+) {
+  const storageRoot = resolve(process.env.STORAGE_DIR || "./storage");
+  const counters = new Map<string, number>();
+  for (const seed of [...INCIDENTS].sort((a, b) => b.minutesAgo - a.minutesAgo)) {
+    const createdAt = new Date(ctx.now.getTime() - seed.minutesAgo * MIN);
+    const day = dhakaDateStamp(createdAt);
+    const counterKey = `INC:${seed.branch}|${day}`;
+    const n = (counters.get(counterKey) ?? 0) + 1;
+    counters.set(counterKey, n);
+    const steps = seed.steps ?? [];
+    const last = steps[steps.length - 1];
+    const status = last?.to ?? IncidentStatus.PENDING;
+    const at = (m: number) => new Date(ctx.now.getTime() - m * MIN);
+    const reporter = ctx.users[seed.reporter];
+    const incident = await prisma.incident.create({
+      data: {
+        referenceNumber: formatIncidentNumber(day, seed.branch, n),
+        title: seed.title,
+        description: seed.description,
+        category: seed.category,
+        severity: seed.severity,
+        status,
+        branchId: ctx.branches[seed.branch].id,
+        locationId: seed.loc ? ctx.locations[`${seed.branch}:${seed.loc}`]?.id ?? null : null,
+        locationDetail: seed.detail ?? null,
+        reporterUserId: reporter.id,
+        anonymous: !!seed.anonymous,
+        statusNote: last?.note ?? null,
+        statusChangedAt: last ? at(last.minutesAgo) : createdAt,
+        processingAt: steps.find((s) => s.to === IncidentStatus.PROCESSING) ? at(steps.find((s) => s.to === IncidentStatus.PROCESSING)!.minutesAgo) : null,
+        doneAt: status === IncidentStatus.DONE ? at(last!.minutesAgo) : null,
+        declinedAt: status === IncidentStatus.DECLINED ? at(last!.minutesAgo) : null,
+        lastHandledById: last ? ctx.users[last.by].id : null,
+        createdAt,
+      },
+    });
+    if (seed.photo) {
+      const source = join(__dirname, "demo-photos", seed.photo);
+      if (existsSync(source)) {
+        const key = `seed/${randomBytes(12).toString("base64url")}.jpg`;
+        await mkdir(join(storageRoot, "seed"), { recursive: true });
+        const data = await readFile(source);
+        await writeFile(join(storageRoot, key), data);
+        await prisma.incidentPhoto.create({
+          data: { incidentId: incident.id, kind: IncidentPhotoKind.REPORT, storageKey: key, fileName: seed.photo, mimeType: "image/jpeg", sizeBytes: data.length, uploadedByUserId: seed.anonymous ? null : reporter.id, createdAt },
+        });
+      }
+    }
+    await prisma.incidentUpdate.create({
+      data: { incidentId: incident.id, type: IncidentUpdateType.SUBMITTED, toStatus: IncidentStatus.PENDING, actorUserId: seed.anonymous ? null : reporter.id, actorName: seed.anonymous ? ANONYMOUS_REPORTER : reporter.name, metadata: { photos: seed.photo ? 1 : 0 }, createdAt },
+    });
+    let from: string = IncidentStatus.PENDING;
+    for (const step of steps) {
+      await prisma.incidentUpdate.create({
+        data: { incidentId: incident.id, type: IncidentUpdateType.STATUS_CHANGED, fromStatus: from, toStatus: step.to, note: step.note, actorUserId: ctx.users[step.by].id, actorName: ctx.users[step.by].name, createdAt: at(step.minutesAgo) },
+      });
+      from = step.to ?? from;
+    }
+    // Inbox items: the handler hears about new reports; the reporter hears about progress.
+    const data = { incidentId: incident.id, referenceNumber: incident.referenceNumber, status };
+    if (status === IncidentStatus.PENDING) {
+      const handler = seed.branch === "FCA" ? "ABG-5120" : seed.branch === "FCB" ? "ABG-7455" : "ABG-1001";
+      await prisma.notification.create({
+        data: { userId: ctx.users[handler].id, eventType: "INCIDENT_REPORTED", category: "ACTION_REQUIRED", title: `New incident at ${ctx.branches[seed.branch].name}`, body: `${seed.title} — ${INCIDENT_CATEGORY_LABEL[seed.category]}. ${incident.referenceNumber}`, createdAt, dedupeKey: `seed:incident:${seed.key}:${handler}`, data: { ...data, status: IncidentStatus.PENDING } },
+      });
+    }
+    if (last) {
+      await prisma.notification.create({
+        data: {
+          userId: reporter.id,
+          eventType: "INCIDENT_UPDATED",
+          category: "PARCEL_UPDATE",
+          title: status === IncidentStatus.DONE ? "Your report has been resolved" : status === IncidentStatus.DECLINED ? "Your report was declined" : "Your report is being processed",
+          body: `${incident.referenceNumber} · ${seed.title} — ${last.note}`,
+          sensitive: seed.category === IncidentCategory.MISCONDUCT,
+          readAt: seed.minutesAgo > 600 ? ctx.now : null,
+          createdAt: at(last.minutesAgo),
+          dedupeKey: `seed:incident:${seed.key}:reporter`,
+          data,
+        },
+      });
+    }
+  }
+  // New reports continue each office's numbering for the day.
+  for (const [key, value] of counters) {
+    const [branchCode, dayStamp] = key.split("|");
+    await prisma.trackingSequence.upsert({ where: { branchCode_dayStamp: { branchCode, dayStamp } }, create: { branchCode, dayStamp, lastValue: value }, update: { lastValue: value } });
+  }
 }
 
 async function main() {

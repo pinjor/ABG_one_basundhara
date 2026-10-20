@@ -61,8 +61,9 @@ model Branch {
   employees      Employee[]
   userRoles      UserRole[]
 
-  originParcels      Parcel[] @relation("OriginBranch")
-  destinationParcels Parcel[] @relation("DestinationBranch")
+  originParcels      Parcel[]   @relation("OriginBranch")
+  destinationParcels Parcel[]   @relation("DestinationBranch")
+  incidents          Incident[]
 
   @@map("branches")
 }
@@ -89,6 +90,7 @@ model Location {
   employees          Employee[]
   originParcels      Parcel[]      @relation("OriginLocation")
   destinationParcels Parcel[]      @relation("DestinationLocation")
+  incidents          Incident[]
   events             ParcelEvent[]
 
   @@index([branchId])
@@ -96,17 +98,17 @@ model Location {
 }
 
 model Department {
-  id         String    @id @default(uuid())
+  id         String     @id @default(uuid())
   branchId   String
-  branch     Branch    @relation(fields: [branchId], references: [id])
+  branch     Branch     @relation(fields: [branchId], references: [id])
   name       String
   code       String
   /// Where parcels for this department are normally dropped.
   locationId String?
-  location   Location? @relation(fields: [locationId], references: [id])
-  active     Boolean   @default(true)
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  location   Location?  @relation(fields: [locationId], references: [id])
+  active     Boolean    @default(true)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
   employees  Employee[]
 
   senderParcels   Parcel[] @relation("SenderDepartment")
@@ -170,14 +172,15 @@ model User {
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
 
-  roles           UserRole[]
-  sessions        UserSession[]
-  devices         DeviceToken[]
-  notifications   Notification[]
-  savedViews      SavedView[]
-  preferences     NotificationPreference[]
-  createdParcels  Parcel[]                 @relation("CreatedBy")
-  assignmentsMade CarrierAssignment[]      @relation("AssignedBy")
+  roles             UserRole[]
+  sessions          UserSession[]
+  devices           DeviceToken[]
+  notifications     Notification[]
+  savedViews        SavedView[]
+  preferences       NotificationPreference[]
+  createdParcels    Parcel[]                 @relation("CreatedBy")
+  reportedIncidents Incident[]               @relation("IncidentReporter")
+  assignmentsMade   CarrierAssignment[]      @relation("AssignedBy")
 
   @@map("users")
 }
@@ -331,7 +334,7 @@ model Parcel {
   destinationLocationId        String?
   destinationLocation          Location?   @relation("DestinationLocation", fields: [destinationLocationId], references: [id])
 
-  expectedDeliveryAt DateTime?
+  expectedDeliveryAt  DateTime?
   /// bcrypt hash of the sender's handover PIN. The PIN is shown to the sender once.
   handoverPinHash     String?
   /// Wrong PIN attempts. At the limit the PIN stops working and handover needs the sender's app or a dispatch officer.
@@ -363,12 +366,12 @@ model Parcel {
   /// Status to resume after ON_HOLD or DELIVERY_EXCEPTION is cleared.
   resumeStatus      String?
 
-  isOverdue           Boolean   @default(false)
+  isOverdue           Boolean            @default(false)
   overdueSince        DateTime?
-  hasOpenException    Boolean   @default(false)
-  currentAssignmentId String?   @unique
+  hasOpenException    Boolean            @default(false)
+  currentAssignmentId String?            @unique
   currentAssignment   CarrierAssignment? @relation("CurrentAssignment", fields: [currentAssignmentId], references: [id])
-  lastEventSequence   Int       @default(0)
+  lastEventSequence   Int                @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -769,4 +772,84 @@ model SavedView {
 
   @@index([userId])
   @@map("saved_views")
+}
+
+// ── Workplace incident reports ──────────────────────────────────────────────
+
+/// An employee's report of a problem at an office (damage, hygiene, safety,
+/// misconduct…). Routed to that office's admins; misconduct goes to head office only.
+model Incident {
+  id              String    @id @default(uuid())
+  /// INC-YYMMDD-OFFICE-NNN
+  referenceNumber String    @unique
+  title           String
+  description     String    @default("")
+  category        String
+  severity        String    @default("MEDIUM")
+  status          String    @default("PENDING")
+  branchId        String
+  branch          Branch    @relation(fields: [branchId], references: [id])
+  locationId      String?
+  location        Location? @relation(fields: [locationId], references: [id])
+  /// "3rd floor, beside the lift"
+  locationDetail  String?
+  /// Kept even for anonymous reports, only to send status updates back to the
+  /// reporter. Never returned to anyone else by the API.
+  reporterUserId  String
+  reporter        User      @relation("IncidentReporter", fields: [reporterUserId], references: [id])
+  anonymous       Boolean   @default(false)
+  /// The latest note the admins left for the reporter.
+  statusNote      String?
+  statusChangedAt DateTime  @default(now())
+  processingAt    DateTime?
+  doneAt          DateTime?
+  declinedAt      DateTime?
+  lastHandledById String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  updates IncidentUpdate[]
+  photos  IncidentPhoto[]
+
+  @@index([branchId, status])
+  @@index([status, createdAt])
+  @@index([reporterUserId, createdAt])
+  @@map("incidents")
+}
+
+/// The incident's history. Append-only (database trigger), like the custody ledger.
+model IncidentUpdate {
+  id          String   @id @default(uuid())
+  incidentId  String
+  incident    Incident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  type        String
+  fromStatus  String?
+  toStatus    String?
+  /// Visible to the reporter.
+  note        String?
+  /// Null for an anonymous submission.
+  actorUserId String?
+  actorName   String
+  metadata    Json     @default("{}")
+  createdAt   DateTime @default(now())
+
+  @@index([incidentId, createdAt])
+  @@map("incident_updates")
+}
+
+model IncidentPhoto {
+  id               String   @id @default(uuid())
+  incidentId       String
+  incident         Incident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  /// REPORT (the problem) or RESOLUTION (proof it was fixed)
+  kind             String
+  storageKey       String   @unique
+  fileName         String
+  mimeType         String
+  sizeBytes        Int
+  uploadedByUserId String?
+  createdAt        DateTime @default(now())
+
+  @@index([incidentId])
+  @@map("incident_photos")
 }

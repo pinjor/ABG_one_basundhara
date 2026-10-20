@@ -8,12 +8,15 @@ import 'screens/create_parcel_screen.dart';
 import 'screens/guest_home_screen.dart';
 import 'screens/guest_login_screen.dart';
 import 'screens/home_screen.dart';
+import 'screens/incident_detail_screen.dart';
 import 'screens/login_screen.dart';
+import 'screens/my_reports_screen.dart';
 import 'screens/notifications_screen.dart';
 import 'screens/parcel_detail_screen.dart';
 import 'screens/parcels_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/qr_label_screen.dart';
+import 'screens/report_incident_screen.dart';
 import 'screens/scan_screen.dart';
 import 'screens/splash_screen.dart';
 import 'widgets/app_shell.dart';
@@ -77,6 +80,24 @@ GoRouter buildRouter(SessionController session) {
         path: '/create',
         parentNavigatorKey: rootNavigatorKey,
         builder: (_, _) => const CreateParcelScreen(),
+      ),
+      GoRoute(
+        path: '/incidents',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (_, _) => const MyReportsScreen(),
+        routes: [
+          GoRoute(
+            path: 'new',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, _) => const ReportIncidentScreen(),
+          ),
+          GoRoute(
+            path: ':id',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, s) =>
+                IncidentDetailScreen(id: s.pathParameters['id']!),
+          ),
+        ],
       ),
       GoRoute(
         path: '/booked',

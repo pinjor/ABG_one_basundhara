@@ -181,3 +181,65 @@ Tone eventTone(String type) => switch (type) {
   'HANDOVER_REQUESTED' => Tone.pending,
   _ => Tone.neutral,
 };
+
+// ── Incident reports ──
+
+String incidentStatusLabel(L l, String s) => switch (s) {
+  'PENDING' => l.incStatusPENDING,
+  'PROCESSING' => l.incStatusPROCESSING,
+  'DONE' => l.incStatusDONE,
+  'DECLINED' => l.incStatusDECLINED,
+  _ => s,
+};
+
+Tone incidentStatusTone(String s) => switch (s) {
+  'PENDING' => Tone.pending,
+  'PROCESSING' => Tone.active,
+  'DONE' => Tone.success,
+  _ => Tone.neutral,
+};
+
+IconData incidentStatusIcon(String s) => switch (s) {
+  'PENDING' => Icons.hourglass_top_rounded,
+  'PROCESSING' => Icons.construction_rounded,
+  'DONE' => Icons.task_alt_rounded,
+  _ => Icons.do_not_disturb_on_outlined,
+};
+
+String incidentCategoryLabel(L l, String c) => switch (c) {
+  'BUILDING_DAMAGE' => l.incCatBUILDING_DAMAGE,
+  'CLEANLINESS' => l.incCatCLEANLINESS,
+  'CAFETERIA_HYGIENE' => l.incCatCAFETERIA_HYGIENE,
+  'WASHROOM' => l.incCatWASHROOM,
+  'SAFETY_HAZARD' => l.incCatSAFETY_HAZARD,
+  'ELECTRICAL' => l.incCatELECTRICAL,
+  'SECURITY' => l.incCatSECURITY,
+  'MISCONDUCT' => l.incCatMISCONDUCT,
+  _ => l.incCatOTHER,
+};
+
+IconData incidentCategoryIcon(String c) => switch (c) {
+  'BUILDING_DAMAGE' => Icons.domain_disabled_outlined,
+  'CLEANLINESS' => Icons.cleaning_services_outlined,
+  'CAFETERIA_HYGIENE' => Icons.restaurant_outlined,
+  'WASHROOM' => Icons.wash_outlined,
+  'SAFETY_HAZARD' => Icons.warning_amber_rounded,
+  'ELECTRICAL' => Icons.electrical_services_rounded,
+  'SECURITY' => Icons.shield_outlined,
+  'MISCONDUCT' => Icons.gavel_rounded,
+  _ => Icons.more_horiz_rounded,
+};
+
+String incidentSeverityLabel(L l, String s) => switch (s) {
+  'LOW' => l.incSevLOW,
+  'HIGH' => l.incSevHIGH,
+  'URGENT' => l.incSevURGENT,
+  _ => l.incSevMEDIUM,
+};
+
+Tone incidentSeverityTone(String s) => switch (s) {
+  'LOW' => Tone.neutral,
+  'HIGH' => Tone.pending,
+  'URGENT' => Tone.danger,
+  _ => Tone.active,
+};

@@ -31,12 +31,18 @@ export const Capability = {
   CONFIG_MANAGE: "config.manage",
   USERS_MANAGE: "users.manage",
   INTEGRATIONS_MANAGE: "integrations.manage",
+  /** Report a workplace incident (every employee). */
+  INCIDENT_REPORT: "incident.report",
+  /** See incident reports for one's offices. */
+  INCIDENT_VIEW: "incident.view",
+  /** Change an incident's status, add notes and fix photos. */
+  INCIDENT_MANAGE: "incident.manage",
 } as const;
 export type Capability = (typeof Capability)[keyof typeof Capability];
 
 const C = Capability;
 
-const EMPLOYEE_CAPS: Capability[] = [C.PARCEL_CREATE, C.PARCEL_VIEW_OWN, C.EXCEPTION_RECORD];
+const EMPLOYEE_CAPS: Capability[] = [C.PARCEL_CREATE, C.PARCEL_VIEW_OWN, C.EXCEPTION_RECORD, C.INCIDENT_REPORT];
 
 const OPERATIONS_CAPS: Capability[] = [
   C.PARCEL_VIEW_BRANCH,
@@ -54,8 +60,8 @@ const OPERATIONS_CAPS: Capability[] = [
 export const ROLE_CAPABILITIES: Record<RoleCode, readonly Capability[]> = {
   EMPLOYEE: EMPLOYEE_CAPS,
   SENDER: EMPLOYEE_CAPS,
-  RECEIVER: [C.PARCEL_VIEW_OWN, C.EXCEPTION_RECORD],
-  COURIER_RUNNER: [C.PARCEL_VIEW_OWN, C.COURIER_ACTIONS, C.EXCEPTION_RECORD],
+  RECEIVER: [C.PARCEL_VIEW_OWN, C.EXCEPTION_RECORD, C.INCIDENT_REPORT],
+  COURIER_RUNNER: [C.PARCEL_VIEW_OWN, C.COURIER_ACTIONS, C.EXCEPTION_RECORD, C.INCIDENT_REPORT],
   DISPATCH_OFFICER: [...EMPLOYEE_CAPS, ...OPERATIONS_CAPS, C.COURIER_ACTIONS],
   BRANCH_ADMIN: [
     ...EMPLOYEE_CAPS,
@@ -67,6 +73,8 @@ export const ROLE_CAPABILITIES: Record<RoleCode, readonly Capability[]> = {
     C.SLA_UPDATE,
     C.ANALYTICS_VIEW,
     C.AUDIT_VIEW,
+    C.INCIDENT_VIEW,
+    C.INCIDENT_MANAGE,
   ],
   HEAD_OFFICE_ADMIN: [
     ...EMPLOYEE_CAPS,
@@ -79,8 +87,10 @@ export const ROLE_CAPABILITIES: Record<RoleCode, readonly Capability[]> = {
     C.SLA_UPDATE,
     C.ANALYTICS_VIEW,
     C.AUDIT_VIEW,
+    C.INCIDENT_VIEW,
+    C.INCIDENT_MANAGE,
   ],
-  AUDITOR: [C.PARCEL_VIEW_ALL, C.DASHBOARD_VIEW, C.ANALYTICS_VIEW, C.REPORTS_EXPORT, C.AUDIT_VIEW],
+  AUDITOR: [C.PARCEL_VIEW_ALL, C.DASHBOARD_VIEW, C.ANALYTICS_VIEW, C.REPORTS_EXPORT, C.AUDIT_VIEW, C.INCIDENT_VIEW],
   SUPER_ADMIN: Object.values(Capability),
 };
 

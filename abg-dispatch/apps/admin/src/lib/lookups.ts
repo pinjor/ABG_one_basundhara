@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { api } from "./api";
+import { api, qs } from "./api";
+import type { IncidentSummary } from "./types";
 
 export interface Branch {
   id: string;
@@ -37,3 +38,12 @@ export interface Provider {
 export const useBranches = () => useQuery({ queryKey: ["admin", "branches"], queryFn: () => api.get<Branch[]>("/admin/branches"), staleTime: 5 * 60_000 });
 export const useCategories = () => useQuery({ queryKey: ["admin", "categories"], queryFn: () => api.get<Category[]>("/admin/categories"), staleTime: 5 * 60_000 });
 export const useProviders = () => useQuery({ queryKey: ["admin", "courier-providers"], queryFn: () => api.get<Provider[]>("/admin/courier-providers"), staleTime: 5 * 60_000 });
+
+/** Incident counts for the sidebar badge, control-room strip and inbox; refreshed every minute. */
+export const useIncidentSummary = (branchId?: string, enabled = true) =>
+  useQuery({
+    queryKey: ["admin", "incidents", "summary", branchId ?? ""],
+    queryFn: () => api.get<IncidentSummary>(`/admin/incidents/summary${qs({ branchId })}`),
+    refetchInterval: 60_000,
+    enabled,
+  });

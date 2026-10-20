@@ -68,3 +68,23 @@ offices, couriers and categories, so analytics and reports have real shape.
 Notifications, SLA rules (pickup, delivery, receipt reminder at 1 h, receipt
 escalation at 2 h, end-to-end at 8 h, priority-specific pickup reminders) and
 four courier providers (Pathao, REDX, Steadfast and a generic "Other") are seeded too.
+
+## Incident reports
+
+Eight reports across the offices, so every state is on screen:
+
+| Office | Report | Reported by | State |
+|---|---|---|---|
+| HO | Water leaking from the ceiling near the Level 7 lift (photo, High) | Md. Rahim | Processing — plumber on the way |
+| FCA | Cafeteria serving counter not cleaned after lunch | Anonymous (Shahin) | **Pending** |
+| FCB | Crack spreading across the store-room wall (photo) | Imran Hossain | **Pending** |
+| FCA | Exposed wires at the production-floor switchboard (Urgent) | Rafiq Islam | Processing — electrician called |
+| HO | Wet floor at reception with no warning sign (photo) | Nusrat Jahan | Done |
+| CO | No water in the 2nd floor washroom | Jamal Uddin | Done |
+| HO | Supplier asking staff for cash to speed up deliveries (**misconduct**) | Anonymous (Mehedi Hasan) | Processing — head office only |
+| DHK | Broken lock on the front-desk drawer | Laila Rahman | Declined, with the reason |
+
+Sign in as **Sabina Yasmin** to handle Factory A's reports (she cannot see the
+misconduct report), **Arif Chowdhury** for every office, and **Farhana
+Islam** or **Md. Rahim** on the phone to report one and follow it.
+

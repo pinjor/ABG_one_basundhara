@@ -11,6 +11,7 @@ import '../models/models.dart';
 import '../theme/theme.dart';
 import '../theme/tokens.dart';
 import '../widgets/common.dart';
+import '../widgets/vocab.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -68,7 +69,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       setState(() => n.read = true);
       unawaited(repo.markRead(n.id).then((_) => badge.refresh()));
     }
-    if (n.parcelId != null) await context.push('/parcels/${n.parcelId}');
+    if (n.incidentId != null) {
+      await context.push('/incidents/${n.incidentId}');
+    } else if (n.parcelId != null) {
+      await context.push('/parcels/${n.parcelId}');
+    }
   }
 
   @override
@@ -190,7 +195,21 @@ class _NotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = L.of(context);
     final action = item.category == 'ACTION_REQUIRED';
+    final incidentTone = item.incidentId == null
+        ? null
+        : toneColors(
+            item.eventType == 'INCIDENT_REPORTED'
+                ? Tone.pending
+                : incidentStatusTone(item.incidentStatus ?? 'PENDING'),
+          );
     final (icon, fg, bg) = switch (item.eventType) {
+      _ when incidentTone != null => (
+        item.eventType == 'INCIDENT_REPORTED'
+            ? Icons.campaign_outlined
+            : incidentStatusIcon(item.incidentStatus ?? 'PENDING'),
+        incidentTone.fg,
+        incidentTone.bg,
+      ),
       'RECEIVED' => (
         Icons.verified_outlined,
         AbgColors.success,

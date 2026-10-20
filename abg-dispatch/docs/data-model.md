@@ -50,6 +50,12 @@ erDiagram
   Parcel ||--o{ Escalation : "once per policy"
   CourierProvider ||--o{ ExternalProviderEvent : "webhook events"
   Parcel |o--o{ ExternalProviderEvent : "matched to"
+
+  Branch ||--o{ Incident : "reported at"
+  Location |o--o{ Incident : "area"
+  User ||--o{ Incident : "reported by"
+  Incident ||--o{ IncidentUpdate : "append-only history"
+  Incident ||--o{ IncidentPhoto : "problem / fix photos"
 ```
 
 Standalone tables: `AuditLog` (append-only), `IdempotencyRecord`,
@@ -68,6 +74,9 @@ Standalone tables: `AuditLog` (append-only), `IdempotencyRecord`,
 | `sla_policies` / `escalations` | Configurable rules and the record of each trigger | Unique `(parcelId, slaPolicyId)` → never double-escalates |
 | `external_provider_events` | Raw courier webhooks with outcome | Unique `(courierProviderId, externalEventId)` → replay guard |
 | `audit_logs` | Administrative and security events with before/after JSON, actor, IP, user agent, session | **Append-only trigger** |
+| `incidents` | Workplace incident reports: reference `INC-…`, title, description, category, severity, status (`PENDING`, `PROCESSING`, `DONE`, `DECLINED`), office, area, exact spot, reporter, `anonymous`, latest note for the reporter, `processingAt` / `doneAt` / `declinedAt` | Status, severity and category CHECKs; Done needs `doneAt`, Declined needs `declinedAt`; unique reference |
+| `incident_updates` | Submitted, status changes, notes, photos and detail edits, with actor snapshot (`Anonymous employee` and no user id for anonymous reporters) | **Append-only trigger** |
+| `incident_photos` | Photo metadata (`REPORT` or `RESOLUTION`); bytes in private storage | Kind CHECK; type sniffed from content |
 | `idempotency_records` | Response cache for `Idempotency-Key` on create | Unique `(actorKey, key)` |
 
 ## Migrations
@@ -80,6 +89,10 @@ Standalone tables: `AuditLog` (append-only), `IdempotencyRecord`,
    in it, even from raw SQL; `pg_trgm` indexes for fast "contains" search on
    titles, tracking numbers and employee names.
 
+3. `20261020000300_incident_reports` — `incidents`, `incident_updates`,
+   `incident_photos`; the append-only trigger on `incident_updates`; CHECK
+   constraints; a `pg_trgm` index on incident titles.
+
 Apply with `bun run db:migrate` (or automatically when the API container starts).
 Tests assert that the database transition table equals the TypeScript one.
 
@@ -90,5 +103,7 @@ Tests assert that the database transition table equals the TypeScript one.
   `tracking_sequences` (row-locked, so concurrent bookings never collide).
 - **QR payload** `<PUBLIC_QR_BASE_URL>/q/<token>`. The token is random and
   reveals nothing; scanning it requires an authorised session to resolve.
+- **Incident reference** `INC-YYMMDD-OFFICE-NNN`, e.g. `INC-261020-FCA-007`,
+  numbered per office per day from the same sequence table.
 - **Handover PIN** — six digits shown only to the sender, stored as a hash,
   locked after five wrong attempts.

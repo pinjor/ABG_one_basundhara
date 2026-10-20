@@ -187,3 +187,67 @@ monthly office summary, courier activity, and the per-parcel
 **chain-of-custody** report. Each can be viewed, printed with the ABG header,
 or downloaded as CSV (opens in Excel). Parcel lists export to CSV with the
 current filters. All exports respect the viewer's scope and redaction.
+
+## 13. Incident reports
+
+Any employee can flag a problem at work that needs an admin's attention —
+a cracked or leaking wall, a dirty floor, an unhygienic cafeteria, a washroom
+without water, exposed wiring, a security gap, or misconduct.
+
+**Reporting (mobile → *Report an incident*, on Home and Profile).** The
+employee picks the kind of problem, gives a title (3–120 characters), an
+optional description, up to **three photos** (camera or gallery), the office
+(defaults to their own), an optional area and exact spot, and how urgent it
+is (Low · Medium · High · Urgent). They may report **anonymously**; misconduct
+reports default to anonymous. The report is sent as one multipart
+`POST /incidents` with an `Idempotency-Key`, so a retry on a bad connection
+never files it twice. It gets a reference `INC-YYMMDD-OFFICE-NNN` (per office
+per day, from `tracking_sequences` under key `INC:<office>`). Photos are
+sniffed from their bytes (JPEG, PNG or WebP only, 10 MB each).
+
+**Who is told.** At once, in-app and by push: the office's branch admins and
+head-office admins (super admins if there are none). High and urgent reports
+are titled *Urgent: …*. **Misconduct** goes to head office only — the
+office's own admins never see it, in the list or by id — and its push shows
+only "You have a new report to review" on the lock screen.
+
+**Handling (portal → *Incident reports*).** The sidebar shows the pending
+count and the control room shows a strip while anything is open. Tabs: Needs
+attention (Pending + Processing), Pending, Processing, Done, Declined, All;
+filters for office, kind and urgency; search by reference, title, place or
+reporter. An admin with `incident.manage`:
+
+```
+Pending ──▶ Processing ──▶ Done
+   │             │           │
+   └──▶ Done     └──▶ Declined (reason required)
+   └──▶ Declined        ▲
+            Done / Declined ──▶ Processing   (reopen)
+```
+
+- each move can carry a message for the reporter (required to decline);
+- *Send update* messages the reporter without changing the status;
+- *Add photo* attaches up to three photos of the fix;
+- *Edit* corrects urgency or kind (re-classifying as misconduct hands it to
+  head office and removes it from the office's view).
+
+Status changes take a row lock and are checked against the transition table,
+so two admins acting at once cannot both succeed (`409
+INCIDENT_STATE_CONFLICT`). Every change appends to `incident_updates`
+(append-only by trigger) and to the audit log.
+
+**Following up (mobile → *My reports*).** The reporter is notified on every
+status change and update ("Your report is being processed", "…has been
+resolved", "…was declined", "…was reopened", "Update on your report"). The
+report shows a Submitted → Processing → Done progress bar, the admin's latest
+message, the problem and fix photos side by side, and the full history. While
+it is open they can add more photos.
+
+**Anonymity.** An anonymous report stores who sent it (so the reporter can
+follow it) but nobody handling it can find out: the API returns `reporter:
+null`, the history and photo uploads say *Anonymous employee*, the admin
+search does not match the reporter's name, and notifications to handlers
+omit it. Photos are served either to a person involved (auth header) or
+through a signed link valid for ten minutes, so the `<img>` URLs in the apps
+cannot be shared onwards.
+

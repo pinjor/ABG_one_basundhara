@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../core/config.dart';
@@ -324,6 +325,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 6),
                   child: Column(
                     children: [
+                      if (p?.can('incident.report') ?? false)
+                        ListTile(
+                          leading: const Icon(
+                            Icons.campaign_outlined,
+                            color: AbgColors.navy500,
+                          ),
+                          title: Text(
+                            l.incMyReports,
+                            style: AbgText.bodyStrong.copyWith(fontSize: 14.5),
+                          ),
+                          trailing: const Icon(Icons.chevron_right_rounded),
+                          onTap: () => context.push('/incidents'),
+                        ),
                       ListTile(
                         leading: const Icon(
                           Icons.support_agent_rounded,

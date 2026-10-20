@@ -38,6 +38,9 @@ Generated from [`packages/shared/src/permissions.ts`](../packages/shared/src/per
 | `config.manage` |  |  |  |  |  |  |  |  | ● |
 | `users.manage` |  |  |  |  |  |  |  |  | ● |
 | `integrations.manage` |  |  |  |  |  |  |  |  | ● |
+| `incident.report` | ● | ● | ● | ● | ● | ● | ● |  | ● |
+| `incident.view` |  |  |  |  |  | ● | ● | ● | ● |
+| `incident.manage` |  |  |  |  |  | ● | ● |  | ● |
 
 Emp = Employee · Snd = Sender · Rcv = Receiver · Cour = Courier / Runner · Disp = Dispatch Officer · BrAdm = Branch Admin · HOAdm = Head Office Admin · Aud = Auditor · Super = Super Admin
 
@@ -105,6 +108,15 @@ confidential parcels.
   scan the label.
 - **OTP**: a 6-digit code SMS'd to the receiver (or a named on-behalf
   recipient), hashed at rest, five attempts, five minutes.
+
+## Incident reports
+
+Every signed-in employee role can **report** (`incident.report`). Branch
+admins **view and manage** reports in their offices; head-office admins in
+every office; auditors **view** everything and change nothing. Misconduct
+reports are visible to head office only — a branch admin gets 404 for one,
+and it never appears in their list or notifications. Anonymous reports hide
+the reporter from every handler (see [workflows §13](workflows.md#13-incident-reports)).
 
 ## Administrative actions
 

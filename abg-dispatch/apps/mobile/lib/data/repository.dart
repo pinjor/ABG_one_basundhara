@@ -172,6 +172,58 @@ class DispatchRepository {
   Future<void> revokeSession(String id) async =>
       api.delete('/auth/sessions/$id');
 
+  // ── Incident reports ──
+
+  /// Multipart report with up to three photos. The key makes a retried submit safe.
+  Future<Incident> reportIncident({
+    required Map<String, String> fields,
+    required List<UploadFile> photos,
+    required String idempotencyKey,
+  }) async => Incident(
+    await api.uploadMany(
+          '/incidents',
+          files: photos,
+          fileField: 'photos',
+          fields: fields,
+          idempotencyKey: idempotencyKey,
+        )
+        as Json,
+  );
+
+  Future<PageOf<IncidentRow>> myIncidents({
+    String state = 'all',
+    String? cursor,
+  }) async {
+    final res =
+        await api.get(
+              '/incidents/mine',
+              query: {'state': state, 'cursor': cursor, 'limit': '30'},
+            )
+            as Json;
+    return PageOf(
+      (res['items'] as List).cast<Json>().map(IncidentRow.fromJson).toList(),
+      res['nextCursor'] as String?,
+    );
+  }
+
+  Future<Incident> incident(String id) async =>
+      Incident(await api.get('/incidents/$id') as Json);
+
+  Future<Incident> addIncidentPhoto(
+    String id, {
+    required List<int> bytes,
+    required String filename,
+  }) async => Incident(
+    await api.upload(
+          '/incidents/$id/photos',
+          bytes: bytes,
+          filename: filename,
+          fileField: 'photo',
+          fields: const {},
+        )
+        as Json,
+  );
+
   Future<Json> uploadEvidence(
     String parcelId, {
     required List<int> bytes,

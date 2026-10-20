@@ -31,9 +31,7 @@ class _AbgDispatchAppState extends State<AbgDispatchApp>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _session.addListener(_onSession);
-    _pushTaps = context.read<PushService>().openedParcel.listen(
-      (id) => _router.push('/parcels/$id'),
-    );
+    _pushTaps = context.read<PushService>().openedRoute.listen(_router.push);
     unawaited(_session.restore());
   }
 

@@ -10,6 +10,7 @@ The employee, courier and guest-carrier app for ABG Dispatch. One codebase for
 | Employee | Book a parcel in four short steps, see incoming/outgoing parcels, confirm handovers, receive parcels (in-app, by scanning the label, or on someone's behalf), notifications |
 | Courier / runner | Assigned parcels, scan-to-pickup, sender PIN entry, start transit, checkpoints, mark arrived, receiver code + signature, photo evidence |
 | Guest carrier | Phone + SMS code sign-in that shows **only** their own assignments |
+| Any employee | **Report an incident** (Home and Profile): kind of problem, title, up to three photos from the camera or gallery, office / area / exact spot, urgency, optionally anonymous. **My reports** shows each report's status (Pending · Processing · Done · Declined), a progress bar, the admin's latest message, photos of the fix and the full history; every change arrives as a notification that opens the report |
 
 Every custody button comes from the server's `viewer.actions` list, so the app
 only ever offers what the API will accept; the server re-checks everything.

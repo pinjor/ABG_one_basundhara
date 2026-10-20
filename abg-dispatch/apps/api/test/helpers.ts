@@ -51,6 +51,8 @@ export async function resetAndSeed() {
   const { prisma } = await startApp();
   const { resetDatabase, seed } = await import("../prisma/seed");
   await resetDatabase(prisma);
+  // The reset revokes every session, so cached sign-ins are no longer valid.
+  tokens.clear();
   return seed(prisma, { history: false });
 }
 

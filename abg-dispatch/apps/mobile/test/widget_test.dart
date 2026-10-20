@@ -1,5 +1,6 @@
 import 'package:abg_dispatch/l10n/app_localizations.dart';
 import 'package:abg_dispatch/models/models.dart';
+import 'package:abg_dispatch/screens/my_reports_screen.dart';
 import 'package:abg_dispatch/theme/theme.dart';
 import 'package:abg_dispatch/widgets/common.dart';
 import 'package:abg_dispatch/widgets/parcel_card.dart';
@@ -140,5 +141,77 @@ void main() {
     expect(p.can('COMMENT'), isTrue);
     expect(p.can('RECEIVE'), isFalse);
     expect(p.isSender, isTrue);
+  });
+
+  testWidgets(
+    'incident status is shown as words and an icon, in both languages',
+    (tester) async {
+      await tester.pumpWidget(_wrap(const IncidentStatusChip('PROCESSING')));
+      expect(find.text('Processing'), findsOneWidget);
+      expect(find.byIcon(Icons.construction_rounded), findsOneWidget);
+      await tester.pumpWidget(
+        _wrap(const IncidentStatusChip('DONE'), locale: const Locale('bn')),
+      );
+      expect(find.text('সম্পন্ন'), findsOneWidget);
+    },
+  );
+
+  test('an incident report parses its photos, history and allowed actions', () {
+    final incident = Incident({
+      'id': 'i1',
+      'referenceNumber': 'INC-261020-FCA-007',
+      'title': 'Dirty floor outside the QA lab',
+      'category': 'CLEANLINESS',
+      'severity': 'HIGH',
+      'status': 'PROCESSING',
+      'statusNote': 'Cleaning team sent.',
+      'createdAt': '2026-10-20T04:00:00Z',
+      'processingAt': '2026-10-20T04:20:00Z',
+      'branch': {'id': 'b1', 'name': 'Factory A', 'code': 'FCA'},
+      'anonymous': true,
+      'reporter': {'name': 'Farhana Islam'},
+      'photos': [
+        {
+          'id': 'p1',
+          'kind': 'REPORT',
+          'url': '/api/incident-photos/p1/content?exp=1&sig=x',
+        },
+        {
+          'id': 'p2',
+          'kind': 'RESOLUTION',
+          'url': '/api/incident-photos/p2/content?exp=1&sig=y',
+        },
+      ],
+      'updates': [
+        {
+          'id': 'u1',
+          'type': 'SUBMITTED',
+          'toStatus': 'PENDING',
+          'actor': 'You',
+          'createdAt': '2026-10-20T04:00:00Z',
+          'metadata': {},
+        },
+        {
+          'id': 'u2',
+          'type': 'STATUS_CHANGED',
+          'fromStatus': 'DONE',
+          'toStatus': 'PROCESSING',
+          'note': 'Back again',
+          'actor': 'Sabina Yasmin',
+          'createdAt': '2026-10-20T05:00:00Z',
+          'metadata': {'reopened': true},
+        },
+      ],
+      'viewer': {
+        'isReporter': true,
+        'actions': ['ADD_PHOTO'],
+      },
+    });
+    expect(incident.isOpen, isTrue);
+    expect(incident.photos.where((p) => p.isFix).length, 1);
+    expect(incident.updates.last.reopened, isTrue);
+    expect(incident.actions, contains('ADD_PHOTO'));
+    expect(incident.branchName, 'Factory A');
+    expect(incidentStatusTone(incident.status), Tone.active);
   });
 }

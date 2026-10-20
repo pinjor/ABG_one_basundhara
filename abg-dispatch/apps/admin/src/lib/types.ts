@@ -100,3 +100,75 @@ export interface Timeline {
   comments: { id: string; author: string; body: string; createdAt: string }[];
   exceptions: { id: string; code: string; details: string; raisedBy: string; raisedAt: string; resolvedBy: string | null; resolvedAt: string | null; resolution: string | null; open: boolean }[];
 }
+
+/** Shapes returned by the incident endpoints (see apps/api/src/incidents/incidents.service.ts). */
+export interface IncidentRow {
+  id: string;
+  referenceNumber: string;
+  title: string;
+  category: string;
+  severity: string;
+  status: string;
+  statusNote: string | null;
+  statusChangedAt: string;
+  createdAt: string;
+  branch: { id: string; name: string; code: string };
+  place: string | null;
+  anonymous: boolean;
+  reporterName: string | null;
+  reporterCode: string | null;
+  photoCount: number;
+  thumbnailUrl: string | null;
+}
+
+export interface IncidentPhoto {
+  id: string;
+  kind: "REPORT" | "RESOLUTION";
+  mimeType: string;
+  createdAt: string;
+  url: string;
+}
+
+export interface IncidentUpdate {
+  id: string;
+  type: string;
+  fromStatus: string | null;
+  toStatus: string | null;
+  note: string | null;
+  actor: string;
+  metadata: Record<string, unknown>;
+  createdAt: string;
+}
+
+export interface Incident {
+  id: string;
+  referenceNumber: string;
+  title: string;
+  description: string;
+  category: string;
+  severity: string;
+  status: string;
+  statusNote: string | null;
+  statusChangedAt: string;
+  processingAt: string | null;
+  doneAt: string | null;
+  declinedAt: string | null;
+  createdAt: string;
+  branch: { id: string; name: string; code: string };
+  location: { id: string; name: string; path: string } | null;
+  locationDetail: string | null;
+  anonymous: boolean;
+  reporter: { name: string; employeeCode: string | null; designation: string | null; department: string | null; phone: string | null } | null;
+  photos: IncidentPhoto[];
+  updates: IncidentUpdate[];
+  viewer: { isReporter: boolean; isStaff: boolean; canManage: boolean; actions: string[] };
+}
+
+export interface IncidentSummary {
+  counts: Record<"PENDING" | "PROCESSING" | "DONE" | "DECLINED", number>;
+  open: number;
+  urgentOpen: number;
+  oldestPendingAt: string | null;
+  doneLast30Days: number;
+  avgHoursToDone: number | null;
+}

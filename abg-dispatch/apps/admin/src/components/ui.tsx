@@ -10,6 +10,8 @@ import {
   Clock3,
   FileEdit,
   Flame,
+  Hammer,
+  Hourglass,
   Inbox,
   Loader2,
   Lock,
@@ -26,6 +28,11 @@ import {
 import {
   CLASSIFICATION_LABEL,
   Classification,
+  INCIDENT_SEVERITY_LABEL,
+  INCIDENT_STATUS_LABEL,
+  INCIDENT_STATUS_TONE,
+  IncidentStatus,
+  IncidentSeverity,
   PRIORITY_LABEL,
   ParcelStatus,
   Priority,
@@ -71,6 +78,35 @@ export function StatusBadge({ status, size = "md" }: { status: string; size?: "s
     <span className={cx("inline-flex items-center gap-1.5 whitespace-nowrap rounded-full font-semibold ring-1 ring-inset", TONE_CLASS[STATUS_TONE[s] ?? "neutral"], size === "sm" ? "px-2 py-0.5 text-[11px]" : "px-2.5 py-1 text-xs")}>
       <Icon className={size === "sm" ? "h-3 w-3" : "h-3.5 w-3.5"} aria-hidden />
       {STATUS_LABEL[s] ?? status}
+    </span>
+  );
+}
+
+const INCIDENT_ICON: Record<IncidentStatus, LucideIcon> = {
+  PENDING: Hourglass,
+  PROCESSING: Hammer,
+  DONE: CheckCircle2,
+  DECLINED: Ban,
+};
+
+export function IncidentStatusBadge({ status, size = "md" }: { status: string; size?: "sm" | "md" }) {
+  const s = status as IncidentStatus;
+  const Icon = INCIDENT_ICON[s] ?? CircleDashed;
+  return (
+    <span className={cx("inline-flex items-center gap-1.5 whitespace-nowrap rounded-full font-semibold ring-1 ring-inset", TONE_CLASS[INCIDENT_STATUS_TONE[s] ?? "neutral"], size === "sm" ? "px-2 py-0.5 text-[11px]" : "px-2.5 py-1 text-xs")}>
+      <Icon className={size === "sm" ? "h-3 w-3" : "h-3.5 w-3.5"} aria-hidden />
+      {INCIDENT_STATUS_LABEL[s] ?? status}
+    </span>
+  );
+}
+
+export function SeverityBadge({ severity }: { severity: string }) {
+  if (severity === IncidentSeverity.MEDIUM || severity === IncidentSeverity.LOW) return <span className="text-xs text-ink-muted">{INCIDENT_SEVERITY_LABEL[severity]}</span>;
+  const urgent = severity === IncidentSeverity.URGENT;
+  return (
+    <span className={cx("inline-flex items-center gap-1 whitespace-nowrap rounded-md px-1.5 py-0.5 text-[11px] font-bold uppercase tracking-wide", urgent ? "bg-danger-soft text-danger" : "bg-pending-soft text-pending")}>
+      {urgent && <Flame className="h-3 w-3" aria-hidden />}
+      {INCIDENT_SEVERITY_LABEL[severity as IncidentSeverity] ?? severity}
     </span>
   );
 }

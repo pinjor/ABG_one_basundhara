@@ -352,5 +352,91 @@
     }
   },
   "you": "You",
-  "moreActions": "More actions"
+  "moreActions": "More actions",
+  "incReport": "Report an incident",
+  "incReportHint": "Spotted a problem? Snap a photo — your office's admins are told at once.",
+  "incMyReports": "My reports",
+  "incOpenCount": "{count, plural, =0{No open reports} =1{1 open report} other{{count} open reports}}",
+  "@incOpenCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "incWhatKind": "What kind of problem?",
+  "incTitleLabel": "Title",
+  "incTitleHint": "e.g. Plaster falling from the wall near lift 2",
+  "incDescriptionLabel": "What did you see? (optional)",
+  "incWhere": "Where is it?",
+  "incOffice": "Office",
+  "incArea": "Area (optional)",
+  "incAreaAny": "Not sure / somewhere in the office",
+  "incSpot": "Exact spot (optional)",
+  "incSpotHint": "e.g. 3rd floor, beside the lift",
+  "incHowUrgent": "How urgent is it?",
+  "incPhotos": "Photos",
+  "incPhotosHint": "Add up to 3 photos. A clear photo helps the team fix it faster.",
+  "incTakePhoto": "Take photo",
+  "incChoosePhoto": "Gallery",
+  "incRemovePhoto": "Remove photo",
+  "incAnonymous": "Report anonymously",
+  "incAnonymousHint": "Admins won't see your name. It is kept only so you can follow the status.",
+  "incMisconductNote": "Misconduct reports go to Head Office only — never to your own office's admins.",
+  "incSubmit": "Submit report",
+  "incSubmitted": "Report {ref} sent. The admin team has been notified.",
+  "@incSubmitted": {
+    "placeholders": {
+      "ref": {}
+    }
+  },
+  "incTitleRequired": "Give a short title (at least 3 characters)",
+  "incCategoryRequired": "Choose what kind of problem it is",
+  "incNoReports": "No reports yet",
+  "incNoReportsHint": "When you report a problem, you can follow its progress here.",
+  "incFilterOpen": "Open",
+  "incFilterClosed": "Closed",
+  "incFilterAll": "All",
+  "incStatusPENDING": "Pending",
+  "incStatusPROCESSING": "Processing",
+  "incStatusDONE": "Done",
+  "incStatusDECLINED": "Declined",
+  "incCatBUILDING_DAMAGE": "Building damage",
+  "incCatCLEANLINESS": "Cleanliness",
+  "incCatCAFETERIA_HYGIENE": "Cafeteria hygiene",
+  "incCatWASHROOM": "Washroom",
+  "incCatSAFETY_HAZARD": "Safety hazard",
+  "incCatELECTRICAL": "Electrical",
+  "incCatSECURITY": "Security",
+  "incCatMISCONDUCT": "Misconduct",
+  "incCatOTHER": "Other",
+  "incSevLOW": "Low",
+  "incSevMEDIUM": "Medium",
+  "incSevHIGH": "High",
+  "incSevURGENT": "Urgent",
+  "incProgress": "Progress",
+  "incStepSubmitted": "Submitted",
+  "incStepProcessing": "Processing",
+  "incStepDone": "Done",
+  "incStepDeclined": "Declined",
+  "incAdminUpdate": "Update from the admin team",
+  "incReportedBy": "Reported by",
+  "incAnonymousBadge": "Anonymous",
+  "incAddPhoto": "Add another photo",
+  "incPhotoAdded": "Photo added",
+  "incFixPhotos": "Photos of the fix",
+  "incHistory": "History",
+  "incEvSubmitted": "Report submitted",
+  "incEvStatus": "Marked {status}",
+  "@incEvStatus": {
+    "placeholders": {
+      "status": {}
+    }
+  },
+  "incEvReopened": "Reopened",
+  "incEvNote": "Update for you",
+  "incEvPhoto": "Photo added",
+  "incEvDetails": "Details updated",
+  "incWaitingForAdmin": "Waiting for the admin team to pick it up.",
+  "incOfflineNotice": "You're offline. Reports with photos need a connection — try again when you're back online."
 }

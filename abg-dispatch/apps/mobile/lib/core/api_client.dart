@@ -23,6 +23,17 @@ class ApiException implements Exception {
 }
 
 typedef TokenProvider = Future<String?> Function();
+
+class UploadFile {
+  const UploadFile(this.bytes, this.filename);
+  final List<int> bytes;
+  final String filename;
+}
+
+/// Absolute URL for a path the API returned (signed photo links start with /api).
+String apiUrl(String path) => path.startsWith('http')
+    ? path
+    : Uri.parse(AppConfig.apiBaseUrl).resolve(path).toString();
 typedef TokenRefresher = Future<bool> Function();
 
 /// Thin JSON client. Adds the bearer token, refreshes it once on expiry,
@@ -72,14 +83,33 @@ class ApiClient {
     required List<int> bytes,
     required String filename,
     required Map<String, String> fields,
+    String fileField = 'file',
+  }) => uploadMany(
+    path,
+    files: [UploadFile(bytes, filename)],
+    fileField: fileField,
+    fields: fields,
+  );
+
+  /// Multipart POST with any number of files under one field name.
+  Future<dynamic> uploadMany(
+    String path, {
+    required List<UploadFile> files,
+    required String fileField,
+    required Map<String, String> fields,
+    String? idempotencyKey,
   }) async {
     final req = http.MultipartRequest('POST', _uri(path));
     final token = await tokenProvider?.call();
     if (token != null) req.headers['authorization'] = 'Bearer $token';
+    req.headers['accept-language'] = locale;
+    if (idempotencyKey != null) req.headers['idempotency-key'] = idempotencyKey;
     req.fields.addAll(fields);
-    req.files.add(
-      http.MultipartFile.fromBytes('file', bytes, filename: filename),
-    );
+    for (final f in files) {
+      req.files.add(
+        http.MultipartFile.fromBytes(fileField, f.bytes, filename: f.filename),
+      );
+    }
     try {
       final streamed = await _http
           .send(req)

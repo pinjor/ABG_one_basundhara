@@ -21,6 +21,7 @@ class Person {
     this.department,
     this.branch,
     this.branchCode,
+    this.branchId,
   });
 
   final String? id;
@@ -31,6 +32,7 @@ class Person {
   final String? department;
   final String? branch;
   final String? branchCode;
+  final String? branchId;
 
   static Person? fromJson(dynamic raw) {
     if (raw is! Map<String, dynamic>) return null;
@@ -43,6 +45,7 @@ class Person {
       department: _str(_map(raw['department'])['name']),
       branch: _str(_map(raw['branch'])['name']),
       branchCode: _str(_map(raw['branch'])['code']),
+      branchId: _str(_map(raw['branch'])['id']),
     );
   }
 
@@ -421,6 +424,8 @@ class AppNotification {
     required this.createdAt,
     required this.read,
     this.parcelId,
+    this.incidentId,
+    this.incidentStatus,
     this.eventType,
   });
 
@@ -431,6 +436,10 @@ class AppNotification {
   final DateTime createdAt;
   bool read;
   final String? parcelId;
+  final String? incidentId;
+
+  /// The report's status when this alert was sent (incident alerts only).
+  final String? incidentStatus;
   final String? eventType;
 
   factory AppNotification.fromJson(Json j) => AppNotification(
@@ -441,6 +450,8 @@ class AppNotification {
     createdAt: _date(j['createdAt']) ?? DateTime.now(),
     read: j['read'] == true,
     parcelId: _str(j['parcelId']),
+    incidentId: _str(_map(j['data'])['incidentId']),
+    incidentStatus: _str(_map(j['data'])['status']),
     eventType: _str(j['eventType']),
   );
 }
@@ -501,4 +512,158 @@ class Option {
   final String label;
   final String? subtitle;
   final String? code;
+}
+
+// ── Incident reports ──
+
+const incidentCategories = [
+  'BUILDING_DAMAGE',
+  'CLEANLINESS',
+  'CAFETERIA_HYGIENE',
+  'WASHROOM',
+  'SAFETY_HAZARD',
+  'ELECTRICAL',
+  'SECURITY',
+  'MISCONDUCT',
+  'OTHER',
+];
+const incidentSeverities = ['LOW', 'MEDIUM', 'HIGH', 'URGENT'];
+const maxIncidentPhotos = 3;
+
+class IncidentRow {
+  IncidentRow({
+    required this.id,
+    required this.referenceNumber,
+    required this.title,
+    required this.category,
+    required this.severity,
+    required this.status,
+    required this.createdAt,
+    required this.statusChangedAt,
+    required this.branchName,
+    this.statusNote,
+    this.place,
+    this.anonymous = false,
+    this.photoCount = 0,
+    this.thumbnailUrl,
+  });
+
+  final String id;
+  final String referenceNumber;
+  final String title;
+  final String category;
+  final String severity;
+  final String status;
+  final DateTime createdAt;
+  final DateTime statusChangedAt;
+  final String branchName;
+  final String? statusNote;
+  final String? place;
+  final bool anonymous;
+  final int photoCount;
+  final String? thumbnailUrl;
+
+  bool get isOpen => status == 'PENDING' || status == 'PROCESSING';
+
+  factory IncidentRow.fromJson(Json j) => IncidentRow(
+    id: _str(j['id'])!,
+    referenceNumber: _str(j['referenceNumber']) ?? '',
+    title: _str(j['title']) ?? '',
+    category: _str(j['category']) ?? 'OTHER',
+    severity: _str(j['severity']) ?? 'MEDIUM',
+    status: _str(j['status']) ?? 'PENDING',
+    createdAt: _date(j['createdAt']) ?? DateTime.now(),
+    statusChangedAt: _date(j['statusChangedAt']) ?? DateTime.now(),
+    branchName: _str(_map(j['branch'])['name']) ?? '',
+    statusNote: _str(j['statusNote']),
+    place: _str(j['place']),
+    anonymous: j['anonymous'] == true,
+    photoCount: (j['photoCount'] as num?)?.toInt() ?? 0,
+    thumbnailUrl: _str(j['thumbnailUrl']),
+  );
+}
+
+class IncidentPhoto {
+  IncidentPhoto(this.id, this.kind, this.url);
+  final String id;
+  final String kind;
+  final String url;
+  bool get isFix => kind == 'RESOLUTION';
+}
+
+class IncidentUpdate {
+  IncidentUpdate({
+    required this.id,
+    required this.type,
+    required this.actor,
+    required this.at,
+    this.fromStatus,
+    this.toStatus,
+    this.note,
+    this.reopened = false,
+  });
+
+  final String id;
+  final String type;
+  final String actor;
+  final DateTime at;
+  final String? fromStatus;
+  final String? toStatus;
+  final String? note;
+  final bool reopened;
+}
+
+class Incident {
+  Incident(this.raw);
+
+  final Json raw;
+
+  String get id => raw['id'] as String;
+  String get referenceNumber => _str(raw['referenceNumber']) ?? '';
+  String get title => _str(raw['title']) ?? '';
+  String get description => _str(raw['description']) ?? '';
+  String get category => _str(raw['category']) ?? 'OTHER';
+  String get severity => _str(raw['severity']) ?? 'MEDIUM';
+  String get status => _str(raw['status']) ?? 'PENDING';
+  String? get statusNote => _str(raw['statusNote']);
+  DateTime get createdAt => _date(raw['createdAt']) ?? DateTime.now();
+  DateTime? get processingAt => _date(raw['processingAt']);
+  DateTime? get doneAt => _date(raw['doneAt']);
+  DateTime? get declinedAt => _date(raw['declinedAt']);
+  String get branchName => _str(_map(raw['branch'])['name']) ?? '';
+  String? get locationPath => _str(_map(raw['location'])['path']);
+  String? get locationDetail => _str(raw['locationDetail']);
+  bool get anonymous => raw['anonymous'] == true;
+  String? get reporterName => _str(_map(raw['reporter'])['name']);
+  bool get isReporter => _map(raw['viewer'])['isReporter'] == true;
+  List<String> get actions =>
+      ((_map(raw['viewer'])['actions'] as List?) ?? const []).cast<String>();
+  bool get isOpen => status == 'PENDING' || status == 'PROCESSING';
+
+  List<IncidentPhoto> get photos => ((raw['photos'] as List?) ?? const [])
+      .cast<Json>()
+      .map(
+        (p) => IncidentPhoto(
+          p['id'] as String,
+          p['kind'] as String,
+          p['url'] as String,
+        ),
+      )
+      .toList();
+
+  List<IncidentUpdate> get updates => ((raw['updates'] as List?) ?? const [])
+      .cast<Json>()
+      .map(
+        (u) => IncidentUpdate(
+          id: u['id'] as String,
+          type: _str(u['type']) ?? '',
+          actor: _str(u['actor']) ?? '',
+          at: _date(u['createdAt']) ?? DateTime.now(),
+          fromStatus: _str(u['fromStatus']),
+          toStatus: _str(u['toStatus']),
+          note: _str(u['note']),
+          reopened: _map(u['metadata'])['reopened'] == true,
+        ),
+      )
+      .toList();
 }

@@ -833,4 +833,230 @@ class LEn extends L {
 
   @override
   String get moreActions => 'More actions';
+
+  @override
+  String get incReport => 'Report an incident';
+
+  @override
+  String get incReportHint =>
+      'Spotted a problem? Snap a photo — your office\'s admins are told at once.';
+
+  @override
+  String get incMyReports => 'My reports';
+
+  @override
+  String incOpenCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count open reports',
+      one: '1 open report',
+      zero: 'No open reports',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get incWhatKind => 'What kind of problem?';
+
+  @override
+  String get incTitleLabel => 'Title';
+
+  @override
+  String get incTitleHint => 'e.g. Plaster falling from the wall near lift 2';
+
+  @override
+  String get incDescriptionLabel => 'What did you see? (optional)';
+
+  @override
+  String get incWhere => 'Where is it?';
+
+  @override
+  String get incOffice => 'Office';
+
+  @override
+  String get incArea => 'Area (optional)';
+
+  @override
+  String get incAreaAny => 'Not sure / somewhere in the office';
+
+  @override
+  String get incSpot => 'Exact spot (optional)';
+
+  @override
+  String get incSpotHint => 'e.g. 3rd floor, beside the lift';
+
+  @override
+  String get incHowUrgent => 'How urgent is it?';
+
+  @override
+  String get incPhotos => 'Photos';
+
+  @override
+  String get incPhotosHint =>
+      'Add up to 3 photos. A clear photo helps the team fix it faster.';
+
+  @override
+  String get incTakePhoto => 'Take photo';
+
+  @override
+  String get incChoosePhoto => 'Gallery';
+
+  @override
+  String get incRemovePhoto => 'Remove photo';
+
+  @override
+  String get incAnonymous => 'Report anonymously';
+
+  @override
+  String get incAnonymousHint =>
+      'Admins won\'t see your name. It is kept only so you can follow the status.';
+
+  @override
+  String get incMisconductNote =>
+      'Misconduct reports go to Head Office only — never to your own office\'s admins.';
+
+  @override
+  String get incSubmit => 'Submit report';
+
+  @override
+  String incSubmitted(Object ref) {
+    return 'Report $ref sent. The admin team has been notified.';
+  }
+
+  @override
+  String get incTitleRequired => 'Give a short title (at least 3 characters)';
+
+  @override
+  String get incCategoryRequired => 'Choose what kind of problem it is';
+
+  @override
+  String get incNoReports => 'No reports yet';
+
+  @override
+  String get incNoReportsHint =>
+      'When you report a problem, you can follow its progress here.';
+
+  @override
+  String get incFilterOpen => 'Open';
+
+  @override
+  String get incFilterClosed => 'Closed';
+
+  @override
+  String get incFilterAll => 'All';
+
+  @override
+  String get incStatusPENDING => 'Pending';
+
+  @override
+  String get incStatusPROCESSING => 'Processing';
+
+  @override
+  String get incStatusDONE => 'Done';
+
+  @override
+  String get incStatusDECLINED => 'Declined';
+
+  @override
+  String get incCatBUILDING_DAMAGE => 'Building damage';
+
+  @override
+  String get incCatCLEANLINESS => 'Cleanliness';
+
+  @override
+  String get incCatCAFETERIA_HYGIENE => 'Cafeteria hygiene';
+
+  @override
+  String get incCatWASHROOM => 'Washroom';
+
+  @override
+  String get incCatSAFETY_HAZARD => 'Safety hazard';
+
+  @override
+  String get incCatELECTRICAL => 'Electrical';
+
+  @override
+  String get incCatSECURITY => 'Security';
+
+  @override
+  String get incCatMISCONDUCT => 'Misconduct';
+
+  @override
+  String get incCatOTHER => 'Other';
+
+  @override
+  String get incSevLOW => 'Low';
+
+  @override
+  String get incSevMEDIUM => 'Medium';
+
+  @override
+  String get incSevHIGH => 'High';
+
+  @override
+  String get incSevURGENT => 'Urgent';
+
+  @override
+  String get incProgress => 'Progress';
+
+  @override
+  String get incStepSubmitted => 'Submitted';
+
+  @override
+  String get incStepProcessing => 'Processing';
+
+  @override
+  String get incStepDone => 'Done';
+
+  @override
+  String get incStepDeclined => 'Declined';
+
+  @override
+  String get incAdminUpdate => 'Update from the admin team';
+
+  @override
+  String get incReportedBy => 'Reported by';
+
+  @override
+  String get incAnonymousBadge => 'Anonymous';
+
+  @override
+  String get incAddPhoto => 'Add another photo';
+
+  @override
+  String get incPhotoAdded => 'Photo added';
+
+  @override
+  String get incFixPhotos => 'Photos of the fix';
+
+  @override
+  String get incHistory => 'History';
+
+  @override
+  String get incEvSubmitted => 'Report submitted';
+
+  @override
+  String incEvStatus(Object status) {
+    return 'Marked $status';
+  }
+
+  @override
+  String get incEvReopened => 'Reopened';
+
+  @override
+  String get incEvNote => 'Update for you';
+
+  @override
+  String get incEvPhoto => 'Photo added';
+
+  @override
+  String get incEvDetails => 'Details updated';
+
+  @override
+  String get incWaitingForAdmin => 'Waiting for the admin team to pick it up.';
+
+  @override
+  String get incOfflineNotice =>
+      'You\'re offline. Reports with photos need a connection — try again when you\'re back online.';
 }

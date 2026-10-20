@@ -8,6 +8,8 @@ import { LoginPage } from "./pages/Login";
 import { DashboardPage } from "./pages/Dashboard";
 import { ParcelsPage } from "./pages/Parcels";
 import { ParcelDetailPage } from "./pages/ParcelDetail";
+import { IncidentsPage } from "./pages/Incidents";
+import { IncidentDetailPage } from "./pages/IncidentDetail";
 import { AnalyticsPage } from "./pages/Analytics";
 import { ReportsPage } from "./pages/Reports";
 import { ConfigPage } from "./pages/Config";
@@ -41,6 +43,8 @@ export function App() {
       <Route path="/" element={<RequireAuth><DashboardPage /></RequireAuth>} />
       <Route path="/parcels" element={<RequireAuth><ParcelsPage /></RequireAuth>} />
       <Route path="/parcels/:id" element={<RequireAuth><ParcelDetailPage /></RequireAuth>} />
+      <Route path="/incidents" element={<RequireAuth><IncidentsPage /></RequireAuth>} />
+      <Route path="/incidents/:id" element={<RequireAuth><IncidentDetailPage /></RequireAuth>} />
       <Route path="/analytics" element={<RequireAuth><AnalyticsPage /></RequireAuth>} />
       <Route path="/reports" element={<RequireAuth><ReportsPage /></RequireAuth>} />
       <Route path="/config" element={<RequireAuth><ConfigPage /></RequireAuth>} />

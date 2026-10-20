@@ -8,6 +8,7 @@ import {
   Clock3,
   Inbox,
   MapPin,
+  Megaphone,
   PackageCheck,
   PackagePlus,
   Radio,
@@ -16,11 +17,13 @@ import {
   UserCheck,
   type LucideIcon,
 } from "lucide-react";
+import { Capability } from "@abg-dispatch/shared";
 import { api, qs, subscribeLive } from "../lib/api";
-import { useAuth } from "../lib/auth";
+import { useAuth, useCan } from "../lib/auth";
 import { ago, dhakaDay, when } from "../lib/format";
 import { Card, Empty, ErrorNote, MoreLink, OverdueTag, PriorityBadge, Spinner, StatusBadge, cx } from "../components/ui";
 import { Columns, GroupedColumns } from "../components/charts";
+import { useIncidentSummary } from "../lib/lookups";
 
 interface Dashboard {
   kpis: Record<"bookedToday" | "booked" | "awaitingPickup" | "inRoute" | "arrived" | "pendingReceipt" | "receivedToday" | "onBehalfToday" | "overdue" | "exceptions" | "returnsOpen" | "returnedToday", number>;
@@ -51,6 +54,33 @@ const hourLabel = (h: unknown) => {
 function greeting(): string {
   const h = Number(new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Dhaka", hour: "numeric", hour12: false }).format(new Date()));
   return h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
+}
+
+/** Workplace incident reports waiting for this office, so they are seen on landing. */
+function IncidentStrip({ branchId }: { branchId: string }) {
+  const canView = useCan(Capability.INCIDENT_VIEW);
+  const summary = useIncidentSummary(branchId || undefined, canView);
+  const s = summary.data;
+  if (!canView || !s || s.open === 0) return null;
+  return (
+    <Link to={`/incidents${qs({ branchId })}`} className="card flex flex-wrap items-center gap-4 px-5 py-3.5 transition hover:shadow-raised">
+      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-pending-soft text-pending">
+        <Megaphone className="h-5 w-5" aria-hidden />
+      </span>
+      <div className="min-w-0 flex-1">
+        <p className="font-semibold text-navy">
+          {s.counts.PENDING} incident report{s.counts.PENDING === 1 ? "" : "s"} waiting · {s.counts.PROCESSING} being fixed
+        </p>
+        <p className="text-xs text-ink-muted">
+          {s.urgentOpen ? `${s.urgentOpen} marked high or urgent. ` : ""}
+          {s.oldestPendingAt ? `Oldest waiting since ${ago(s.oldestPendingAt)}.` : "Nothing new waiting."}
+        </p>
+      </div>
+      <span className="inline-flex items-center gap-1 text-sm font-semibold text-active">
+        Review reports <ArrowUpRight className="h-4 w-4" aria-hidden />
+      </span>
+    </Link>
+  );
 }
 
 function Kpi({ label, value, icon: Icon, to, tone = "default", hint }: { label: string; value: number; icon: LucideIcon; to: string; tone?: "default" | "danger" | "pending"; hint?: string }) {
@@ -152,6 +182,8 @@ export function DashboardPage() {
           </div>
         </div>
       </section>
+
+      <IncidentStrip branchId={branchId} />
 
       <ErrorNote error={dash.error} />
       {!k ? (

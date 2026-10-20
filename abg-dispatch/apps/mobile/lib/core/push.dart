@@ -18,8 +18,8 @@ class PushService {
   String? _token;
   final _opened = StreamController<String>.broadcast();
 
-  /// Parcel ids from notifications the user tapped.
-  Stream<String> get openedParcel => _opened.stream;
+  /// In-app routes for notifications the user tapped (a parcel or a report).
+  Stream<String> get openedRoute => _opened.stream;
 
   Future<void> initialiseAfterSignIn() async {
     if (!AppConfig.pushConfigured) return;
@@ -51,8 +51,13 @@ class PushService {
   }
 
   void _open(RemoteMessage m) {
-    final id = m.data['parcelId'];
-    if (id is String && id.isNotEmpty) _opened.add(id);
+    final parcel = m.data['parcelId'];
+    final incident = m.data['incidentId'];
+    if (incident is String && incident.isNotEmpty) {
+      _opened.add('/incidents/$incident');
+    } else if (parcel is String && parcel.isNotEmpty) {
+      _opened.add('/parcels/$parcel');
+    }
   }
 
   Future<void> _register(String token) async {

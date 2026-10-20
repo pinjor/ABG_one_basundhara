@@ -834,4 +834,231 @@ class LBn extends L {
 
   @override
   String get moreActions => 'আরও কাজ';
+
+  @override
+  String get incReport => 'ঘটনা জানান';
+
+  @override
+  String get incReportHint =>
+      'কোনো সমস্যা চোখে পড়েছে? ছবি তুলুন — আপনার অফিসের অ্যাডমিনরা সঙ্গে সঙ্গে জানবেন।';
+
+  @override
+  String get incMyReports => 'আমার রিপোর্ট';
+
+  @override
+  String incOpenCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$countটি চলমান রিপোর্ট',
+      one: '১টি চলমান রিপোর্ট',
+      zero: 'কোনো চলমান রিপোর্ট নেই',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get incWhatKind => 'কী ধরনের সমস্যা?';
+
+  @override
+  String get incTitleLabel => 'শিরোনাম';
+
+  @override
+  String get incTitleHint =>
+      'যেমন: লিফট ২-এর পাশে দেয়ালের প্লাস্টার খসে পড়ছে';
+
+  @override
+  String get incDescriptionLabel => 'আপনি কী দেখেছেন? (ঐচ্ছিক)';
+
+  @override
+  String get incWhere => 'কোথায়?';
+
+  @override
+  String get incOffice => 'অফিস';
+
+  @override
+  String get incArea => 'এলাকা (ঐচ্ছিক)';
+
+  @override
+  String get incAreaAny => 'নিশ্চিত নই / অফিসের কোথাও';
+
+  @override
+  String get incSpot => 'নির্দিষ্ট জায়গা (ঐচ্ছিক)';
+
+  @override
+  String get incSpotHint => 'যেমন: ৩য় তলা, লিফটের পাশে';
+
+  @override
+  String get incHowUrgent => 'কতটা জরুরি?';
+
+  @override
+  String get incPhotos => 'ছবি';
+
+  @override
+  String get incPhotosHint =>
+      'সর্বোচ্চ ৩টি ছবি যোগ করুন। পরিষ্কার ছবি দ্রুত সমাধানে সাহায্য করে।';
+
+  @override
+  String get incTakePhoto => 'ছবি তুলুন';
+
+  @override
+  String get incChoosePhoto => 'গ্যালারি';
+
+  @override
+  String get incRemovePhoto => 'ছবি সরান';
+
+  @override
+  String get incAnonymous => 'নাম গোপন রেখে জানান';
+
+  @override
+  String get incAnonymousHint =>
+      'অ্যাডমিনরা আপনার নাম দেখবেন না। শুধু আপনি অবস্থা দেখতে পারবেন বলে এটি সংরক্ষিত থাকে।';
+
+  @override
+  String get incMisconductNote =>
+      'অসদাচরণের রিপোর্ট কেবল প্রধান কার্যালয়ে যায় — কখনো আপনার অফিসের অ্যাডমিনদের কাছে নয়।';
+
+  @override
+  String get incSubmit => 'রিপোর্ট জমা দিন';
+
+  @override
+  String incSubmitted(Object ref) {
+    return 'রিপোর্ট $ref পাঠানো হয়েছে। অ্যাডমিন দলকে জানানো হয়েছে।';
+  }
+
+  @override
+  String get incTitleRequired => 'একটি ছোট শিরোনাম দিন (অন্তত ৩ অক্ষর)';
+
+  @override
+  String get incCategoryRequired => 'সমস্যার ধরন বেছে নিন';
+
+  @override
+  String get incNoReports => 'এখনো কোনো রিপোর্ট নেই';
+
+  @override
+  String get incNoReportsHint =>
+      'কোনো সমস্যা জানালে এখানে এর অগ্রগতি দেখতে পারবেন।';
+
+  @override
+  String get incFilterOpen => 'চলমান';
+
+  @override
+  String get incFilterClosed => 'বন্ধ';
+
+  @override
+  String get incFilterAll => 'সব';
+
+  @override
+  String get incStatusPENDING => 'অপেক্ষমাণ';
+
+  @override
+  String get incStatusPROCESSING => 'প্রক্রিয়াধীন';
+
+  @override
+  String get incStatusDONE => 'সম্পন্ন';
+
+  @override
+  String get incStatusDECLINED => 'প্রত্যাখ্যাত';
+
+  @override
+  String get incCatBUILDING_DAMAGE => 'ভবনের ক্ষতি';
+
+  @override
+  String get incCatCLEANLINESS => 'পরিচ্ছন্নতা';
+
+  @override
+  String get incCatCAFETERIA_HYGIENE => 'ক্যাফেটেরিয়ার স্বাস্থ্যবিধি';
+
+  @override
+  String get incCatWASHROOM => 'ওয়াশরুম';
+
+  @override
+  String get incCatSAFETY_HAZARD => 'নিরাপত্তা ঝুঁকি';
+
+  @override
+  String get incCatELECTRICAL => 'বৈদ্যুতিক';
+
+  @override
+  String get incCatSECURITY => 'সিকিউরিটি';
+
+  @override
+  String get incCatMISCONDUCT => 'অসদাচরণ';
+
+  @override
+  String get incCatOTHER => 'অন্যান্য';
+
+  @override
+  String get incSevLOW => 'কম';
+
+  @override
+  String get incSevMEDIUM => 'মাঝারি';
+
+  @override
+  String get incSevHIGH => 'বেশি';
+
+  @override
+  String get incSevURGENT => 'জরুরি';
+
+  @override
+  String get incProgress => 'অগ্রগতি';
+
+  @override
+  String get incStepSubmitted => 'জমা হয়েছে';
+
+  @override
+  String get incStepProcessing => 'প্রক্রিয়াধীন';
+
+  @override
+  String get incStepDone => 'সম্পন্ন';
+
+  @override
+  String get incStepDeclined => 'প্রত্যাখ্যাত';
+
+  @override
+  String get incAdminUpdate => 'অ্যাডমিন দলের আপডেট';
+
+  @override
+  String get incReportedBy => 'রিপোর্টকারী';
+
+  @override
+  String get incAnonymousBadge => 'নাম গোপন';
+
+  @override
+  String get incAddPhoto => 'আরেকটি ছবি যোগ করুন';
+
+  @override
+  String get incPhotoAdded => 'ছবি যোগ হয়েছে';
+
+  @override
+  String get incFixPhotos => 'সমাধানের ছবি';
+
+  @override
+  String get incHistory => 'ইতিহাস';
+
+  @override
+  String get incEvSubmitted => 'রিপোর্ট জমা হয়েছে';
+
+  @override
+  String incEvStatus(Object status) {
+    return '$status হিসেবে চিহ্নিত';
+  }
+
+  @override
+  String get incEvReopened => 'পুনরায় খোলা হয়েছে';
+
+  @override
+  String get incEvNote => 'আপনার জন্য আপডেট';
+
+  @override
+  String get incEvPhoto => 'ছবি যোগ হয়েছে';
+
+  @override
+  String get incEvDetails => 'বিবরণ হালনাগাদ হয়েছে';
+
+  @override
+  String get incWaitingForAdmin => 'অ্যাডমিন দলের পদক্ষেপের অপেক্ষায়।';
+
+  @override
+  String get incOfflineNotice =>
+      'আপনি অফলাইনে আছেন। ছবিসহ রিপোর্টের জন্য সংযোগ প্রয়োজন — অনলাইনে ফিরে আবার চেষ্টা করুন।';
 }

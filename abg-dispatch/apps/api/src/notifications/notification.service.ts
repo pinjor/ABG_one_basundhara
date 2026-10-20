@@ -111,6 +111,63 @@ export class NotificationService {
     await this.deliver(parcel, dedupeBase, eventType, drafts);
   }
 
+  /**
+   * Notifications that are not about a parcel (incident reports). Same rules:
+   * in-app row first, deduplicated per person, then push. Sensitive ones keep
+   * their subject off the lock screen.
+   */
+  async deliverIncident(incident: { id: string; referenceNumber: string }, dedupeBase: string, eventType: string, drafts: Draft[], sensitive = false, status?: string) {
+    const unique = new Map<string, Draft>();
+    for (const d of drafts) if (d.userId && !unique.has(d.userId)) unique.set(d.userId, d);
+    if (!unique.size) return 0;
+    const rows = [...unique.values()].map((d) => ({
+      userId: d.userId,
+      eventType,
+      category: d.category,
+      title: d.title,
+      body: d.body,
+      sensitive,
+      data: { incidentId: incident.id, referenceNumber: incident.referenceNumber, ...(status ? { status } : {}) },
+      dedupeKey: `${dedupeBase}:${d.userId}`,
+    }));
+    try {
+      await this.prisma.notification.createMany({ data: rows, skipDuplicates: true });
+      const created = await this.prisma.notification.findMany({
+        where: { dedupeKey: { in: rows.map((r) => r.dedupeKey) } },
+        select: { id: true, userId: true, title: true, body: true },
+      });
+      void Promise.all(
+        created.map((n) =>
+          this.push
+            .sendToUser(
+              n.userId,
+              {
+                title: sensitive ? "ABG Dispatch" : n.title,
+                body: sensitive
+                  ? eventType === "INCIDENT_REPORTED"
+                    ? "You have a new report to review. Open the app to view."
+                    : "There is an update on your report. Open the app to view."
+                  : n.body,
+                data: { incidentId: incident.id, notificationId: n.id, eventType },
+              },
+              n.id,
+            )
+            .catch((err) => this.logger.warn(`Push failed: ${(err as Error).message}`)),
+        ),
+      );
+      return created.length;
+    } catch (err) {
+      // Never undo a report because a notification failed.
+      this.logger.error(`Incident notification ${dedupeBase} failed: ${(err as Error).message}`);
+      return 0;
+    }
+  }
+
+  async superAdminUsers(): Promise<string[]> {
+    const rows = await this.prisma.userRole.findMany({ where: { role: RoleCode.SUPER_ADMIN, user: { active: true } }, select: { userId: true } });
+    return [...new Set(rows.map((r) => r.userId))];
+  }
+
   private copyInput(p: Parcel) {
     return { classification: p.classification as Classification, trackingNumber: p.trackingNumber, title: p.title };
   }

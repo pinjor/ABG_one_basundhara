@@ -138,12 +138,12 @@ export function subscribeLive(onEvent: (e: { parcelId: string; trackingNumber: s
   };
 }
 
-/** Multipart upload (attachments). Retries once after a token refresh. */
-export async function upload<T = any>(path: string, file: File, fields: Record<string, string>): Promise<T> {
+/** Multipart upload (attachments, photos). Retries once after a token refresh. */
+export async function upload<T = any>(path: string, file: File, fields: Record<string, string>, fileField = "file"): Promise<T> {
   const send = () => {
     const form = new FormData();
     for (const [k, v] of Object.entries(fields)) form.append(k, v);
-    form.append("file", file);
+    form.append(fileField, file);
     const token = useAuth.getState().accessToken;
     return fetch(`/api${path}`, { method: "POST", headers: token ? { authorization: `Bearer ${token}` } : {}, body: form });
   };

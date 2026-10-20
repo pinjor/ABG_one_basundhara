@@ -2,6 +2,11 @@ import { describe, expect, test } from "bun:test";
 import {
   Capability,
   Classification,
+  INCIDENT_TRANSITIONS,
+  IncidentStatus,
+  canIncidentTransition,
+  formatIncidentNumber,
+  isIncidentNumber,
   ParcelStatus,
   RoleCode,
   STATUS_LABEL,
@@ -146,5 +151,33 @@ describe("tracking numbers and QR payloads", () => {
     expect(extractQrToken("https://dispatch.abg.com.bd/q/AbCdEfGhIjKlMnOpQrStUv")).toBe("AbCdEfGhIjKlMnOpQrStUv");
     expect(extractQrToken("AbCdEfGhIjKlMnOpQrStUv")).toBe("AbCdEfGhIjKlMnOpQrStUv");
     expect(extractQrToken("not a token")).toBeNull();
+  });
+});
+
+describe("incident reports", () => {
+  test("move forward, can be reopened, and never return to Pending", () => {
+    expect(canIncidentTransition("PENDING", "PROCESSING")).toBe(true);
+    expect(canIncidentTransition("PROCESSING", "DONE")).toBe(true);
+    expect(canIncidentTransition("DONE", "PROCESSING")).toBe(true);
+    expect(canIncidentTransition("DECLINED", "PROCESSING")).toBe(true);
+    for (const from of Object.values(IncidentStatus)) expect(INCIDENT_TRANSITIONS[from]).not.toContain("PENDING");
+    expect(canIncidentTransition("DONE", "DECLINED")).toBe(false);
+  });
+
+  test("reference numbers name the day and the office", () => {
+    const ref = formatIncidentNumber("261020", "FCA", 7);
+    expect(ref).toBe("INC-261020-FCA-007");
+    expect(isIncidentNumber(ref)).toBe(true);
+    expect(isIncidentNumber("ABG-261020-HO-00428")).toBe(false);
+  });
+
+  test("every employee role can report; only admins can manage", () => {
+    for (const role of [RoleCode.EMPLOYEE, RoleCode.RECEIVER, RoleCode.COURIER_RUNNER, RoleCode.DISPATCH_OFFICER]) {
+      expect(capabilitiesFor([role]).has(Capability.INCIDENT_REPORT)).toBe(true);
+      expect(capabilitiesFor([role]).has(Capability.INCIDENT_MANAGE)).toBe(false);
+    }
+    expect(capabilitiesFor([RoleCode.BRANCH_ADMIN]).has(Capability.INCIDENT_MANAGE)).toBe(true);
+    expect(capabilitiesFor([RoleCode.AUDITOR]).has(Capability.INCIDENT_VIEW)).toBe(true);
+    expect(capabilitiesFor([RoleCode.AUDITOR]).has(Capability.INCIDENT_MANAGE)).toBe(false);
   });
 });
