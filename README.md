@@ -1,5 +1,11 @@
 # Bashundhara Sports City — Digital Management Platform
 
+> **Also in this repository:** [ABG Dispatch](abg-dispatch/README.md) — the
+> Anvir Bashundhara Group's internal chain-of-custody system for documents,
+> parcels and instruments (Flutter mobile app, admin control centre, API). It
+> is a separate workspace under `abg-dispatch/` and shares nothing with the
+> Sports City platform below.
+
 Production-grade operations platform for staff running the Bashundhara
 Sports City complex day to day: venue managers, gate officers, hospitality
 teams, F&B outlets, parking marshals and fleet dispatchers. This is **not**

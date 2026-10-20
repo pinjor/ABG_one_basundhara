@@ -1,0 +1,86 @@
+# ABG Dispatch — API, admin portal and PostgreSQL.
+#   cp .env.docker.example .env   # then fill in the secrets
+#   docker compose up -d --build
+# Admin portal http://localhost:18490 · API http://localhost:18491/api · Postgres 127.0.0.1:18434
+name: abg-dispatch
+
+
+services:
+  postgres:
+    image: ${POSTGRES_IMAGE:-postgres:16-alpine}
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: abg
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: abg_dispatch
+    # Bound to localhost only; the API reaches it on the internal network.
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-18434}:5432"
+    volumes:
+      - abg_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U abg -d abg_dispatch"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      secrets: [extra_ca]
+      args:
+        NODE_BUILD_IMAGE: ${NODE_BUILD_IMAGE:-node:22-bookworm}
+        NODE_RUNTIME_IMAGE: ${NODE_RUNTIME_IMAGE:-node:22-bookworm-slim}
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      DATABASE_URL: postgresql://abg:${POSTGRES_PASSWORD}@postgres:5432/abg_dispatch?schema=public
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in .env}
+      APP_ENCRYPTION_KEY: ${APP_ENCRYPTION_KEY:?Set APP_ENCRYPTION_KEY in .env}
+      OTP_PEPPER: ${OTP_PEPPER:?Set OTP_PEPPER in .env}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:18490}
+      PUBLIC_QR_BASE_URL: ${PUBLIC_QR_BASE_URL:-http://localhost:18490}
+      REQUIRE_ADMIN_MFA: ${REQUIRE_ADMIN_MFA:-true}
+      EXPOSE_DEV_OTP: ${EXPOSE_DEV_OTP:-false}
+      SLA_INTERVAL_SECONDS: ${SLA_INTERVAL_SECONDS:-60}
+      SMS_PROVIDER: ${SMS_PROVIDER:-dev}
+      SMS_HTTP_URL: ${SMS_HTTP_URL:-}
+      SMS_API_KEY: ${SMS_API_KEY:-}
+      SMS_SENDER_ID: ${SMS_SENDER_ID:-ABG}
+      FCM_PROJECT_ID: ${FCM_PROJECT_ID:-}
+      FCM_SERVICE_ACCOUNT_JSON: ${FCM_SERVICE_ACCOUNT_JSON:-}
+      PATHAO_WEBHOOK_SECRET: ${PATHAO_WEBHOOK_SECRET:-}
+      REDX_WEBHOOK_SECRET: ${REDX_WEBHOOK_SECRET:-}
+      STEADFAST_WEBHOOK_SECRET: ${STEADFAST_WEBHOOK_SECRET:-}
+      GENERIC_COURIER_WEBHOOK_SECRET: ${GENERIC_COURIER_WEBHOOK_SECRET:-}
+    volumes:
+      - abg_storage:/data/storage
+    ports:
+      - "${API_PORT:-18491}:18491"
+
+  admin:
+    build:
+      context: .
+      dockerfile: apps/admin/Dockerfile
+      secrets: [extra_ca]
+      args:
+        NODE_IMAGE: ${NODE_RUNTIME_IMAGE:-node:22-bookworm-slim}
+        NGINX_IMAGE: ${NGINX_IMAGE:-nginx:1.27-alpine}
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "${ADMIN_PORT:-18490}:80"
+
+volumes:
+  abg_postgres:
+  abg_storage:
+
+# Optional CA for builds behind a TLS-inspecting proxy (empty by default).
+secrets:
+  extra_ca:
+    file: ${EXTRA_CA_FILE:-/dev/null}

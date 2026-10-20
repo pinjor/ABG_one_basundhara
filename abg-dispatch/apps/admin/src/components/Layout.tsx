@@ -18,7 +18,9 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
-import { Capability, ROLE_LABEL, RoleCode } from "@abg-dispatch/shared";
+import { Capability, ROLE_LABEL, RoleCode, extractQrToken } from "@abg-dispatch/shared";
+import { openScanned } from "../pages/QrLanding";
+import { toast } from "./toast";
 import { useAuth } from "../lib/auth";
 import { api } from "../lib/api";
 import { cx } from "./ui";
@@ -170,7 +172,15 @@ export function Layout({ children }: { children: ReactNode }) {
             onSubmit={(e) => {
               e.preventDefault();
               const q = search.trim();
-              if (q) navigate(`/parcels?q=${encodeURIComponent(q)}`);
+              if (!q) return;
+              // A desk scanner "types" the label URL; open that parcel directly.
+              if (extractQrToken(q)) {
+                openScanned(q)
+                  .then((id) => (setSearch(""), navigate(`/parcels/${id}`)))
+                  .catch(toast.error);
+                return;
+              }
+              navigate(`/parcels?q=${encodeURIComponent(q)}`);
             }}
           >
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-subtle" aria-hidden />

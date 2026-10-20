@@ -1,0 +1,14 @@
+# Keep build contexts small and free of local state and secrets.
+**/node_modules
+**/dist
+**/*.tsbuildinfo
+**/.env
+**/.env.*
+!**/.env.example
+apps/api/storage
+apps/mobile
+docs
+brand
+scripts
+**/*.log
+.git

@@ -11,4 +11,6 @@ export default defineConfig({
     },
   },
   preview: { port: 18490 },
+  // Never inline assets as data: URIs, so the Content-Security-Policy can stay strict.
+  build: { assetsInlineLimit: 0 },
 });

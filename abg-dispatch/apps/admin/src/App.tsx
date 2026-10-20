@@ -16,6 +16,7 @@ import { AuditPage } from "./pages/Audit";
 import { IntegrationsPage } from "./pages/Integrations";
 import { SecurityPage } from "./pages/Security";
 import { LabelPrintPage } from "./pages/LabelPrint";
+import { QrLandingPage } from "./pages/QrLanding";
 
 function RequireAuth({ children, bare }: { children: ReactNode; bare?: boolean }) {
   const token = useAuth((s) => s.accessToken);
@@ -46,6 +47,7 @@ export function App() {
       <Route path="/people" element={<RequireAuth><PeoplePage /></RequireAuth>} />
       <Route path="/audit" element={<RequireAuth><AuditPage /></RequireAuth>} />
       <Route path="/integrations" element={<RequireAuth><IntegrationsPage /></RequireAuth>} />
+      <Route path="/q/:token" element={<RequireAuth><QrLandingPage /></RequireAuth>} />
       <Route path="/security" element={<RequireAuth><SecurityPage /></RequireAuth>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

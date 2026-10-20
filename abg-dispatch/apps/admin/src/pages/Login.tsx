@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowRight, KeyRound, Loader2, ShieldCheck } from "lucide-react";
 import { ApiError, api } from "../lib/api";
 import { useAuth, type Profile } from "../lib/auth";
@@ -16,6 +16,7 @@ const DEMO = import.meta.env.DEV || import.meta.env.VITE_DEMO_HINTS === "true";
 
 export function LoginPage() {
   const navigate = useNavigate();
+  const from = (useLocation().state as { from?: string } | null)?.from;
   const setAuth = useAuth((s) => s.set);
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -37,7 +38,7 @@ export function LoginPage() {
         throw new Error("This portal is for dispatch officers and administrators. Please use the ABG Dispatch mobile app.");
       }
       setAuth({ accessToken: res.accessToken, refreshToken: res.refreshToken, profile: res.user, mfaEnrollmentRequired: res.mfaEnrollmentRequired });
-      navigate(res.mfaEnrollmentRequired ? "/security" : "/", { replace: true });
+      navigate(res.mfaEnrollmentRequired ? "/security" : from && from !== "/login" ? from : "/", { replace: true });
     } catch (err) {
       if (err instanceof ApiError && (err.code === "MFA_REQUIRED" || err.code === "MFA_INVALID")) {
         setNeedTotp(true);
