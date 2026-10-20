@@ -1,0 +1,53 @@
+import { useEffect, type ReactNode } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { useAuth, type Profile } from "./lib/auth";
+import { api } from "./lib/api";
+import { Layout } from "./components/Layout";
+import { LoginPage } from "./pages/Login";
+import { DashboardPage } from "./pages/Dashboard";
+import { ParcelsPage } from "./pages/Parcels";
+import { ParcelDetailPage } from "./pages/ParcelDetail";
+import { AnalyticsPage } from "./pages/Analytics";
+import { ReportsPage } from "./pages/Reports";
+import { ConfigPage } from "./pages/Config";
+import { PeoplePage } from "./pages/People";
+import { AuditPage } from "./pages/Audit";
+import { IntegrationsPage } from "./pages/Integrations";
+import { SecurityPage } from "./pages/Security";
+import { LabelPrintPage } from "./pages/LabelPrint";
+
+function RequireAuth({ children, bare }: { children: ReactNode; bare?: boolean }) {
+  const token = useAuth((s) => s.accessToken);
+  const enrollment = useAuth((s) => s.mfaEnrollmentRequired);
+  const location = useLocation();
+  // Keep the profile (roles, capabilities) fresh after role changes.
+  const me = useQuery({ queryKey: ["me"], queryFn: () => api.get<Profile>("/auth/me"), enabled: !!token, staleTime: 60_000 });
+  useEffect(() => {
+    if (me.data) useAuth.getState().set({ profile: me.data });
+  }, [me.data]);
+
+  if (!token) return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+  if (enrollment && location.pathname !== "/security") return <Navigate to="/security" replace />;
+  return bare ? <>{children}</> : <Layout>{children}</Layout>;
+}
+
+export function App() {
+  return (
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/print/label/:id" element={<RequireAuth bare><LabelPrintPage /></RequireAuth>} />
+      <Route path="/" element={<RequireAuth><DashboardPage /></RequireAuth>} />
+      <Route path="/parcels" element={<RequireAuth><ParcelsPage /></RequireAuth>} />
+      <Route path="/parcels/:id" element={<RequireAuth><ParcelDetailPage /></RequireAuth>} />
+      <Route path="/analytics" element={<RequireAuth><AnalyticsPage /></RequireAuth>} />
+      <Route path="/reports" element={<RequireAuth><ReportsPage /></RequireAuth>} />
+      <Route path="/config" element={<RequireAuth><ConfigPage /></RequireAuth>} />
+      <Route path="/people" element={<RequireAuth><PeoplePage /></RequireAuth>} />
+      <Route path="/audit" element={<RequireAuth><AuditPage /></RequireAuth>} />
+      <Route path="/integrations" element={<RequireAuth><IntegrationsPage /></RequireAuth>} />
+      <Route path="/security" element={<RequireAuth><SecurityPage /></RequireAuth>} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+}

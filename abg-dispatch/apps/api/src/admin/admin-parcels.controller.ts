@@ -112,7 +112,7 @@ export class AdminParcelsController {
     const today = dhakaDayRange(dhakaDay(new Date()));
     const count = (where: Prisma.ParcelWhereInput) => this.prisma.parcel.count({ where: { AND: [base, where] } });
     const open = { status: { notIn: [...TERMINAL_STATUSES] } };
-    const [bookedToday, booked, awaitingPickup, inRoute, arrived, pendingReceipt, receivedToday, overdue, exceptions, returnsOpen, returnedToday] = await Promise.all([
+    const [bookedToday, booked, awaitingPickup, inRoute, arrived, pendingReceipt, receivedToday, onBehalfToday, overdue, exceptions, returnsOpen, returnedToday] = await Promise.all([
       count({ bookedAt: today }),
       count({ status: ParcelStatus.BOOKED }),
       count({ status: ParcelStatus.AWAITING_PICKUP }),
@@ -120,6 +120,7 @@ export class AdminParcelsController {
       count({ status: ParcelStatus.ARRIVED_AT_DESTINATION }),
       count({ status: { in: [...STATUS_VIEW_STATUSES.PENDING_RECEIPT] } }),
       count({ status: ParcelStatus.RECEIVED, receivedAt: today }),
+      count({ status: ParcelStatus.RECEIVED, receivedAt: today, receivedOnBehalf: true }),
       count({ ...open, isOverdue: true }),
       count({ OR: [{ status: { in: [...STATUS_VIEW_STATUSES.EXCEPTIONS] } }, { ...open, hasOpenException: true }] }),
       count({ status: { in: [ParcelStatus.RETURN_REQUESTED, ParcelStatus.RETURN_IN_TRANSIT] } }),
@@ -169,7 +170,7 @@ export class AdminParcelsController {
       FROM generate_series(7, 21) AS h(hour) ORDER BY h.hour`;
 
     return {
-      kpis: { bookedToday, booked, awaitingPickup, inRoute, arrived, pendingReceipt, receivedToday, overdue, exceptions, returnsOpen, returnedToday },
+      kpis: { bookedToday, booked, awaitingPickup, inRoute, arrived, pendingReceipt, receivedToday, onBehalfToday, overdue, exceptions, returnsOpen, returnedToday },
       pendingAging: buckets.map(({ label, count }) => ({ label, count })),
       hourly: hourly.map((h) => ({ hour: Number(h.hour), booked: Number(h.booked), received: Number(h.received) })),
       recent: recentEvents.map((e) => ({
