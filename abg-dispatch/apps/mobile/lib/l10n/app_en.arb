@@ -1,0 +1,356 @@
+{
+  "@@locale": "en",
+  "appName": "ABG Dispatch",
+  "orgName": "Anvir Bashundhara Group",
+  "tagline": "Every handover, on the record.",
+  "splashLoading": "Securing your session",
+  "signIn": "Sign in",
+  "welcomeBack": "Welcome back",
+  "signInSubtitle": "Sign in with your ABG email or employee ID.",
+  "identifierLabel": "Email or employee ID",
+  "passwordLabel": "Password",
+  "authenticatorLabel": "Authenticator code",
+  "carrierEntry": "Carrying a parcel without an ABG account?",
+  "carrierEntryAction": "Carrier sign-in",
+  "securedFooter": "Secured access · Every action is logged",
+  "guestTitle": "Carrier sign-in",
+  "guestSubtitle": "Enter the mobile number dispatch registered for you. We will text you a 6-digit code.",
+  "phoneLabel": "Mobile number",
+  "sendCode": "Send code",
+  "codeLabel": "6-digit code",
+  "verifyContinue": "Verify and continue",
+  "codeSentTo": "Code sent to {phone}",
+  "@codeSentTo": {
+    "placeholders": {
+      "phone": {}
+    }
+  },
+  "devCode": "Development code: {code}",
+  "@devCode": {
+    "placeholders": {
+      "code": {}
+    }
+  },
+  "greetingMorning": "Good morning, {name}",
+  "@greetingMorning": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "greetingAfternoon": "Good afternoon, {name}",
+  "@greetingAfternoon": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "greetingEvening": "Good evening, {name}",
+  "@greetingEvening": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "sendParcel": "Send a parcel",
+  "sendParcelHint": "Book a document, instrument or package in under a minute",
+  "myActivity": "My activity",
+  "inTransit": "In transit",
+  "waitingForMe": "Waiting for me",
+  "pendingPickup": "Pending pickup",
+  "assignedToMe": "Assigned to me",
+  "actionRequired": "Action required",
+  "recentParcels": "Recent parcels",
+  "seeAll": "See all",
+  "navHome": "Home",
+  "navParcels": "Parcels",
+  "navScan": "Scan",
+  "navAlerts": "Alerts",
+  "navProfile": "Profile",
+  "tabIncoming": "Incoming",
+  "tabOutgoing": "Outgoing",
+  "tabAssigned": "Carrying",
+  "tabCompleted": "Completed",
+  "searchParcels": "Search tracking ID, title or person",
+  "noParcels": "No parcels here yet",
+  "noParcelsHint": "Parcels you send, receive or carry will appear here.",
+  "noMatches": "No parcels match this search",
+  "allCaughtUp": "You're all caught up",
+  "nothingWaiting": "No parcels are waiting for you.",
+  "from": "From",
+  "to": "To",
+  "carrier": "Carrier",
+  "timeline": "Custody timeline",
+  "details": "Details",
+  "priority": "Priority",
+  "classification": "Classification",
+  "category": "Category",
+  "receipt": "Receipt",
+  "receivedBy": "Received by",
+  "onBehalfOf": "On behalf of {name}",
+  "@onBehalfOf": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "verifiedBy": "Verified by",
+  "attachments": "Evidence & attachments",
+  "notes": "Notes",
+  "showQr": "QR label",
+  "call": "Call",
+  "upcoming": "Upcoming",
+  "expectedBy": "Expected by {time}",
+  "@expectedBy": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "overdue": "Overdue",
+  "exceptionOpen": "Exception open",
+  "sentOnBehalf": "Booked by {name} on the sender's behalf",
+  "@sentOnBehalf": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "contentHidden": "Contents are restricted for your role.",
+  "actionAccept": "Accept assignment",
+  "actionRequestHandover": "Request handover",
+  "actionConfirmHandover": "Confirm handover",
+  "actionEnterPin": "Enter sender's PIN",
+  "actionOfficerHandover": "Confirm as dispatch officer",
+  "actionStartTransit": "Start transit",
+  "actionCheckpoint": "Add checkpoint",
+  "actionArrived": "Mark arrived",
+  "actionReceive": "Receive parcel",
+  "actionReceiveOnBehalf": "Receive on behalf",
+  "actionReceiveWithCode": "Receiver has a code",
+  "actionSendCode": "Send receipt code",
+  "actionException": "Report a problem",
+  "actionCancel": "Cancel dispatch",
+  "actionReturn": "Request return",
+  "actionStartReturn": "Start return",
+  "actionConfirmReturn": "Confirm it's back",
+  "actionBook": "Book now",
+  "actionComment": "Add note",
+  "confirmHandoverBody": "Confirm you have handed this parcel to {name}. The time and your name are recorded.",
+  "@confirmHandoverBody": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "pinTitle": "Sender's handover PIN",
+  "pinHint": "Ask the sender for the 6-digit PIN they received when booking.",
+  "receiveTitle": "Confirm receipt",
+  "receiveBody": "Confirm this parcel is in your hands. Your name, employee ID and the time are recorded as proof.",
+  "scanToReceive": "Scan the label to receive",
+  "onBehalfTitle": "Receive on behalf",
+  "onBehalfBody": "You are receiving this for {name}. They will be notified that you have it.",
+  "@onBehalfBody": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "reasonLabel": "Reason",
+  "reasonHint": "e.g. Receiver is in a meeting",
+  "relationshipLabel": "Your relationship",
+  "relationshipHint": "e.g. Assistant, same department",
+  "receiptCodeTitle": "Receiver's code",
+  "receiptCodeBody": "Enter the 6-digit code the receiver got by SMS.",
+  "signature": "Receiver's signature",
+  "signatureRequired": "A signature is required for highly confidential parcels.",
+  "clear": "Clear",
+  "exceptionType": "What happened?",
+  "exceptionDetails": "Details",
+  "returnTitle": "Request a return",
+  "cancelTitle": "Cancel this dispatch?",
+  "checkpointLabel": "Where are you?",
+  "checkpointHint": "e.g. Factory A main gate",
+  "submit": "Submit",
+  "confirm": "Confirm",
+  "cancel": "Cancel",
+  "close": "Close",
+  "done": "Done",
+  "next": "Next",
+  "back": "Back",
+  "retry": "Try again",
+  "savedOffline": "Saved offline. It will sync automatically when you're back online.",
+  "pendingSync": "{count, plural, =1{1 action waiting to sync} other{{count} actions waiting to sync}}",
+  "@pendingSync": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "syncNow": "Sync now",
+  "syncNeedsAttention": "Needs attention",
+  "offline": "You're offline",
+  "dismiss": "Dismiss",
+  "newParcel": "New parcel",
+  "stepWhat": "What",
+  "stepWho": "To whom",
+  "stepHow": "Carrier",
+  "stepReview": "Review",
+  "titleLabel": "Title",
+  "titleHint": "e.g. Quarterly Supplier Agreement",
+  "descriptionLabel": "Description",
+  "descriptionHint": "What is inside, and any handling instructions",
+  "receiverEmployee": "Employee",
+  "receiverDepartment": "Department",
+  "receiverBranch": "Office",
+  "receiverExternal": "External",
+  "searchEmployee": "Search name, ID, phone or department",
+  "destination": "Destination",
+  "carrierEmployee": "ABG employee",
+  "carrierCourier": "Courier company",
+  "carrierGuest": "Guest person",
+  "assignLater": "Let dispatch assign a courier",
+  "courierCompany": "Courier company",
+  "trackingNumberLabel": "Courier tracking / consignment no.",
+  "riderName": "Rider name (optional)",
+  "riderPhone": "Rider phone (optional)",
+  "guestName": "Full name",
+  "guestCompany": "Company (optional)",
+  "vehicleNumber": "Vehicle number (optional)",
+  "externalName": "Receiver name",
+  "externalOrg": "Organisation",
+  "externalAddress": "Delivery address",
+  "expectedDelivery": "Expected delivery",
+  "noDeadline": "No deadline",
+  "bookParcel": "Book parcel",
+  "saveDraft": "Save as draft",
+  "reviewNotice": "Booking creates a tracking ID and QR label. Every handover from now on is recorded.",
+  "bookedTitle": "Parcel booked",
+  "bookedBody": "Attach the QR label to the envelope or package.",
+  "handoverPin": "Handover PIN",
+  "handoverPinHint": "Share this PIN with the courier only at the moment you hand the parcel over.",
+  "viewParcel": "View parcel",
+  "bookAnother": "Book another",
+  "required": "Required",
+  "scanTitle": "Scan parcel",
+  "scanHint": "Align the QR label inside the frame",
+  "enterManually": "Enter tracking ID",
+  "trackingIdLabel": "Tracking ID",
+  "lookUp": "Look up",
+  "cameraUnavailable": "Camera unavailable on this device. Enter the tracking ID instead.",
+  "torch": "Torch",
+  "notificationsTitle": "Notifications",
+  "filterAll": "All",
+  "filterAction": "Action required",
+  "filterUpdates": "Updates",
+  "filterSystem": "System",
+  "markAllRead": "Mark all read",
+  "noNotifications": "No notifications yet",
+  "profileTitle": "Profile",
+  "employeeId": "Employee ID",
+  "department": "Department",
+  "office": "Office",
+  "phone": "Phone",
+  "email": "Email",
+  "settings": "Settings",
+  "language": "Language",
+  "pushNotifications": "Push notifications",
+  "smsNotifications": "SMS notifications",
+  "sessions": "Signed-in devices",
+  "thisDevice": "This device",
+  "signOut": "Sign out",
+  "signOutConfirm": "Sign out of ABG Dispatch on this device?",
+  "help": "Help & support",
+  "helpBody": "Contact the dispatch desk at Head Office, Level 2, or call 09612-000100.",
+  "privacy": "Privacy & security",
+  "privacyBody": "Your sign-in is stored in the device's secure keystore. QR labels carry no personal data. Every custody action is recorded with your name and the server time.",
+  "version": "Version {version}",
+  "@version": {
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "roles": "Roles",
+  "errorNetwork": "Can't reach ABG Dispatch. Check your connection and try again.",
+  "errorGeneric": "That didn't work. Please try again.",
+  "guestHello": "Hello, {name}",
+  "@guestHello": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "guestAssignments": "Your assignments",
+  "guestNoAssignments": "No active assignments right now.",
+  "guestSessionNote": "This carrier session only shows parcels assigned to you and ends automatically.",
+  "justNow": "Just now",
+  "minutesAgo": "{count} min ago",
+  "@minutesAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hoursAgo": "{count} h ago",
+  "@hoursAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "yesterday": "Yesterday",
+  "statusDRAFT": "Draft",
+  "statusBOOKED": "Booked",
+  "statusAWAITING_PICKUP": "Awaiting Pickup",
+  "statusPICKED_UP": "Picked Up",
+  "statusIN_TRANSIT": "In Transit",
+  "statusARRIVED_AT_DESTINATION": "Arrived",
+  "statusPENDING_RECEIPT": "Pending Receipt",
+  "statusRECEIVED": "Received",
+  "statusON_HOLD": "On Hold",
+  "statusDELIVERY_EXCEPTION": "Exception",
+  "statusDELIVERY_FAILED": "Delivery Failed",
+  "statusRETURN_REQUESTED": "Return Requested",
+  "statusRETURN_IN_TRANSIT": "Return In Transit",
+  "statusRETURNED": "Returned",
+  "statusCANCELLED": "Cancelled",
+  "priorityNORMAL": "Normal",
+  "priorityPRIORITY": "Priority",
+  "priorityURGENT": "Urgent",
+  "priorityCRITICAL": "Critical",
+  "classNORMAL": "Normal",
+  "classINTERNAL": "Internal",
+  "classCONFIDENTIAL": "Confidential",
+  "classHIGHLY_CONFIDENTIAL": "Highly Confidential",
+  "carrierTypeINTERNAL_EMPLOYEE": "Employee courier",
+  "carrierTypeEXTERNAL_COURIER": "Courier company",
+  "carrierTypeGUEST_PERSON": "Guest carrier",
+  "excRECEIVER_UNAVAILABLE": "Receiver unavailable",
+  "excWRONG_DESTINATION": "Wrong destination",
+  "excADDRESS_CLARIFICATION": "Address needs clarification",
+  "excPACKAGE_DAMAGED": "Package damaged",
+  "excOFFICE_CLOSED": "Office closed",
+  "excSEAL_BROKEN": "Seal broken",
+  "excAWAITING_AUTHORIZATION": "Waiting for authorisation",
+  "excOTHER": "Other",
+  "dispatchedTo": "{from} → {to}",
+  "@dispatchedTo": {
+    "placeholders": {
+      "from": {},
+      "to": {}
+    }
+  },
+  "trackingCopied": "Tracking ID copied",
+  "handoverRequested": "The sender has been asked to confirm.",
+  "receiptCodeSent": "Code sent to {phone}",
+  "@receiptCodeSent": {
+    "placeholders": {
+      "phone": {}
+    }
+  },
+  "addEvidence": "Add photo evidence",
+  "evidenceAdded": "Evidence attached",
+  "evidenceHint": "Photograph the sealed envelope or package — never its contents.",
+  "sentToPhone": "Sent to {phone}",
+  "@sentToPhone": {
+    "placeholders": {
+      "phone": {}
+    }
+  },
+  "you": "You",
+  "moreActions": "More actions"
+}

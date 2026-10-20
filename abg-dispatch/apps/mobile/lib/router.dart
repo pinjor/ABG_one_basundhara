@@ -1,0 +1,137 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import 'core/session.dart';
+import 'models/models.dart';
+import 'screens/booked_screen.dart';
+import 'screens/create_parcel_screen.dart';
+import 'screens/guest_home_screen.dart';
+import 'screens/guest_login_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/login_screen.dart';
+import 'screens/notifications_screen.dart';
+import 'screens/parcel_detail_screen.dart';
+import 'screens/parcels_screen.dart';
+import 'screens/profile_screen.dart';
+import 'screens/qr_label_screen.dart';
+import 'screens/scan_screen.dart';
+import 'screens/splash_screen.dart';
+import 'widgets/app_shell.dart';
+
+final rootNavigatorKey = GlobalKey<NavigatorState>();
+
+/// Routes, with sign-in state deciding where you may go:
+/// employees get the tabbed app, guest carriers only their assignments.
+GoRouter buildRouter(SessionController session) {
+  // Where the user was heading before sign-in or session restore got in the way
+  // (a deep link, a reloaded web page, a notification).
+  String? pending;
+  const entry = ['/splash', '/login', '/guest-login'];
+  return GoRouter(
+    navigatorKey: rootNavigatorKey,
+    initialLocation: '/splash',
+    refreshListenable: session,
+    redirect: (context, state) {
+      final loc = state.matchedLocation;
+      if (!entry.contains(loc) && loc != '/home' && loc != '/guest') {
+        pending = state.uri.toString();
+      }
+      switch (session.state) {
+        case SessionState.restoring:
+          return loc == '/splash' ? null : '/splash';
+        case SessionState.signedOut:
+          return (loc == '/login' || loc == '/guest-login') ? null : '/login';
+        case SessionState.guest:
+          final allowed =
+              loc == '/guest' || loc == '/scan' || loc.startsWith('/parcels/');
+          if (allowed) return null;
+          final target = pending != null && pending!.startsWith('/parcels/')
+              ? pending
+              : '/guest';
+          pending = null;
+          return target;
+        case SessionState.employee:
+          if (entry.contains(loc) || loc == '/guest') {
+            final target = pending ?? '/home';
+            pending = null;
+            return target;
+          }
+          pending = null;
+          return null;
+      }
+    },
+    routes: [
+      GoRoute(path: '/splash', builder: (_, _) => const SplashScreen()),
+      GoRoute(path: '/login', builder: (_, _) => const LoginScreen()),
+      GoRoute(
+        path: '/guest-login',
+        builder: (_, _) => const GuestLoginScreen(),
+      ),
+      GoRoute(path: '/guest', builder: (_, _) => const GuestHomeScreen()),
+      GoRoute(
+        path: '/scan',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (_, _) => const ScanScreen(),
+      ),
+      GoRoute(
+        path: '/create',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (_, _) => const CreateParcelScreen(),
+      ),
+      GoRoute(
+        path: '/booked',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (_, s) => BookedScreen(result: s.extra! as Json),
+      ),
+      GoRoute(
+        path: '/parcels/:id',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (_, s) => ParcelDetailScreen(
+          id: s.pathParameters['id']!,
+          scannedPayload: s.extra as String?,
+        ),
+        routes: [
+          GoRoute(
+            path: 'label',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, s) => QrLabelScreen(parcel: s.extra! as ParcelDetail),
+          ),
+        ],
+      ),
+      StatefulShellRoute.indexedStack(
+        builder: (_, _, shell) => AppShell(shell: shell),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: '/home', builder: (_, _) => const HomeScreen()),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/parcels',
+                builder: (_, _) => const ParcelsScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/alerts',
+                builder: (_, _) => const NotificationsScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/profile',
+                builder: (_, _) => const ProfileScreen(),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ],
+  );
+}

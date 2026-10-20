@@ -1,0 +1,35 @@
+{
+    "name": "ABG Dispatch",
+    "short_name": "ABG Dispatch",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#071225",
+    "theme_color": "#071225",
+    "description": "Internal document, parcel and asset custody tracking \u2014 Anvir Bashundhara Group",
+    "orientation": "portrait",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
