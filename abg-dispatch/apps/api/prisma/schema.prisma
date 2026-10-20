@@ -1,0 +1,772 @@
+// ABG Dispatch — chain-of-custody data model.
+//
+// `parcels` holds the present state of each dispatch. `parcel_events` holds what
+// actually happened, in order, and is append-only (enforced by a trigger in the
+// 0002 migration). Status values are validated against @abg-dispatch/shared and,
+// as a second line of defence, by a transition trigger on `parcels`.
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Organisation ────────────────────────────────────────────────────────────
+
+model Organization {
+  id            String         @id @default(uuid())
+  name          String
+  code          String         @unique
+  createdAt     DateTime       @default(now())
+  businessUnits BusinessUnit[]
+  branches      Branch[]
+
+  @@map("organizations")
+}
+
+model BusinessUnit {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  name           String
+  code           String       @unique
+  active         Boolean      @default(true)
+  branches       Branch[]
+
+  @@map("business_units")
+}
+
+model Branch {
+  id             String        @id @default(uuid())
+  organizationId String
+  organization   Organization  @relation(fields: [organizationId], references: [id])
+  businessUnitId String?
+  businessUnit   BusinessUnit? @relation(fields: [businessUnitId], references: [id])
+  name           String
+  /// Short code used in tracking numbers: ABG-261020-HO-00428
+  code           String        @unique
+  type           String
+  address        String?
+  city           String?
+  phone          String?
+  active         Boolean       @default(true)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  locations      Location[]
+  departments    Department[]
+  employees      Employee[]
+  userRoles      UserRole[]
+
+  originParcels      Parcel[] @relation("OriginBranch")
+  destinationParcels Parcel[] @relation("DestinationBranch")
+
+  @@map("branches")
+}
+
+model Location {
+  id        String     @id @default(uuid())
+  branchId  String
+  branch    Branch     @relation(fields: [branchId], references: [id])
+  parentId  String?
+  parent    Location?  @relation("LocationTree", fields: [parentId], references: [id])
+  children  Location[] @relation("LocationTree")
+  type      String
+  name      String
+  code      String?
+  /// Breadcrumb snapshot: "ABG Head Office › Level 7 › Legal Department"
+  path      String
+  latitude  Float?
+  longitude Float?
+  active    Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  departments        Department[]
+  employees          Employee[]
+  originParcels      Parcel[]      @relation("OriginLocation")
+  destinationParcels Parcel[]      @relation("DestinationLocation")
+  events             ParcelEvent[]
+
+  @@index([branchId])
+  @@map("locations")
+}
+
+model Department {
+  id         String    @id @default(uuid())
+  branchId   String
+  branch     Branch    @relation(fields: [branchId], references: [id])
+  name       String
+  code       String
+  /// Where parcels for this department are normally dropped.
+  locationId String?
+  location   Location? @relation(fields: [locationId], references: [id])
+  active     Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  employees  Employee[]
+
+  senderParcels   Parcel[] @relation("SenderDepartment")
+  receiverParcels Parcel[] @relation("ReceiverDepartment")
+
+  @@unique([branchId, code])
+  @@map("departments")
+}
+
+// ─── People ──────────────────────────────────────────────────────────────────
+
+model Employee {
+  id                String      @id @default(uuid())
+  employeeCode      String      @unique
+  fullName          String
+  phone             String?
+  email             String?
+  designation       String?
+  departmentId      String?
+  department        Department? @relation(fields: [departmentId], references: [id])
+  branchId          String
+  branch            Branch      @relation(fields: [branchId], references: [id])
+  defaultLocationId String?
+  defaultLocation   Location?   @relation(fields: [defaultLocationId], references: [id])
+  photoUrl          String?
+  status            String      @default("ACTIVE")
+  managerId         String?
+  manager           Employee?   @relation("Manager", fields: [managerId], references: [id])
+  reports           Employee[]  @relation("Manager")
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  user              User?
+
+  sentParcels        Parcel[]            @relation("SenderEmployee")
+  addressedParcels   Parcel[]            @relation("ReceiverEmployee")
+  receivedParcels    Parcel[]            @relation("ActualReceiverEmployee")
+  carrierAssignments CarrierAssignment[]
+
+  @@index([fullName])
+  @@index([phone])
+  @@index([branchId])
+  @@index([departmentId])
+  @@map("employees")
+}
+
+model User {
+  id               String    @id @default(uuid())
+  email            String?   @unique
+  employeeId       String?   @unique
+  employee         Employee? @relation(fields: [employeeId], references: [id])
+  displayName      String
+  passwordHash     String
+  active           Boolean   @default(true)
+  locale           String    @default("en")
+  /// TOTP secret, AES-256-GCM encrypted with APP_ENCRYPTION_KEY.
+  mfaSecret        String?
+  mfaEnabledAt     DateTime?
+  lastLoginAt      DateTime?
+  failedLoginCount Int       @default(0)
+  lockedUntil      DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  roles           UserRole[]
+  sessions        UserSession[]
+  devices         DeviceToken[]
+  notifications   Notification[]
+  savedViews      SavedView[]
+  preferences     NotificationPreference[]
+  createdParcels  Parcel[]                 @relation("CreatedBy")
+  assignmentsMade CarrierAssignment[]      @relation("AssignedBy")
+
+  @@map("users")
+}
+
+model UserRole {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      String
+  /// Branch scope for BRANCH_ADMIN / DISPATCH_OFFICER. Null = the employee's own branch.
+  branchId  String?
+  branch    Branch?  @relation(fields: [branchId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, role, branchId])
+  @@map("user_roles")
+}
+
+model UserSession {
+  id               String    @id @default(uuid())
+  userId           String
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  refreshTokenHash String    @unique
+  deviceName       String?
+  platform         String?
+  ip               String?
+  userAgent        String?
+  createdAt        DateTime  @default(now())
+  lastUsedAt       DateTime  @default(now())
+  expiresAt        DateTime
+  revokedAt        DateTime?
+  revokedReason    String?
+
+  @@index([userId])
+  @@map("user_sessions")
+}
+
+/// A driver, messenger or temporary person who carries a parcel without an ABG account.
+model GuestCarrier {
+  id              String    @id @default(uuid())
+  fullName        String
+  phone           String
+  company         String?
+  idType          String?
+  idReference     String?
+  vehicleNumber   String?
+  photoUrl        String?
+  notes           String?
+  phoneVerifiedAt DateTime?
+  createdByUserId String
+  createdAt       DateTime  @default(now())
+
+  assignments CarrierAssignment[]
+  sessions    GuestSession[]
+
+  @@index([phone])
+  @@map("guest_carriers")
+}
+
+/// A restricted, short-lived sign-in that can only act on the guest's own assignments.
+model GuestSession {
+  id             String       @id @default(uuid())
+  guestCarrierId String
+  guestCarrier   GuestCarrier @relation(fields: [guestCarrierId], references: [id])
+  createdAt      DateTime     @default(now())
+  expiresAt      DateTime
+  revokedAt      DateTime?
+  ip             String?
+
+  @@index([guestCarrierId])
+  @@map("guest_sessions")
+}
+
+// ─── Reference data ──────────────────────────────────────────────────────────
+
+model ParcelCategory {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  name        String
+  description String?
+  active      Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  parcels     Parcel[]
+
+  @@map("parcel_categories")
+}
+
+model CourierProvider {
+  id                  String    @id @default(uuid())
+  code                String    @unique
+  name                String
+  enabled             Boolean   @default(true)
+  /// Feature flag: call the provider's API. Off = manual tracking only.
+  apiEnabled          Boolean   @default(false)
+  webhookEnabled      Boolean   @default(false)
+  trackingUrlTemplate String?
+  /// Non-secret settings (base URL, store id). Secrets live in environment variables.
+  config              Json      @default("{}")
+  healthStatus        String    @default("UNKNOWN")
+  healthMessage       String?
+  healthCheckedAt     DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  assignments CarrierAssignment[]
+  events      ExternalProviderEvent[]
+
+  @@map("courier_providers")
+}
+
+// ─── Parcels ─────────────────────────────────────────────────────────────────
+
+model Parcel {
+  id             String         @id @default(uuid())
+  trackingNumber String         @unique
+  /// Opaque token encoded in the QR label. Never a database id, never personal data.
+  qrToken        String         @unique
+  title          String
+  description    String
+  categoryId     String
+  category       ParcelCategory @relation(fields: [categoryId], references: [id])
+  classification String
+  priority       String
+  status         String
+  deliveryMethod String
+
+  createdById        String
+  createdBy          User        @relation("CreatedBy", fields: [createdById], references: [id])
+  senderEmployeeId   String
+  senderEmployee     Employee    @relation("SenderEmployee", fields: [senderEmployeeId], references: [id])
+  senderDepartmentId String?
+  senderDepartment   Department? @relation("SenderDepartment", fields: [senderDepartmentId], references: [id])
+  originBranchId     String
+  originBranch       Branch      @relation("OriginBranch", fields: [originBranchId], references: [id])
+  originLocationId   String?
+  originLocation     Location?   @relation("OriginLocation", fields: [originLocationId], references: [id])
+
+  receiverType                 String
+  receiverEmployeeId           String?
+  receiverEmployee             Employee?   @relation("ReceiverEmployee", fields: [receiverEmployeeId], references: [id])
+  receiverDepartmentId         String?
+  receiverDepartment           Department? @relation("ReceiverDepartment", fields: [receiverDepartmentId], references: [id])
+  externalReceiverName         String?
+  externalReceiverPhone        String?
+  externalReceiverOrganization String?
+  externalReceiverAddress      String?
+  destinationBranchId          String?
+  destinationBranch            Branch?     @relation("DestinationBranch", fields: [destinationBranchId], references: [id])
+  destinationLocationId        String?
+  destinationLocation          Location?   @relation("DestinationLocation", fields: [destinationLocationId], references: [id])
+
+  expectedDeliveryAt DateTime?
+  /// bcrypt hash of the sender's handover PIN. The PIN is shown to the sender once.
+  handoverPinHash     String?
+  /// Wrong PIN attempts. At the limit the PIN stops working and handover needs the sender's app or a dispatch officer.
+  handoverPinFailures Int       @default(0)
+
+  actualReceiverEmployeeId String?
+  actualReceiverEmployee   Employee? @relation("ActualReceiverEmployee", fields: [actualReceiverEmployeeId], references: [id])
+  actualReceiverName       String?
+  actualReceiverCode       String?
+  actualReceiverPhone      String?
+  receivedOnBehalf         Boolean   @default(false)
+  onBehalfReason           String?
+  onBehalfRelationship     String?
+  receiptVerification      String?
+
+  // Milestones, denormalised from the ledger so the dashboard never has to scan events.
+  bookedAt          DateTime?
+  carrierAssignedAt DateTime?
+  handedOverAt      DateTime?
+  pickedUpAt        DateTime?
+  inTransitAt       DateTime?
+  arrivedAt         DateTime?
+  pendingReceiptAt  DateTime?
+  receivedAt        DateTime?
+  cancelledAt       DateTime?
+  returnRequestedAt DateTime?
+  returnedAt        DateTime?
+  statusChangedAt   DateTime  @default(now())
+  /// Status to resume after ON_HOLD or DELIVERY_EXCEPTION is cleared.
+  resumeStatus      String?
+
+  isOverdue           Boolean   @default(false)
+  overdueSince        DateTime?
+  hasOpenException    Boolean   @default(false)
+  currentAssignmentId String?   @unique
+  currentAssignment   CarrierAssignment? @relation("CurrentAssignment", fields: [currentAssignmentId], references: [id])
+  lastEventSequence   Int       @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  assignments            CarrierAssignment[]     @relation("ParcelAssignments")
+  events                 ParcelEvent[]
+  proofs                 ParcelProof[]
+  attachments            ParcelAttachment[]
+  comments               ParcelComment[]
+  exceptions             ParcelException[]
+  notifications          Notification[]
+  escalations            Escalation[]
+  externalProviderEvents ExternalProviderEvent[]
+
+  @@index([status])
+  @@index([senderEmployeeId])
+  @@index([receiverEmployeeId])
+  @@index([receiverDepartmentId])
+  @@index([createdById])
+  @@index([originBranchId, createdAt])
+  @@index([destinationBranchId, createdAt])
+  @@index([createdAt])
+  @@index([isOverdue])
+  @@index([priority])
+  @@map("parcels")
+}
+
+/// Who is carrying the parcel. A reassignment ends one row and starts another.
+model CarrierAssignment {
+  id          String  @id @default(uuid())
+  parcelId    String
+  parcel      Parcel  @relation("ParcelAssignments", fields: [parcelId], references: [id])
+  currentFor  Parcel? @relation("CurrentAssignment")
+  carrierType String
+  status      String
+
+  employeeId     String?
+  employee       Employee?     @relation(fields: [employeeId], references: [id])
+  guestCarrierId String?
+  guestCarrier   GuestCarrier? @relation(fields: [guestCarrierId], references: [id])
+
+  courierProviderId          String?
+  courierProvider            CourierProvider? @relation(fields: [courierProviderId], references: [id])
+  externalTrackingNumber     String?
+  externalBookingReference   String?
+  riderName                  String?
+  riderPhone                 String?
+  pickupReference            String?
+  trackingUrl                String?
+  externalExpectedDeliveryAt DateTime?
+  externalRawStatus          String?
+  externalStatusAt           DateTime?
+
+  carrierNameSnapshot  String
+  carrierPhoneSnapshot String?
+  carrierCodeSnapshot  String?
+
+  assignedByUserId    String
+  assignedBy          User      @relation("AssignedBy", fields: [assignedByUserId], references: [id])
+  assignedAt          DateTime  @default(now())
+  acceptedAt          DateTime?
+  handoverRequestedAt DateTime?
+  custodyStartedAt    DateTime?
+  endedAt             DateTime?
+  endReason           String?
+  notes               String?
+
+  @@index([parcelId])
+  @@index([employeeId, status])
+  @@index([guestCarrierId, status])
+  @@index([externalTrackingNumber])
+  @@map("carrier_assignments")
+}
+
+/// The custody ledger. Append-only: corrections are new CORRECTION_ADDED rows.
+model ParcelEvent {
+  id                   String    @id @default(uuid())
+  parcelId             String
+  parcel               Parcel    @relation(fields: [parcelId], references: [id])
+  sequence             Int
+  eventType            String
+  fromStatus           String?
+  toStatus             String?
+  actorType            String
+  actorUserId          String?
+  actorGuestId         String?
+  actorNameSnapshot    String
+  actorCodeSnapshot    String?
+  locationId           String?
+  location             Location? @relation(fields: [locationId], references: [id])
+  locationNameSnapshot String?
+  carrierAssignmentId  String?
+  /// Authoritative. Clients never set this.
+  serverTimestamp      DateTime  @default(now())
+  /// What the phone's clock said; kept for offline sync forensics only.
+  deviceTimestamp      DateTime?
+  latitude             Float?
+  longitude            Float?
+  verificationMethod   String?
+  proofId              String?
+  notes                String?
+  externalProvider     String?
+  externalEventId      String?
+  correctsEventId      String?
+  metadata             Json      @default("{}")
+  idempotencyKey       String?   @unique
+  createdAt            DateTime  @default(now())
+
+  @@unique([parcelId, sequence])
+  @@index([parcelId, serverTimestamp])
+  @@index([eventType, serverTimestamp])
+  @@map("parcel_events")
+}
+
+model ParcelProof {
+  id               String   @id @default(uuid())
+  parcelId         String
+  parcel           Parcel   @relation(fields: [parcelId], references: [id])
+  type             String
+  createdByUserId  String?
+  createdByGuestId String?
+  attachmentId     String?
+  metadata         Json     @default("{}")
+  createdAt        DateTime @default(now())
+
+  @@index([parcelId])
+  @@map("parcel_proofs")
+}
+
+model ParcelAttachment {
+  id                String   @id @default(uuid())
+  parcelId          String
+  parcel            Parcel   @relation(fields: [parcelId], references: [id])
+  kind              String
+  fileName          String
+  mimeType          String
+  sizeBytes         Int
+  sha256            String
+  /// Key inside private storage. Files are served only through authorised, short-lived links.
+  storageKey        String   @unique
+  uploadedByUserId  String?
+  uploadedByGuestId String?
+  uploadedByName    String
+  createdAt         DateTime @default(now())
+
+  @@index([parcelId])
+  @@map("parcel_attachments")
+}
+
+model ParcelComment {
+  id                 String   @id @default(uuid())
+  parcelId           String
+  parcel             Parcel   @relation(fields: [parcelId], references: [id])
+  authorUserId       String?
+  authorGuestId      String?
+  authorNameSnapshot String
+  body               String
+  createdAt          DateTime @default(now())
+
+  @@index([parcelId])
+  @@map("parcel_comments")
+}
+
+model ParcelException {
+  id               String    @id @default(uuid())
+  parcelId         String
+  parcel           Parcel    @relation(fields: [parcelId], references: [id])
+  code             String
+  details          String
+  statusBefore     String
+  raisedByUserId   String?
+  raisedByGuestId  String?
+  raisedByName     String
+  raisedAt         DateTime  @default(now())
+  resolvedByUserId String?
+  resolvedByName   String?
+  resolvedAt       DateTime?
+  resolution       String?
+
+  @@index([parcelId])
+  @@index([resolvedAt])
+  @@map("parcel_exceptions")
+}
+
+// ─── Notifications ───────────────────────────────────────────────────────────
+
+model Notification {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parcelId  String?
+  parcel    Parcel?   @relation(fields: [parcelId], references: [id])
+  eventId   String?
+  eventType String
+  category  String
+  title     String
+  body      String
+  /// Lock-screen safe: push payloads for sensitive notifications carry no parcel details.
+  sensitive Boolean   @default(false)
+  data      Json      @default("{}")
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+  /// One physical event never notifies the same person twice.
+  dedupeKey String    @unique
+
+  @@index([userId, readAt])
+  @@index([userId, createdAt])
+  @@map("notifications")
+}
+
+model NotificationDelivery {
+  id                String   @id @default(uuid())
+  notificationId    String?
+  channel           String
+  /// Masked recipient (token suffix or phone mask) — never the OTP or full number.
+  target            String
+  provider          String
+  status            String
+  providerMessageId String?
+  error             String?
+  createdAt         DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("notification_deliveries")
+}
+
+model DeviceToken {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token      String   @unique
+  platform   String
+  appVersion String?
+  createdAt  DateTime @default(now())
+  lastSeenAt DateTime @default(now())
+
+  @@map("device_tokens")
+}
+
+model NotificationPreference {
+  id      String  @id @default(uuid())
+  userId  String
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  channel String
+  enabled Boolean @default(true)
+
+  @@unique([userId, channel])
+  @@map("notification_preferences")
+}
+
+// ─── SLA ─────────────────────────────────────────────────────────────────────
+
+model SlaPolicy {
+  id                  String   @id @default(uuid())
+  name                String
+  active              Boolean  @default(true)
+  stage               String
+  thresholdMinutes    Int
+  audience            String[]
+  marksOverdue        Boolean  @default(false)
+  // Optional filters. Null = applies to all.
+  priority            String?
+  classification      String?
+  categoryId          String?
+  originBranchId      String?
+  destinationBranchId String?
+  deliveryMethod      String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  escalations Escalation[]
+
+  @@map("sla_policies")
+}
+
+model Escalation {
+  id            String    @id @default(uuid())
+  parcelId      String
+  parcel        Parcel    @relation(fields: [parcelId], references: [id])
+  slaPolicyId   String
+  slaPolicy     SlaPolicy @relation(fields: [slaPolicyId], references: [id])
+  stage         String
+  audience      String[]
+  notifiedCount Int       @default(0)
+  triggeredAt   DateTime  @default(now())
+
+  @@unique([parcelId, slaPolicyId])
+  @@map("escalations")
+}
+
+// ─── Integrations ────────────────────────────────────────────────────────────
+
+/// Raw courier-provider events. The unique key is the webhook replay guard.
+model ExternalProviderEvent {
+  id                String          @id @default(uuid())
+  courierProviderId String
+  courierProvider   CourierProvider @relation(fields: [courierProviderId], references: [id])
+  externalEventId   String
+  parcelId          String?
+  parcel            Parcel?         @relation(fields: [parcelId], references: [id])
+  assignmentId      String?
+  trackingNumber    String?
+  rawStatus         String?
+  normalizedStatus  String?
+  payload           Json
+  outcome           String
+  message           String?
+  receivedAt        DateTime        @default(now())
+
+  @@unique([courierProviderId, externalEventId])
+  @@map("external_provider_events")
+}
+
+// ─── Platform ────────────────────────────────────────────────────────────────
+
+model AuditLog {
+  id           String   @id @default(uuid())
+  actorType    String
+  actorUserId  String?
+  actorGuestId String?
+  actorName    String
+  action       String
+  objectType   String
+  objectId     String
+  summary      String
+  before       Json?
+  after        Json?
+  ip           String?
+  userAgent    String?
+  sessionId    String?
+  createdAt    DateTime @default(now())
+
+  @@index([objectType, objectId])
+  @@index([createdAt])
+  @@index([actorUserId])
+  @@index([action])
+  @@map("audit_logs")
+}
+
+model IdempotencyRecord {
+  id             String    @id @default(uuid())
+  /// Who sent it: "user:<id>" or "guest:<id>". Keys are only unique per actor.
+  actorKey       String
+  key            String
+  method         String
+  path           String
+  requestHash    String
+  status         String
+  responseStatus Int?
+  responseBody   Json?
+  createdAt      DateTime  @default(now())
+  completedAt    DateTime?
+
+  @@unique([actorKey, key])
+  @@index([createdAt])
+  @@map("idempotency_records")
+}
+
+model TrackingSequence {
+  branchCode String
+  dayStamp   String
+  lastValue  Int
+
+  @@id([branchCode, dayStamp])
+  @@map("tracking_sequences")
+}
+
+model OtpChallenge {
+  id             String    @id @default(uuid())
+  purpose        String
+  phone          String
+  /// sha256(code + pepper). The code itself is never stored or logged.
+  codeHash       String
+  parcelId       String?
+  guestCarrierId String?
+  employeeId     String?
+  /// Who the code was sent to and why (e.g. an on-behalf receiver). Never the code.
+  metadata       Json      @default("{}")
+  expiresAt      DateTime
+  attempts       Int       @default(0)
+  maxAttempts    Int       @default(5)
+  consumedAt     DateTime?
+  requestIp      String?
+  createdAt      DateTime  @default(now())
+
+  @@index([phone, purpose, createdAt])
+  @@index([parcelId, purpose])
+  @@map("otp_challenges")
+}
+
+model SavedView {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  filters   Json
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@map("saved_views")
+}

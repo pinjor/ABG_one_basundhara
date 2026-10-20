@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "types": ["node", "bun-types", "multer"], "noEmit": true, "incremental": false },
+  "include": ["src", "test", "prisma"],
+  "exclude": ["node_modules", "dist"]
+}

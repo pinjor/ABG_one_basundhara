@@ -1,0 +1,22 @@
+{
+  "name": "abg-dispatch",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/api",
+    "apps/admin",
+    "packages/*"
+  ],
+  "scripts": {
+    "build:shared": "bun run --filter @abg-dispatch/shared build",
+    "dev": "bun run build:shared && bun run --filter @abg-dispatch/api --filter @abg-dispatch/admin --parallel dev",
+    "dev:api": "bun run --filter @abg-dispatch/api dev",
+    "dev:admin": "bun run --filter @abg-dispatch/admin dev",
+    "build": "bun run build:shared && bun run --filter @abg-dispatch/api build && bun run --filter @abg-dispatch/admin build",
+    "test": "bun run build:shared && bun run --filter @abg-dispatch/shared test && bun run --filter @abg-dispatch/api test",
+    "db:migrate": "bun run --filter @abg-dispatch/api prisma:deploy",
+    "db:seed": "bun run --filter @abg-dispatch/api prisma:seed",
+    "docker:up": "docker compose up -d --build",
+    "docker:down": "docker compose down"
+  }
+}
