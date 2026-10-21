@@ -10,7 +10,7 @@
         </intent>
     </queries>
     <application
-        android:label="ABG Dispatch"
+        android:label="ABG ONE"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

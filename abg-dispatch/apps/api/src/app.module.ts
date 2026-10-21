@@ -35,6 +35,16 @@ import { AdminConfigController } from "./admin/admin-config.controller";
 import { HealthController } from "./health/health.controller";
 import { IncidentsController } from "./incidents/incidents.controller";
 import { IncidentsService } from "./incidents/incidents.service";
+import { ToursController } from "./tours/tours.controller";
+import { ToursService } from "./tours/tours.service";
+import { FleetController } from "./fleet/fleet.controller";
+import { FleetService } from "./fleet/fleet.service";
+import { VisitorsController } from "./visitors/visitors.controller";
+import { VisitorsService } from "./visitors/visitors.service";
+import { LicencesController } from "./licences/licences.controller";
+import { LicencesService } from "./licences/licences.service";
+import { NoticesController } from "./notices/notices.controller";
+import { NoticesService } from "./notices/notices.service";
 
 @Module({
   imports: [PrismaModule, AuditModule, RealtimeModule, JwtModule.register({})],
@@ -50,9 +60,19 @@ import { IncidentsService } from "./incidents/incidents.service";
     AdminInsightsController,
     AdminConfigController,
     IncidentsController,
+    ToursController,
+    FleetController,
+    VisitorsController,
+    LicencesController,
+    NoticesController,
   ],
   providers: [
     IncidentsService,
+    ToursService,
+    FleetService,
+    VisitorsService,
+    LicencesService,
+    NoticesService,
     { provide: APP_CONFIG, useFactory: loadConfig },
     { provide: APP_GUARD, useClass: AuthGuard },
     RateLimitGuard,

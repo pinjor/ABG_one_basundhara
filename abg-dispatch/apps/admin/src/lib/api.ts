@@ -46,7 +46,7 @@ export async function request<T = any>(method: string, path: string, body?: unkn
   try {
     res = await send();
   } catch {
-    throw new ApiError(0, "NETWORK", "Can't reach the ABG Dispatch API. Check your connection.");
+    throw new ApiError(0, "NETWORK", "Can't reach the ABG ONE server. Check your connection.");
   }
   if (res.status === 401) {
     const code = (await res.clone().json().catch(() => ({})))?.code;

@@ -65,7 +65,7 @@ export class ParcelQueryService {
     if (token) parcel = await this.prisma.parcel.findUnique({ where: { qrToken: token }, include: PARCEL_INCLUDE });
     else if (isTrackingNumber(payload)) {
       parcel = await this.prisma.parcel.findUnique({ where: { trackingNumber: payload.trim().toUpperCase() }, include: PARCEL_INCLUDE });
-    } else throw badRequest("This is not an ABG Dispatch QR code or tracking number.", "UNRECOGNISED_CODE");
+    } else throw badRequest("This is not an ABG ONE parcel QR code or tracking number.", "UNRECOGNISED_CODE");
     if (!parcel) throw notFound(PARCEL_NOT_FOUND);
     const relation = this.access.relation(actor, parcel);
     // Holding the physical label lets a destination colleague receive on the receiver's behalf.

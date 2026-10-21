@@ -69,6 +69,18 @@ export const RoleCode = {
   HEAD_OFFICE_ADMIN: "HEAD_OFFICE_ADMIN",
   AUDITOR: "AUDITOR",
   SUPER_ADMIN: "SUPER_ADMIN",
+  /** Assigns pool cars and drivers; keeps the fleet register. */
+  FLEET_MANAGER: "FLEET_MANAGER",
+  /** Drives pool cars: sees and starts/finishes their own trips. */
+  DRIVER: "DRIVER",
+  /** Gate security: checks visitors in and out, verifies gate passes. */
+  SECURITY_GUARD: "SECURITY_GUARD",
+  /** HR & Finance: vets official tours and their budgets; publishes HR notices. */
+  HR_FINANCE: "HR_FINANCE",
+  /** Managing Director / Chairman: sanctions overseas tours, publishes executive notices. */
+  EXECUTIVE: "EXECUTIVE",
+  /** Keeps the regulatory licence register. */
+  COMPLIANCE_OFFICER: "COMPLIANCE_OFFICER",
 } as const;
 export type RoleCode = (typeof RoleCode)[keyof typeof RoleCode];
 

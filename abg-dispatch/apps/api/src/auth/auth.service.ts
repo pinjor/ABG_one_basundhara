@@ -260,14 +260,14 @@ export class AuthService {
     // Same answer whether or not the number exists, so the endpoint can't be used to probe numbers.
     const response: { sent: true; message: string; devOtp?: string } = {
       sent: true,
-      message: "If this number has an active ABG Dispatch assignment, a 6-digit code has been sent by SMS.",
+      message: "If this number has an active ABG ONE parcel assignment, a 6-digit code has been sent by SMS.",
     };
     if (!guest) {
       await this.audit.security("auth.guest_otp_unknown", "Guest code requested for a number with no assignment", client);
       return response;
     }
     const { challenge, code } = await this.otp.issue({ purpose: OtpPurpose.GUEST_LOGIN, phone, guestCarrierId: guest.id, ip: client.ip });
-    await this.sms.send(phone, `ABG Dispatch sign-in code: ${code}. It expires in 5 minutes. Do not share it.`);
+    await this.sms.send(phone, `ABG ONE sign-in code: ${code}. It expires in 5 minutes. Do not share it.`);
     if (this.config.exposeDevOtp) response.devOtp = code;
     void challenge;
     return response;

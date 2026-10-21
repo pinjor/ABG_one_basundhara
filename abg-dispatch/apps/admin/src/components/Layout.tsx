@@ -5,21 +5,27 @@ import {
   BarChart3,
   Building2,
   CalendarDays,
+  CarFront,
+  FileBadge,
   FileSpreadsheet,
+  IdCard,
   LayoutDashboard,
   LogOut,
-  Megaphone,
   Menu,
+  Newspaper,
   Package,
+  Plane,
   PlugZap,
+  Radio,
   ScrollText,
   Search,
   ShieldCheck,
+  TriangleAlert,
   Users,
   X,
   type LucideIcon,
 } from "lucide-react";
-import { Capability, ROLE_LABEL, RoleCode, extractQrToken } from "@abg-dispatch/shared";
+import { Capability, ROLE_LABEL, RoleCode, extractGatePass, extractQrToken } from "@abg-dispatch/shared";
 import { openScanned } from "../pages/QrLanding";
 import { toast } from "./toast";
 import { useAuth } from "../lib/auth";
@@ -33,15 +39,33 @@ interface NavItem {
   icon: LucideIcon;
   cap?: string;
   badge?: "incidents";
+  /** Small label after the item, e.g. "New". */
+  tag?: string;
 }
 
 const NAV: { section: string; items: NavItem[] }[] = [
   {
-    section: "Operations",
+    section: "Main console",
     items: [
-      { to: "/", label: "Control room", icon: LayoutDashboard, cap: Capability.DASHBOARD_VIEW },
-      { to: "/parcels", label: "Parcels", icon: Package, cap: Capability.DASHBOARD_VIEW },
-      { to: "/incidents", label: "Incident reports", icon: Megaphone, cap: Capability.INCIDENT_VIEW, badge: "incidents" },
+      { to: "/", label: "Dashboard", icon: LayoutDashboard },
+      { to: "/tours", label: "Official Tour Request", icon: Plane, cap: Capability.TOUR_REQUEST, tag: "New" },
+    ],
+  },
+  {
+    section: "Facility & transport",
+    items: [
+      { to: "/pool-car", label: "Pool Car Requisition", icon: CarFront, cap: Capability.FLEET_REQUEST },
+      { to: "/visitors", label: "Factory Visitor Mgmt", icon: IdCard, cap: Capability.VISITOR_INVITE },
+      { to: "/incidents", label: "Incident & Facility Issues", icon: TriangleAlert, cap: Capability.INCIDENT_VIEW, badge: "incidents" },
+    ],
+  },
+  {
+    section: "Operations & governance",
+    items: [
+      { to: "/parcels", label: "Parcel Dispatch & Track", icon: Package, cap: Capability.DASHBOARD_VIEW },
+      { to: "/parcels/control-room", label: "Parcel control room", icon: Radio, cap: Capability.DASHBOARD_VIEW },
+      { to: "/licences", label: "Regulatory Licences", icon: FileBadge, cap: Capability.LICENCE_VIEW },
+      { to: "/notices", label: "Notice Board", icon: Newspaper, cap: Capability.NOTICE_READ },
     ],
   },
   {
@@ -64,7 +88,18 @@ const NAV: { section: string; items: NavItem[] }[] = [
 ];
 
 function primaryRole(roles: string[]): string {
-  const order: RoleCode[] = [RoleCode.SUPER_ADMIN, RoleCode.HEAD_OFFICE_ADMIN, RoleCode.BRANCH_ADMIN, RoleCode.AUDITOR, RoleCode.DISPATCH_OFFICER];
+  const order: RoleCode[] = [
+    RoleCode.SUPER_ADMIN,
+    RoleCode.EXECUTIVE,
+    RoleCode.HEAD_OFFICE_ADMIN,
+    RoleCode.BRANCH_ADMIN,
+    RoleCode.HR_FINANCE,
+    RoleCode.FLEET_MANAGER,
+    RoleCode.COMPLIANCE_OFFICER,
+    RoleCode.AUDITOR,
+    RoleCode.DISPATCH_OFFICER,
+    RoleCode.SECURITY_GUARD,
+  ];
   const r = order.find((x) => roles.includes(x));
   return r ? ROLE_LABEL[r] : "Staff";
 }
@@ -99,8 +134,8 @@ export function Layout({ children }: { children: ReactNode }) {
         <img src="/brand/abg-logo-light.png" alt="Anvir Bashundhara Group" className="h-11 w-auto" />
       </div>
       <div className="mx-5 mb-4 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5">
-        <p className="font-display text-[13px] font-bold tracking-wide text-platinum-bright">ABG Dispatch</p>
-        <p className="text-[11px] text-platinum-deep">Chain-of-custody control centre</p>
+        <p className="font-display text-[13px] font-bold tracking-wide text-platinum-bright">ABG ONE</p>
+        <p className="text-[11px] text-platinum-deep">Group operations portal</p>
       </div>
       <div className="flex-1 space-y-5 overflow-y-auto px-3 pb-4">
         {NAV.map((group) => {
@@ -114,7 +149,7 @@ export function Layout({ children }: { children: ReactNode }) {
                   <li key={item.to}>
                     <NavLink
                       to={item.to}
-                      end={item.to === "/"}
+                      end={item.to === "/" || item.to === "/parcels"}
                       onClick={() => setOpen(false)}
                       className={({ isActive }) =>
                         cx(
@@ -125,6 +160,7 @@ export function Layout({ children }: { children: ReactNode }) {
                     >
                       <item.icon className="h-[18px] w-[18px]" aria-hidden />
                       {item.label}
+                      {item.tag && <span className="ml-auto rounded-full bg-active/20 px-2 text-[10px] font-bold uppercase leading-[18px] tracking-wide text-[#8DB8FF]">{item.tag}</span>}
                       {item.badge === "incidents" && pending > 0 && (
                         <span className="tabular ml-auto rounded-full bg-pending px-1.5 text-[11px] font-bold leading-[18px] text-white" aria-label={`${pending} pending`}>
                           {pending}
@@ -184,7 +220,14 @@ export function Layout({ children }: { children: ReactNode }) {
               e.preventDefault();
               const q = search.trim();
               if (!q) return;
-              // A desk scanner "types" the label URL; open that parcel directly.
+              // A desk scanner "types" the code's URL: gate passes open their verification page.
+              const pass = extractGatePass(q);
+              if (pass) {
+                setSearch("");
+                navigate(pass.kind === "VISITOR" ? `/visitors/pass/${pass.token}` : `/pool-car/pass/${pass.token}`);
+                return;
+              }
+              // A parcel label URL opens that parcel directly.
               if (extractQrToken(q)) {
                 openScanned(q)
                   .then((id) => (setSearch(""), navigate(`/parcels/${id}`)))

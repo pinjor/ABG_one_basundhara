@@ -165,7 +165,7 @@ export function ReportsPage() {
         <section className="card overflow-hidden print:border-0">
           <header className="flex items-center justify-between gap-4 bg-midnight px-6 py-4" style={{ printColorAdjust: "exact", WebkitPrintColorAdjust: "exact" }}>
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-platinum-deep">ABG Dispatch · Anvir Bashundhara Group</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-platinum-deep">ABG ONE · Anvir Bashundhara Group</p>
               <h2 className="font-display text-xl font-extrabold text-platinum-bright">{report.title}</h2>
               <p className="text-xs text-platinum">{report.subtitle}</p>
             </div>

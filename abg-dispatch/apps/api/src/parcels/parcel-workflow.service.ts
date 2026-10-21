@@ -773,7 +773,7 @@ export class ParcelWorkflowService {
         actor: eventActor(actor),
         metadata: { sentTo, recipientName: recipientName!, onBehalf, recipientUserId: recipientUser?.id ?? null },
       });
-      await this.sms.send(phone, `ABG Dispatch receipt code for ${state.trackingNumber}: ${code}. Share it with the courier only when the parcel is in your hands.`);
+      await this.sms.send(phone, `ABG ONE receipt code for ${state.trackingNumber}: ${code}. Share it with the courier only when the parcel is in your hands.`);
       if (this.config.exposeDevOtp) devOtp = code;
     });
     return this.respond(actor, parcelId, { sentTo, ...(devOtp ? { devOtp } : {}) });

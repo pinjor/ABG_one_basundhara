@@ -61,9 +61,15 @@ model Branch {
   employees      Employee[]
   userRoles      UserRole[]
 
-  originParcels      Parcel[]   @relation("OriginBranch")
-  destinationParcels Parcel[]   @relation("DestinationBranch")
+  originParcels      Parcel[]         @relation("OriginBranch")
+  destinationParcels Parcel[]         @relation("DestinationBranch")
   incidents          Incident[]
+  tourRequests       TourRequest[]
+  vehicles           Vehicle[]
+  drivers            Driver[]
+  carRequisitions    CarRequisition[]
+  visits             Visit[]
+  licences           Licence[]
 
   @@map("branches")
 }
@@ -91,6 +97,7 @@ model Location {
   originParcels      Parcel[]      @relation("OriginLocation")
   destinationParcels Parcel[]      @relation("DestinationLocation")
   incidents          Incident[]
+  visits             Visit[]
   events             ParcelEvent[]
 
   @@index([branchId])
@@ -180,6 +187,15 @@ model User {
   preferences       NotificationPreference[]
   createdParcels    Parcel[]                 @relation("CreatedBy")
   reportedIncidents Incident[]               @relation("IncidentReporter")
+  toursTravelled    TourRequest[]            @relation("TourTraveller")
+  toursToApprove    TourRequest[]            @relation("TourApprover")
+  carRequests       CarRequisition[]         @relation("CarRequester")
+  carsToApprove     CarRequisition[]         @relation("CarApprover")
+  driverProfile     Driver?                  @relation("DriverAccount")
+  hostedVisits      Visit[]                  @relation("VisitHost")
+  licencesOwned     Licence[]                @relation("LicenceOwner")
+  noticesAuthored   Notice[]                 @relation("NoticeAuthor")
+  noticeReceipts    NoticeReceipt[]          @relation("NoticeReader")
   assignmentsMade   CarrierAssignment[]      @relation("AssignedBy")
 
   @@map("users")
@@ -852,4 +868,368 @@ model IncidentPhoto {
 
   @@index([incidentId])
   @@map("incident_photos")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ABG ONE modules: official tours, pool cars, visitors, licences, notices.
+// Statuses are text checked by CHECK constraints (see the migrations), with the
+// allowed values and transitions in packages/shared.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// Small key/value settings an administrator can change (e.g. the annual travel budget).
+model AppSetting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+  updatedBy String?
+
+  @@map("app_settings")
+}
+
+// ── Official tour requests ──
+
+model TourRequest {
+  id               String    @id @default(uuid())
+  /// ABG-TR-YYYY-NNN
+  referenceNumber  String    @unique
+  type             String
+  purpose          String
+  /// Short title, e.g. "Gastech 2026 conference".
+  title            String
+  description      String    @default("")
+  destination      String
+  country          String?
+  startDate        DateTime  @db.Date
+  endDate          DateTime  @db.Date
+  transportMode    String
+  travellerUserId  String
+  traveller        User      @relation("TourTraveller", fields: [travellerUserId], references: [id])
+  branchId         String
+  branch           Branch    @relation(fields: [branchId], references: [id])
+  departmentId     String?
+  /// Names of colleagues travelling on the same request.
+  coTravellers     Json      @default("[]")
+  /// Taka, whole units.
+  estimatedBudget  Int
+  advanceRequested Int       @default(0)
+  sanctionedBudget Int?
+  passportNumber   String?
+  passportExpiry   DateTime? @db.Date
+  /// The head of department who must approve first.
+  approverUserId   String
+  approver         User      @relation("TourApprover", fields: [approverUserId], references: [id])
+  status           String    @default("PENDING_HOD")
+  statusNote       String?
+  statusChangedAt  DateTime  @default(now())
+  hodApprovedAt    DateTime?
+  vettedAt         DateTime?
+  sanctionedAt     DateTime?
+  startedAt        DateTime?
+  completedAt      DateTime?
+  rejectedAt       DateTime?
+  cancelledAt      DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  updates TourUpdate[]
+
+  @@index([status, startDate])
+  @@index([travellerUserId, createdAt])
+  @@index([approverUserId, status])
+  @@index([branchId, status])
+  @@map("tour_requests")
+}
+
+/// A tour's history. Append-only (database trigger).
+model TourUpdate {
+  id          String      @id @default(uuid())
+  tourId      String
+  tour        TourRequest @relation(fields: [tourId], references: [id])
+  type        String
+  fromStatus  String?
+  toStatus    String?
+  note        String?
+  actorUserId String?
+  actorName   String
+  metadata    Json        @default("{}")
+  createdAt   DateTime    @default(now())
+
+  @@index([tourId, createdAt])
+  @@map("tour_updates")
+}
+
+// ── Pool cars and fleet ──
+
+model Vehicle {
+  id                 String           @id @default(uuid())
+  /// "Dhaka Metro-GA 11-2345"
+  registrationNumber String           @unique
+  make               String
+  model              String
+  type               String
+  seats              Int
+  colour             String?
+  fuelType           String?
+  branchId           String
+  branch             Branch           @relation(fields: [branchId], references: [id])
+  status             String           @default("AVAILABLE")
+  odometerKm         Int              @default(0)
+  nextServiceAt      DateTime?        @db.Date
+  fitnessExpiry      DateTime?        @db.Date
+  insuranceExpiry    DateTime?        @db.Date
+  notes              String?
+  active             Boolean          @default(true)
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  requisitions       CarRequisition[]
+
+  @@index([branchId, status])
+  @@map("vehicles")
+}
+
+model Driver {
+  id            String           @id @default(uuid())
+  fullName      String
+  phone         String
+  licenseNumber String
+  licenseExpiry DateTime?        @db.Date
+  branchId      String
+  branch        Branch           @relation(fields: [branchId], references: [id])
+  /// Set when the driver has an app account (role DRIVER).
+  userId        String?          @unique
+  user          User?            @relation("DriverAccount", fields: [userId], references: [id])
+  employeeId    String?
+  status        String           @default("AVAILABLE")
+  active        Boolean          @default(true)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  requisitions  CarRequisition[]
+
+  @@index([branchId, status])
+  @@map("drivers")
+}
+
+model CarRequisition {
+  id                String    @id @default(uuid())
+  /// PC-YYMMDD-OFFICE-NNN
+  referenceNumber   String    @unique
+  requesterUserId   String
+  requester         User      @relation("CarRequester", fields: [requesterUserId], references: [id])
+  branchId          String
+  branch            Branch    @relation(fields: [branchId], references: [id])
+  departmentId      String?
+  tripType          String
+  purpose           String
+  pickupLocation    String
+  dropLocation      String
+  pickupAt          DateTime
+  returnAt          DateTime?
+  /// [{ name, phone? }]
+  passengers        Json      @default("[]")
+  passengerCount    Int       @default(1)
+  urgent            Boolean   @default(false)
+  vehiclePreference String    @default("ANY")
+  approverUserId    String
+  approver          User      @relation("CarApprover", fields: [approverUserId], references: [id])
+  status            String    @default("PENDING_HOD")
+  statusNote        String?
+  statusChangedAt   DateTime  @default(now())
+  vehicleId         String?
+  vehicle           Vehicle?  @relation(fields: [vehicleId], references: [id])
+  driverId          String?
+  driver            Driver?   @relation(fields: [driverId], references: [id])
+  /// Opaque token behind the QR gate pass (/g/c/<token>).
+  gatePassToken     String?   @unique
+  hodApprovedAt     DateTime?
+  assignedAt        DateTime?
+  startedAt         DateTime?
+  completedAt       DateTime?
+  rejectedAt        DateTime?
+  cancelledAt       DateTime?
+  startOdometerKm   Int?
+  endOdometerKm     Int?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  updates CarRequisitionUpdate[]
+
+  @@index([status, pickupAt])
+  @@index([requesterUserId, createdAt])
+  @@index([approverUserId, status])
+  @@index([branchId, status])
+  @@index([driverId, status])
+  @@map("car_requisitions")
+}
+
+/// A requisition's history. Append-only (database trigger).
+model CarRequisitionUpdate {
+  id            String         @id @default(uuid())
+  requisitionId String
+  requisition   CarRequisition @relation(fields: [requisitionId], references: [id])
+  type          String
+  fromStatus    String?
+  toStatus      String?
+  note          String?
+  actorUserId   String?
+  actorName     String
+  metadata      Json           @default("{}")
+  createdAt     DateTime       @default(now())
+
+  @@index([requisitionId, createdAt])
+  @@map("car_requisition_updates")
+}
+
+// ── Visitors ──
+
+model Visit {
+  id             String    @id @default(uuid())
+  /// VP-YYMMDD-OFFICE-NNN — the gate pass number.
+  passNumber     String    @unique
+  visitorName    String
+  visitorPhone   String
+  company        String?
+  /// Last 4 digits only; never the full national ID.
+  idLast4        String?
+  purpose        String
+  purposeDetail  String?
+  partySize      Int       @default(1)
+  vehicleNumber  String?
+  carrying       String?
+  branchId       String
+  branch         Branch    @relation(fields: [branchId], references: [id])
+  locationId     String?
+  location       Location? @relation(fields: [locationId], references: [id])
+  hostUserId     String?
+  host           User?     @relation("VisitHost", fields: [hostUserId], references: [id])
+  hostName       String
+  expectedAt     DateTime
+  expectedUntil  DateTime?
+  status         String    @default("EXPECTED")
+  walkIn         Boolean   @default(false)
+  badgeNumber    String?
+  /// Opaque token behind the QR gate pass (/g/v/<token>).
+  passToken      String    @unique
+  checkedInAt    DateTime?
+  checkedInById  String?
+  checkedOutAt   DateTime?
+  checkedOutById String?
+  cancelledAt    DateTime?
+  createdById    String
+  notes          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([branchId, status])
+  @@index([branchId, expectedAt])
+  @@index([hostUserId, expectedAt])
+  @@index([visitorPhone])
+  @@map("visits")
+}
+
+// ── Regulatory licences ──
+
+model Licence {
+  id               String    @id @default(uuid())
+  name             String
+  licenceNumber    String
+  category         String
+  issuingAuthority String
+  branchId         String
+  branch           Branch    @relation(fields: [branchId], references: [id])
+  /// The person responsible for keeping it valid.
+  ownerUserId      String?
+  owner            User?     @relation("LicenceOwner", fields: [ownerUserId], references: [id])
+  issuedAt         DateTime? @db.Date
+  expiresAt        DateTime  @db.Date
+  renewalLeadDays  Int       @default(90)
+  renewalStage     String    @default("NOT_STARTED")
+  renewalStartedAt DateTime?
+  /// Taka, whole units.
+  renewalFee       Int?
+  documentKey      String?
+  documentName     String?
+  documentMime     String?
+  documentSize     Int?
+  /// The most recent alert threshold (days before expiry) already sent, per expiry date.
+  lastAlertDays    Int?
+  lastAlertAt      DateTime?
+  notes            String?
+  active           Boolean   @default(true)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  events LicenceEvent[]
+
+  @@unique([branchId, licenceNumber])
+  @@index([expiresAt])
+  @@index([branchId, expiresAt])
+  @@map("licences")
+}
+
+/// A licence's history. Append-only (database trigger).
+model LicenceEvent {
+  id          String   @id @default(uuid())
+  licenceId   String
+  licence     Licence  @relation(fields: [licenceId], references: [id])
+  type        String
+  note        String?
+  actorUserId String?
+  actorName   String
+  metadata    Json     @default("{}")
+  createdAt   DateTime @default(now())
+
+  @@index([licenceId, createdAt])
+  @@map("licence_events")
+}
+
+// ── Notice board ──
+
+model Notice {
+  id                      String    @id @default(uuid())
+  /// ABG-NB-YYYY-NNN
+  referenceNumber         String    @unique
+  title                   String
+  body                    String
+  channel                 String
+  category                String    @default("GENERAL")
+  urgent                  Boolean   @default(false)
+  pinned                  Boolean   @default(false)
+  audience                String    @default("ALL")
+  /// Office ids when audience = BRANCHES.
+  branchIds               Json      @default("[]")
+  requiresAcknowledgement Boolean   @default(true)
+  status                  String    @default("DRAFT")
+  authorUserId            String
+  author                  User      @relation("NoticeAuthor", fields: [authorUserId], references: [id])
+  /// Shown as the signatory, e.g. "Managing Director".
+  signedBy                String?
+  attachmentKey           String?
+  attachmentName          String?
+  attachmentMime          String?
+  attachmentSize          Int?
+  publishedAt             DateTime?
+  expiresAt               DateTime?
+  archivedAt              DateTime?
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+
+  receipts NoticeReceipt[]
+
+  @@index([status, publishedAt])
+  @@map("notices")
+}
+
+/// Who has opened and who has acknowledged a notice.
+model NoticeReceipt {
+  id             String    @id @default(uuid())
+  noticeId       String
+  notice         Notice    @relation(fields: [noticeId], references: [id])
+  userId         String
+  user           User      @relation("NoticeReader", fields: [userId], references: [id])
+  readAt         DateTime  @default(now())
+  acknowledgedAt DateTime?
+
+  @@unique([noticeId, userId])
+  @@index([userId])
+  @@map("notice_receipts")
 }

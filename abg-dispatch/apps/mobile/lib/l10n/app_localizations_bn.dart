@@ -9,13 +9,13 @@ class LBn extends L {
   LBn([String locale = 'bn']) : super(locale);
 
   @override
-  String get appName => 'ABG ডিসপ্যাচ';
+  String get appName => 'ABG ONE';
 
   @override
   String get orgName => 'আনভীর বসুন্ধরা গ্রুপ';
 
   @override
-  String get tagline => 'প্রতিটি হস্তান্তর, রেকর্ডে সংরক্ষিত।';
+  String get tagline => 'পুরো গ্রুপের জন্য একটি অ্যাপ।';
 
   @override
   String get splashLoading => 'আপনার সেশন সুরক্ষিত করা হচ্ছে';
@@ -634,7 +634,7 @@ class LBn extends L {
   String get signOut => 'সাইন আউট';
 
   @override
-  String get signOutConfirm => 'এই ডিভাইস থেকে ABG ডিসপ্যাচ সাইন আউট করবেন?';
+  String get signOutConfirm => 'এই ডিভাইস থেকে ABG ONE সাইন আউট করবেন?';
 
   @override
   String get help => 'সহায়তা';
@@ -660,7 +660,7 @@ class LBn extends L {
 
   @override
   String get errorNetwork =>
-      'ABG ডিসপ্যাচে পৌঁছানো যাচ্ছে না। সংযোগ দেখে আবার চেষ্টা করুন।';
+      'ABG ONE-এ পৌঁছানো যাচ্ছে না। সংযোগ দেখে আবার চেষ্টা করুন।';
 
   @override
   String get errorGeneric => 'কাজটি হয়নি। আবার চেষ্টা করুন।';

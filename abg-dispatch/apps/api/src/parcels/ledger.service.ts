@@ -17,7 +17,7 @@ export const SYSTEM_ACTOR: EventActor = {
   actorType: ActorType.SYSTEM,
   actorUserId: null,
   actorGuestId: null,
-  actorNameSnapshot: "ABG Dispatch",
+  actorNameSnapshot: "ABG ONE",
   actorCodeSnapshot: null,
 };
 

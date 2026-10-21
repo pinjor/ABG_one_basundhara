@@ -10,7 +10,7 @@ export interface TokenPayload {
   mfa?: boolean;
 }
 
-const BRANCH_SCOPED_ROLES: string[] = [RoleCode.DISPATCH_OFFICER, RoleCode.BRANCH_ADMIN];
+const BRANCH_SCOPED_ROLES: string[] = [RoleCode.DISPATCH_OFFICER, RoleCode.BRANCH_ADMIN, RoleCode.SECURITY_GUARD];
 
 /** Turns a verified token into the actor every service works with. Runs on every request. */
 @Injectable()

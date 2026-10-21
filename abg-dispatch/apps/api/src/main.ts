@@ -58,7 +58,7 @@ async function bootstrap() {
   app.enableShutdownHooks();
   await app.listen(config.port, "0.0.0.0");
   // eslint-disable-next-line no-console
-  console.log(`ABG Dispatch API listening on :${config.port}`);
+  console.log(`ABG ONE API listening on :${config.port}`);
 }
 
 if (require.main === module) void bootstrap();

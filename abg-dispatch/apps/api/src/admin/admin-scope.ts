@@ -10,6 +10,20 @@ export function branchScope(actor: Actor): string[] | null {
   return user.scopedBranchIds;
 }
 
+/**
+ * Offices whose records a module's staff may see; null means every office.
+ * Super admins, head office admins and auditors always see everything; a
+ * module adds the roles that work group-wide for it (e.g. HR & Finance for
+ * tours, the fleet manager for pool cars). Everyone else is limited to the
+ * offices their branch-scoped roles cover (branch admin, dispatch, security).
+ */
+export function moduleScope(actor: Actor, orgWideRoles: readonly RoleCode[] = []): string[] | null {
+  const user = asUser(actor);
+  const wide: RoleCode[] = [RoleCode.SUPER_ADMIN, RoleCode.HEAD_OFFICE_ADMIN, RoleCode.AUDITOR, ...orgWideRoles];
+  if (user.roles.some((r) => wide.includes(r))) return null;
+  return user.scopedBranchIds;
+}
+
 export function asUser(actor: Actor): UserActor {
   if (actor.kind !== "user") throw forbidden("Administrator access only.", "GUEST_RESTRICTED");
   return actor;

@@ -15,7 +15,7 @@ import { dhakaTime } from "../common/time";
 import { PushService } from "./push.service";
 import { SmsService } from "./sms.service";
 
-interface Draft {
+export interface Draft {
   userId: string;
   category: string;
   title: string;
@@ -142,7 +142,7 @@ export class NotificationService {
             .sendToUser(
               n.userId,
               {
-                title: sensitive ? "ABG Dispatch" : n.title,
+                title: sensitive ? "ABG ONE" : n.title,
                 body: sensitive
                   ? eventType === "INCIDENT_REPORTED"
                     ? "You have a new report to review. Open the app to view."
@@ -161,6 +161,77 @@ export class NotificationService {
       this.logger.error(`Incident notification ${dedupeBase} failed: ${(err as Error).message}`);
       return 0;
     }
+  }
+
+  /**
+   * Notifications for the ABG ONE modules (tours, pool cars, visitors,
+   * licences, notices). Each row carries `data.route`, the app path that
+   * opens the item (e.g. "/pool-car/<id>"); the apps navigate there on tap.
+   * `lockScreen` replaces the push text for sensitive items.
+   */
+  async deliverModule(
+    item: { module: string; id: string; reference: string; route: string; status?: string },
+    dedupeBase: string,
+    eventType: string,
+    drafts: Draft[],
+    opts: { sensitive?: boolean; lockScreen?: string } = {},
+  ): Promise<number> {
+    const unique = new Map<string, Draft>();
+    for (const d of drafts) if (d.userId && !unique.has(d.userId)) unique.set(d.userId, d);
+    if (!unique.size) return 0;
+    const sensitive = !!opts.sensitive;
+    const data = { module: item.module, objectId: item.id, reference: item.reference, route: item.route, ...(item.status ? { status: item.status } : {}) };
+    const rows = [...unique.values()].map((d) => ({
+      userId: d.userId,
+      eventType,
+      category: d.category,
+      title: d.title,
+      body: d.body,
+      sensitive,
+      data,
+      dedupeKey: `${dedupeBase}:${d.userId}`,
+    }));
+    try {
+      await this.prisma.notification.createMany({ data: rows, skipDuplicates: true });
+      const created = await this.prisma.notification.findMany({
+        where: { dedupeKey: { in: rows.map((r) => r.dedupeKey) } },
+        select: { id: true, userId: true, title: true, body: true },
+      });
+      void Promise.all(
+        created.map((n) =>
+          this.push
+            .sendToUser(
+              n.userId,
+              {
+                title: sensitive ? "ABG ONE" : n.title,
+                body: sensitive ? (opts.lockScreen ?? "You have an update. Open the app to view.") : n.body,
+                data: { route: item.route, notificationId: n.id, eventType },
+              },
+              n.id,
+            )
+            .catch((err) => this.logger.warn(`Push failed: ${(err as Error).message}`)),
+        ),
+      );
+      return created.length;
+    } catch (err) {
+      // Never undo the business action because a notification failed.
+      this.logger.error(`Notification ${dedupeBase} failed: ${(err as Error).message}`);
+      return 0;
+    }
+  }
+
+  /** Active users holding any of `roles`, optionally limited to people whose role scope or home office is in `branchIds`. */
+  async usersWithRoles(roles: string[], branchIds?: (string | null)[]): Promise<string[]> {
+    const ids = branchIds?.filter((b): b is string => !!b);
+    const rows = await this.prisma.userRole.findMany({
+      where: {
+        role: { in: roles },
+        user: { active: true },
+        ...(ids ? { OR: [{ branchId: { in: ids } }, { branchId: null, user: { employee: { branchId: { in: ids } } } }] } : {}),
+      },
+      select: { userId: true },
+    });
+    return [...new Set(rows.map((r) => r.userId))];
   }
 
   async superAdminUsers(): Promise<string[]> {
@@ -202,8 +273,8 @@ export class NotificationService {
             n.userId,
             {
               // Lock-screen copy for sensitive parcels never includes the parcel title.
-              title: sensitive ? "ABG Dispatch" : n.title,
-              body: sensitive ? "You have an ABG Dispatch update. Open the app to view." : n.body,
+              title: sensitive ? "ABG ONE" : n.title,
+              body: sensitive ? "You have a confidential parcel update. Open the app to view." : n.body,
               data: { parcelId: p.id, notificationId: n.id, eventType },
             },
             n.id,
@@ -356,11 +427,11 @@ export class NotificationService {
     if ((e.eventType === EventType.CARRIER_ASSIGNED || e.eventType === EventType.CARRIER_REASSIGNED) && assignment?.guestCarrier && p.status !== "DRAFT") {
       await this.sms.send(
         assignment.guestCarrier.phone,
-        `ABG Dispatch: you are assigned ${p.trackingNumber} (${p.originBranch.name} → ${p.destinationBranch?.name ?? "external"}). Open the ABG Dispatch app and sign in with this number to start.`,
+        `ABG ONE: you are assigned ${p.trackingNumber} (${p.originBranch.name} → ${p.destinationBranch?.name ?? "external"}). Open the ABG ONE app and sign in with this number to start.`,
       );
     }
     if (e.eventType === EventType.PICKED_UP && p.receiverType === ReceiverType.EXTERNAL && p.externalReceiverPhone) {
-      await this.sms.send(p.externalReceiverPhone, `ABG Dispatch: ${p.trackingNumber} from Anvir Bashundhara Group is on its way to you.`);
+      await this.sms.send(p.externalReceiverPhone, `ABG ONE: ${p.trackingNumber} from Anvir Bashundhara Group is on its way to you.`);
     }
   }
 }

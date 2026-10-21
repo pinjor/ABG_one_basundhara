@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
 
+import '../core/gate_pass.dart';
 import '../data/repository.dart';
 import '../l10n/app_localizations.dart';
 import '../theme/theme.dart';
@@ -37,6 +38,13 @@ class _ScanScreenState extends State<ScanScreen> {
 
   Future<void> _resolve(String payload) async {
     if (_resolving) return;
+    // Visitor and pool-car gate passes open their own verification screens.
+    final pass = extractGatePass(payload);
+    if (pass != null) {
+      _resolving = true;
+      context.pushReplacement(pass.route);
+      return;
+    }
     setState(() => _resolving = true);
     try {
       final res = await context.read<DispatchRepository>().scan(payload);

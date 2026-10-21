@@ -69,7 +69,7 @@ class _AbgDispatchAppState extends State<AbgDispatchApp>
       (s) => s.profile?.locale ?? 'en',
     );
     return MaterialApp.router(
-      title: 'ABG Dispatch',
+      title: 'ABG ONE',
       debugShowCheckedModeBanner: false,
       theme: buildTheme(),
       locale: Locale(locale),

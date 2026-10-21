@@ -426,6 +426,7 @@ class AppNotification {
     this.parcelId,
     this.incidentId,
     this.incidentStatus,
+    this.route,
     this.eventType,
   });
 
@@ -440,6 +441,9 @@ class AppNotification {
 
   /// The report's status when this alert was sent (incident alerts only).
   final String? incidentStatus;
+
+  /// App path that opens the item (ABG ONE modules), e.g. `/pool-car/{id}`.
+  final String? route;
   final String? eventType;
 
   factory AppNotification.fromJson(Json j) => AppNotification(
@@ -452,6 +456,7 @@ class AppNotification {
     parcelId: _str(j['parcelId']),
     incidentId: _str(_map(j['data'])['incidentId']),
     incidentStatus: _str(_map(j['data'])['status']),
+    route: _str(_map(j['data'])['route']),
     eventType: _str(j['eventType']),
   );
 }

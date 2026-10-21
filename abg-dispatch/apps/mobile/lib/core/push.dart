@@ -51,9 +51,12 @@ class PushService {
   }
 
   void _open(RemoteMessage m) {
+    final route = m.data['route'];
     final parcel = m.data['parcelId'];
     final incident = m.data['incidentId'];
-    if (incident is String && incident.isNotEmpty) {
+    if (route is String && route.startsWith('/')) {
+      _opened.add(route);
+    } else if (incident is String && incident.isNotEmpty) {
       _opened.add('/incidents/$incident');
     } else if (parcel is String && parcel.isNotEmpty) {
       _opened.add('/parcels/$parcel');

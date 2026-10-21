@@ -100,7 +100,7 @@ abstract class L {
   /// No description provided for @appName.
   ///
   /// In en, this message translates to:
-  /// **'ABG Dispatch'**
+  /// **'ABG ONE'**
   String get appName;
 
   /// No description provided for @orgName.
@@ -112,7 +112,7 @@ abstract class L {
   /// No description provided for @tagline.
   ///
   /// In en, this message translates to:
-  /// **'Every handover, on the record.'**
+  /// **'One app for the whole group.'**
   String get tagline;
 
   /// No description provided for @splashLoading.
@@ -1270,7 +1270,7 @@ abstract class L {
   /// No description provided for @signOutConfirm.
   ///
   /// In en, this message translates to:
-  /// **'Sign out of ABG Dispatch on this device?'**
+  /// **'Sign out of ABG ONE on this device?'**
   String get signOutConfirm;
 
   /// No description provided for @help.
@@ -1312,7 +1312,7 @@ abstract class L {
   /// No description provided for @errorNetwork.
   ///
   /// In en, this message translates to:
-  /// **'Can\'t reach ABG Dispatch. Check your connection and try again.'**
+  /// **'Can\'t reach ABG ONE. Check your connection and try again.'**
   String get errorNetwork;
 
   /// No description provided for @errorGeneric.

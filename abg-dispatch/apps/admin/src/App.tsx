@@ -6,6 +6,12 @@ import { api } from "./lib/api";
 import { Layout } from "./components/Layout";
 import { LoginPage } from "./pages/Login";
 import { DashboardPage } from "./pages/Dashboard";
+import { ExecutiveDashboardPage } from "./pages/ExecutiveDashboard";
+import { TourDetailPage, ToursPage } from "./pages/tours";
+import { CarRequisitionDetailPage, PoolCarPage, VehiclePassPage } from "./pages/fleet";
+import { VisitDetailPage, VisitorPassPage, VisitorsPage } from "./pages/visitors";
+import { LicenceDetailPage, LicencesPage } from "./pages/licences";
+import { NoticeDetailPage, NoticesPage } from "./pages/notices";
 import { ParcelsPage } from "./pages/Parcels";
 import { ParcelDetailPage } from "./pages/ParcelDetail";
 import { IncidentsPage } from "./pages/Incidents";
@@ -40,11 +46,24 @@ export function App() {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/print/label/:id" element={<RequireAuth bare><LabelPrintPage /></RequireAuth>} />
-      <Route path="/" element={<RequireAuth><DashboardPage /></RequireAuth>} />
+      <Route path="/" element={<RequireAuth><ExecutiveDashboardPage /></RequireAuth>} />
+      <Route path="/parcels/control-room" element={<RequireAuth><DashboardPage /></RequireAuth>} />
       <Route path="/parcels" element={<RequireAuth><ParcelsPage /></RequireAuth>} />
       <Route path="/parcels/:id" element={<RequireAuth><ParcelDetailPage /></RequireAuth>} />
       <Route path="/incidents" element={<RequireAuth><IncidentsPage /></RequireAuth>} />
       <Route path="/incidents/:id" element={<RequireAuth><IncidentDetailPage /></RequireAuth>} />
+      <Route path="/tours" element={<RequireAuth><ToursPage /></RequireAuth>} />
+      <Route path="/tours/:id" element={<RequireAuth><TourDetailPage /></RequireAuth>} />
+      <Route path="/pool-car" element={<RequireAuth><PoolCarPage /></RequireAuth>} />
+      <Route path="/pool-car/pass/:token" element={<RequireAuth><VehiclePassPage /></RequireAuth>} />
+      <Route path="/pool-car/:id" element={<RequireAuth><CarRequisitionDetailPage /></RequireAuth>} />
+      <Route path="/visitors" element={<RequireAuth><VisitorsPage /></RequireAuth>} />
+      <Route path="/visitors/pass/:token" element={<RequireAuth><VisitorPassPage /></RequireAuth>} />
+      <Route path="/visitors/:id" element={<RequireAuth><VisitDetailPage /></RequireAuth>} />
+      <Route path="/licences" element={<RequireAuth><LicencesPage /></RequireAuth>} />
+      <Route path="/licences/:id" element={<RequireAuth><LicenceDetailPage /></RequireAuth>} />
+      <Route path="/notices" element={<RequireAuth><NoticesPage /></RequireAuth>} />
+      <Route path="/notices/:id" element={<RequireAuth><NoticeDetailPage /></RequireAuth>} />
       <Route path="/analytics" element={<RequireAuth><AnalyticsPage /></RequireAuth>} />
       <Route path="/reports" element={<RequireAuth><ReportsPage /></RequireAuth>} />
       <Route path="/config" element={<RequireAuth><ConfigPage /></RequireAuth>} />

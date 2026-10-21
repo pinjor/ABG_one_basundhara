@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'core/session.dart';
+import 'modules/approvals/approvals.dart';
+import 'modules/fleet/fleet.dart';
+import 'modules/licences/licences.dart';
+import 'modules/notices/notices.dart';
+import 'modules/tours/tours.dart';
+import 'modules/visitors/visitors.dart';
 import 'models/models.dart';
 import 'screens/booked_screen.dart';
 import 'screens/create_parcel_screen.dart';
@@ -98,6 +104,100 @@ GoRouter buildRouter(SessionController session) {
                 IncidentDetailScreen(id: s.pathParameters['id']!),
           ),
         ],
+      ),
+      // ── ABG ONE modules ──
+      GoRoute(
+        path: '/tours',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (_, _) => const ToursScreen(),
+        routes: [
+          GoRoute(
+            path: 'new',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, _) => const TourFormScreen(),
+          ),
+          GoRoute(
+            path: ':id',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, s) => TourDetailScreen(id: s.pathParameters['id']!),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/pool-car',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (_, _) => const PoolCarScreen(),
+        routes: [
+          GoRoute(
+            path: 'new',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, _) => const CarRequestFormScreen(),
+          ),
+          GoRoute(
+            path: 'pass/:token',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, s) =>
+                VehiclePassScreen(token: s.pathParameters['token']!),
+          ),
+          GoRoute(
+            path: ':id',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, s) =>
+                CarRequisitionDetailScreen(id: s.pathParameters['id']!),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/visitors',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (_, _) => const VisitorsScreen(),
+        routes: [
+          GoRoute(
+            path: 'new',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, _) => const VisitorFormScreen(),
+          ),
+          GoRoute(
+            path: 'pass/:token',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, s) =>
+                VisitorPassScreen(token: s.pathParameters['token']!),
+          ),
+          GoRoute(
+            path: ':id',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, s) => VisitDetailScreen(id: s.pathParameters['id']!),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/licences',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (_, _) => const LicencesScreen(),
+        routes: [
+          GoRoute(
+            path: ':id',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, s) => LicenceDetailScreen(id: s.pathParameters['id']!),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/notices',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (_, _) => const NoticesScreen(),
+        routes: [
+          GoRoute(
+            path: ':id',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, s) => NoticeDetailScreen(id: s.pathParameters['id']!),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/approvals',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (_, _) => const ApprovalsScreen(),
       ),
       GoRoute(
         path: '/booked',

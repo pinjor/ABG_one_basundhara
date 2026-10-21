@@ -1,14 +1,16 @@
 # Regenerates lib/l10n/app_en.arb and app_bn.arb from one table so the two languages never drift.
+# Core strings live here; each ABG ONE module keeps its own in tool/strings/<module>.py
+# (same s(key, en, bn, **placeholders) calls), loaded in file-name order.
 # Usage: python3 tool/generate_arb.py lib/l10n && flutter gen-l10n
-import json, sys
+import glob, json, os, sys
 out = sys.argv[1]
 S = {}
 def s(key, en, bn, **ph):
     S[key] = (en, bn, ph)
 
-s("appName", "ABG Dispatch", "ABG ডিসপ্যাচ")
+s("appName", "ABG ONE", "ABG ONE")
 s("orgName", "Anvir Bashundhara Group", "আনভীর বসুন্ধরা গ্রুপ")
-s("tagline", "Every handover, on the record.", "প্রতিটি হস্তান্তর, রেকর্ডে সংরক্ষিত।")
+s("tagline", "One app for the whole group.", "পুরো গ্রুপের জন্য একটি অ্যাপ।")
 s("splashLoading", "Securing your session", "আপনার সেশন সুরক্ষিত করা হচ্ছে")
 s("signIn", "Sign in", "সাইন ইন")
 s("welcomeBack", "Welcome back", "আবার স্বাগতম")
@@ -201,14 +203,14 @@ s("smsNotifications", "SMS notifications", "SMS নোটিফিকেশন")
 s("sessions", "Signed-in devices", "সাইন-ইন ডিভাইস")
 s("thisDevice", "This device", "এই ডিভাইস")
 s("signOut", "Sign out", "সাইন আউট")
-s("signOutConfirm", "Sign out of ABG Dispatch on this device?", "এই ডিভাইস থেকে ABG ডিসপ্যাচ সাইন আউট করবেন?")
+s("signOutConfirm", "Sign out of ABG ONE on this device?", "এই ডিভাইস থেকে ABG ONE সাইন আউট করবেন?")
 s("help", "Help & support", "সহায়তা")
 s("helpBody", "Contact the dispatch desk at Head Office, Level 2, or call 09612-000100.", "হেড অফিস, লেভেল ২-এর ডিসপ্যাচ ডেস্কে যোগাযোগ করুন অথবা ০৯৬১২-০০০১০০ নম্বরে কল করুন।")
 s("privacy", "Privacy & security", "গোপনীয়তা ও নিরাপত্তা")
 s("privacyBody", "Your sign-in is stored in the device's secure keystore. QR labels carry no personal data. Every custody action is recorded with your name and the server time.", "আপনার সাইন-ইন ডিভাইসের নিরাপদ কী-স্টোরে সংরক্ষিত। QR লেবেলে কোনো ব্যক্তিগত তথ্য থাকে না। প্রতিটি হেফাজত কার্যক্রম আপনার নাম ও সার্ভার সময়সহ রেকর্ড হয়।")
 s("version", "Version {version}", "সংস্করণ {version}", version={})
 s("roles", "Roles", "ভূমিকা")
-s("errorNetwork", "Can't reach ABG Dispatch. Check your connection and try again.", "ABG ডিসপ্যাচে পৌঁছানো যাচ্ছে না। সংযোগ দেখে আবার চেষ্টা করুন।")
+s("errorNetwork", "Can't reach ABG ONE. Check your connection and try again.", "ABG ONE-এ পৌঁছানো যাচ্ছে না। সংযোগ দেখে আবার চেষ্টা করুন।")
 s("errorGeneric", "That didn't work. Please try again.", "কাজটি হয়নি। আবার চেষ্টা করুন।")
 s("guestHello", "Hello, {name}", "হ্যালো, {name}", name={})
 s("guestAssignments", "Your assignments", "আপনার দায়িত্ব")
@@ -333,6 +335,15 @@ s("incEvPhoto", "Photo added", "ছবি যোগ হয়েছে")
 s("incEvDetails", "Details updated", "বিবরণ হালনাগাদ হয়েছে")
 s("incWaitingForAdmin", "Waiting for the admin team to pick it up.", "অ্যাডমিন দলের পদক্ষেপের অপেক্ষায়।")
 s("incOfflineNotice", "You're offline. Reports with photos need a connection — try again when you're back online.", "আপনি অফলাইনে আছেন। ছবিসহ রিপোর্টের জন্য সংযোগ প্রয়োজন — অনলাইনে ফিরে আবার চেষ্টা করুন।")
+
+def module_strings(path):
+    def add(key, en, bn, **ph):
+        assert key not in S, f"{os.path.basename(path)}: key {key!r} is already defined"
+        s(key, en, bn, **ph)
+    return add
+
+for path in sorted(glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), "strings", "*.py"))):
+    exec(open(path, encoding="utf-8").read(), {"s": module_strings(path)})
 
 en = {"@@locale": "en"}
 bn = {"@@locale": "bn"}

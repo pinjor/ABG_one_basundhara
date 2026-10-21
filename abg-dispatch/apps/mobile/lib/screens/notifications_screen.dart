@@ -69,7 +69,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       setState(() => n.read = true);
       unawaited(repo.markRead(n.id).then((_) => badge.refresh()));
     }
-    if (n.incidentId != null) {
+    if (n.route != null) {
+      await context.push(n.route!);
+    } else if (n.incidentId != null) {
       await context.push('/incidents/${n.incidentId}');
     } else if (n.parcelId != null) {
       await context.push('/parcels/${n.parcelId}');

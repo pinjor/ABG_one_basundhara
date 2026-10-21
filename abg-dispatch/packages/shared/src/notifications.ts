@@ -12,7 +12,7 @@ export interface NotificationCopyInput {
  * generic phrase and only the tracking number identifies it.
  */
 export function notificationSubject(input: NotificationCopyInput): string {
-  if (input.classification === Classification.HIGHLY_CONFIDENTIAL) return "an ABG Dispatch";
+  if (input.classification === Classification.HIGHLY_CONFIDENTIAL) return "a confidential parcel";
   return `"${input.title}"`;
 }
 

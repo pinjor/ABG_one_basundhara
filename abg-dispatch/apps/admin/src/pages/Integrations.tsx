@@ -18,7 +18,7 @@ export function IntegrationsPage() {
       <PageHeader
         overline="Administration"
         title="Integrations"
-        subtitle="Health of the services ABG Dispatch depends on. Counts cover the last 24 hours."
+        subtitle="Health of the services ABG ONE depends on. Counts cover the last 24 hours."
         actions={
           <button className="btn-secondary" onClick={() => q.refetch()} disabled={q.isFetching}>
             <RefreshCw className={`h-4 w-4 ${q.isFetching ? "animate-spin" : ""}`} /> Refresh

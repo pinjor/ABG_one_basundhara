@@ -1,5 +1,5 @@
 /**
- * Demo data for ABG Dispatch: the organisation, the people named in the
+ * Demo data for ABG ONE: the organisation, the people named in the
  * product brief, every parcel state on today's board, and 30 days of history
  * so analytics have something to say.
  *
@@ -14,6 +14,12 @@ import { randomBytes } from "crypto";
 import { existsSync } from "fs";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { join, resolve } from "path";
+import type { SeedContext } from "./seed-modules/context";
+import { seedFleet } from "./seed-modules/fleet";
+import { seedLicences } from "./seed-modules/licences";
+import { seedNotices } from "./seed-modules/notices";
+import { seedTours } from "./seed-modules/tours";
+import { seedVisitors } from "./seed-modules/visitors";
 import {
   ANONYMOUS_REPORTER,
   ActorType,
@@ -74,6 +80,8 @@ interface PersonSeed {
   email?: string;
   roles?: { role: RoleCode; branch?: string }[];
   loc?: string;
+  /** Employee code of their head of department / line manager (the approver for tours and pool cars). */
+  manager?: string;
 }
 
 const BRANCHES = [
@@ -145,28 +153,38 @@ const DEPARTMENTS: [string, string, string, string][] = [
 ];
 
 export const PEOPLE: PersonSeed[] = [
-  { code: "ABG-0001", name: "System Administrator", branch: "HO", dept: "ADMIN", designation: "IT Systems Administrator", phone: "01700000001", email: "admin@abg.com.bd", roles: [{ role: RoleCode.SUPER_ADMIN }, { role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-1001", name: "Arif Chowdhury", branch: "HO", dept: "ADMIN", designation: "Head of Administration", phone: "01711000101", email: "arif.chowdhury@abg.com.bd", roles: [{ role: RoleCode.HEAD_OFFICE_ADMIN }, { role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-2041", name: "Md. Rahim", branch: "HO", dept: "LEGAL", designation: "Senior Legal Officer", phone: "01712204100", email: "rahim@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-2055", name: "Nusrat Jahan", branch: "HO", dept: "FIN", designation: "Finance Manager", phone: "01713205500", email: "nusrat.jahan@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-2101", name: "Sadia Rahman", branch: "HO", dept: "HR", designation: "HR Manager", phone: "01714210100", email: "sadia.rahman@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-2210", name: "Farid Uddin", branch: "HO", dept: "DIR", designation: "Executive Director", phone: "01715221000", email: "farid.uddin@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-2305", name: "Mehedi Hasan", branch: "HO", dept: "PROC", designation: "Procurement Officer", phone: "01716230500", email: "mehedi.hasan@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-3550", name: "Tanvir Hasan", branch: "HO", dept: "DISP", designation: "Dispatch Officer", phone: "01717355000", email: "tanvir.hasan@abg.com.bd", roles: [{ role: RoleCode.DISPATCH_OFFICER }, { role: RoleCode.EMPLOYEE }], loc: "HO:DISP" },
-  { code: "ABG-4832", name: "Karim Ahmed", branch: "HO", dept: "DISP", designation: "Internal Runner", phone: "01718483200", email: "karim.ahmed@abg.com.bd", roles: [{ role: RoleCode.COURIER_RUNNER }, { role: RoleCode.EMPLOYEE }], loc: "HO:DISP" },
-  { code: "ABG-4870", name: "Rafiq Islam", branch: "FCA", dept: "STORE", designation: "Runner", phone: "01719487000", email: "rafiq.islam@abg.com.bd", roles: [{ role: RoleCode.COURIER_RUNNER }, { role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-5120", name: "Sabina Yasmin", branch: "FCA", dept: "ADMIN", designation: "Factory Admin Lead", phone: "01720512000", email: "sabina.yasmin@abg.com.bd", roles: [{ role: RoleCode.BRANCH_ADMIN }, { role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-5205", name: "Kamrul Hasan", branch: "FCA", dept: "ADMIN", designation: "Front Desk & Dispatch", phone: "01721520500", email: "kamrul.hasan@abg.com.bd", roles: [{ role: RoleCode.DISPATCH_OFFICER }, { role: RoleCode.EMPLOYEE }], loc: "FCA:GATE" },
-  { code: "ABG-7231", name: "Farhana Islam", branch: "FCA", dept: "ADMIN", designation: "Administration Manager", phone: "01722723100", email: "farhana.islam@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-7310", name: "Shahin Ahmed", branch: "FCA", dept: "ADMIN", designation: "Administrative Assistant", phone: "01723731000", email: "shahin.ahmed@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-7420", name: "Imran Hossain", branch: "FCB", dept: "PROD", designation: "Production Manager", phone: "01724742000", email: "imran.hossain@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-7455", name: "Tahmina Begum", branch: "FCB", dept: "ADMIN", designation: "Factory B Admin Lead", phone: "01725745500", email: "tahmina.begum@abg.com.bd", roles: [{ role: RoleCode.BRANCH_ADMIN }, { role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-6021", name: "Jamal Uddin", branch: "CO", dept: "ACC", designation: "Accounts Officer", phone: "01726602100", email: "jamal.uddin@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-6110", name: "Rubina Akter", branch: "CO", dept: "BS", designation: "Board Secretary", phone: "01727611000", email: "rubina.akter@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-6150", name: "Laila Rahman", branch: "DHK", dept: "HR", designation: "HR Executive", phone: "01728615000", email: "laila.rahman@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-6188", name: "Nazmul Karim", branch: "DHK", dept: "SALES", designation: "Sales Manager", phone: "01729618800", email: "nazmul.karim@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-8015", name: "Selim Reza", branch: "WH", dept: "STORE", designation: "Warehouse Supervisor", phone: "01730801500", email: "selim.reza@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }] },
-  { code: "ABG-9002", name: "Mahmuda Akter", branch: "HO", dept: "ADMIN", designation: "Internal Auditor", phone: "01731900200", email: "mahmuda.akter@abg.com.bd", roles: [{ role: RoleCode.AUDITOR }] },
+  { code: "ABG-0001", name: "System Administrator", branch: "HO", dept: "ADMIN", designation: "IT Systems Administrator", phone: "01700000001", email: "admin@abg.com.bd", roles: [{ role: RoleCode.SUPER_ADMIN }, { role: RoleCode.EMPLOYEE }], manager: "ABG-1001" },
+  { code: "ABG-1001", name: "Arif Chowdhury", branch: "HO", dept: "ADMIN", designation: "Head of Administration", phone: "01711000101", email: "arif.chowdhury@abg.com.bd", roles: [{ role: RoleCode.HEAD_OFFICE_ADMIN }, { role: RoleCode.EMPLOYEE }], manager: "ABG-1002" },
+  { code: "ABG-2041", name: "Md. Rahim", branch: "HO", dept: "LEGAL", designation: "Senior Legal Officer", phone: "01712204100", email: "rahim@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }], manager: "ABG-2210" },
+  { code: "ABG-2055", name: "Nusrat Jahan", branch: "HO", dept: "FIN", designation: "Finance Manager", phone: "01713205500", email: "nusrat.jahan@abg.com.bd", roles: [{ role: RoleCode.HR_FINANCE }, { role: RoleCode.EMPLOYEE }], manager: "ABG-2210" },
+  { code: "ABG-2101", name: "Sadia Rahman", branch: "HO", dept: "HR", designation: "HR Manager", phone: "01714210100", email: "sadia.rahman@abg.com.bd", roles: [{ role: RoleCode.HR_FINANCE }, { role: RoleCode.EMPLOYEE }], manager: "ABG-2210" },
+  { code: "ABG-2210", name: "Farid Uddin", branch: "HO", dept: "DIR", designation: "Executive Director", phone: "01715221000", email: "farid.uddin@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }], manager: "ABG-1002" },
+  { code: "ABG-2305", name: "Mehedi Hasan", branch: "HO", dept: "PROC", designation: "Procurement Officer", phone: "01716230500", email: "mehedi.hasan@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }], manager: "ABG-2055" },
+  { code: "ABG-3550", name: "Tanvir Hasan", branch: "HO", dept: "DISP", designation: "Dispatch Officer", phone: "01717355000", email: "tanvir.hasan@abg.com.bd", roles: [{ role: RoleCode.DISPATCH_OFFICER }, { role: RoleCode.EMPLOYEE }], loc: "HO:DISP", manager: "ABG-1001" },
+  { code: "ABG-4832", name: "Karim Ahmed", branch: "HO", dept: "DISP", designation: "Internal Runner", phone: "01718483200", email: "karim.ahmed@abg.com.bd", roles: [{ role: RoleCode.COURIER_RUNNER }, { role: RoleCode.EMPLOYEE }], loc: "HO:DISP", manager: "ABG-3550" },
+  { code: "ABG-4870", name: "Rafiq Islam", branch: "FCA", dept: "STORE", designation: "Runner", phone: "01719487000", email: "rafiq.islam@abg.com.bd", roles: [{ role: RoleCode.COURIER_RUNNER }, { role: RoleCode.EMPLOYEE }], manager: "ABG-5120" },
+  { code: "ABG-5120", name: "Sabina Yasmin", branch: "FCA", dept: "ADMIN", designation: "Factory Admin Lead", phone: "01720512000", email: "sabina.yasmin@abg.com.bd", roles: [{ role: RoleCode.BRANCH_ADMIN }, { role: RoleCode.EMPLOYEE }], manager: "ABG-1001" },
+  { code: "ABG-5205", name: "Kamrul Hasan", branch: "FCA", dept: "ADMIN", designation: "Front Desk & Dispatch", phone: "01721520500", email: "kamrul.hasan@abg.com.bd", roles: [{ role: RoleCode.DISPATCH_OFFICER }, { role: RoleCode.EMPLOYEE }], loc: "FCA:GATE", manager: "ABG-5120" },
+  { code: "ABG-7231", name: "Farhana Islam", branch: "FCA", dept: "ADMIN", designation: "Administration Manager", phone: "01722723100", email: "farhana.islam@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }], manager: "ABG-5120" },
+  { code: "ABG-7310", name: "Shahin Ahmed", branch: "FCA", dept: "ADMIN", designation: "Administrative Assistant", phone: "01723731000", email: "shahin.ahmed@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }], manager: "ABG-7231" },
+  { code: "ABG-7420", name: "Imran Hossain", branch: "FCB", dept: "PROD", designation: "Production Manager", phone: "01724742000", email: "imran.hossain@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }], manager: "ABG-7455" },
+  { code: "ABG-7455", name: "Tahmina Begum", branch: "FCB", dept: "ADMIN", designation: "Factory B Admin Lead", phone: "01725745500", email: "tahmina.begum@abg.com.bd", roles: [{ role: RoleCode.BRANCH_ADMIN }, { role: RoleCode.EMPLOYEE }], manager: "ABG-1001" },
+  { code: "ABG-6021", name: "Jamal Uddin", branch: "CO", dept: "ACC", designation: "Accounts Officer", phone: "01726602100", email: "jamal.uddin@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }], manager: "ABG-2210" },
+  { code: "ABG-6110", name: "Rubina Akter", branch: "CO", dept: "BS", designation: "Board Secretary", phone: "01727611000", email: "rubina.akter@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }], manager: "ABG-1002" },
+  { code: "ABG-6150", name: "Laila Rahman", branch: "DHK", dept: "HR", designation: "HR Executive", phone: "01728615000", email: "laila.rahman@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }], manager: "ABG-2101" },
+  { code: "ABG-6188", name: "Nazmul Karim", branch: "DHK", dept: "SALES", designation: "Sales Manager", phone: "01729618800", email: "nazmul.karim@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }], manager: "ABG-2210" },
+  { code: "ABG-8015", name: "Selim Reza", branch: "WH", dept: "STORE", designation: "Warehouse Supervisor", phone: "01730801500", email: "selim.reza@abg.com.bd", roles: [{ role: RoleCode.EMPLOYEE }], manager: "ABG-1001" },
+  { code: "ABG-9002", name: "Mahmuda Akter", branch: "HO", dept: "ADMIN", designation: "Internal Auditor", phone: "01731900200", email: "mahmuda.akter@abg.com.bd", roles: [{ role: RoleCode.AUDITOR }], manager: "ABG-1002" },
+  // Leadership and the people who run the ABG ONE modules.
+  { code: "ABG-1003", name: "Shafiqul Alam", branch: "HO", dept: "DIR", designation: "Chairman", phone: "01711000103", email: "chairman@abg.com.bd", roles: [{ role: RoleCode.EXECUTIVE }, { role: RoleCode.EMPLOYEE }] },
+  { code: "ABG-1002", name: "Kazi Ashraful Haque", branch: "HO", dept: "DIR", designation: "Managing Director", phone: "01711000102", email: "md@abg.com.bd", roles: [{ role: RoleCode.EXECUTIVE }, { role: RoleCode.EMPLOYEE }], manager: "ABG-1003" },
+  { code: "ABG-2400", name: "Shirin Akhter", branch: "HO", dept: "ADMIN", designation: "Compliance & Licensing Manager", phone: "01737240000", email: "shirin.akhter@abg.com.bd", roles: [{ role: RoleCode.COMPLIANCE_OFFICER }, { role: RoleCode.EMPLOYEE }], manager: "ABG-2210" },
+  { code: "ABG-3610", name: "Jahangir Alam", branch: "HO", dept: "ADMIN", designation: "Transport & Fleet Manager", phone: "01738361000", email: "jahangir.alam@abg.com.bd", roles: [{ role: RoleCode.FLEET_MANAGER }, { role: RoleCode.EMPLOYEE }], manager: "ABG-1001" },
+  { code: "ABG-3620", name: "Abul Kalam", branch: "HO", dept: "ADMIN", designation: "Driver", phone: "01739362000", email: "abul.kalam@abg.com.bd", roles: [{ role: RoleCode.DRIVER }], manager: "ABG-3610", loc: "HO:GATE" },
+  { code: "ABG-3621", name: "Mizanur Rahman", branch: "HO", dept: "ADMIN", designation: "Driver", phone: "01740362100", email: "mizanur.rahman@abg.com.bd", roles: [{ role: RoleCode.DRIVER }], manager: "ABG-3610", loc: "HO:GATE" },
+  { code: "ABG-7620", name: "Sohel Rana", branch: "FCA", dept: "ADMIN", designation: "Driver", phone: "01741762000", email: "sohel.rana@abg.com.bd", roles: [{ role: RoleCode.DRIVER }], manager: "ABG-3610", loc: "FCA:GATE" },
+  { code: "ABG-3700", name: "Rezaul Karim", branch: "HO", dept: "ADMIN", designation: "Security Officer, Reception", phone: "01742370000", email: "rezaul.karim@abg.com.bd", roles: [{ role: RoleCode.SECURITY_GUARD }], manager: "ABG-1001", loc: "HO:RECEPTION" },
+  { code: "ABG-5290", name: "Nurul Amin", branch: "FCA", dept: "ADMIN", designation: "Security Supervisor, Main Gate", phone: "01743529000", email: "nurul.amin@abg.com.bd", roles: [{ role: RoleCode.SECURITY_GUARD }], manager: "ABG-5120", loc: "FCA:GATE" },
   // Directory-only employees (no app account yet).
   { code: "ABG-2120", name: "Taslima Nasrin", branch: "HO", dept: "HR", designation: "HR Executive", phone: "01732212000" },
   { code: "ABG-2066", name: "Rashed Khan", branch: "HO", dept: "FIN", designation: "Treasury Officer", phone: "01733206600" },
@@ -297,6 +315,10 @@ export async function seed(prisma: PrismaClient, opts: { now?: Date; history?: b
       users[p.code] = { id: u.id, name: p.name, code: p.code };
     }
   }
+  // Reporting lines: each person's manager is the approver for their tour and pool car requests.
+  for (const p of PEOPLE) {
+    if (p.manager && employees[p.manager]) await prisma.employee.update({ where: { id: employees[p.code].id }, data: { managerId: employees[p.manager].id } });
+  }
   const admin = users["ABG-0001"];
 
   const categories: Record<string, string> = {};
@@ -354,7 +376,7 @@ export async function seed(prisma: PrismaClient, opts: { now?: Date; history?: b
 
   const actorOf = (by: Actor | undefined, fallback: string) => {
     const a = by ?? fallback;
-    if (a === "SYSTEM") return { actorType: ActorType.SYSTEM, actorUserId: null, actorGuestId: null, actorNameSnapshot: "ABG Dispatch", actorCodeSnapshot: null };
+    if (a === "SYSTEM") return { actorType: ActorType.SYSTEM, actorUserId: null, actorGuestId: null, actorNameSnapshot: "ABG ONE", actorCodeSnapshot: null };
     if (typeof a === "object" && "guest" in a) {
       const g = guests[a.guest];
       return { actorType: ActorType.GUEST, actorUserId: null, actorGuestId: g.id, actorNameSnapshot: g.fullName, actorCodeSnapshot: `${g.phone.slice(0, 3)}•••••${g.phone.slice(-3)}` };
@@ -930,13 +952,21 @@ export async function seed(prisma: PrismaClient, opts: { now?: Date; history?: b
   await notify("ABG-4832", "exception", "PARCEL_UPDATE", EventType.EXCEPTION_RECORDED, "Delivery exception", `${await tn("exception")}: Office closed.`, 80, true);
   await notify("ABG-7231", "sample", "ACTION_REQUIRED", EventType.PENDING_RECEIPT, "Your parcel has arrived", `${await tn("sample")} is waiting for your receipt confirmation.`, 68, true);
   await notify("ABG-7231", "onBehalf", "PARCEL_UPDATE", EventType.RECEIVED, "Received on your behalf", `Your parcel ${await tn("onBehalf")} was received on your behalf by Shahin Ahmed.`, 1200, true);
-  await notify("ABG-2210", "overdue", "ACTION_REQUIRED", EventType.SLA_ESCALATED, "Your parcel has arrived", "You have an ABG Dispatch awaiting receipt.", 115);
+  await notify("ABG-2210", "overdue", "ACTION_REQUIRED", EventType.SLA_ESCALATED, "Your parcel has arrived", "You have a confidential parcel awaiting receipt.", 115);
   await notify("ABG-5120", "overdue", "ACTION_REQUIRED", EventType.SLA_ESCALATED, "Receipt overdue", `${await tn("overdue")}: Receipt escalation. Needs attention.`, 115);
   await notify("ABG-3550", "booked", "ACTION_REQUIRED", EventType.PARCEL_CREATED, "Assign a courier", `${await tn("booked")} is booked without a courier.`, 8);
   await notify("ABG-3550", "exception", "ACTION_REQUIRED", EventType.EXCEPTION_RECORDED, "Delivery exception", `${await tn("exception")}: Office closed. Reported by Karim Ahmed.`, 80);
   await notify("ABG-1001", "overdue", "ACTION_REQUIRED", EventType.SLA_ESCALATED, "Dispatch SLA breached", `${await tn("overdue")} is overdue at the destination.`, 115);
 
   await seedIncidents(prisma, { now, branches, locations, users });
+
+  // ABG ONE modules.
+  const moduleCtx: SeedContext = { prisma, now, storageRoot: resolve(process.env.STORAGE_DIR || "./storage"), branches, locations, departments, employees, users };
+  await seedNotices(moduleCtx);
+  await seedLicences(moduleCtx);
+  await seedFleet(moduleCtx);
+  await seedTours(moduleCtx);
+  await seedVisitors(moduleCtx);
 
   await prisma.auditLog.create({ data: { actorType: ActorType.SYSTEM, actorName: "Seed", action: "system.seeded", objectType: "system", objectId: "seed", summary: "Demo data loaded", actorUserId: admin.id } });
 

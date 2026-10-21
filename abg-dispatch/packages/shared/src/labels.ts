@@ -112,6 +112,12 @@ export const ROLE_LABEL: Record<RoleCode, string> = {
   HEAD_OFFICE_ADMIN: "Head Office Admin",
   AUDITOR: "Auditor",
   SUPER_ADMIN: "Super Admin",
+  FLEET_MANAGER: "Fleet Manager",
+  DRIVER: "Driver",
+  SECURITY_GUARD: "Security",
+  HR_FINANCE: "HR & Finance",
+  EXECUTIVE: "MD / Chairman",
+  COMPLIANCE_OFFICER: "Compliance Officer",
 };
 
 export const VERIFICATION_LABEL: Record<VerificationMethod, string> = {

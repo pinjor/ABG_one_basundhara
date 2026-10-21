@@ -6,3 +6,8 @@ export * from "./tokens";
 export * from "./tracking";
 export * from "./notifications";
 export * from "./incidents";
+export * from "./tours";
+export * from "./fleet";
+export * from "./visitors";
+export * from "./licences";
+export * from "./notices";

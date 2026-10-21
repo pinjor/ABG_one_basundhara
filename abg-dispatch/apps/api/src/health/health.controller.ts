@@ -9,7 +9,7 @@ export class HealthController {
   @Public()
   @Get()
   root() {
-    return { name: "ABG Dispatch API", status: "ok" };
+    return { name: "ABG ONE API", status: "ok" };
   }
 
   @Public()

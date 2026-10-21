@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSCameraUsageDescription</key>
-	<string>ABG Dispatch uses the camera to scan parcel QR labels and to photograph sealed packages as delivery evidence.</string>
+	<string>ABG ONE uses the camera to scan parcel labels and gate passes, and to photograph parcels and workplace issues.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Attach a photo of the sealed envelope or package as delivery evidence.</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -15,7 +15,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>ABG Dispatch</string>
+	<string>ABG ONE</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -23,7 +23,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>ABG Dispatch</string>
+	<string>ABG ONE</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

@@ -1,8 +1,8 @@
 {
   "@@locale": "en",
-  "appName": "ABG Dispatch",
+  "appName": "ABG ONE",
   "orgName": "Anvir Bashundhara Group",
-  "tagline": "Every handover, on the record.",
+  "tagline": "One app for the whole group.",
   "splashLoading": "Securing your session",
   "signIn": "Sign in",
   "welcomeBack": "Welcome back",
@@ -252,7 +252,7 @@
   "sessions": "Signed-in devices",
   "thisDevice": "This device",
   "signOut": "Sign out",
-  "signOutConfirm": "Sign out of ABG Dispatch on this device?",
+  "signOutConfirm": "Sign out of ABG ONE on this device?",
   "help": "Help & support",
   "helpBody": "Contact the dispatch desk at Head Office, Level 2, or call 09612-000100.",
   "privacy": "Privacy & security",
@@ -264,7 +264,7 @@
     }
   },
   "roles": "Roles",
-  "errorNetwork": "Can't reach ABG Dispatch. Check your connection and try again.",
+  "errorNetwork": "Can't reach ABG ONE. Check your connection and try again.",
   "errorGeneric": "That didn't work. Please try again.",
   "guestHello": "Hello, {name}",
   "@guestHello": {

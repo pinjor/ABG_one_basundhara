@@ -94,7 +94,7 @@ class SessionController extends ChangeNotifier {
                       : (defaultTargetPlatform == TargetPlatform.iOS
                             ? 'ios'
                             : 'android'),
-                  'deviceName': 'ABG Dispatch ${AppConfig.appVersion}',
+                  'deviceName': 'ABG ONE ${AppConfig.appVersion}',
                 },
               )
               as Map<String, dynamic>;

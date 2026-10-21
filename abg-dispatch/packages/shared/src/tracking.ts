@@ -35,3 +35,20 @@ export function extractQrToken(scanned: string): string | null {
 export function qrPayload(baseUrl: string, token: string): string {
   return `${baseUrl.replace(/\/+$/, "")}/q/${token}`;
 }
+
+/** Gate passes: visitors (`/g/v/<token>`) and pool cars (`/g/c/<token>`). */
+export const GatePassKind = {
+  VISITOR: "VISITOR",
+  VEHICLE: "VEHICLE",
+} as const;
+export type GatePassKind = (typeof GatePassKind)[keyof typeof GatePassKind];
+
+export function gatePassPayload(baseUrl: string, kind: GatePassKind, token: string): string {
+  return `${baseUrl.replace(/\/+$/, "")}/g/${kind === GatePassKind.VISITOR ? "v" : "c"}/${token}`;
+}
+
+export function extractGatePass(scanned: string): { kind: GatePassKind; token: string } | null {
+  const match = scanned.trim().match(/\/g\/([vc])\/([A-Za-z0-9_-]{16,128})\/?$/);
+  if (!match) return null;
+  return { kind: match[1] === "v" ? GatePassKind.VISITOR : GatePassKind.VEHICLE, token: match[2] };
+}

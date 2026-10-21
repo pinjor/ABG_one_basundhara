@@ -35,7 +35,7 @@ export function LoginPage() {
         useAuth.getState().set({ accessToken: res.accessToken });
         await api.post("/auth/logout").catch(() => undefined);
         useAuth.getState().clear();
-        throw new Error("This portal is for dispatch officers and administrators. Please use the ABG Dispatch mobile app.");
+        throw new Error("This portal is for dispatch officers and administrators. Please use the ABG ONE mobile app.");
       }
       setAuth({ accessToken: res.accessToken, refreshToken: res.refreshToken, profile: res.user, mfaEnrollmentRequired: res.mfaEnrollmentRequired });
       navigate(res.mfaEnrollmentRequired ? "/security" : from && from !== "/login" ? from : "/", { replace: true });
@@ -56,7 +56,7 @@ export function LoginPage() {
         <div className="pointer-events-none absolute -bottom-56 -left-24 h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,rgba(47,111,237,0.10),transparent_65%)]" />
         <img src="/brand/abg-logo-original.png" alt="Anvir Bashundhara Group" className="relative w-[300px]" />
         <div className="relative max-w-lg">
-          <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.22em] text-platinum-deep">ABG Dispatch · Control Centre</p>
+          <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.22em] text-platinum-deep">ABG ONE · Group Operations Portal</p>
           <h1 className="font-display text-[40px] font-extrabold leading-[1.08] tracking-tight text-platinum-bright">
             Every document, parcel and instrument — accounted for, end to end.
           </h1>

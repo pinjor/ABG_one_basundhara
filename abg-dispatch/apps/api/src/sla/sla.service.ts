@@ -156,7 +156,7 @@ export class SlaService implements OnModuleInit, OnModuleDestroy {
         case SlaAudience.CARRIER:
           add([p.currentAssignment?.employee?.user?.id], copy.reminder, `${p.trackingNumber} is waiting for you. Please complete the ${policy.stage === "PICKUP" ? "pickup" : "delivery"}.`);
           if (p.currentAssignment?.guestCarrier) {
-            await this.sms.send(p.currentAssignment.guestCarrier.phone, `ABG Dispatch reminder: ${p.trackingNumber} is waiting for you.`);
+            await this.sms.send(p.currentAssignment.guestCarrier.phone, `ABG ONE reminder: ${p.trackingNumber} is waiting for you.`);
           }
           break;
         case SlaAudience.SENDER:

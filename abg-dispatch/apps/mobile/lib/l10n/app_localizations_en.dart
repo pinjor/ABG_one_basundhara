@@ -9,13 +9,13 @@ class LEn extends L {
   LEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'ABG Dispatch';
+  String get appName => 'ABG ONE';
 
   @override
   String get orgName => 'Anvir Bashundhara Group';
 
   @override
-  String get tagline => 'Every handover, on the record.';
+  String get tagline => 'One app for the whole group.';
 
   @override
   String get splashLoading => 'Securing your session';
@@ -633,7 +633,7 @@ class LEn extends L {
   String get signOut => 'Sign out';
 
   @override
-  String get signOutConfirm => 'Sign out of ABG Dispatch on this device?';
+  String get signOutConfirm => 'Sign out of ABG ONE on this device?';
 
   @override
   String get help => 'Help & support';
@@ -659,7 +659,7 @@ class LEn extends L {
 
   @override
   String get errorNetwork =>
-      'Can\'t reach ABG Dispatch. Check your connection and try again.';
+      'Can\'t reach ABG ONE. Check your connection and try again.';
 
   @override
   String get errorGeneric => 'That didn\'t work. Please try again.';

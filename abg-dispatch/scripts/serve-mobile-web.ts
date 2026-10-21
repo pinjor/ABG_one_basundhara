@@ -24,4 +24,4 @@ Bun.serve({
     return (await target.exists()) ? new Response(target) : new Response(file(join(root, "index.html")));
   },
 });
-console.log(`ABG Dispatch mobile (web build) on http://localhost:${port} → API ${api}`);
+console.log(`ABG ONE mobile (web build) on http://localhost:${port} → API ${api}`);

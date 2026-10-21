@@ -37,12 +37,62 @@ export const Capability = {
   INCIDENT_VIEW: "incident.view",
   /** Change an incident's status, add notes and fix photos. */
   INCIDENT_MANAGE: "incident.manage",
+  /** Apply for an official tour (every employee). HOD approval is by being the named approver. */
+  TOUR_REQUEST: "tour.request",
+  /** See every tour request in one's offices (all offices for head office). */
+  TOUR_VIEW: "tour.view",
+  /** HR & Finance vetting of tour budgets. */
+  TOUR_VET: "tour.vet",
+  /** MD / Chairman sanction of overseas tours. */
+  TOUR_SANCTION: "tour.sanction",
+  /** Request a pool car (every employee). */
+  FLEET_REQUEST: "fleet.request",
+  /** See every requisition and the fleet. */
+  FLEET_VIEW: "fleet.view",
+  /** Assign vehicles and drivers; keep the vehicle and driver register. */
+  FLEET_MANAGE: "fleet.manage",
+  /** Start and finish one's own assigned trips. */
+  FLEET_DRIVE: "fleet.drive",
+  /** Pre-register a visitor one is hosting (every employee). */
+  VISITOR_INVITE: "visitor.invite",
+  /** See visitors at one's offices. */
+  VISITOR_VIEW: "visitor.view",
+  /** Check visitors in and out, register walk-ins. */
+  VISITOR_MANAGE: "visitor.manage",
+  /** Scan and verify visitor and vehicle gate passes. */
+  GATE_VERIFY: "gate.verify",
+  /** See the licence register for one's offices. */
+  LICENCE_VIEW: "licence.view",
+  /** Add licences, track renewals, upload scans. */
+  LICENCE_MANAGE: "licence.manage",
+  /** Read published notices (every signed-in employee). */
+  NOTICE_READ: "notice.read",
+  /** Publish notices (branch admins to their offices only). */
+  NOTICE_PUBLISH: "notice.publish",
+  /** Edit or archive anyone's notices and see every acknowledgement report. */
+  NOTICE_MANAGE: "notice.manage",
 } as const;
 export type Capability = (typeof Capability)[keyof typeof Capability];
 
 const C = Capability;
 
-const EMPLOYEE_CAPS: Capability[] = [C.PARCEL_CREATE, C.PARCEL_VIEW_OWN, C.EXCEPTION_RECORD, C.INCIDENT_REPORT];
+/** What every employee gets across the modules: request, report, read. */
+const SELF_SERVICE_CAPS: Capability[] = [C.INCIDENT_REPORT, C.TOUR_REQUEST, C.FLEET_REQUEST, C.VISITOR_INVITE, C.NOTICE_READ];
+
+const EMPLOYEE_CAPS: Capability[] = [C.PARCEL_CREATE, C.PARCEL_VIEW_OWN, C.EXCEPTION_RECORD, ...SELF_SERVICE_CAPS];
+
+/** Office-level oversight of the facility modules. */
+const FACILITY_ADMIN_CAPS: Capability[] = [
+  C.INCIDENT_VIEW,
+  C.INCIDENT_MANAGE,
+  C.TOUR_VIEW,
+  C.FLEET_VIEW,
+  C.VISITOR_VIEW,
+  C.VISITOR_MANAGE,
+  C.GATE_VERIFY,
+  C.LICENCE_VIEW,
+  C.NOTICE_PUBLISH,
+];
 
 const OPERATIONS_CAPS: Capability[] = [
   C.PARCEL_VIEW_BRANCH,
@@ -60,9 +110,10 @@ const OPERATIONS_CAPS: Capability[] = [
 export const ROLE_CAPABILITIES: Record<RoleCode, readonly Capability[]> = {
   EMPLOYEE: EMPLOYEE_CAPS,
   SENDER: EMPLOYEE_CAPS,
-  RECEIVER: [C.PARCEL_VIEW_OWN, C.EXCEPTION_RECORD, C.INCIDENT_REPORT],
-  COURIER_RUNNER: [C.PARCEL_VIEW_OWN, C.COURIER_ACTIONS, C.EXCEPTION_RECORD, C.INCIDENT_REPORT],
-  DISPATCH_OFFICER: [...EMPLOYEE_CAPS, ...OPERATIONS_CAPS, C.COURIER_ACTIONS],
+  RECEIVER: [C.PARCEL_VIEW_OWN, C.EXCEPTION_RECORD, ...SELF_SERVICE_CAPS],
+  COURIER_RUNNER: [C.PARCEL_VIEW_OWN, C.COURIER_ACTIONS, C.EXCEPTION_RECORD, ...SELF_SERVICE_CAPS],
+  // Front-desk dispatch officers also run reception: visitors and gate passes.
+  DISPATCH_OFFICER: [...EMPLOYEE_CAPS, ...OPERATIONS_CAPS, C.COURIER_ACTIONS, C.VISITOR_VIEW, C.VISITOR_MANAGE, C.GATE_VERIFY],
   BRANCH_ADMIN: [
     ...EMPLOYEE_CAPS,
     ...OPERATIONS_CAPS,
@@ -73,8 +124,7 @@ export const ROLE_CAPABILITIES: Record<RoleCode, readonly Capability[]> = {
     C.SLA_UPDATE,
     C.ANALYTICS_VIEW,
     C.AUDIT_VIEW,
-    C.INCIDENT_VIEW,
-    C.INCIDENT_MANAGE,
+    ...FACILITY_ADMIN_CAPS,
   ],
   HEAD_OFFICE_ADMIN: [
     ...EMPLOYEE_CAPS,
@@ -87,11 +137,30 @@ export const ROLE_CAPABILITIES: Record<RoleCode, readonly Capability[]> = {
     C.SLA_UPDATE,
     C.ANALYTICS_VIEW,
     C.AUDIT_VIEW,
-    C.INCIDENT_VIEW,
-    C.INCIDENT_MANAGE,
+    ...FACILITY_ADMIN_CAPS,
+    C.LICENCE_MANAGE,
+    C.NOTICE_MANAGE,
   ],
-  AUDITOR: [C.PARCEL_VIEW_ALL, C.DASHBOARD_VIEW, C.ANALYTICS_VIEW, C.REPORTS_EXPORT, C.AUDIT_VIEW, C.INCIDENT_VIEW],
+  AUDITOR: [
+    C.PARCEL_VIEW_ALL,
+    C.DASHBOARD_VIEW,
+    C.ANALYTICS_VIEW,
+    C.REPORTS_EXPORT,
+    C.AUDIT_VIEW,
+    C.INCIDENT_VIEW,
+    C.TOUR_VIEW,
+    C.FLEET_VIEW,
+    C.VISITOR_VIEW,
+    C.LICENCE_VIEW,
+    C.NOTICE_READ,
+  ],
   SUPER_ADMIN: Object.values(Capability),
+  FLEET_MANAGER: [...EMPLOYEE_CAPS, C.FLEET_VIEW, C.FLEET_MANAGE, C.GATE_VERIFY],
+  DRIVER: [C.PARCEL_VIEW_OWN, C.EXCEPTION_RECORD, ...SELF_SERVICE_CAPS, C.FLEET_DRIVE],
+  SECURITY_GUARD: [C.PARCEL_VIEW_OWN, ...SELF_SERVICE_CAPS, C.VISITOR_VIEW, C.VISITOR_MANAGE, C.GATE_VERIFY],
+  HR_FINANCE: [...EMPLOYEE_CAPS, C.TOUR_VIEW, C.TOUR_VET, C.NOTICE_PUBLISH],
+  EXECUTIVE: [...EMPLOYEE_CAPS, C.TOUR_VIEW, C.TOUR_SANCTION, C.NOTICE_PUBLISH, C.NOTICE_MANAGE, C.LICENCE_VIEW, C.INCIDENT_VIEW],
+  COMPLIANCE_OFFICER: [...EMPLOYEE_CAPS, C.LICENCE_VIEW, C.LICENCE_MANAGE, C.NOTICE_PUBLISH],
 };
 
 export function capabilitiesFor(roles: readonly string[]): Set<Capability> {
@@ -113,6 +182,11 @@ export const ADMIN_PORTAL_ROLES: readonly RoleCode[] = [
   RoleCode.HEAD_OFFICE_ADMIN,
   RoleCode.AUDITOR,
   RoleCode.SUPER_ADMIN,
+  RoleCode.FLEET_MANAGER,
+  RoleCode.SECURITY_GUARD,
+  RoleCode.HR_FINANCE,
+  RoleCode.EXECUTIVE,
+  RoleCode.COMPLIANCE_OFFICER,
 ];
 
 /** Roles that must use MFA once REQUIRE_ADMIN_MFA is on. */
@@ -121,6 +195,10 @@ export const PRIVILEGED_ROLES: readonly RoleCode[] = [
   RoleCode.HEAD_OFFICE_ADMIN,
   RoleCode.AUDITOR,
   RoleCode.SUPER_ADMIN,
+  RoleCode.FLEET_MANAGER,
+  RoleCode.HR_FINANCE,
+  RoleCode.EXECUTIVE,
+  RoleCode.COMPLIANCE_OFFICER,
 ];
 
 /** A role that may read but never change operational data. */

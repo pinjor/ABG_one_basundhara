@@ -42,7 +42,7 @@ export function LabelPrintPage() {
         <header className="flex items-center justify-between bg-midnight px-[5mm] py-[3.5mm]">
           <img src="/brand/abg-logo-light.png" alt="ABG" className="h-[11mm]" />
           <div className="text-right">
-            <p className="text-[8pt] font-bold uppercase tracking-[0.18em] text-platinum">ABG Dispatch</p>
+            <p className="text-[8pt] font-bold uppercase tracking-[0.18em] text-platinum">ABG ONE · Dispatch</p>
             <p className="text-[7pt] text-platinum-deep">Internal custody label</p>
           </div>
         </header>
@@ -73,11 +73,11 @@ export function LabelPrintPage() {
             </div>
             <div>
               <p className="text-[7pt] font-bold uppercase tracking-wider text-ink-subtle">Contents</p>
-              <p className="text-[9pt] text-ink">{showTitle ? p.title : "Sealed — details available to authorised staff in ABG Dispatch"}</p>
+              <p className="text-[9pt] text-ink">{showTitle ? p.title : "Sealed — details available to authorised staff in ABG ONE"}</p>
             </div>
           </div>
           <footer className="mt-auto border-t border-line py-[3mm] text-[7pt] leading-snug text-ink-muted">
-            Booked {stamp(p.milestones.bookedAt ?? p.createdAt)}. Arrival is not receipt: the receiver must confirm in ABG Dispatch. Scan this code to view or receive. Do not open if the seal is broken — report it.
+            Booked {stamp(p.milestones.bookedAt ?? p.createdAt)}. Arrival is not receipt: the receiver must confirm in ABG ONE. Scan this code to view or receive. Do not open if the seal is broken — report it.
           </footer>
         </div>
       </article>

@@ -1,0 +1,1 @@
+# Official tour requests — s(key, english, bangla, **placeholders). Keys must be unique across all files.
