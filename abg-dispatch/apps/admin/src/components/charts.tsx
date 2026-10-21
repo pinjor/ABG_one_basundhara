@@ -315,7 +315,7 @@ export function BarList({ data, caption, format = (v: number) => String(v), deta
 }
 
 /** Single-series columns (e.g. ageing buckets). The title names the measure, so no legend. */
-export function Columns({ data, caption, height = 180, onSelect }: { data: { label: string; value: number }[]; caption: string; height?: number; onSelect?: (label: string) => void }) {
+export function Columns({ data, caption, height = 180, onSelect, unit = "parcels" }: { data: { label: string; value: number }[]; caption: string; height?: number; onSelect?: (label: string) => void; unit?: string }) {
   const [ref, width] = useWidth<HTMLDivElement>();
   const [hover, setHover] = useState<number | null>(null);
   const pad = { top: 22, right: 4, bottom: 26, left: 4 };
@@ -349,10 +349,12 @@ export function Columns({ data, caption, height = 180, onSelect }: { data: { lab
       {hover !== null && (
         <Tooltip x={pad.left + band * hover + band / 2} y={y(data[hover].value) - 18} width={width}>
           <p className="font-semibold">{data[hover].label}</p>
-          <p className="tabular text-white/80">{data[hover].value} parcels</p>
+          <p className="tabular text-white/80">
+            {data[hover].value} {unit}
+          </p>
         </Tooltip>
       )}
-      <DataTable caption={caption} head={["Bucket", "Parcels"]} rows={data.map((d) => [d.label, d.value])} />
+      <DataTable caption={caption} head={["Bucket", unit.charAt(0).toUpperCase() + unit.slice(1)]} rows={data.map((d) => [d.label, d.value])} />
     </div>
   );
 }

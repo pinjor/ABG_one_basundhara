@@ -31,6 +31,7 @@ import { toast } from "./toast";
 import { useAuth } from "../lib/auth";
 import { api } from "../lib/api";
 import { cx } from "./ui";
+import { NotificationBell, QuickCreate } from "./HeaderMenus";
 import { useIncidentSummary } from "../lib/lookups";
 
 interface NavItem {
@@ -133,9 +134,19 @@ export function Layout({ children }: { children: ReactNode }) {
       <div className="flex items-center gap-3 px-5 pb-5 pt-6">
         <img src="/brand/abg-logo-light.png" alt="Anvir Bashundhara Group" className="h-11 w-auto" />
       </div>
-      <div className="mx-5 mb-4 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5">
-        <p className="font-display text-[13px] font-bold tracking-wide text-platinum-bright">ABG ONE</p>
-        <p className="text-[11px] text-platinum-deep">Group operations portal</p>
+      <div className="mx-5 mb-3 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5">
+        <p className="font-display text-[15px] font-extrabold tracking-wide text-platinum-bright">ABG ONE</p>
+        <p className="text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#8DB8FF]">Group operations portal</p>
+      </div>
+      <div className="mb-4 flex items-center gap-3 border-y border-white/10 px-5 py-3">
+        <div className="relative">
+          <div className="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-platinum-bright to-platinum font-display text-sm font-extrabold text-navy ring-2 ring-white/20">{initials}</div>
+          <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-midnight bg-success" aria-hidden />
+        </div>
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-semibold text-platinum-bright">{profile.displayName}</p>
+          <p className="truncate text-[11.5px] text-platinum-deep">{profile.employee?.designation ?? primaryRole(profile.roles)}</p>
+        </div>
       </div>
       <div className="flex-1 space-y-5 overflow-y-auto px-3 pb-4">
         {NAV.map((group) => {
@@ -174,20 +185,17 @@ export function Layout({ children }: { children: ReactNode }) {
           );
         })}
       </div>
-      <div className="border-t border-white/10 p-4">
-        <div className="flex items-center gap-3">
-          <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-platinum font-display text-sm font-extrabold text-navy">{initials}</div>
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-semibold text-platinum-bright">{profile.displayName}</p>
-            <p className="truncate text-[11px] text-platinum-deep">
-              {primaryRole(profile.roles)}
-              {scope ? ` · ${scope}` : ""}
-            </p>
-          </div>
-          <button onClick={signOut} className="rounded-lg p-2 text-platinum-deep hover:bg-white/10 hover:text-platinum-bright" aria-label="Sign out" title="Sign out">
-            <LogOut className="h-4 w-4" />
-          </button>
+      <div className="flex items-center gap-2 border-t border-white/10 px-5 py-3.5">
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-[11.5px] font-semibold text-platinum-deep">
+            {primaryRole(profile.roles)}
+            {scope ? ` · ${scope}` : ""}
+          </p>
+          <p className="truncate text-[10.5px] text-platinum-deep/70">Anvir Bashundhara Group © {new Date().getFullYear()}</p>
         </div>
+        <button onClick={signOut} className="rounded-lg p-2 text-platinum-deep hover:bg-white/10 hover:text-platinum-bright" aria-label="Sign out" title="Sign out">
+          <LogOut className="h-4 w-4" />
+        </button>
       </div>
     </nav>
   );
@@ -234,21 +242,46 @@ export function Layout({ children }: { children: ReactNode }) {
                   .catch(toast.error);
                 return;
               }
-              navigate(`/parcels?q=${encodeURIComponent(q)}`);
+              // Reference numbers go to their module; anything else searches parcels.
+              const upper = q.toUpperCase();
+              const target = upper.startsWith("ABG-TR-")
+                ? "/tours"
+                : upper.startsWith("PC-")
+                  ? "/pool-car"
+                  : upper.startsWith("VP-")
+                    ? "/visitors"
+                    : upper.startsWith("INC-")
+                      ? "/incidents"
+                      : upper.startsWith("ABG-NB-")
+                        ? "/notices"
+                        : "/parcels";
+              navigate(`${target}?q=${encodeURIComponent(q)}`);
             }}
           >
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-subtle" aria-hidden />
             <input
               className="input h-10 rounded-full bg-surface pl-9"
-              placeholder="Search tracking ID, title, sender, receiver, employee ID, courier ref…"
+              placeholder="Search parcels, tours, pool cars, visitors, licences…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              aria-label="Search parcels"
+              aria-label="Search"
             />
           </form>
-          <div className="ml-auto hidden items-center gap-2 text-xs text-ink-muted md:flex">
-            <CalendarDays className="h-3.5 w-3.5" aria-hidden />
-            <span>{new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Dhaka", weekday: "short", day: "numeric", month: "short" }).format(new Date())} · Asia/Dhaka</span>
+          <div className="ml-auto flex items-center gap-2 sm:gap-3">
+            <div className="hidden sm:block">
+              <QuickCreate />
+            </div>
+            <div className="sm:hidden">
+              <QuickCreate compact />
+            </div>
+            <NotificationBell />
+            <div className="hidden border-l border-line pl-3 text-right xl:block">
+              <p className="text-sm font-bold leading-tight text-navy">{profile.employee?.branch.name ?? "Anvir Bashundhara Group"}</p>
+              <p className="flex items-center justify-end gap-1 text-[11px] text-ink-muted">
+                <CalendarDays className="h-3 w-3" aria-hidden />
+                {new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Dhaka", weekday: "short", day: "numeric", month: "short" }).format(new Date())} · Dhaka
+              </p>
+            </div>
           </div>
         </div>
       </header>
