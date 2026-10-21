@@ -8,3 +8,6 @@ build/
 .vite/
 apps/api/prisma/dev.db
 *.tsbuildinfo
+
+# Temporary git worktrees used by Claude Code helper agents
+.claude/worktrees/
