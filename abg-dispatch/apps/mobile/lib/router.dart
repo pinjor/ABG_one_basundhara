@@ -219,6 +219,11 @@ GoRouter buildRouter(SessionController session) {
           ),
         ],
       ),
+      GoRoute(
+        path: '/parcels',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (_, _) => const ParcelsScreen(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (_, _, shell) => AppShell(shell: shell),
         branches: [
@@ -230,8 +235,8 @@ GoRouter buildRouter(SessionController session) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/parcels',
-                builder: (_, _) => const ParcelsScreen(),
+                path: '/profile',
+                builder: (_, _) => const ProfileScreen(),
               ),
             ],
           ),
@@ -240,14 +245,6 @@ GoRouter buildRouter(SessionController session) {
               GoRoute(
                 path: '/alerts',
                 builder: (_, _) => const NotificationsScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: '/profile',
-                builder: (_, _) => const ProfileScreen(),
               ),
             ],
           ),

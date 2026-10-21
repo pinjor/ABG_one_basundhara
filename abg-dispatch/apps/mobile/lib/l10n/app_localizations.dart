@@ -2046,6 +2046,426 @@ abstract class L {
   /// In en, this message translates to:
   /// **'You\'re offline. Reports with photos need a connection — try again when you\'re back online.'**
   String get incOfflineNotice;
+
+  /// No description provided for @apprTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approvals'**
+  String get apprTitle;
+
+  /// No description provided for @apprEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is waiting for you'**
+  String get apprEmpty;
+
+  /// No description provided for @apprEmptyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tour and pool car requests that need your approval appear here.'**
+  String get apprEmptyHint;
+
+  /// No description provided for @apprAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get apprAll;
+
+  /// No description provided for @apprTours.
+  ///
+  /// In en, this message translates to:
+  /// **'Official tours'**
+  String get apprTours;
+
+  /// No description provided for @apprPoolCar.
+  ///
+  /// In en, this message translates to:
+  /// **'Pool car'**
+  String get apprPoolCar;
+
+  /// No description provided for @apprApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get apprApprove;
+
+  /// No description provided for @apprReject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get apprReject;
+
+  /// No description provided for @apprRejectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject this request?'**
+  String get apprRejectTitle;
+
+  /// No description provided for @apprRejectReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason (shown to the requester)'**
+  String get apprRejectReason;
+
+  /// No description provided for @apprApproveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve this request?'**
+  String get apprApproveTitle;
+
+  /// No description provided for @apprNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get apprNote;
+
+  /// No description provided for @apprApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved — the requester has been told.'**
+  String get apprApproved;
+
+  /// No description provided for @apprRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected — the requester has been told.'**
+  String get apprRejected;
+
+  /// No description provided for @apprAwaitingHOD.
+  ///
+  /// In en, this message translates to:
+  /// **'Your approval as head of department'**
+  String get apprAwaitingHOD;
+
+  /// No description provided for @apprAwaitingVETTING.
+  ///
+  /// In en, this message translates to:
+  /// **'HR & Finance vetting'**
+  String get apprAwaitingVETTING;
+
+  /// No description provided for @apprAwaitingSANCTION.
+  ///
+  /// In en, this message translates to:
+  /// **'MD / Chairman sanction'**
+  String get apprAwaitingSANCTION;
+
+  /// No description provided for @apprForeign.
+  ///
+  /// In en, this message translates to:
+  /// **'Foreign'**
+  String get apprForeign;
+
+  /// No description provided for @apprLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'Local'**
+  String get apprLocal;
+
+  /// No description provided for @apprUrgent.
+  ///
+  /// In en, this message translates to:
+  /// **'Urgent'**
+  String get apprUrgent;
+
+  /// No description provided for @apprPassengers.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 passenger} other{{count} passengers}}'**
+  String apprPassengers(int count);
+
+  /// No description provided for @apprBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget ৳{amount}'**
+  String apprBudget(Object amount);
+
+  /// No description provided for @apprRequestedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested by {name}'**
+  String apprRequestedBy(Object name);
+
+  /// No description provided for @apprDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get apprDetails;
+
+  /// No description provided for @navMyAbg.
+  ///
+  /// In en, this message translates to:
+  /// **'My ABG'**
+  String get navMyAbg;
+
+  /// No description provided for @navQrScan.
+  ///
+  /// In en, this message translates to:
+  /// **'QR Scan'**
+  String get navQrScan;
+
+  /// No description provided for @navInbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Inbox'**
+  String get navInbox;
+
+  /// No description provided for @homeSeeMore.
+  ///
+  /// In en, this message translates to:
+  /// **'See more'**
+  String get homeSeeMore;
+
+  /// No description provided for @homeSeeLess.
+  ///
+  /// In en, this message translates to:
+  /// **'See less'**
+  String get homeSeeLess;
+
+  /// No description provided for @homeSearchTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Search services'**
+  String get homeSearchTooltip;
+
+  /// No description provided for @homeSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search services, e.g. pool car'**
+  String get homeSearchHint;
+
+  /// No description provided for @homeSearchEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No service matches “{query}”'**
+  String homeSearchEmpty(Object query);
+
+  /// No description provided for @homeSearchParcels.
+  ///
+  /// In en, this message translates to:
+  /// **'Search parcels by tracking ID'**
+  String get homeSearchParcels;
+
+  /// No description provided for @homeMenuTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'My ABG'**
+  String get homeMenuTooltip;
+
+  /// No description provided for @homeGlance.
+  ///
+  /// In en, this message translates to:
+  /// **'At a glance'**
+  String get homeGlance;
+
+  /// No description provided for @homeParcelsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Parcels'**
+  String get homeParcelsSection;
+
+  /// No description provided for @svcSendParcel.
+  ///
+  /// In en, this message translates to:
+  /// **'Send parcel'**
+  String get svcSendParcel;
+
+  /// No description provided for @svcMyParcels.
+  ///
+  /// In en, this message translates to:
+  /// **'My parcels'**
+  String get svcMyParcels;
+
+  /// No description provided for @svcPoolCar.
+  ///
+  /// In en, this message translates to:
+  /// **'Pool car'**
+  String get svcPoolCar;
+
+  /// No description provided for @svcReportIssue.
+  ///
+  /// In en, this message translates to:
+  /// **'Report issue'**
+  String get svcReportIssue;
+
+  /// No description provided for @svcVisitors.
+  ///
+  /// In en, this message translates to:
+  /// **'Visitors'**
+  String get svcVisitors;
+
+  /// No description provided for @svcTours.
+  ///
+  /// In en, this message translates to:
+  /// **'Tour request'**
+  String get svcTours;
+
+  /// No description provided for @svcNotices.
+  ///
+  /// In en, this message translates to:
+  /// **'Notice board'**
+  String get svcNotices;
+
+  /// No description provided for @svcApprovals.
+  ///
+  /// In en, this message translates to:
+  /// **'Approvals'**
+  String get svcApprovals;
+
+  /// No description provided for @svcScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan & receive'**
+  String get svcScan;
+
+  /// No description provided for @svcMyReports.
+  ///
+  /// In en, this message translates to:
+  /// **'My reports'**
+  String get svcMyReports;
+
+  /// No description provided for @svcLicences.
+  ///
+  /// In en, this message translates to:
+  /// **'Licences'**
+  String get svcLicences;
+
+  /// No description provided for @svcMyTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'My trips'**
+  String get svcMyTrips;
+
+  /// No description provided for @svcGateDesk.
+  ///
+  /// In en, this message translates to:
+  /// **'Gate desk'**
+  String get svcGateDesk;
+
+  /// No description provided for @glanceWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Parcels waiting'**
+  String get glanceWaiting;
+
+  /// No description provided for @glanceInTransit.
+  ///
+  /// In en, this message translates to:
+  /// **'In transit'**
+  String get glanceInTransit;
+
+  /// No description provided for @glanceApprovals.
+  ///
+  /// In en, this message translates to:
+  /// **'To approve'**
+  String get glanceApprovals;
+
+  /// No description provided for @glanceReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Open reports'**
+  String get glanceReports;
+
+  /// No description provided for @glanceNotices.
+  ///
+  /// In en, this message translates to:
+  /// **'Unread notices'**
+  String get glanceNotices;
+
+  /// No description provided for @bannerRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Read'**
+  String get bannerRead;
+
+  /// No description provided for @bannerUrgent.
+  ///
+  /// In en, this message translates to:
+  /// **'Urgent'**
+  String get bannerUrgent;
+
+  /// No description provided for @bannerPinned.
+  ///
+  /// In en, this message translates to:
+  /// **'Pinned'**
+  String get bannerPinned;
+
+  /// No description provided for @bannerStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get bannerStart;
+
+  /// No description provided for @homeChannelCHAIRMAN.
+  ///
+  /// In en, this message translates to:
+  /// **'Chairman'**
+  String get homeChannelCHAIRMAN;
+
+  /// No description provided for @homeChannelMANAGING_DIRECTOR.
+  ///
+  /// In en, this message translates to:
+  /// **'Managing Director'**
+  String get homeChannelMANAGING_DIRECTOR;
+
+  /// No description provided for @homeChannelHR.
+  ///
+  /// In en, this message translates to:
+  /// **'Human Resources'**
+  String get homeChannelHR;
+
+  /// No description provided for @homeChannelADMINISTRATION.
+  ///
+  /// In en, this message translates to:
+  /// **'Administration'**
+  String get homeChannelADMINISTRATION;
+
+  /// No description provided for @homeChannelCOMPLIANCE.
+  ///
+  /// In en, this message translates to:
+  /// **'Compliance'**
+  String get homeChannelCOMPLIANCE;
+
+  /// No description provided for @homeChannelIT.
+  ///
+  /// In en, this message translates to:
+  /// **'IT'**
+  String get homeChannelIT;
+
+  /// No description provided for @promoCarTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Need a car for official work?'**
+  String get promoCarTitle;
+
+  /// No description provided for @promoCarBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Request a pool car — your head of department approves in one tap.'**
+  String get promoCarBody;
+
+  /// No description provided for @promoIssueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'See something unsafe or broken?'**
+  String get promoIssueTitle;
+
+  /// No description provided for @promoIssueBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Snap a photo and report it. The admin team is told at once.'**
+  String get promoIssueBody;
+
+  /// No description provided for @promoVisitorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Expecting a guest?'**
+  String get promoVisitorTitle;
+
+  /// No description provided for @promoVisitorBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Send them a gate pass before they arrive — no waiting at the gate.'**
+  String get promoVisitorBody;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

@@ -1061,4 +1061,230 @@ class LBn extends L {
   @override
   String get incOfflineNotice =>
       'আপনি অফলাইনে আছেন। ছবিসহ রিপোর্টের জন্য সংযোগ প্রয়োজন — অনলাইনে ফিরে আবার চেষ্টা করুন।';
+
+  @override
+  String get apprTitle => 'অনুমোদন';
+
+  @override
+  String get apprEmpty => 'আপনার জন্য কিছু অপেক্ষমাণ নেই';
+
+  @override
+  String get apprEmptyHint =>
+      'আপনার অনুমোদন প্রয়োজন এমন ট্যুর ও পুল কার অনুরোধ এখানে দেখাবে।';
+
+  @override
+  String get apprAll => 'সব';
+
+  @override
+  String get apprTours => 'অফিসিয়াল ট্যুর';
+
+  @override
+  String get apprPoolCar => 'পুল কার';
+
+  @override
+  String get apprApprove => 'অনুমোদন';
+
+  @override
+  String get apprReject => 'প্রত্যাখ্যান';
+
+  @override
+  String get apprRejectTitle => 'এই অনুরোধ প্রত্যাখ্যান করবেন?';
+
+  @override
+  String get apprRejectReason => 'কারণ (অনুরোধকারী দেখবেন)';
+
+  @override
+  String get apprApproveTitle => 'এই অনুরোধ অনুমোদন করবেন?';
+
+  @override
+  String get apprNote => 'মন্তব্য (ঐচ্ছিক)';
+
+  @override
+  String get apprApproved => 'অনুমোদিত — অনুরোধকারীকে জানানো হয়েছে।';
+
+  @override
+  String get apprRejected => 'প্রত্যাখ্যাত — অনুরোধকারীকে জানানো হয়েছে।';
+
+  @override
+  String get apprAwaitingHOD => 'বিভাগীয় প্রধান হিসেবে আপনার অনুমোদন';
+
+  @override
+  String get apprAwaitingVETTING => 'এইচআর ও ফাইন্যান্স যাচাই';
+
+  @override
+  String get apprAwaitingSANCTION => 'এমডি / চেয়ারম্যানের অনুমোদন';
+
+  @override
+  String get apprForeign => 'বিদেশ';
+
+  @override
+  String get apprLocal => 'দেশে';
+
+  @override
+  String get apprUrgent => 'জরুরি';
+
+  @override
+  String apprPassengers(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count জন যাত্রী',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String apprBudget(Object amount) {
+    return 'বাজেট ৳$amount';
+  }
+
+  @override
+  String apprRequestedBy(Object name) {
+    return 'অনুরোধকারী $name';
+  }
+
+  @override
+  String get apprDetails => 'বিস্তারিত';
+
+  @override
+  String get navMyAbg => 'আমার ABG';
+
+  @override
+  String get navQrScan => 'QR স্ক্যান';
+
+  @override
+  String get navInbox => 'ইনবক্স';
+
+  @override
+  String get homeSeeMore => 'আরো দেখুন';
+
+  @override
+  String get homeSeeLess => 'কম দেখুন';
+
+  @override
+  String get homeSearchTooltip => 'সেবা খুঁজুন';
+
+  @override
+  String get homeSearchHint => 'সেবা খুঁজুন, যেমন পুল কার';
+
+  @override
+  String homeSearchEmpty(Object query) {
+    return '“$query” এর সাথে কোনো সেবা মেলেনি';
+  }
+
+  @override
+  String get homeSearchParcels => 'ট্র্যাকিং আইডি দিয়ে পার্সেল খুঁজুন';
+
+  @override
+  String get homeMenuTooltip => 'আমার ABG';
+
+  @override
+  String get homeGlance => 'এক নজরে';
+
+  @override
+  String get homeParcelsSection => 'পার্সেল';
+
+  @override
+  String get svcSendParcel => 'পার্সেল পাঠান';
+
+  @override
+  String get svcMyParcels => 'আমার পার্সেল';
+
+  @override
+  String get svcPoolCar => 'পুল কার';
+
+  @override
+  String get svcReportIssue => 'সমস্যা জানান';
+
+  @override
+  String get svcVisitors => 'ভিজিটর';
+
+  @override
+  String get svcTours => 'ট্যুর আবেদন';
+
+  @override
+  String get svcNotices => 'নোটিশ বোর্ড';
+
+  @override
+  String get svcApprovals => 'অনুমোদন';
+
+  @override
+  String get svcScan => 'স্ক্যান ও গ্রহণ';
+
+  @override
+  String get svcMyReports => 'আমার রিপোর্ট';
+
+  @override
+  String get svcLicences => 'লাইসেন্স';
+
+  @override
+  String get svcMyTrips => 'আমার ট্রিপ';
+
+  @override
+  String get svcGateDesk => 'গেট ডেস্ক';
+
+  @override
+  String get glanceWaiting => 'অপেক্ষমাণ পার্সেল';
+
+  @override
+  String get glanceInTransit => 'পথে আছে';
+
+  @override
+  String get glanceApprovals => 'অনুমোদন বাকি';
+
+  @override
+  String get glanceReports => 'খোলা রিপোর্ট';
+
+  @override
+  String get glanceNotices => 'অপঠিত নোটিশ';
+
+  @override
+  String get bannerRead => 'পড়ুন';
+
+  @override
+  String get bannerUrgent => 'জরুরি';
+
+  @override
+  String get bannerPinned => 'পিন করা';
+
+  @override
+  String get bannerStart => 'শুরু করুন';
+
+  @override
+  String get homeChannelCHAIRMAN => 'চেয়ারম্যান';
+
+  @override
+  String get homeChannelMANAGING_DIRECTOR => 'ব্যবস্থাপনা পরিচালক';
+
+  @override
+  String get homeChannelHR => 'মানবসম্পদ';
+
+  @override
+  String get homeChannelADMINISTRATION => 'প্রশাসন';
+
+  @override
+  String get homeChannelCOMPLIANCE => 'কমপ্লায়েন্স';
+
+  @override
+  String get homeChannelIT => 'আইটি';
+
+  @override
+  String get promoCarTitle => 'অফিসের কাজে গাড়ি লাগবে?';
+
+  @override
+  String get promoCarBody =>
+      'পুল কার অনুরোধ করুন — বিভাগীয় প্রধান এক ট্যাপে অনুমোদন দেবেন।';
+
+  @override
+  String get promoIssueTitle => 'অনিরাপদ বা নষ্ট কিছু দেখছেন?';
+
+  @override
+  String get promoIssueBody =>
+      'ছবি তুলে জানিয়ে দিন। অ্যাডমিন দল সঙ্গে সঙ্গে জানবে।';
+
+  @override
+  String get promoVisitorTitle => 'অতিথি আসছেন?';
+
+  @override
+  String get promoVisitorBody => 'আসার আগেই গেট পাস পাঠান — গেটে অপেক্ষা নয়।';
 }

@@ -7,9 +7,9 @@ import '../l10n/app_localizations.dart';
 import '../theme/theme.dart';
 import '../theme/tokens.dart';
 
-/// Bottom navigation: Home · Parcels · [Scan] · Alerts · Profile.
-/// Scan sits in the middle as a raised platinum-ringed button because it is
-/// the fastest way to record a custody change.
+/// Bottom navigation: Home · My ABG · QR Scan · Inbox — a flat white bar like
+/// the wallet apps people already use every day. Scan opens the camera over
+/// everything else; the other three are tabs that keep their state.
 class AppShell extends StatelessWidget {
   const AppShell({super.key, required this.shell});
 
@@ -23,58 +23,55 @@ class AppShell extends StatelessWidget {
     void go(int i) => shell.goBranch(i, initialLocation: i == index);
     return Scaffold(
       body: shell,
-      extendBody: true,
-      bottomNavigationBar: SafeArea(
-        top: false,
-        child: Container(
-          height: 74,
-          margin: const EdgeInsets.fromLTRB(12, 0, 12, 10),
-          decoration: BoxDecoration(
-            color: AbgColors.white,
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: AbgColors.border),
-            boxShadow: AbgShadows.raised,
-          ),
-          child: Row(
-            children: [
-              _NavItem(
-                icon: Icons.space_dashboard_outlined,
-                active: Icons.space_dashboard_rounded,
-                label: l.navHome,
-                selected: index == 0,
-                onTap: () => go(0),
-              ),
-              _NavItem(
-                icon: Icons.inventory_2_outlined,
-                active: Icons.inventory_2_rounded,
-                label: l.navParcels,
-                selected: index == 1,
-                onTap: () => go(1),
-              ),
-              Expanded(
-                child: Center(
-                  child: _ScanButton(
-                    label: l.navScan,
-                    onTap: () => context.push('/scan'),
-                  ),
+      bottomNavigationBar: DecoratedBox(
+        decoration: const BoxDecoration(
+          color: AbgColors.white,
+          border: Border(top: BorderSide(color: AbgColors.border)),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x14071225),
+              blurRadius: 18,
+              offset: Offset(0, -4),
+            ),
+          ],
+        ),
+        child: SafeArea(
+          top: false,
+          child: SizedBox(
+            height: 66,
+            child: Row(
+              children: [
+                _NavItem(
+                  icon: Icons.home_outlined,
+                  active: Icons.home_rounded,
+                  label: l.navHome,
+                  selected: index == 0,
+                  onTap: () => go(0),
                 ),
-              ),
-              _NavItem(
-                icon: Icons.notifications_none_rounded,
-                active: Icons.notifications_rounded,
-                label: l.navAlerts,
-                selected: index == 2,
-                onTap: () => go(2),
-                badge: badge.total,
-              ),
-              _NavItem(
-                icon: Icons.person_outline_rounded,
-                active: Icons.person_rounded,
-                label: l.navProfile,
-                selected: index == 3,
-                onTap: () => go(3),
-              ),
-            ],
+                _NavItem(
+                  icon: Icons.account_box_outlined,
+                  active: Icons.account_box_rounded,
+                  label: l.navMyAbg,
+                  selected: index == 1,
+                  onTap: () => go(1),
+                ),
+                _NavItem(
+                  icon: Icons.qr_code_scanner_rounded,
+                  active: Icons.qr_code_scanner_rounded,
+                  label: l.navQrScan,
+                  selected: false,
+                  onTap: () => context.push('/scan'),
+                ),
+                _NavItem(
+                  icon: Icons.mail_outline_rounded,
+                  active: Icons.mail_rounded,
+                  label: l.navInbox,
+                  selected: index == 2,
+                  onTap: () => go(2),
+                  badge: badge.total,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -101,13 +98,13 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = selected ? AbgColors.navy : AbgColors.inkMuted;
     return Expanded(
       child: Semantics(
         button: true,
         selected: selected,
         label: badge > 0 ? '$label, $badge unread' : label,
         child: InkWell(
-          borderRadius: BorderRadius.circular(18),
           onTap: onTap,
           child: ExcludeSemantics(
             child: Column(
@@ -116,101 +113,57 @@ class _NavItem extends StatelessWidget {
                 Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 180),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 14,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: selected
-                            ? AbgColors.platinumBright
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Icon(
-                        selected ? active : icon,
-                        color: selected ? AbgColors.navy : AbgColors.inkSubtle,
-                        size: 23,
-                      ),
-                    ),
+                    Icon(selected ? active : icon, color: color, size: 26),
                     if (badge > 0)
                       Positioned(
-                        right: 6,
-                        top: -2,
+                        right: -12,
+                        top: -7,
                         child: Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 5,
                             vertical: 1,
                           ),
-                          constraints: const BoxConstraints(minWidth: 18),
+                          constraints: const BoxConstraints(minWidth: 20),
                           decoration: BoxDecoration(
                             color: AbgColors.danger,
-                            borderRadius: BorderRadius.circular(9),
-                            border: Border.all(color: Colors.white, width: 1.5),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.white, width: 2),
                           ),
                           child: Text(
                             badge > 99 ? '99+' : '$badge',
                             textAlign: TextAlign.center,
                             style: AbgText.caption.copyWith(
                               color: Colors.white,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w700,
+                              fontSize: 10.5,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
                         ),
                       ),
                   ],
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 5),
                 Text(
                   label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: AbgText.caption.copyWith(
-                    fontSize: 11,
-                    color: selected ? AbgColors.navy : AbgColors.inkSubtle,
+                    fontSize: 12,
+                    color: color,
                     fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
                   ),
                 ),
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 180),
+                  margin: const EdgeInsets.only(top: 4),
+                  width: selected ? 18 : 0,
+                  height: 3,
+                  decoration: BoxDecoration(
+                    color: AbgColors.navy,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
               ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ScanButton extends StatelessWidget {
-  const _ScanButton({required this.label, required this.onTap});
-
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: label,
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          width: 60,
-          height: 60,
-          padding: const EdgeInsets.all(3),
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: AbgGradients.platinum,
-            boxShadow: AbgShadows.raised,
-          ),
-          child: Container(
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: AbgGradients.hero,
-            ),
-            child: const Icon(
-              Icons.qr_code_scanner_rounded,
-              color: AbgColors.platinumBright,
-              size: 27,
             ),
           ),
         ),

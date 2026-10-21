@@ -438,5 +438,97 @@
   "incEvPhoto": "Photo added",
   "incEvDetails": "Details updated",
   "incWaitingForAdmin": "Waiting for the admin team to pick it up.",
-  "incOfflineNotice": "You're offline. Reports with photos need a connection — try again when you're back online."
+  "incOfflineNotice": "You're offline. Reports with photos need a connection — try again when you're back online.",
+  "apprTitle": "Approvals",
+  "apprEmpty": "Nothing is waiting for you",
+  "apprEmptyHint": "Tour and pool car requests that need your approval appear here.",
+  "apprAll": "All",
+  "apprTours": "Official tours",
+  "apprPoolCar": "Pool car",
+  "apprApprove": "Approve",
+  "apprReject": "Reject",
+  "apprRejectTitle": "Reject this request?",
+  "apprRejectReason": "Reason (shown to the requester)",
+  "apprApproveTitle": "Approve this request?",
+  "apprNote": "Note (optional)",
+  "apprApproved": "Approved — the requester has been told.",
+  "apprRejected": "Rejected — the requester has been told.",
+  "apprAwaitingHOD": "Your approval as head of department",
+  "apprAwaitingVETTING": "HR & Finance vetting",
+  "apprAwaitingSANCTION": "MD / Chairman sanction",
+  "apprForeign": "Foreign",
+  "apprLocal": "Local",
+  "apprUrgent": "Urgent",
+  "apprPassengers": "{count, plural, =1{1 passenger} other{{count} passengers}}",
+  "@apprPassengers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "apprBudget": "Budget ৳{amount}",
+  "@apprBudget": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "apprRequestedBy": "Requested by {name}",
+  "@apprRequestedBy": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "apprDetails": "Details",
+  "navMyAbg": "My ABG",
+  "navQrScan": "QR Scan",
+  "navInbox": "Inbox",
+  "homeSeeMore": "See more",
+  "homeSeeLess": "See less",
+  "homeSearchTooltip": "Search services",
+  "homeSearchHint": "Search services, e.g. pool car",
+  "homeSearchEmpty": "No service matches “{query}”",
+  "@homeSearchEmpty": {
+    "placeholders": {
+      "query": {}
+    }
+  },
+  "homeSearchParcels": "Search parcels by tracking ID",
+  "homeMenuTooltip": "My ABG",
+  "homeGlance": "At a glance",
+  "homeParcelsSection": "Parcels",
+  "svcSendParcel": "Send parcel",
+  "svcMyParcels": "My parcels",
+  "svcPoolCar": "Pool car",
+  "svcReportIssue": "Report issue",
+  "svcVisitors": "Visitors",
+  "svcTours": "Tour request",
+  "svcNotices": "Notice board",
+  "svcApprovals": "Approvals",
+  "svcScan": "Scan & receive",
+  "svcMyReports": "My reports",
+  "svcLicences": "Licences",
+  "svcMyTrips": "My trips",
+  "svcGateDesk": "Gate desk",
+  "glanceWaiting": "Parcels waiting",
+  "glanceInTransit": "In transit",
+  "glanceApprovals": "To approve",
+  "glanceReports": "Open reports",
+  "glanceNotices": "Unread notices",
+  "bannerRead": "Read",
+  "bannerUrgent": "Urgent",
+  "bannerPinned": "Pinned",
+  "bannerStart": "Start",
+  "homeChannelCHAIRMAN": "Chairman",
+  "homeChannelMANAGING_DIRECTOR": "Managing Director",
+  "homeChannelHR": "Human Resources",
+  "homeChannelADMINISTRATION": "Administration",
+  "homeChannelCOMPLIANCE": "Compliance",
+  "homeChannelIT": "IT",
+  "promoCarTitle": "Need a car for official work?",
+  "promoCarBody": "Request a pool car — your head of department approves in one tap.",
+  "promoIssueTitle": "See something unsafe or broken?",
+  "promoIssueBody": "Snap a photo and report it. The admin team is told at once.",
+  "promoVisitorTitle": "Expecting a guest?",
+  "promoVisitorBody": "Send them a gate pass before they arrive — no waiting at the gate."
 }

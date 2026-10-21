@@ -1059,4 +1059,232 @@ class LEn extends L {
   @override
   String get incOfflineNotice =>
       'You\'re offline. Reports with photos need a connection — try again when you\'re back online.';
+
+  @override
+  String get apprTitle => 'Approvals';
+
+  @override
+  String get apprEmpty => 'Nothing is waiting for you';
+
+  @override
+  String get apprEmptyHint =>
+      'Tour and pool car requests that need your approval appear here.';
+
+  @override
+  String get apprAll => 'All';
+
+  @override
+  String get apprTours => 'Official tours';
+
+  @override
+  String get apprPoolCar => 'Pool car';
+
+  @override
+  String get apprApprove => 'Approve';
+
+  @override
+  String get apprReject => 'Reject';
+
+  @override
+  String get apprRejectTitle => 'Reject this request?';
+
+  @override
+  String get apprRejectReason => 'Reason (shown to the requester)';
+
+  @override
+  String get apprApproveTitle => 'Approve this request?';
+
+  @override
+  String get apprNote => 'Note (optional)';
+
+  @override
+  String get apprApproved => 'Approved — the requester has been told.';
+
+  @override
+  String get apprRejected => 'Rejected — the requester has been told.';
+
+  @override
+  String get apprAwaitingHOD => 'Your approval as head of department';
+
+  @override
+  String get apprAwaitingVETTING => 'HR & Finance vetting';
+
+  @override
+  String get apprAwaitingSANCTION => 'MD / Chairman sanction';
+
+  @override
+  String get apprForeign => 'Foreign';
+
+  @override
+  String get apprLocal => 'Local';
+
+  @override
+  String get apprUrgent => 'Urgent';
+
+  @override
+  String apprPassengers(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count passengers',
+      one: '1 passenger',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String apprBudget(Object amount) {
+    return 'Budget ৳$amount';
+  }
+
+  @override
+  String apprRequestedBy(Object name) {
+    return 'Requested by $name';
+  }
+
+  @override
+  String get apprDetails => 'Details';
+
+  @override
+  String get navMyAbg => 'My ABG';
+
+  @override
+  String get navQrScan => 'QR Scan';
+
+  @override
+  String get navInbox => 'Inbox';
+
+  @override
+  String get homeSeeMore => 'See more';
+
+  @override
+  String get homeSeeLess => 'See less';
+
+  @override
+  String get homeSearchTooltip => 'Search services';
+
+  @override
+  String get homeSearchHint => 'Search services, e.g. pool car';
+
+  @override
+  String homeSearchEmpty(Object query) {
+    return 'No service matches “$query”';
+  }
+
+  @override
+  String get homeSearchParcels => 'Search parcels by tracking ID';
+
+  @override
+  String get homeMenuTooltip => 'My ABG';
+
+  @override
+  String get homeGlance => 'At a glance';
+
+  @override
+  String get homeParcelsSection => 'Parcels';
+
+  @override
+  String get svcSendParcel => 'Send parcel';
+
+  @override
+  String get svcMyParcels => 'My parcels';
+
+  @override
+  String get svcPoolCar => 'Pool car';
+
+  @override
+  String get svcReportIssue => 'Report issue';
+
+  @override
+  String get svcVisitors => 'Visitors';
+
+  @override
+  String get svcTours => 'Tour request';
+
+  @override
+  String get svcNotices => 'Notice board';
+
+  @override
+  String get svcApprovals => 'Approvals';
+
+  @override
+  String get svcScan => 'Scan & receive';
+
+  @override
+  String get svcMyReports => 'My reports';
+
+  @override
+  String get svcLicences => 'Licences';
+
+  @override
+  String get svcMyTrips => 'My trips';
+
+  @override
+  String get svcGateDesk => 'Gate desk';
+
+  @override
+  String get glanceWaiting => 'Parcels waiting';
+
+  @override
+  String get glanceInTransit => 'In transit';
+
+  @override
+  String get glanceApprovals => 'To approve';
+
+  @override
+  String get glanceReports => 'Open reports';
+
+  @override
+  String get glanceNotices => 'Unread notices';
+
+  @override
+  String get bannerRead => 'Read';
+
+  @override
+  String get bannerUrgent => 'Urgent';
+
+  @override
+  String get bannerPinned => 'Pinned';
+
+  @override
+  String get bannerStart => 'Start';
+
+  @override
+  String get homeChannelCHAIRMAN => 'Chairman';
+
+  @override
+  String get homeChannelMANAGING_DIRECTOR => 'Managing Director';
+
+  @override
+  String get homeChannelHR => 'Human Resources';
+
+  @override
+  String get homeChannelADMINISTRATION => 'Administration';
+
+  @override
+  String get homeChannelCOMPLIANCE => 'Compliance';
+
+  @override
+  String get homeChannelIT => 'IT';
+
+  @override
+  String get promoCarTitle => 'Need a car for official work?';
+
+  @override
+  String get promoCarBody =>
+      'Request a pool car — your head of department approves in one tap.';
+
+  @override
+  String get promoIssueTitle => 'See something unsafe or broken?';
+
+  @override
+  String get promoIssueBody =>
+      'Snap a photo and report it. The admin team is told at once.';
+
+  @override
+  String get promoVisitorTitle => 'Expecting a guest?';
+
+  @override
+  String get promoVisitorBody =>
+      'Send them a gate pass before they arrive — no waiting at the gate.';
 }
