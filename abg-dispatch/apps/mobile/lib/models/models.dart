@@ -73,6 +73,7 @@ class Profile {
     this.employee,
     this.defaultLocation,
     this.mfaEnabled = false,
+    this.manager,
   });
 
   final String id;
@@ -84,6 +85,9 @@ class Profile {
   final Person? employee;
   final String? defaultLocation;
   final bool mfaEnabled;
+
+  /// Head of department / line manager: the default approver for tours and pool cars.
+  final ManagerRef? manager;
 
   bool get isCourier =>
       roles.contains('COURIER_RUNNER') || roles.contains('DISPATCH_OFFICER');
@@ -109,6 +113,35 @@ class Profile {
       employee: Person.fromJson(e),
       defaultLocation: _str(_map(_map(e)['defaultLocation'])['path']),
       mfaEnabled: j['mfaEnabled'] == true,
+      manager: ManagerRef.fromJson(_map(e)['manager']),
+    );
+  }
+}
+
+class ManagerRef {
+  const ManagerRef({
+    required this.employeeId,
+    required this.fullName,
+    this.designation,
+    this.hasAccount = false,
+  });
+
+  final String employeeId;
+  final String fullName;
+  final String? designation;
+
+  /// Only someone who can sign in can approve.
+  final bool hasAccount;
+
+  static ManagerRef? fromJson(Object? raw) {
+    final j = _map(raw);
+    final id = _str(j['employeeId']);
+    if (id == null) return null;
+    return ManagerRef(
+      employeeId: id,
+      fullName: _str(j['fullName']) ?? '',
+      designation: _str(j['designation']),
+      hasAccount: _str(j['userId']) != null,
     );
   }
 }

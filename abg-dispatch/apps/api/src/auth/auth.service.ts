@@ -151,11 +151,19 @@ export class AuthService {
     const user = await this.prisma.user.findUniqueOrThrow({
       where: { id: actor.userId },
       include: {
-        employee: { include: { department: true, branch: true, defaultLocation: true } },
+        employee: {
+          include: {
+            department: true,
+            branch: true,
+            defaultLocation: true,
+            manager: { select: { id: true, fullName: true, designation: true, employeeCode: true, user: { select: { id: true, active: true } } } },
+          },
+        },
         roles: { include: { branch: { select: { id: true, name: true, code: true } } } },
       },
     });
     const e = user.employee;
+    const m = e?.manager;
     return {
       id: user.id,
       displayName: user.displayName,
@@ -179,6 +187,10 @@ export class AuthService {
             department: e.department ? { id: e.department.id, name: e.department.name } : null,
             branch: { id: e.branch.id, name: e.branch.name, code: e.branch.code },
             defaultLocation: e.defaultLocation ? { id: e.defaultLocation.id, name: e.defaultLocation.name, path: e.defaultLocation.path } : null,
+            // Head of department / line manager: the default approver for tours and pool cars.
+            manager: m
+              ? { employeeId: m.id, userId: m.user?.active ? m.user.id : null, fullName: m.fullName, designation: m.designation, employeeCode: m.employeeCode }
+              : null,
           }
         : null,
     };

@@ -47,7 +47,12 @@ export class DirectoryController {
             }
           : {}),
       },
-      include: { department: { select: { id: true, name: true } }, branch: { select: { id: true, name: true, code: true } }, defaultLocation: { select: { id: true, name: true, path: true } } },
+      include: {
+        department: { select: { id: true, name: true } },
+        branch: { select: { id: true, name: true, code: true } },
+        defaultLocation: { select: { id: true, name: true, path: true } },
+        user: { select: { active: true } },
+      },
       orderBy: { fullName: "asc" },
       take: 25,
     });
@@ -62,6 +67,8 @@ export class DirectoryController {
       branch: e.branch,
       defaultLocation: e.defaultLocation,
       isMe: e.id === me.employeeId,
+      /** Can sign in, so can approve requests and receive notifications. */
+      hasAccount: !!e.user?.active,
     }));
   }
 
