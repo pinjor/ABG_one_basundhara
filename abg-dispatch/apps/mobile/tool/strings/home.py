@@ -45,3 +45,8 @@ s("promoIssueTitle", "See something unsafe or broken?", "অনিরাপদ �
 s("promoIssueBody", "Snap a photo and report it. The admin team is told at once.", "ছবি তুলে জানিয়ে দিন। অ্যাডমিন দল সঙ্গে সঙ্গে জানবে।")
 s("promoVisitorTitle", "Expecting a guest?", "অতিথি আসছেন?")
 s("promoVisitorBody", "Send them a gate pass before they arrive — no waiting at the gate.", "আসার আগেই গেট পাস পাঠান — গেটে অপেক্ষা নয়।")
+s("myRequests", "My requests", "আমার অনুরোধ")
+s("myTours", "My tour requests", "আমার ট্যুর আবেদন")
+s("myCars", "My pool car requests", "আমার পুল কার অনুরোধ")
+s("myVisitors", "My visitors", "আমার ভিজিটর")
+s("myApprovals", "Waiting for my approval", "আমার অনুমোদনের অপেক্ষায়")

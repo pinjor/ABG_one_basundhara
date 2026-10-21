@@ -1287,4 +1287,19 @@ class LBn extends L {
 
   @override
   String get promoVisitorBody => 'আসার আগেই গেট পাস পাঠান — গেটে অপেক্ষা নয়।';
+
+  @override
+  String get myRequests => 'আমার অনুরোধ';
+
+  @override
+  String get myTours => 'আমার ট্যুর আবেদন';
+
+  @override
+  String get myCars => 'আমার পুল কার অনুরোধ';
+
+  @override
+  String get myVisitors => 'আমার ভিজিটর';
+
+  @override
+  String get myApprovals => 'আমার অনুমোদনের অপেক্ষায়';
 }

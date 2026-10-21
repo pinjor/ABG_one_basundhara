@@ -27,6 +27,12 @@ const _roleLabels = {
   'HEAD_OFFICE_ADMIN': 'Head Office Admin',
   'AUDITOR': 'Auditor',
   'SUPER_ADMIN': 'Super Admin',
+  'FLEET_MANAGER': 'Fleet Manager',
+  'DRIVER': 'Driver',
+  'SECURITY_GUARD': 'Security',
+  'HR_FINANCE': 'HR & Finance',
+  'EXECUTIVE': 'MD / Chairman',
+  'COMPLIANCE_OFFICER': 'Compliance Officer',
 };
 
 class ProfileScreen extends StatefulWidget {
@@ -207,6 +213,59 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
+                SectionTitle(l.myRequests),
+                SectionCard(
+                  padding: const EdgeInsets.symmetric(vertical: 6),
+                  child: Column(
+                    children: [
+                      for (final (cap, icon, label, route) in [
+                        (
+                          'tour.request',
+                          Icons.flight_takeoff_rounded,
+                          l.myTours,
+                          '/tours',
+                        ),
+                        (
+                          'fleet.request',
+                          Icons.directions_car_filled_outlined,
+                          l.myCars,
+                          '/pool-car',
+                        ),
+                        (
+                          'visitor.invite',
+                          Icons.badge_outlined,
+                          l.myVisitors,
+                          '/visitors',
+                        ),
+                        (
+                          'incident.report',
+                          Icons.campaign_outlined,
+                          l.incMyReports,
+                          '/incidents',
+                        ),
+                        (
+                          null,
+                          Icons.fact_check_outlined,
+                          l.myApprovals,
+                          '/approvals',
+                        ),
+                      ])
+                        if (cap == null || (p?.can(cap) ?? false))
+                          ListTile(
+                            leading: Icon(icon, color: AbgColors.navy500),
+                            title: Text(
+                              label,
+                              style: AbgText.bodyStrong.copyWith(
+                                fontSize: 14.5,
+                              ),
+                            ),
+                            trailing: const Icon(Icons.chevron_right_rounded),
+                            onTap: () => context.push(route),
+                          ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
                 SectionTitle(l.settings),
                 SectionCard(
                   padding: const EdgeInsets.symmetric(vertical: 6),
@@ -325,19 +384,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 6),
                   child: Column(
                     children: [
-                      if (p?.can('incident.report') ?? false)
-                        ListTile(
-                          leading: const Icon(
-                            Icons.campaign_outlined,
-                            color: AbgColors.navy500,
-                          ),
-                          title: Text(
-                            l.incMyReports,
-                            style: AbgText.bodyStrong.copyWith(fontSize: 14.5),
-                          ),
-                          trailing: const Icon(Icons.chevron_right_rounded),
-                          onTap: () => context.push('/incidents'),
-                        ),
                       ListTile(
                         leading: const Icon(
                           Icons.support_agent_rounded,

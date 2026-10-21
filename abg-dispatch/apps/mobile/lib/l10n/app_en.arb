@@ -530,5 +530,10 @@
   "promoIssueTitle": "See something unsafe or broken?",
   "promoIssueBody": "Snap a photo and report it. The admin team is told at once.",
   "promoVisitorTitle": "Expecting a guest?",
-  "promoVisitorBody": "Send them a gate pass before they arrive — no waiting at the gate."
+  "promoVisitorBody": "Send them a gate pass before they arrive — no waiting at the gate.",
+  "myRequests": "My requests",
+  "myTours": "My tour requests",
+  "myCars": "My pool car requests",
+  "myVisitors": "My visitors",
+  "myApprovals": "Waiting for my approval"
 }

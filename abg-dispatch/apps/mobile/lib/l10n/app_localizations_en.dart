@@ -1287,4 +1287,19 @@ class LEn extends L {
   @override
   String get promoVisitorBody =>
       'Send them a gate pass before they arrive — no waiting at the gate.';
+
+  @override
+  String get myRequests => 'My requests';
+
+  @override
+  String get myTours => 'My tour requests';
+
+  @override
+  String get myCars => 'My pool car requests';
+
+  @override
+  String get myVisitors => 'My visitors';
+
+  @override
+  String get myApprovals => 'Waiting for my approval';
 }

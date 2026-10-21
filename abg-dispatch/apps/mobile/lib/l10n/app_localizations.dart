@@ -2466,6 +2466,36 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Send them a gate pass before they arrive — no waiting at the gate.'**
   String get promoVisitorBody;
+
+  /// No description provided for @myRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'My requests'**
+  String get myRequests;
+
+  /// No description provided for @myTours.
+  ///
+  /// In en, this message translates to:
+  /// **'My tour requests'**
+  String get myTours;
+
+  /// No description provided for @myCars.
+  ///
+  /// In en, this message translates to:
+  /// **'My pool car requests'**
+  String get myCars;
+
+  /// No description provided for @myVisitors.
+  ///
+  /// In en, this message translates to:
+  /// **'My visitors'**
+  String get myVisitors;
+
+  /// No description provided for @myApprovals.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for my approval'**
+  String get myApprovals;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {
