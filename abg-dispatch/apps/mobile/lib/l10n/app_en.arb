@@ -1006,5 +1006,318 @@
     "placeholders": {
       "amount": {}
     }
-  }
+  },
+  "visTitle": "Visitors",
+  "visMyVisitors": "My visitors",
+  "visGate": "Gate",
+  "visInvite": "Invite a visitor",
+  "visUpcoming": "Upcoming",
+  "visPast": "Past",
+  "visNoUpcoming": "No visitors coming",
+  "visNoUpcomingHint": "Invite a visitor and they get a gate pass number by SMS. You are told when they arrive and leave.",
+  "visNoPast": "No past visitors yet",
+  "visStatusEXPECTED": "Expected",
+  "visStatusCHECKED_IN": "On site",
+  "visStatusCHECKED_OUT": "Checked out",
+  "visStatusCANCELLED": "Cancelled",
+  "visStatusEXPIRED": "Did not arrive",
+  "visStatusSemantics": "Status: {status}",
+  "@visStatusSemantics": {
+    "placeholders": {
+      "status": {}
+    }
+  },
+  "visPurposeMEETING": "Meeting",
+  "visPurposeINTERVIEW": "Interview",
+  "visPurposeVENDOR_SUPPLIER": "Vendor / supplier",
+  "visPurposeCONTRACTOR": "Contractor work",
+  "visPurposeAUDIT_INSPECTION": "Audit / inspection",
+  "visPurposeGOVERNMENT_OFFICIAL": "Government official",
+  "visPurposeDELIVERY": "Delivery",
+  "visPurposePERSONAL": "Personal",
+  "visPurposeOTHER": "Other",
+  "visWalkIn": "Walk-in",
+  "visOverstay": "Past expected time",
+  "visInSince": "In since {time}",
+  "@visInSince": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "visLeftAt": "Left at {time}",
+  "@visLeftAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "visExpectedAt": "Expected {time}",
+  "@visExpectedAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "visHostIs": "Host: {name}",
+  "@visHostIs": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "visCheckIn": "Check in",
+  "visCheckOut": "Check out",
+  "visCheckedIn": "{name} checked in — the host has been told.",
+  "@visCheckedIn": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "visCheckedOut": "{name} checked out.",
+  "@visCheckedOut": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "visPassTitle": "Visitor gate pass",
+  "visQrSemantics": "QR code for gate pass {number}",
+  "@visQrSemantics": {
+    "placeholders": {
+      "number": {}
+    }
+  },
+  "visCopyPassNumber": "Copy pass number",
+  "visPassNumberCopied": "Pass number copied",
+  "visValidToday": "Valid today only · show it at the gate in and out",
+  "visValidOn": "Valid on {date} only · show it at the gate in and out",
+  "@visValidOn": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "visHost": "Host",
+  "visPurpose": "Purpose",
+  "visArea": "Area",
+  "visTime": "Time",
+  "visParty": "Party",
+  "visPartyCount": "{count, plural, =1{1 person} other{{count} people}}",
+  "@visPartyCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "visVehicle": "Vehicle number",
+  "visNone": "None",
+  "visCarrying": "Carrying",
+  "visPassFooter": "Wear the visitor badge on site and return it at the gate. Issued by ABG ONE.",
+  "visLiveOnSite": "Live · on site now",
+  "visOnSiteSemantics": "{count, plural, =0{Nobody on site now} =1{1 visitor on site now} other{{count} visitors on site now}}",
+  "@visOnSiteSemantics": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "visCounting": "Counting…",
+  "visPeopleOnSite": "{count, plural, =1{1 person on site} other{{count} people on site}}",
+  "@visPeopleOnSite": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "visStillExpected": "{count} still expected today",
+  "@visStillExpected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "visOverstaying": "{count, plural, =1{1 visitor past their expected time} other{{count} visitors past their expected time}}",
+  "@visOverstaying": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "visLongest": "Longest on site: {name} · {time}",
+  "@visLongest": {
+    "placeholders": {
+      "name": {},
+      "time": {}
+    }
+  },
+  "visScanPass": "Scan pass",
+  "visWalkInAction": "Walk-in",
+  "visStatCheckedOut": "Checked out today",
+  "visStatWalkIns": "Walk-ins today",
+  "visStatVisits": "Visits today",
+  "visPassNumberHint": "Type a pass number, e.g. VP-261021-FCA-012",
+  "visVerify": "Verify pass",
+  "visOnSiteNow": "On site now",
+  "visExpectedToday": "Expected today",
+  "visNobodyOnSite": "Nobody is on site right now.",
+  "visNobodyExpected": "Nobody else is expected today.",
+  "visWalkInTitle": "Register a walk-in",
+  "visInviteHint": "You are the host. Your visitor gets the gate pass number by SMS, and you are told when they arrive and leave.",
+  "visWalkInHint": "For someone who arrived without a pass. They are checked in now and their host is told they are at the gate.",
+  "visVisitorSection": "Visitor",
+  "visVisitor": "Visitor",
+  "visNameLabel": "Visitor's name",
+  "visPhoneLabel": "Mobile number",
+  "visPhoneHelper": "The gate pass number is texted here.",
+  "visCompanyLabel": "Company or organisation",
+  "visCompanyHint": "e.g. Akij Packaging Ltd, DIFE Narayanganj",
+  "visPurposeTitle": "Purpose of the visit",
+  "visDetailLabel": "What for (optional)",
+  "visDetailHint": "e.g. Carton sample approval",
+  "visHereToSee": "Here to see",
+  "visSearchDirectory": "Search directory",
+  "visNotListed": "Not listed?",
+  "visHostNameLabel": "Name of the person or team being visited",
+  "visChooseHost": "Choose the employee being visited",
+  "visHostNoAccount": "Not on ABG ONE — tell them in person",
+  "visHostSearchHint": "Name, employee ID or department",
+  "visWhenWhere": "When and where",
+  "visDate": "Date",
+  "visFrom": "From",
+  "visUntil": "Until",
+  "visLeaveBy": "Expected to leave by",
+  "visOptional": "Optional",
+  "visClear": "Clear",
+  "visOffice": "Office",
+  "visAreaAny": "Anywhere in the office",
+  "visPartyLabel": "People on this pass",
+  "visPartyFewer": "One fewer person",
+  "visPartyMore": "One more person",
+  "visAtTheGate": "For the gate",
+  "visBadgeLabel": "Badge number (optional)",
+  "visCarryingHint": "e.g. Laptop, tools, samples",
+  "visIdLast4Label": "ID card — last 4 only",
+  "visIdLast4Helper": "Never type the full NID number.",
+  "visNotesLabel": "Note for the gate",
+  "visSubmitInvite": "Create gate pass",
+  "visSubmitWalkIn": "Register and check in",
+  "visNameRequired": "Enter the visitor's name.",
+  "visPhoneInvalid": "Enter a Bangladeshi mobile number, e.g. 01711 223344.",
+  "visPurposeRequired": "Choose the purpose of the visit.",
+  "visIdLast4Invalid": "ID: only the last 4 digits or letters.",
+  "visHostRequired": "Say who the visitor has come to see.",
+  "visUntilPassed": "That leaving time has already passed.",
+  "visTimePast": "That time has already passed. Choose a time from now on.",
+  "visUntilBeforeStart": "The visit must end after it starts.",
+  "visPassCreated": "Gate pass {pass} created — the visitor has been sent the number by SMS.",
+  "@visPassCreated": {
+    "placeholders": {
+      "pass": {}
+    }
+  },
+  "visWalkInDone": "{name} is checked in with pass {pass}.",
+  "@visWalkInDone": {
+    "placeholders": {
+      "name": {},
+      "pass": {}
+    }
+  },
+  "visCopy": "Copy number",
+  "visSendSms": "Send by SMS",
+  "visDetailsCopied": "Pass details copied",
+  "visSmsText": "ABG gate pass {pass} · {office} · {time} · Host: {host}. Please show this at the gate.",
+  "@visSmsText": {
+    "placeholders": {
+      "office": {},
+      "time": {},
+      "host": {},
+      "pass": {}
+    }
+  },
+  "visPassHidden": "Only the host and this office's gate staff can see the QR gate pass.",
+  "visProgress": "Where the visit stands",
+  "visDetails": "Details",
+  "visStepExpected": "Expected",
+  "visStepWalkIn": "Walk-in registered",
+  "visStepOnSite": "Checked in",
+  "visStepOut": "Checked out",
+  "visStepCancelled": "Cancelled",
+  "visStepExpired": "Did not arrive",
+  "visStepExpiredHint": "The pass lapsed at the end of its day.",
+  "visBy": "by {name}",
+  "@visBy": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "visOnSiteFor": "{time} on site",
+  "@visOnSiteFor": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "visCheckInTitle": "Check in {name}?",
+  "@visCheckInTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "visCheckInBody": "Check their ID card and hand over a visitor badge. The host is told at once.",
+  "visCheckInBodyId": "Compare the ID card (last 4: {last4}) and hand over a visitor badge. The host is told at once.",
+  "@visCheckInBodyId": {
+    "placeholders": {
+      "last4": {}
+    }
+  },
+  "visCheckOutTitle": "Check out {name}?",
+  "@visCheckOutTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "visCheckOutBody": "The pass cannot be used again after check-out.",
+  "visCheckOutBodyBadge": "Collect badge {badge}. The pass cannot be used again after check-out.",
+  "@visCheckOutBodyBadge": {
+    "placeholders": {
+      "badge": {}
+    }
+  },
+  "visCancelPass": "Cancel pass",
+  "visCancelTitle": "Cancel this gate pass?",
+  "visCancelBody": "{name} is sent an SMS that the visit is cancelled, and the pass stops working at the gate.",
+  "@visCancelBody": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "visCancelReason": "Reason (optional)",
+  "visCancelled": "Gate pass cancelled — the visitor has been told by SMS.",
+  "visPassNotFound": "Pass not recognised",
+  "visPassNotFoundHint": "Do not admit the visitor on it — call the host or register them as a walk-in.",
+  "visScanAnother": "Scan another pass",
+  "visBlockWrongOffice": "Wrong office",
+  "visBlockWrongDay": "Not valid today",
+  "visBlockCancelled": "Pass cancelled",
+  "visBlockExpired": "Pass expired",
+  "visBlockAlreadyOut": "Pass already used",
+  "visBlockGeneric": "Not valid",
+  "visVerdictValid": "Valid pass",
+  "visVerdictValidBody": "Expected {time} to see {host}. Check the ID, then check the visitor in.",
+  "@visVerdictValidBody": {
+    "placeholders": {
+      "time": {},
+      "host": {}
+    }
+  },
+  "visVerdictOnSite": "On site",
+  "visVerdictOnSiteBody": "Checked in at {time}. Check them out as they leave.",
+  "@visVerdictOnSiteBody": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "visVerdictGenuine": "Genuine pass",
+  "visVerdictGenuineBody": "Your role can verify passes but not check visitors in or out. Ask security or the front desk.",
+  "visIdCompare": "Compare with the ID card — last 4",
+  "visOpenVisit": "Open the visit"
 }

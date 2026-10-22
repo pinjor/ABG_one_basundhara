@@ -1109,18 +1109,30 @@ model Visit {
   badgeNumber    String?
   /// Opaque token behind the QR gate pass (/g/v/<token>).
   passToken      String    @unique
-  checkedInAt    DateTime?
-  checkedInById  String?
-  checkedOutAt   DateTime?
-  checkedOutById String?
-  cancelledAt    DateTime?
-  createdById    String
-  notes          String?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  checkedInAt      DateTime?
+  checkedInById    String?
+  /// Name snapshot of the guard or desk officer who checked the visitor in.
+  checkedInByName  String?
+  /// Where the visitor was checked in: "Factory A › Security Gate".
+  checkInPoint     String?
+  checkedOutAt     DateTime?
+  checkedOutById   String?
+  checkedOutByName String?
+  cancelledAt      DateTime?
+  cancelledById    String?
+  cancelledByName  String?
+  cancelReason     String?
+  /// When an unused pass lapsed at the end of its Dhaka day.
+  expiredAt        DateTime?
+  createdById      String
+  notes            String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
   @@index([branchId, status])
   @@index([branchId, expectedAt])
+  @@index([branchId, checkedInAt])
+  @@index([status, expectedAt])
   @@index([hostUserId, expectedAt])
   @@index([visitorPhone])
   @@map("visits")

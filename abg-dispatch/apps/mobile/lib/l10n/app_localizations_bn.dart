@@ -2341,4 +2341,581 @@ class LBn extends L {
   String tourEvBudget(Object amount) {
     return 'মঞ্জুরকৃত বাজেট $amount নির্ধারিত';
   }
+
+  @override
+  String get visTitle => 'ভিজিটর';
+
+  @override
+  String get visMyVisitors => 'আমার ভিজিটর';
+
+  @override
+  String get visGate => 'গেট';
+
+  @override
+  String get visInvite => 'ভিজিটর আমন্ত্রণ';
+
+  @override
+  String get visUpcoming => 'আসন্ন';
+
+  @override
+  String get visPast => 'আগের';
+
+  @override
+  String get visNoUpcoming => 'কোনো ভিজিটর আসছেন না';
+
+  @override
+  String get visNoUpcomingHint =>
+      'ভিজিটরকে আমন্ত্রণ জানালে তিনি এসএমএসে গেট পাস নম্বর পাবেন। তিনি এলে ও চলে গেলে আপনাকে জানানো হবে।';
+
+  @override
+  String get visNoPast => 'এখনও আগের কোনো ভিজিটর নেই';
+
+  @override
+  String get visStatusEXPECTED => 'প্রত্যাশিত';
+
+  @override
+  String get visStatusCHECKED_IN => 'সাইটে আছেন';
+
+  @override
+  String get visStatusCHECKED_OUT => 'চলে গেছেন';
+
+  @override
+  String get visStatusCANCELLED => 'বাতিল';
+
+  @override
+  String get visStatusEXPIRED => 'আসেননি';
+
+  @override
+  String visStatusSemantics(Object status) {
+    return 'অবস্থা: $status';
+  }
+
+  @override
+  String get visPurposeMEETING => 'মিটিং';
+
+  @override
+  String get visPurposeINTERVIEW => 'ইন্টারভিউ';
+
+  @override
+  String get visPurposeVENDOR_SUPPLIER => 'ভেন্ডর / সরবরাহকারী';
+
+  @override
+  String get visPurposeCONTRACTOR => 'ঠিকাদারি কাজ';
+
+  @override
+  String get visPurposeAUDIT_INSPECTION => 'অডিট / পরিদর্শন';
+
+  @override
+  String get visPurposeGOVERNMENT_OFFICIAL => 'সরকারি কর্মকর্তা';
+
+  @override
+  String get visPurposeDELIVERY => 'ডেলিভারি';
+
+  @override
+  String get visPurposePERSONAL => 'ব্যক্তিগত';
+
+  @override
+  String get visPurposeOTHER => 'অন্যান্য';
+
+  @override
+  String get visWalkIn => 'ওয়াক-ইন';
+
+  @override
+  String get visOverstay => 'নির্ধারিত সময় পেরিয়েছে';
+
+  @override
+  String visInSince(Object time) {
+    return '$time থেকে ভেতরে';
+  }
+
+  @override
+  String visLeftAt(Object time) {
+    return '$time-এ চলে গেছেন';
+  }
+
+  @override
+  String visExpectedAt(Object time) {
+    return 'প্রত্যাশিত $time';
+  }
+
+  @override
+  String visHostIs(Object name) {
+    return 'হোস্ট: $name';
+  }
+
+  @override
+  String get visCheckIn => 'চেক-ইন';
+
+  @override
+  String get visCheckOut => 'চেক-আউট';
+
+  @override
+  String visCheckedIn(Object name) {
+    return '$name চেক-ইন করেছেন — হোস্টকে জানানো হয়েছে।';
+  }
+
+  @override
+  String visCheckedOut(Object name) {
+    return '$name চেক-আউট করেছেন।';
+  }
+
+  @override
+  String get visPassTitle => 'ভিজিটর গেট পাস';
+
+  @override
+  String visQrSemantics(Object number) {
+    return 'গেট পাস $number-এর QR কোড';
+  }
+
+  @override
+  String get visCopyPassNumber => 'পাস নম্বর কপি করুন';
+
+  @override
+  String get visPassNumberCopied => 'পাস নম্বর কপি হয়েছে';
+
+  @override
+  String get visValidToday =>
+      'শুধু আজকের জন্য বৈধ · ঢোকা ও বের হওয়ার সময় গেটে দেখান';
+
+  @override
+  String visValidOn(Object date) {
+    return 'শুধু $date তারিখে বৈধ · ঢোকা ও বের হওয়ার সময় গেটে দেখান';
+  }
+
+  @override
+  String get visHost => 'হোস্ট';
+
+  @override
+  String get visPurpose => 'উদ্দেশ্য';
+
+  @override
+  String get visArea => 'এলাকা';
+
+  @override
+  String get visTime => 'সময়';
+
+  @override
+  String get visParty => 'দল';
+
+  @override
+  String visPartyCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count জন',
+      one: '১ জন',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get visVehicle => 'গাড়ির নম্বর';
+
+  @override
+  String get visNone => 'নেই';
+
+  @override
+  String get visCarrying => 'সাথে আছে';
+
+  @override
+  String get visPassFooter =>
+      'সাইটে ভিজিটর ব্যাজ পরে থাকুন এবং গেটে ফেরত দিন। ABG ONE থেকে ইস্যু করা।';
+
+  @override
+  String get visLiveOnSite => 'লাইভ · এখন সাইটে';
+
+  @override
+  String visOnSiteSemantics(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'এখন সাইটে $count জন ভিজিটর',
+      one: 'এখন সাইটে ১ জন ভিজিটর',
+      zero: 'এখন সাইটে কেউ নেই',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get visCounting => 'গণনা হচ্ছে…';
+
+  @override
+  String visPeopleOnSite(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'সাইটে $count জন',
+      one: 'সাইটে ১ জন',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String visStillExpected(int count) {
+    return 'আজ আরও $count জন আসার কথা';
+  }
+
+  @override
+  String visOverstaying(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count জন ভিজিটরের নির্ধারিত সময় পেরিয়েছে',
+      one: '১ জন ভিজিটরের নির্ধারিত সময় পেরিয়েছে',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String visLongest(Object name, Object time) {
+    return 'সবচেয়ে বেশি সময় ধরে: $name · $time';
+  }
+
+  @override
+  String get visScanPass => 'পাস স্ক্যান';
+
+  @override
+  String get visWalkInAction => 'ওয়াক-ইন';
+
+  @override
+  String get visStatCheckedOut => 'আজ চলে গেছেন';
+
+  @override
+  String get visStatWalkIns => 'আজকের ওয়াক-ইন';
+
+  @override
+  String get visStatVisits => 'আজকের ভিজিট';
+
+  @override
+  String get visPassNumberHint => 'পাস নম্বর লিখুন, যেমন VP-261021-FCA-012';
+
+  @override
+  String get visVerify => 'পাস যাচাই';
+
+  @override
+  String get visOnSiteNow => 'এখন সাইটে';
+
+  @override
+  String get visExpectedToday => 'আজ যাদের আসার কথা';
+
+  @override
+  String get visNobodyOnSite => 'এই মুহূর্তে সাইটে কেউ নেই।';
+
+  @override
+  String get visNobodyExpected => 'আজ আর কারও আসার কথা নেই।';
+
+  @override
+  String get visWalkInTitle => 'ওয়াক-ইন নিবন্ধন';
+
+  @override
+  String get visInviteHint =>
+      'আপনি হোস্ট। আপনার ভিজিটর এসএমএসে গেট পাস নম্বর পাবেন, আর তিনি এলে ও চলে গেলে আপনাকে জানানো হবে।';
+
+  @override
+  String get visWalkInHint =>
+      'যিনি পাস ছাড়া এসেছেন তার জন্য। এখনই চেক-ইন হবে এবং হোস্টকে জানানো হবে যে তিনি গেটে আছেন।';
+
+  @override
+  String get visVisitorSection => 'ভিজিটর';
+
+  @override
+  String get visVisitor => 'ভিজিটর';
+
+  @override
+  String get visNameLabel => 'ভিজিটরের নাম';
+
+  @override
+  String get visPhoneLabel => 'মোবাইল নম্বর';
+
+  @override
+  String get visPhoneHelper => 'গেট পাস নম্বর এই নম্বরে এসএমএস করা হবে।';
+
+  @override
+  String get visCompanyLabel => 'প্রতিষ্ঠান';
+
+  @override
+  String get visCompanyHint => 'যেমন: আকিজ প্যাকেজিং লিমিটেড, ডাইফ নারায়ণগঞ্জ';
+
+  @override
+  String get visPurposeTitle => 'ভিজিটের উদ্দেশ্য';
+
+  @override
+  String get visDetailLabel => 'কী কাজে (ঐচ্ছিক)';
+
+  @override
+  String get visDetailHint => 'যেমন: কার্টন নমুনা অনুমোদন';
+
+  @override
+  String get visHereToSee => 'যার কাছে এসেছেন';
+
+  @override
+  String get visSearchDirectory => 'ডিরেক্টরিতে খুঁজুন';
+
+  @override
+  String get visNotListed => 'তালিকায় নেই?';
+
+  @override
+  String get visHostNameLabel => 'যার বা যে দলের কাছে এসেছেন তাদের নাম';
+
+  @override
+  String get visChooseHost => 'যে কর্মীর কাছে এসেছেন তাকে বাছুন';
+
+  @override
+  String get visHostNoAccount => 'ABG ONE-এ নেই — সরাসরি জানান';
+
+  @override
+  String get visHostSearchHint => 'নাম, কর্মী আইডি বা বিভাগ';
+
+  @override
+  String get visWhenWhere => 'কখন ও কোথায়';
+
+  @override
+  String get visDate => 'তারিখ';
+
+  @override
+  String get visFrom => 'থেকে';
+
+  @override
+  String get visUntil => 'পর্যন্ত';
+
+  @override
+  String get visLeaveBy => 'যে সময়ের মধ্যে যাওয়ার কথা';
+
+  @override
+  String get visOptional => 'ঐচ্ছিক';
+
+  @override
+  String get visClear => 'মুছুন';
+
+  @override
+  String get visOffice => 'অফিস';
+
+  @override
+  String get visAreaAny => 'অফিসের যেকোনো জায়গা';
+
+  @override
+  String get visPartyLabel => 'এই পাসে কতজন';
+
+  @override
+  String get visPartyFewer => 'একজন কম';
+
+  @override
+  String get visPartyMore => 'একজন বেশি';
+
+  @override
+  String get visAtTheGate => 'গেটের জন্য';
+
+  @override
+  String get visBadgeLabel => 'ব্যাজ নম্বর (ঐচ্ছিক)';
+
+  @override
+  String get visCarryingHint => 'যেমন: ল্যাপটপ, যন্ত্রপাতি, নমুনা';
+
+  @override
+  String get visIdLast4Label => 'আইডি কার্ড — শুধু শেষ ৪টি';
+
+  @override
+  String get visIdLast4Helper => 'কখনও পুরো এনআইডি নম্বর লিখবেন না।';
+
+  @override
+  String get visNotesLabel => 'গেটের জন্য নোট';
+
+  @override
+  String get visSubmitInvite => 'গেট পাস তৈরি করুন';
+
+  @override
+  String get visSubmitWalkIn => 'নিবন্ধন করে চেক-ইন';
+
+  @override
+  String get visNameRequired => 'ভিজিটরের নাম লিখুন।';
+
+  @override
+  String get visPhoneInvalid =>
+      'বাংলাদেশি মোবাইল নম্বর দিন, যেমন ০১৭১১ ২২৩৩৪৪।';
+
+  @override
+  String get visPurposeRequired => 'ভিজিটের উদ্দেশ্য বাছুন।';
+
+  @override
+  String get visIdLast4Invalid => 'আইডি: শুধু শেষ ৪টি সংখ্যা বা অক্ষর।';
+
+  @override
+  String get visHostRequired => 'ভিজিটর কার কাছে এসেছেন তা জানান।';
+
+  @override
+  String get visUntilPassed => 'যাওয়ার সেই সময় ইতিমধ্যে পেরিয়ে গেছে।';
+
+  @override
+  String get visTimePast =>
+      'সেই সময় পেরিয়ে গেছে। এখন থেকে পরের কোনো সময় বাছুন।';
+
+  @override
+  String get visUntilBeforeStart => 'ভিজিট শুরুর পরেই শেষ হতে হবে।';
+
+  @override
+  String visPassCreated(Object pass) {
+    return 'গেট পাস $pass তৈরি হয়েছে — ভিজিটরকে এসএমএসে নম্বর পাঠানো হয়েছে।';
+  }
+
+  @override
+  String visWalkInDone(Object name, Object pass) {
+    return '$name পাস $pass নিয়ে চেক-ইন করেছেন।';
+  }
+
+  @override
+  String get visCopy => 'নম্বর কপি';
+
+  @override
+  String get visSendSms => 'এসএমএসে পাঠান';
+
+  @override
+  String get visDetailsCopied => 'পাসের বিবরণ কপি হয়েছে';
+
+  @override
+  String visSmsText(Object office, Object time, Object host, Object pass) {
+    return 'ABG গেট পাস $pass · $office · $time · হোস্ট: $host। অনুগ্রহ করে গেটে এটি দেখান।';
+  }
+
+  @override
+  String get visPassHidden =>
+      'শুধু হোস্ট ও এই অফিসের গেট কর্মীরা QR গেট পাস দেখতে পারেন।';
+
+  @override
+  String get visProgress => 'ভিজিটের অবস্থা';
+
+  @override
+  String get visDetails => 'বিস্তারিত';
+
+  @override
+  String get visStepExpected => 'প্রত্যাশিত';
+
+  @override
+  String get visStepWalkIn => 'ওয়াক-ইন নিবন্ধিত';
+
+  @override
+  String get visStepOnSite => 'চেক-ইন';
+
+  @override
+  String get visStepOut => 'চেক-আউট';
+
+  @override
+  String get visStepCancelled => 'বাতিল';
+
+  @override
+  String get visStepExpired => 'আসেননি';
+
+  @override
+  String get visStepExpiredHint => 'দিন শেষে পাসটির মেয়াদ শেষ হয়েছে।';
+
+  @override
+  String visBy(Object name) {
+    return '$name করেছেন';
+  }
+
+  @override
+  String visOnSiteFor(Object time) {
+    return 'সাইটে $time';
+  }
+
+  @override
+  String visCheckInTitle(Object name) {
+    return '$name-কে চেক-ইন করবেন?';
+  }
+
+  @override
+  String get visCheckInBody =>
+      'আইডি কার্ড দেখে ভিজিটর ব্যাজ দিন। হোস্টকে সঙ্গে সঙ্গে জানানো হবে।';
+
+  @override
+  String visCheckInBodyId(Object last4) {
+    return 'আইডি কার্ড মিলিয়ে নিন (শেষ ৪টি: $last4) এবং ভিজিটর ব্যাজ দিন। হোস্টকে সঙ্গে সঙ্গে জানানো হবে।';
+  }
+
+  @override
+  String visCheckOutTitle(Object name) {
+    return '$name-কে চেক-আউট করবেন?';
+  }
+
+  @override
+  String get visCheckOutBody => 'চেক-আউটের পর পাসটি আর ব্যবহার করা যাবে না।';
+
+  @override
+  String visCheckOutBodyBadge(Object badge) {
+    return 'ব্যাজ $badge ফেরত নিন। চেক-আউটের পর পাসটি আর ব্যবহার করা যাবে না।';
+  }
+
+  @override
+  String get visCancelPass => 'পাস বাতিল';
+
+  @override
+  String get visCancelTitle => 'এই গেট পাস বাতিল করবেন?';
+
+  @override
+  String visCancelBody(Object name) {
+    return '$name-কে এসএমএসে জানানো হবে যে ভিজিট বাতিল হয়েছে, এবং পাসটি গেটে আর কাজ করবে না।';
+  }
+
+  @override
+  String get visCancelReason => 'কারণ (ঐচ্ছিক)';
+
+  @override
+  String get visCancelled =>
+      'গেট পাস বাতিল হয়েছে — ভিজিটরকে এসএমএসে জানানো হয়েছে।';
+
+  @override
+  String get visPassNotFound => 'পাসটি চেনা যায়নি';
+
+  @override
+  String get visPassNotFoundHint =>
+      'এই পাসে ভিজিটরকে ঢুকতে দেবেন না — হোস্টকে ফোন করুন বা ওয়াক-ইন হিসেবে নিবন্ধন করুন।';
+
+  @override
+  String get visScanAnother => 'আরেকটি পাস স্ক্যান';
+
+  @override
+  String get visBlockWrongOffice => 'ভুল অফিস';
+
+  @override
+  String get visBlockWrongDay => 'আজ বৈধ নয়';
+
+  @override
+  String get visBlockCancelled => 'পাস বাতিল';
+
+  @override
+  String get visBlockExpired => 'পাসের মেয়াদ শেষ';
+
+  @override
+  String get visBlockAlreadyOut => 'পাস ইতিমধ্যে ব্যবহৃত';
+
+  @override
+  String get visBlockGeneric => 'বৈধ নয়';
+
+  @override
+  String get visVerdictValid => 'বৈধ পাস';
+
+  @override
+  String visVerdictValidBody(Object time, Object host) {
+    return '$time সময়ে $host-এর কাছে আসার কথা। আইডি দেখে ভিজিটরকে চেক-ইন করুন।';
+  }
+
+  @override
+  String get visVerdictOnSite => 'সাইটে আছেন';
+
+  @override
+  String visVerdictOnSiteBody(Object time) {
+    return '$time-এ চেক-ইন করেছেন। যাওয়ার সময় চেক-আউট করুন।';
+  }
+
+  @override
+  String get visVerdictGenuine => 'আসল পাস';
+
+  @override
+  String get visVerdictGenuineBody =>
+      'আপনার ভূমিকায় পাস যাচাই করা যায়, কিন্তু চেক-ইন বা চেক-আউট নয়। নিরাপত্তা বা ফ্রন্ট ডেস্ককে বলুন।';
+
+  @override
+  String get visIdCompare => 'আইডি কার্ডের সাথে মেলান — শেষ ৪টি';
+
+  @override
+  String get visOpenVisit => 'ভিজিট খুলুন';
 }

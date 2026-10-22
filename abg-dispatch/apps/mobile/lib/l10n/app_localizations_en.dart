@@ -2341,4 +2341,582 @@ class LEn extends L {
   String tourEvBudget(Object amount) {
     return 'Sanctioned budget set to $amount';
   }
+
+  @override
+  String get visTitle => 'Visitors';
+
+  @override
+  String get visMyVisitors => 'My visitors';
+
+  @override
+  String get visGate => 'Gate';
+
+  @override
+  String get visInvite => 'Invite a visitor';
+
+  @override
+  String get visUpcoming => 'Upcoming';
+
+  @override
+  String get visPast => 'Past';
+
+  @override
+  String get visNoUpcoming => 'No visitors coming';
+
+  @override
+  String get visNoUpcomingHint =>
+      'Invite a visitor and they get a gate pass number by SMS. You are told when they arrive and leave.';
+
+  @override
+  String get visNoPast => 'No past visitors yet';
+
+  @override
+  String get visStatusEXPECTED => 'Expected';
+
+  @override
+  String get visStatusCHECKED_IN => 'On site';
+
+  @override
+  String get visStatusCHECKED_OUT => 'Checked out';
+
+  @override
+  String get visStatusCANCELLED => 'Cancelled';
+
+  @override
+  String get visStatusEXPIRED => 'Did not arrive';
+
+  @override
+  String visStatusSemantics(Object status) {
+    return 'Status: $status';
+  }
+
+  @override
+  String get visPurposeMEETING => 'Meeting';
+
+  @override
+  String get visPurposeINTERVIEW => 'Interview';
+
+  @override
+  String get visPurposeVENDOR_SUPPLIER => 'Vendor / supplier';
+
+  @override
+  String get visPurposeCONTRACTOR => 'Contractor work';
+
+  @override
+  String get visPurposeAUDIT_INSPECTION => 'Audit / inspection';
+
+  @override
+  String get visPurposeGOVERNMENT_OFFICIAL => 'Government official';
+
+  @override
+  String get visPurposeDELIVERY => 'Delivery';
+
+  @override
+  String get visPurposePERSONAL => 'Personal';
+
+  @override
+  String get visPurposeOTHER => 'Other';
+
+  @override
+  String get visWalkIn => 'Walk-in';
+
+  @override
+  String get visOverstay => 'Past expected time';
+
+  @override
+  String visInSince(Object time) {
+    return 'In since $time';
+  }
+
+  @override
+  String visLeftAt(Object time) {
+    return 'Left at $time';
+  }
+
+  @override
+  String visExpectedAt(Object time) {
+    return 'Expected $time';
+  }
+
+  @override
+  String visHostIs(Object name) {
+    return 'Host: $name';
+  }
+
+  @override
+  String get visCheckIn => 'Check in';
+
+  @override
+  String get visCheckOut => 'Check out';
+
+  @override
+  String visCheckedIn(Object name) {
+    return '$name checked in — the host has been told.';
+  }
+
+  @override
+  String visCheckedOut(Object name) {
+    return '$name checked out.';
+  }
+
+  @override
+  String get visPassTitle => 'Visitor gate pass';
+
+  @override
+  String visQrSemantics(Object number) {
+    return 'QR code for gate pass $number';
+  }
+
+  @override
+  String get visCopyPassNumber => 'Copy pass number';
+
+  @override
+  String get visPassNumberCopied => 'Pass number copied';
+
+  @override
+  String get visValidToday =>
+      'Valid today only · show it at the gate in and out';
+
+  @override
+  String visValidOn(Object date) {
+    return 'Valid on $date only · show it at the gate in and out';
+  }
+
+  @override
+  String get visHost => 'Host';
+
+  @override
+  String get visPurpose => 'Purpose';
+
+  @override
+  String get visArea => 'Area';
+
+  @override
+  String get visTime => 'Time';
+
+  @override
+  String get visParty => 'Party';
+
+  @override
+  String visPartyCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count people',
+      one: '1 person',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get visVehicle => 'Vehicle number';
+
+  @override
+  String get visNone => 'None';
+
+  @override
+  String get visCarrying => 'Carrying';
+
+  @override
+  String get visPassFooter =>
+      'Wear the visitor badge on site and return it at the gate. Issued by ABG ONE.';
+
+  @override
+  String get visLiveOnSite => 'Live · on site now';
+
+  @override
+  String visOnSiteSemantics(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count visitors on site now',
+      one: '1 visitor on site now',
+      zero: 'Nobody on site now',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get visCounting => 'Counting…';
+
+  @override
+  String visPeopleOnSite(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count people on site',
+      one: '1 person on site',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String visStillExpected(int count) {
+    return '$count still expected today';
+  }
+
+  @override
+  String visOverstaying(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count visitors past their expected time',
+      one: '1 visitor past their expected time',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String visLongest(Object name, Object time) {
+    return 'Longest on site: $name · $time';
+  }
+
+  @override
+  String get visScanPass => 'Scan pass';
+
+  @override
+  String get visWalkInAction => 'Walk-in';
+
+  @override
+  String get visStatCheckedOut => 'Checked out today';
+
+  @override
+  String get visStatWalkIns => 'Walk-ins today';
+
+  @override
+  String get visStatVisits => 'Visits today';
+
+  @override
+  String get visPassNumberHint => 'Type a pass number, e.g. VP-261021-FCA-012';
+
+  @override
+  String get visVerify => 'Verify pass';
+
+  @override
+  String get visOnSiteNow => 'On site now';
+
+  @override
+  String get visExpectedToday => 'Expected today';
+
+  @override
+  String get visNobodyOnSite => 'Nobody is on site right now.';
+
+  @override
+  String get visNobodyExpected => 'Nobody else is expected today.';
+
+  @override
+  String get visWalkInTitle => 'Register a walk-in';
+
+  @override
+  String get visInviteHint =>
+      'You are the host. Your visitor gets the gate pass number by SMS, and you are told when they arrive and leave.';
+
+  @override
+  String get visWalkInHint =>
+      'For someone who arrived without a pass. They are checked in now and their host is told they are at the gate.';
+
+  @override
+  String get visVisitorSection => 'Visitor';
+
+  @override
+  String get visVisitor => 'Visitor';
+
+  @override
+  String get visNameLabel => 'Visitor\'s name';
+
+  @override
+  String get visPhoneLabel => 'Mobile number';
+
+  @override
+  String get visPhoneHelper => 'The gate pass number is texted here.';
+
+  @override
+  String get visCompanyLabel => 'Company or organisation';
+
+  @override
+  String get visCompanyHint => 'e.g. Akij Packaging Ltd, DIFE Narayanganj';
+
+  @override
+  String get visPurposeTitle => 'Purpose of the visit';
+
+  @override
+  String get visDetailLabel => 'What for (optional)';
+
+  @override
+  String get visDetailHint => 'e.g. Carton sample approval';
+
+  @override
+  String get visHereToSee => 'Here to see';
+
+  @override
+  String get visSearchDirectory => 'Search directory';
+
+  @override
+  String get visNotListed => 'Not listed?';
+
+  @override
+  String get visHostNameLabel => 'Name of the person or team being visited';
+
+  @override
+  String get visChooseHost => 'Choose the employee being visited';
+
+  @override
+  String get visHostNoAccount => 'Not on ABG ONE — tell them in person';
+
+  @override
+  String get visHostSearchHint => 'Name, employee ID or department';
+
+  @override
+  String get visWhenWhere => 'When and where';
+
+  @override
+  String get visDate => 'Date';
+
+  @override
+  String get visFrom => 'From';
+
+  @override
+  String get visUntil => 'Until';
+
+  @override
+  String get visLeaveBy => 'Expected to leave by';
+
+  @override
+  String get visOptional => 'Optional';
+
+  @override
+  String get visClear => 'Clear';
+
+  @override
+  String get visOffice => 'Office';
+
+  @override
+  String get visAreaAny => 'Anywhere in the office';
+
+  @override
+  String get visPartyLabel => 'People on this pass';
+
+  @override
+  String get visPartyFewer => 'One fewer person';
+
+  @override
+  String get visPartyMore => 'One more person';
+
+  @override
+  String get visAtTheGate => 'For the gate';
+
+  @override
+  String get visBadgeLabel => 'Badge number (optional)';
+
+  @override
+  String get visCarryingHint => 'e.g. Laptop, tools, samples';
+
+  @override
+  String get visIdLast4Label => 'ID card — last 4 only';
+
+  @override
+  String get visIdLast4Helper => 'Never type the full NID number.';
+
+  @override
+  String get visNotesLabel => 'Note for the gate';
+
+  @override
+  String get visSubmitInvite => 'Create gate pass';
+
+  @override
+  String get visSubmitWalkIn => 'Register and check in';
+
+  @override
+  String get visNameRequired => 'Enter the visitor\'s name.';
+
+  @override
+  String get visPhoneInvalid =>
+      'Enter a Bangladeshi mobile number, e.g. 01711 223344.';
+
+  @override
+  String get visPurposeRequired => 'Choose the purpose of the visit.';
+
+  @override
+  String get visIdLast4Invalid => 'ID: only the last 4 digits or letters.';
+
+  @override
+  String get visHostRequired => 'Say who the visitor has come to see.';
+
+  @override
+  String get visUntilPassed => 'That leaving time has already passed.';
+
+  @override
+  String get visTimePast =>
+      'That time has already passed. Choose a time from now on.';
+
+  @override
+  String get visUntilBeforeStart => 'The visit must end after it starts.';
+
+  @override
+  String visPassCreated(Object pass) {
+    return 'Gate pass $pass created — the visitor has been sent the number by SMS.';
+  }
+
+  @override
+  String visWalkInDone(Object name, Object pass) {
+    return '$name is checked in with pass $pass.';
+  }
+
+  @override
+  String get visCopy => 'Copy number';
+
+  @override
+  String get visSendSms => 'Send by SMS';
+
+  @override
+  String get visDetailsCopied => 'Pass details copied';
+
+  @override
+  String visSmsText(Object office, Object time, Object host, Object pass) {
+    return 'ABG gate pass $pass · $office · $time · Host: $host. Please show this at the gate.';
+  }
+
+  @override
+  String get visPassHidden =>
+      'Only the host and this office\'s gate staff can see the QR gate pass.';
+
+  @override
+  String get visProgress => 'Where the visit stands';
+
+  @override
+  String get visDetails => 'Details';
+
+  @override
+  String get visStepExpected => 'Expected';
+
+  @override
+  String get visStepWalkIn => 'Walk-in registered';
+
+  @override
+  String get visStepOnSite => 'Checked in';
+
+  @override
+  String get visStepOut => 'Checked out';
+
+  @override
+  String get visStepCancelled => 'Cancelled';
+
+  @override
+  String get visStepExpired => 'Did not arrive';
+
+  @override
+  String get visStepExpiredHint => 'The pass lapsed at the end of its day.';
+
+  @override
+  String visBy(Object name) {
+    return 'by $name';
+  }
+
+  @override
+  String visOnSiteFor(Object time) {
+    return '$time on site';
+  }
+
+  @override
+  String visCheckInTitle(Object name) {
+    return 'Check in $name?';
+  }
+
+  @override
+  String get visCheckInBody =>
+      'Check their ID card and hand over a visitor badge. The host is told at once.';
+
+  @override
+  String visCheckInBodyId(Object last4) {
+    return 'Compare the ID card (last 4: $last4) and hand over a visitor badge. The host is told at once.';
+  }
+
+  @override
+  String visCheckOutTitle(Object name) {
+    return 'Check out $name?';
+  }
+
+  @override
+  String get visCheckOutBody =>
+      'The pass cannot be used again after check-out.';
+
+  @override
+  String visCheckOutBodyBadge(Object badge) {
+    return 'Collect badge $badge. The pass cannot be used again after check-out.';
+  }
+
+  @override
+  String get visCancelPass => 'Cancel pass';
+
+  @override
+  String get visCancelTitle => 'Cancel this gate pass?';
+
+  @override
+  String visCancelBody(Object name) {
+    return '$name is sent an SMS that the visit is cancelled, and the pass stops working at the gate.';
+  }
+
+  @override
+  String get visCancelReason => 'Reason (optional)';
+
+  @override
+  String get visCancelled =>
+      'Gate pass cancelled — the visitor has been told by SMS.';
+
+  @override
+  String get visPassNotFound => 'Pass not recognised';
+
+  @override
+  String get visPassNotFoundHint =>
+      'Do not admit the visitor on it — call the host or register them as a walk-in.';
+
+  @override
+  String get visScanAnother => 'Scan another pass';
+
+  @override
+  String get visBlockWrongOffice => 'Wrong office';
+
+  @override
+  String get visBlockWrongDay => 'Not valid today';
+
+  @override
+  String get visBlockCancelled => 'Pass cancelled';
+
+  @override
+  String get visBlockExpired => 'Pass expired';
+
+  @override
+  String get visBlockAlreadyOut => 'Pass already used';
+
+  @override
+  String get visBlockGeneric => 'Not valid';
+
+  @override
+  String get visVerdictValid => 'Valid pass';
+
+  @override
+  String visVerdictValidBody(Object time, Object host) {
+    return 'Expected $time to see $host. Check the ID, then check the visitor in.';
+  }
+
+  @override
+  String get visVerdictOnSite => 'On site';
+
+  @override
+  String visVerdictOnSiteBody(Object time) {
+    return 'Checked in at $time. Check them out as they leave.';
+  }
+
+  @override
+  String get visVerdictGenuine => 'Genuine pass';
+
+  @override
+  String get visVerdictGenuineBody =>
+      'Your role can verify passes but not check visitors in or out. Ask security or the front desk.';
+
+  @override
+  String get visIdCompare => 'Compare with the ID card — last 4';
+
+  @override
+  String get visOpenVisit => 'Open the visit';
 }
