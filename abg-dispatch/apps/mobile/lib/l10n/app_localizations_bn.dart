@@ -1061,4 +1061,187 @@ class LBn extends L {
   @override
   String get incOfflineNotice =>
       'আপনি অফলাইনে আছেন। ছবিসহ রিপোর্টের জন্য সংযোগ প্রয়োজন — অনলাইনে ফিরে আবার চেষ্টা করুন।';
+
+  @override
+  String get nbTitle => 'নোটিশ বোর্ড';
+
+  @override
+  String get nbSubtitle =>
+      'চেয়ারম্যান, এমডি, মানবসম্পদ ও প্রশাসনের অফিশিয়াল নোটিশ';
+
+  @override
+  String get nbFilterAll => 'সব';
+
+  @override
+  String get nbFilterUnread => 'অপঠিত';
+
+  @override
+  String get nbChannelCHAIRMAN => 'চেয়ারম্যান';
+
+  @override
+  String get nbChannelMANAGING_DIRECTOR => 'ব্যবস্থাপনা পরিচালক';
+
+  @override
+  String get nbChannelHR => 'মানবসম্পদ';
+
+  @override
+  String get nbChannelADMINISTRATION => 'প্রশাসন';
+
+  @override
+  String get nbChannelCOMPLIANCE => 'কমপ্লায়েন্স';
+
+  @override
+  String get nbChannelIT => 'আইটি';
+
+  @override
+  String get nbCatGENERAL => 'সাধারণ';
+
+  @override
+  String get nbCatCIRCULAR => 'সার্কুলার';
+
+  @override
+  String get nbCatPOLICY => 'নীতিমালা';
+
+  @override
+  String get nbCatHR => 'মানবসম্পদ';
+
+  @override
+  String get nbCatSAFETY => 'নিরাপত্তা';
+
+  @override
+  String get nbCatEVENT => 'অনুষ্ঠান';
+
+  @override
+  String get nbCatHOLIDAY => 'ছুটি';
+
+  @override
+  String get nbUrgent => 'জরুরি';
+
+  @override
+  String get nbPinned => 'পিন করা';
+
+  @override
+  String get nbNew => 'নতুন';
+
+  @override
+  String get nbAcknowledged => 'স্বীকৃত';
+
+  @override
+  String get nbAckNeeded => 'স্বীকৃতি দিন';
+
+  @override
+  String get nbHasPdf => 'PDF সংযুক্ত';
+
+  @override
+  String nbUnreadCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$countটি অপঠিত নোটিশ',
+      one: '১টি অপঠিত নোটিশ',
+      zero: 'সব পড়া হয়েছে',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nbToAckCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$countটি আপনার স্বীকৃতির অপেক্ষায়',
+      one: '১টি আপনার স্বীকৃতির অপেক্ষায়',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nbEmpty => 'এখানে কোনো নোটিশ নেই';
+
+  @override
+  String get nbEmptyHint =>
+      'আপনার জন্য পাঠানো নোটিশ এখানে দেখাবে, জরুরিগুলো আগে।';
+
+  @override
+  String get nbEmptyUnreadHint => 'বোর্ডের সব নোটিশ আপনি পড়েছেন।';
+
+  @override
+  String get nbShowAll => 'সব নোটিশ দেখুন';
+
+  @override
+  String nbFromOffice(Object channel) {
+    return '$channel দপ্তর থেকে';
+  }
+
+  @override
+  String get nbUrgentBanner => 'জরুরি নোটিশ — এখনই পড়ুন';
+
+  @override
+  String get nbPublished => 'প্রকাশিত';
+
+  @override
+  String get nbAudience => 'প্রাপক';
+
+  @override
+  String get nbAudienceAll => 'গ্রুপের সবাই';
+
+  @override
+  String get nbOnBoardUntil => 'বোর্ডে থাকবে';
+
+  @override
+  String get nbExpired => 'এই নোটিশের মেয়াদ শেষ হয়েছে।';
+
+  @override
+  String get nbArchived => 'এই নোটিশ বোর্ড থেকে সরানো হয়েছে।';
+
+  @override
+  String get nbSignedBy => 'স্বাক্ষরকারী';
+
+  @override
+  String get nbAttachment => 'সংযুক্ত নথি';
+
+  @override
+  String get nbOpenPdf => 'PDF খুলুন';
+
+  @override
+  String get nbPdfHint => 'আপনার ফোনের PDF ভিউয়ারে খুলবে';
+
+  @override
+  String get nbPdfFailed => 'PDF খোলা যায়নি। সংযোগ দেখে আবার চেষ্টা করুন।';
+
+  @override
+  String get nbAckPrompt =>
+      'প্রেরক আপনাকে নিশ্চিত করতে বলেছেন যে আপনি নোটিশটি পড়েছেন ও বুঝেছেন।';
+
+  @override
+  String get nbAckButton => 'আমি পড়েছি ও বুঝেছি';
+
+  @override
+  String get nbAckTitle => 'নোটিশটি স্বীকার করুন';
+
+  @override
+  String get nbAckBody =>
+      'আপনি নিশ্চিত করছেন যে নোটিশটি পড়েছেন ও বুঝেছেন। প্রেরকের জন্য আপনার নাম ও সময় রেকর্ড হবে।';
+
+  @override
+  String get nbAckConfirm => 'নিশ্চিত করুন';
+
+  @override
+  String get nbAckDone => 'ধন্যবাদ — আপনার স্বীকৃতি রেকর্ড হয়েছে।';
+
+  @override
+  String nbAckedOn(Object time) {
+    return 'আপনি নোটিশটি স্বীকার করেছেন · $time';
+  }
+
+  @override
+  String get nbAckExpired =>
+      'মেয়াদ শেষ হওয়ায় এই নোটিশ আর স্বীকার করা যাবে না।';
+
+  @override
+  String get nbNoAckNeeded => 'আপনার অবগতির জন্য — স্বীকৃতির প্রয়োজন নেই।';
+
+  @override
+  String get nbAuthorNote =>
+      'আপনি এই নোটিশ প্রকাশ করেছেন। কে পড়েছেন তা অ্যাডমিন পোর্টালে দেখুন।';
 }
