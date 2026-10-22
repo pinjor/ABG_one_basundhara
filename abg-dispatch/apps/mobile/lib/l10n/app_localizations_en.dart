@@ -1059,4 +1059,315 @@ class LEn extends L {
   @override
   String get incOfflineNotice =>
       'You\'re offline. Reports with photos need a connection — try again when you\'re back online.';
+
+  @override
+  String get licTitle => 'Licences';
+
+  @override
+  String get licRegister => 'Licence register';
+
+  @override
+  String get licReadOnlyNote =>
+      'Changes are made by the compliance team in the ABG ONE portal.';
+
+  @override
+  String get licFilterAll => 'All';
+
+  @override
+  String get licFilterEXPIRING => 'Expiring';
+
+  @override
+  String get licFilterDUE_SOON => 'Renewal due';
+
+  @override
+  String get licFilterEXPIRED => 'Expired';
+
+  @override
+  String get licFilterRENEWAL_IN_PROGRESS => 'Renewal in progress';
+
+  @override
+  String get licFilterVALID => 'Valid';
+
+  @override
+  String get licStateVALID => 'Valid';
+
+  @override
+  String get licStateDUE_SOON => 'Renewal due';
+
+  @override
+  String get licStateEXPIRING => 'Expiring';
+
+  @override
+  String get licStateEXPIRED => 'Expired';
+
+  @override
+  String get licRetired => 'Retired';
+
+  @override
+  String get licRetiredNotice =>
+      'Retired from the register — no alerts are sent.';
+
+  @override
+  String licDaysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days left',
+      one: '1 day left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get licExpiresToday => 'Expires today';
+
+  @override
+  String licExpiredAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Expired $count days ago',
+      one: 'Expired 1 day ago',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String licCaptionLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'days left',
+      one: 'day left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String licCaptionOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'days overdue',
+      one: 'day overdue',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get licCaptionToday => 'expiry day';
+
+  @override
+  String get licToday => 'Today';
+
+  @override
+  String get licWithin30 => '≤ 30 days';
+
+  @override
+  String get licNextToExpire => 'Next to expire';
+
+  @override
+  String get licNoLicences => 'No licences here';
+
+  @override
+  String get licNoLicencesHint =>
+      'Try another filter. Licences for the offices you look after appear here.';
+
+  @override
+  String get licRenewal => 'Renewal';
+
+  @override
+  String get licRenewalProgress => 'Renewal progress';
+
+  @override
+  String get licStageNOT_STARTED => 'Not started';
+
+  @override
+  String get licStageDOCUMENTS_PREPARED => 'Documents prepared';
+
+  @override
+  String get licStageAPPLICATION_SUBMITTED => 'Application submitted';
+
+  @override
+  String get licStageINSPECTION_SCHEDULED => 'Inspection scheduled';
+
+  @override
+  String get licStageFEE_PAID => 'Fee paid';
+
+  @override
+  String get licStageRENEWED => 'Renewed';
+
+  @override
+  String licStartedOn(Object date) {
+    return 'Started $date';
+  }
+
+  @override
+  String licNotStartedHint(Object date) {
+    return 'Renewal has not started yet. The renewal window opens on $date.';
+  }
+
+  @override
+  String licWindowOpenHint(Object date) {
+    return 'Renewal has not started yet. The renewal window opened on $date.';
+  }
+
+  @override
+  String get licNextStep => 'Next';
+
+  @override
+  String get licCatTRADE => 'Trade licence';
+
+  @override
+  String get licCatFACTORY => 'Factory licence';
+
+  @override
+  String get licCatENVIRONMENT => 'Environmental clearance';
+
+  @override
+  String get licCatFIRE_SAFETY => 'Fire safety';
+
+  @override
+  String get licCatENERGY_REGULATORY => 'Energy regulatory (BERC)';
+
+  @override
+  String get licCatEXPLOSIVES => 'Explosives / LPG storage';
+
+  @override
+  String get licCatBOILER => 'Boiler certificate';
+
+  @override
+  String get licCatIMPORT_EXPORT => 'Import / export (IRC / ERC)';
+
+  @override
+  String get licCatSTANDARDS => 'Standards (BSTI)';
+
+  @override
+  String get licCatOTHER => 'Other';
+
+  @override
+  String get licDetails => 'Details';
+
+  @override
+  String get licNumber => 'Licence number';
+
+  @override
+  String get licKind => 'Kind of licence';
+
+  @override
+  String get licAuthority => 'Issuing authority';
+
+  @override
+  String get licOffice => 'Office';
+
+  @override
+  String get licOwner => 'Owner';
+
+  @override
+  String get licNoOwner => 'Not set — alerts go to the compliance team';
+
+  @override
+  String get licIssuedOn => 'Issued on';
+
+  @override
+  String get licExpiresOn => 'Expires on';
+
+  @override
+  String get licExpiredOn => 'Expired on';
+
+  @override
+  String get licWindow => 'Renewal window';
+
+  @override
+  String licWindowValue(int days) {
+    return '$days days before expiry';
+  }
+
+  @override
+  String get licFee => 'Renewal fee';
+
+  @override
+  String licFeeValue(Object amount) {
+    return 'Tk $amount';
+  }
+
+  @override
+  String get licNotes => 'Notes';
+
+  @override
+  String licNextAlert(Object date) {
+    return 'Next alert on $date';
+  }
+
+  @override
+  String get licAllAlertsSent =>
+      'All expiry alerts for this date have gone out.';
+
+  @override
+  String get licScan => 'Scanned copy';
+
+  @override
+  String get licViewScan => 'View scanned copy';
+
+  @override
+  String get licNoScan => 'No scanned copy yet.';
+
+  @override
+  String get licPdf => 'PDF document';
+
+  @override
+  String get licImage => 'Image';
+
+  @override
+  String get licOpenFailed =>
+      'Couldn\'t open the document. Check your connection and try again.';
+
+  @override
+  String get licHistory => 'History';
+
+  @override
+  String get licEvCreated => 'Added to the register';
+
+  @override
+  String get licEvDetails => 'Details changed';
+
+  @override
+  String get licEvRetired => 'Retired from the register';
+
+  @override
+  String get licEvRestored => 'Back in use';
+
+  @override
+  String licEvStage(Object stage) {
+    return 'Renewal moved to $stage';
+  }
+
+  @override
+  String licEvStageBack(Object stage) {
+    return 'Renewal moved back to $stage';
+  }
+
+  @override
+  String licEvRenewed(Object date) {
+    return 'Renewed until $date';
+  }
+
+  @override
+  String get licEvDocument => 'Scanned copy uploaded';
+
+  @override
+  String licEvAlert(int days) {
+    return 'Expiry alert: $days days before';
+  }
+
+  @override
+  String get licEvAlertDay => 'Expiry alert: expiry day';
+
+  @override
+  String get licEvNote => 'Note';
+
+  @override
+  String licEvNotified(Object names) {
+    return 'Sent to $names';
+  }
 }
