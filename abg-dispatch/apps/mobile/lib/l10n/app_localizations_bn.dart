@@ -1485,4 +1485,549 @@ class LBn extends L {
   @override
   String get nbAuthorNote =>
       'আপনি এই নোটিশ প্রকাশ করেছেন। কে পড়েছেন তা অ্যাডমিন পোর্টালে দেখুন।';
+
+  @override
+  String get tourTitle => 'অফিসিয়াল ট্যুর';
+
+  @override
+  String get tourApply => 'ট্যুরের আবেদন করুন';
+
+  @override
+  String get tourMyRequests => 'আমার আবেদন';
+
+  @override
+  String get tourToApprove => 'অনুমোদনের জন্য';
+
+  @override
+  String get tourFilterAll => 'সব';
+
+  @override
+  String get tourFilterOpen => 'চলমান';
+
+  @override
+  String get tourFilterClosed => 'বন্ধ';
+
+  @override
+  String get tourNoRequests => 'এখনো কোনো ট্যুরের আবেদন নেই';
+
+  @override
+  String get tourNoRequestsHint =>
+      'দেশে বা বিদেশে ট্যুরের আবেদন করুন এবং প্রতিটি অনুমোদন এখানে দেখুন।';
+
+  @override
+  String get tourNothingToApprove =>
+      'আপনার সিদ্ধান্তের জন্য কিছু অপেক্ষমাণ নেই';
+
+  @override
+  String get tourNothingToApproveHint =>
+      'যেসব আবেদন আপনাকে অনুমোদন, যাচাই বা মঞ্জুর করতে হবে সেগুলো এখানে দেখাবে।';
+
+  @override
+  String tourWaitingCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$countটি আবেদন আপনার অপেক্ষায়',
+      one: '১টি আবেদন আপনার অপেক্ষায়',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tourYourDecision => 'আপনার সিদ্ধান্ত';
+
+  @override
+  String get tourReview => 'দেখুন';
+
+  @override
+  String tourSanctioned(Object amount) {
+    return 'মঞ্জুর $amount';
+  }
+
+  @override
+  String get tourStatusPENDING_HOD => 'বিভাগীয় প্রধানের অনুমোদনের অপেক্ষায়';
+
+  @override
+  String get tourStatusPENDING_VETTING => 'এইচআর ও ফাইন্যান্স যাচাই';
+
+  @override
+  String get tourStatusPENDING_SANCTION => 'এমডি / চেয়ারম্যানের মঞ্জুরি';
+
+  @override
+  String get tourStatusAPPROVED => 'অনুমোদিত ও অর্থ মঞ্জুর';
+
+  @override
+  String get tourStatusACTIVE => 'ট্যুর চলছে';
+
+  @override
+  String get tourStatusCOMPLETED => 'সম্পন্ন';
+
+  @override
+  String get tourStatusREJECTED => 'প্রত্যাখ্যাত';
+
+  @override
+  String get tourStatusCANCELLED => 'বাতিল';
+
+  @override
+  String get tourTypeLOCAL => 'দেশীয়';
+
+  @override
+  String get tourTypeFOREIGN => 'বিদেশ';
+
+  @override
+  String get tourPurposeCONFERENCE => 'সম্মেলন';
+
+  @override
+  String get tourPurposeTECHNICAL_INSPECTION => 'কারিগরি পরিদর্শন';
+
+  @override
+  String get tourPurposeVENDOR_AUDIT => 'সরবরাহকারী নিরীক্ষা';
+
+  @override
+  String get tourPurposeTRAINING => 'প্রশিক্ষণ';
+
+  @override
+  String get tourPurposeCLIENT_MEETING => 'ক্লায়েন্ট মিটিং';
+
+  @override
+  String get tourPurposePLANT_VISIT => 'প্ল্যান্ট / সাইট পরিদর্শন';
+
+  @override
+  String get tourPurposeOTHER => 'অন্যান্য';
+
+  @override
+  String get tourTransportAIR => 'আকাশপথ';
+
+  @override
+  String get tourTransportROAD => 'সড়কপথ';
+
+  @override
+  String get tourTransportRAIL => 'রেলপথ';
+
+  @override
+  String get tourTransportWATER => 'নৌপথ';
+
+  @override
+  String get tourTransportPOOL_CAR => 'পুল কার';
+
+  @override
+  String get tourAwaitingHOD => 'বিভাগীয় প্রধান';
+
+  @override
+  String get tourAwaitingVETTING => 'এইচআর ও ফাইন্যান্স';
+
+  @override
+  String get tourAwaitingSANCTION => 'এমডি / চেয়ারম্যান';
+
+  @override
+  String tourDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count দিন',
+      one: '১ দিন',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tourPipeline => 'অনুমোদনের ধাপ';
+
+  @override
+  String get tourStageSUBMITTED => 'জমা হয়েছে';
+
+  @override
+  String get tourStagePENDING_HOD => 'বিভাগীয় প্রধানের অনুমোদন';
+
+  @override
+  String get tourStagePENDING_VETTING => 'এইচআর ও ফাইন্যান্স যাচাই';
+
+  @override
+  String get tourStagePENDING_SANCTION => 'এমডি / চেয়ারম্যানের মঞ্জুরি';
+
+  @override
+  String get tourStageAPPROVED => 'অর্থ মঞ্জুর';
+
+  @override
+  String get tourStageACTIVE => 'ট্যুরে';
+
+  @override
+  String get tourStageCOMPLETED => 'সম্পন্ন';
+
+  @override
+  String tourWaitingFor(Object name) {
+    return '$name-এর অপেক্ষায়';
+  }
+
+  @override
+  String tourStageRejectedBy(Object name) {
+    return '$name প্রত্যাখ্যান করেছেন';
+  }
+
+  @override
+  String get tourStageCancelled => 'ভ্রমণকারী বাতিল করেছেন';
+
+  @override
+  String get tourStageSkipped => 'এই ধাপে পৌঁছায়নি';
+
+  @override
+  String get tourStageInProgress => 'চলমান';
+
+  @override
+  String get tourFormIntro =>
+      'প্রথমে আপনার বিভাগীয় প্রধান অনুমোদন দেবেন, তারপর এইচআর ও ফাইন্যান্স বাজেট যাচাই করবে। বিদেশ ট্যুরের জন্য এমডি বা চেয়ারম্যানের মঞ্জুরিও লাগবে।';
+
+  @override
+  String get tourWhere => 'কোথায় যাচ্ছেন?';
+
+  @override
+  String get tourLocalHint => 'বাংলাদেশের ভেতরে';
+
+  @override
+  String get tourForeignHint => 'বিদেশে · মঞ্জুরি লাগবে';
+
+  @override
+  String get tourPurposeLabel => 'উদ্দেশ্য';
+
+  @override
+  String get tourTitleLabel => 'শিরোনাম';
+
+  @override
+  String get tourTitleHint => 'যেমন: কম্প্রেসর সরবরাহকারী নিরীক্ষা';
+
+  @override
+  String get tourDestinationLabel => 'গন্তব্য';
+
+  @override
+  String get tourDestinationHint => 'যেমন: চট্টগ্রাম এলপিজি রিফাইনারি';
+
+  @override
+  String get tourCityLabel => 'শহর / সাইট';
+
+  @override
+  String get tourCountryLabel => 'দেশ';
+
+  @override
+  String get tourDatesLabel => 'ভ্রমণের তারিখ';
+
+  @override
+  String get tourPickDates => 'ভ্রমণের তারিখ বেছে নিন';
+
+  @override
+  String get tourTransportLabel => 'যাতায়াত';
+
+  @override
+  String get tourCoTravellers => 'সহযাত্রী';
+
+  @override
+  String get tourCoTravellerHint => 'একই ভ্রমণে থাকা সহকর্মীর নাম';
+
+  @override
+  String get tourCoTravellerAdd => 'সহযাত্রী যোগ করুন';
+
+  @override
+  String tourRemove(Object name) {
+    return '$name সরান';
+  }
+
+  @override
+  String get tourBudgetSection => 'বাজেট';
+
+  @override
+  String get tourEstimatedBudget => 'আনুমানিক বাজেট (৳)';
+
+  @override
+  String get tourBudgetHint => 'ভাড়া, হোটেল, দৈনিক ভাতা ও স্থানীয় যাতায়াত';
+
+  @override
+  String get tourAdvance => 'অগ্রিমের অনুরোধ (৳)';
+
+  @override
+  String get tourPassportSection => 'পাসপোর্ট';
+
+  @override
+  String get tourPassportNumber => 'পাসপোর্ট নম্বর';
+
+  @override
+  String get tourPassportExpiry => 'পাসপোর্টের মেয়াদ শেষের তারিখ';
+
+  @override
+  String get tourPassportWarning =>
+      'ফেরার ৬ মাসের মধ্যে আপনার পাসপোর্টের মেয়াদ শেষ হচ্ছে। বেশিরভাগ দেশে ৬ মাসের মেয়াদ লাগে — এখনই নবায়ন শুরু করুন।';
+
+  @override
+  String get tourPassportExpired =>
+      'ফেরার আগেই আপনার পাসপোর্টের মেয়াদ শেষ হচ্ছে। আবেদনের আগে নবায়ন করুন।';
+
+  @override
+  String get tourApprover => 'অনুমোদনকারী';
+
+  @override
+  String get tourApproverHint => 'প্রথমে আপনার বিভাগীয় প্রধান অনুমোদন দেবেন।';
+
+  @override
+  String get tourChange => 'পরিবর্তন';
+
+  @override
+  String get tourChooseApprover => 'অনুমোদনকারী বেছে নিন';
+
+  @override
+  String get tourNoManager =>
+      'কোনো লাইন ম্যানেজার নেই — কে অনুমোদন দেবেন বেছে নিন।';
+
+  @override
+  String tourManagerNoAccount(Object name) {
+    return '$name-এর ABG ONE অ্যাকাউন্ট নেই — অন্য কাউকে বেছে নিন।';
+  }
+
+  @override
+  String get tourSearchPeople => 'নাম, আইডি বা পদবি দিয়ে খুঁজুন';
+
+  @override
+  String get tourNoAccount => 'অ্যাকাউন্ট নেই';
+
+  @override
+  String get tourDescriptionLabel => 'বিস্তারিত (ঐচ্ছিক)';
+
+  @override
+  String get tourDescriptionHint =>
+      'কর্মসূচি, যাঁদের সঙ্গে দেখা করবেন, কোম্পানির লাভ';
+
+  @override
+  String get tourSubmit => 'আবেদন জমা দিন';
+
+  @override
+  String tourSubmitted(Object reference) {
+    return '$reference অনুমোদনের জন্য পাঠানো হয়েছে';
+  }
+
+  @override
+  String get tourErrTitle => 'ট্যুরের একটি ছোট শিরোনাম দিন।';
+
+  @override
+  String get tourErrDestination => 'কোথায় যাচ্ছেন লিখুন।';
+
+  @override
+  String get tourErrCountry => 'গন্তব্যের দেশ লিখুন।';
+
+  @override
+  String get tourErrDates => 'ভ্রমণের তারিখ বেছে নিন।';
+
+  @override
+  String get tourErrBudget => 'টাকায় আনুমানিক বাজেট লিখুন।';
+
+  @override
+  String get tourErrAdvance => 'অগ্রিম বাজেটের চেয়ে বেশি হতে পারে না।';
+
+  @override
+  String get tourErrPassport => 'পাসপোর্ট নম্বর ও মেয়াদ শেষের তারিখ লিখুন।';
+
+  @override
+  String get tourErrApprover => 'কে এই ট্যুর অনুমোদন দেবেন বেছে নিন।';
+
+  @override
+  String get tourOfflineNotice =>
+      'আপনি অফলাইনে আছেন। ট্যুরের আবেদনের জন্য সংযোগ প্রয়োজন — অনলাইনে ফিরে আবার চেষ্টা করুন।';
+
+  @override
+  String get tourTrip => 'ভ্রমণ';
+
+  @override
+  String get tourDeparture => 'যাত্রা';
+
+  @override
+  String get tourReturn => 'ফেরা';
+
+  @override
+  String get tourDuration => 'মেয়াদ';
+
+  @override
+  String get tourOffice => 'অফিস';
+
+  @override
+  String get tourBudgetEstimated => 'আনুমানিক';
+
+  @override
+  String get tourBudgetAdvance => 'অগ্রিম';
+
+  @override
+  String get tourBudgetSanctioned => 'মঞ্জুরকৃত';
+
+  @override
+  String get tourNotYet => 'এখনো নয়';
+
+  @override
+  String get tourNone => 'নেই';
+
+  @override
+  String get tourTraveller => 'ভ্রমণকারী';
+
+  @override
+  String get tourHod => 'বিভাগীয় প্রধান';
+
+  @override
+  String get tourAlone => 'একা ভ্রমণ করছেন';
+
+  @override
+  String get tourValidUntil => 'মেয়াদ';
+
+  @override
+  String get tourHistory => 'ইতিহাস';
+
+  @override
+  String get tourPassportAlertTitle => 'পাসপোর্ট নবায়ন প্রয়োজন';
+
+  @override
+  String tourPassportAlertBody(Object expiry, Object end) {
+    return 'মেয়াদ $expiry পর্যন্ত; ট্যুর শেষ $end। বেশিরভাগ দেশে ছয় মাসের মেয়াদ লাগে — বুকিংয়ের আগে নবায়ন করুন।';
+  }
+
+  @override
+  String tourStartableFrom(Object date) {
+    return 'অনুমোদিত ও অর্থ মঞ্জুর। $date থেকে ট্যুর শুরু করতে পারবেন।';
+  }
+
+  @override
+  String get tourSeparation =>
+      'আপনি বিভাগীয় প্রধান হিসেবে এটি অনুমোদন করেছেন, তাই এইচআর ও ফাইন্যান্সের অন্য একজনকে যাচাই করতে হবে।';
+
+  @override
+  String get tourLatestNote => 'সর্বশেষ নোট';
+
+  @override
+  String get tourActApprove => 'অনুমোদন';
+
+  @override
+  String get tourActVet => 'যাচাই করে পাঠান';
+
+  @override
+  String get tourActApproveSanction => 'অনুমোদন ও মঞ্জুর';
+
+  @override
+  String get tourActSanction => 'ট্যুর মঞ্জুর';
+
+  @override
+  String get tourActReject => 'প্রত্যাখ্যান';
+
+  @override
+  String get tourActStart => 'ট্যুর শুরু';
+
+  @override
+  String get tourActComplete => 'সম্পন্ন চিহ্নিত করুন';
+
+  @override
+  String get tourActCancel => 'আবেদন বাতিল';
+
+  @override
+  String get tourActNote => 'নোট যোগ করুন';
+
+  @override
+  String get tourApproveHod => 'বিভাগীয় প্রধান হিসেবে অনুমোদন';
+
+  @override
+  String get tourApproveHodHint =>
+      'এরপর বাজেট যাচাইয়ের জন্য এইচআর ও ফাইন্যান্সে যাবে।';
+
+  @override
+  String get tourVetHint =>
+      'মঞ্জুরির অঙ্ক নিশ্চিত করুন। এরপর এমডি / চেয়ারম্যানের কাছে যাবে।';
+
+  @override
+  String get tourVetLocalHint =>
+      'এইচআর ও ফাইন্যান্সের অনুমোদনে দেশীয় ট্যুর চূড়ান্ত হয় এবং অর্থ মঞ্জুর হয়।';
+
+  @override
+  String get tourSanctionHint =>
+      'আপনার মঞ্জুরিতে ট্যুর অনুমোদিত হবে এবং অর্থ ছাড় হবে।';
+
+  @override
+  String get tourRejectHint => 'কারণ লিখতে হবে — ভ্রমণকারী তা দেখবেন।';
+
+  @override
+  String get tourCancelHint => 'কারণ লিখতে হবে। যিনি দেখছেন তাঁকে জানানো হবে।';
+
+  @override
+  String get tourStartHint =>
+      'আপনার বিভাগীয় প্রধানকে জানানো হবে যে আপনি রওনা দিয়েছেন।';
+
+  @override
+  String get tourCompleteHint =>
+      'ট্যুর বন্ধ হবে। অগ্রিম থাকলে সমন্বয়ের জন্য এইচআর ও ফাইন্যান্সে যাবে।';
+
+  @override
+  String get tourNoteHint => 'ইতিহাসে থাকবে; অপর পক্ষকে জানানো হবে।';
+
+  @override
+  String get tourReason => 'কারণ';
+
+  @override
+  String get tourNoteOptional => 'নোট (ঐচ্ছিক)';
+
+  @override
+  String get tourNoteLabel => 'নোট';
+
+  @override
+  String get tourSanctionedBudget => 'মঞ্জুরকৃত বাজেট (৳)';
+
+  @override
+  String get tourReasonRequired => 'সংক্ষেপে কারণ লিখুন।';
+
+  @override
+  String get tourDoneApproved =>
+      'অনুমোদিত — পরবর্তী অনুমোদনকারীকে জানানো হয়েছে।';
+
+  @override
+  String get tourDoneSanctioned =>
+      'অনুমোদিত — অর্থ মঞ্জুর হয়েছে এবং ভ্রমণকারীকে জানানো হয়েছে।';
+
+  @override
+  String get tourDoneRejected =>
+      'প্রত্যাখ্যাত — ভ্রমণকারীকে কারণ জানানো হয়েছে।';
+
+  @override
+  String get tourDoneStarted => 'ট্যুর শুরু হয়েছে। শুভ যাত্রা!';
+
+  @override
+  String get tourDoneCompleted => 'ট্যুর সম্পন্ন হিসেবে চিহ্নিত হয়েছে।';
+
+  @override
+  String get tourDoneCancelled => 'আবেদন বাতিল হয়েছে।';
+
+  @override
+  String get tourDoneNote => 'নোট যোগ হয়েছে।';
+
+  @override
+  String get tourEvSubmitted => 'আবেদন করা হয়েছে';
+
+  @override
+  String get tourEvHod => 'বিভাগীয় প্রধান অনুমোদন করেছেন';
+
+  @override
+  String get tourEvVetted => 'এইচআর ও ফাইন্যান্স যাচাই করেছে';
+
+  @override
+  String get tourEvApproved => 'অনুমোদিত ও অর্থ মঞ্জুর';
+
+  @override
+  String get tourEvSanctioned => 'এমডি / চেয়ারম্যান মঞ্জুর করেছেন';
+
+  @override
+  String get tourEvRejected => 'প্রত্যাখ্যাত';
+
+  @override
+  String get tourEvStarted => 'ট্যুর শুরু হয়েছে';
+
+  @override
+  String get tourEvCompleted => 'ট্যুর সম্পন্ন';
+
+  @override
+  String get tourEvCancelled => 'আবেদন বাতিল';
+
+  @override
+  String get tourEvNote => 'নোট';
+
+  @override
+  String tourEvBudget(Object amount) {
+    return 'মঞ্জুরকৃত বাজেট $amount নির্ধারিত';
+  }
 }

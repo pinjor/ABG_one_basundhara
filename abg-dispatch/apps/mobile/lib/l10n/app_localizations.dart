@@ -2808,6 +2808,990 @@ abstract class L {
   /// In en, this message translates to:
   /// **'You published this notice. See who has read it in the admin portal.'**
   String get nbAuthorNote;
+
+  /// No description provided for @tourTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Official tours'**
+  String get tourTitle;
+
+  /// No description provided for @tourApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply for a tour'**
+  String get tourApply;
+
+  /// No description provided for @tourMyRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'My requests'**
+  String get tourMyRequests;
+
+  /// No description provided for @tourToApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'To approve'**
+  String get tourToApprove;
+
+  /// No description provided for @tourFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get tourFilterAll;
+
+  /// No description provided for @tourFilterOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get tourFilterOpen;
+
+  /// No description provided for @tourFilterClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get tourFilterClosed;
+
+  /// No description provided for @tourNoRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'No tour requests yet'**
+  String get tourNoRequests;
+
+  /// No description provided for @tourNoRequestsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply for a local or overseas tour and follow every approval here.'**
+  String get tourNoRequestsHint;
+
+  /// No description provided for @tourNothingToApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is waiting for you'**
+  String get tourNothingToApprove;
+
+  /// No description provided for @tourNothingToApproveHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests you need to approve, vet or sanction appear here.'**
+  String get tourNothingToApproveHint;
+
+  /// No description provided for @tourWaitingCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 request waiting for you} other{{count} requests waiting for you}}'**
+  String tourWaitingCount(int count);
+
+  /// No description provided for @tourYourDecision.
+  ///
+  /// In en, this message translates to:
+  /// **'Your decision'**
+  String get tourYourDecision;
+
+  /// No description provided for @tourReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get tourReview;
+
+  /// No description provided for @tourSanctioned.
+  ///
+  /// In en, this message translates to:
+  /// **'Sanctioned {amount}'**
+  String tourSanctioned(Object amount);
+
+  /// No description provided for @tourStatusPENDING_HOD.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending HOD approval'**
+  String get tourStatusPENDING_HOD;
+
+  /// No description provided for @tourStatusPENDING_VETTING.
+  ///
+  /// In en, this message translates to:
+  /// **'HR & Finance vetting'**
+  String get tourStatusPENDING_VETTING;
+
+  /// No description provided for @tourStatusPENDING_SANCTION.
+  ///
+  /// In en, this message translates to:
+  /// **'MD / Chairman sanction'**
+  String get tourStatusPENDING_SANCTION;
+
+  /// No description provided for @tourStatusAPPROVED.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved & funds sanctioned'**
+  String get tourStatusAPPROVED;
+
+  /// No description provided for @tourStatusACTIVE.
+  ///
+  /// In en, this message translates to:
+  /// **'Tour active'**
+  String get tourStatusACTIVE;
+
+  /// No description provided for @tourStatusCOMPLETED.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get tourStatusCOMPLETED;
+
+  /// No description provided for @tourStatusREJECTED.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get tourStatusREJECTED;
+
+  /// No description provided for @tourStatusCANCELLED.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get tourStatusCANCELLED;
+
+  /// No description provided for @tourTypeLOCAL.
+  ///
+  /// In en, this message translates to:
+  /// **'Local'**
+  String get tourTypeLOCAL;
+
+  /// No description provided for @tourTypeFOREIGN.
+  ///
+  /// In en, this message translates to:
+  /// **'Foreign'**
+  String get tourTypeFOREIGN;
+
+  /// No description provided for @tourPurposeCONFERENCE.
+  ///
+  /// In en, this message translates to:
+  /// **'Conference'**
+  String get tourPurposeCONFERENCE;
+
+  /// No description provided for @tourPurposeTECHNICAL_INSPECTION.
+  ///
+  /// In en, this message translates to:
+  /// **'Technical inspection'**
+  String get tourPurposeTECHNICAL_INSPECTION;
+
+  /// No description provided for @tourPurposeVENDOR_AUDIT.
+  ///
+  /// In en, this message translates to:
+  /// **'Vendor audit'**
+  String get tourPurposeVENDOR_AUDIT;
+
+  /// No description provided for @tourPurposeTRAINING.
+  ///
+  /// In en, this message translates to:
+  /// **'Training'**
+  String get tourPurposeTRAINING;
+
+  /// No description provided for @tourPurposeCLIENT_MEETING.
+  ///
+  /// In en, this message translates to:
+  /// **'Client meeting'**
+  String get tourPurposeCLIENT_MEETING;
+
+  /// No description provided for @tourPurposePLANT_VISIT.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant / site visit'**
+  String get tourPurposePLANT_VISIT;
+
+  /// No description provided for @tourPurposeOTHER.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get tourPurposeOTHER;
+
+  /// No description provided for @tourTransportAIR.
+  ///
+  /// In en, this message translates to:
+  /// **'Air'**
+  String get tourTransportAIR;
+
+  /// No description provided for @tourTransportROAD.
+  ///
+  /// In en, this message translates to:
+  /// **'Road'**
+  String get tourTransportROAD;
+
+  /// No description provided for @tourTransportRAIL.
+  ///
+  /// In en, this message translates to:
+  /// **'Rail'**
+  String get tourTransportRAIL;
+
+  /// No description provided for @tourTransportWATER.
+  ///
+  /// In en, this message translates to:
+  /// **'Water'**
+  String get tourTransportWATER;
+
+  /// No description provided for @tourTransportPOOL_CAR.
+  ///
+  /// In en, this message translates to:
+  /// **'Pool car'**
+  String get tourTransportPOOL_CAR;
+
+  /// No description provided for @tourAwaitingHOD.
+  ///
+  /// In en, this message translates to:
+  /// **'Head of department'**
+  String get tourAwaitingHOD;
+
+  /// No description provided for @tourAwaitingVETTING.
+  ///
+  /// In en, this message translates to:
+  /// **'HR & Finance'**
+  String get tourAwaitingVETTING;
+
+  /// No description provided for @tourAwaitingSANCTION.
+  ///
+  /// In en, this message translates to:
+  /// **'MD / Chairman'**
+  String get tourAwaitingSANCTION;
+
+  /// No description provided for @tourDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day} other{{count} days}}'**
+  String tourDays(int count);
+
+  /// No description provided for @tourPipeline.
+  ///
+  /// In en, this message translates to:
+  /// **'Approval pipeline'**
+  String get tourPipeline;
+
+  /// No description provided for @tourStageSUBMITTED.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted'**
+  String get tourStageSUBMITTED;
+
+  /// No description provided for @tourStagePENDING_HOD.
+  ///
+  /// In en, this message translates to:
+  /// **'HOD approval'**
+  String get tourStagePENDING_HOD;
+
+  /// No description provided for @tourStagePENDING_VETTING.
+  ///
+  /// In en, this message translates to:
+  /// **'HR & Finance vetting'**
+  String get tourStagePENDING_VETTING;
+
+  /// No description provided for @tourStagePENDING_SANCTION.
+  ///
+  /// In en, this message translates to:
+  /// **'MD / Chairman sanction'**
+  String get tourStagePENDING_SANCTION;
+
+  /// No description provided for @tourStageAPPROVED.
+  ///
+  /// In en, this message translates to:
+  /// **'Funds sanctioned'**
+  String get tourStageAPPROVED;
+
+  /// No description provided for @tourStageACTIVE.
+  ///
+  /// In en, this message translates to:
+  /// **'On tour'**
+  String get tourStageACTIVE;
+
+  /// No description provided for @tourStageCOMPLETED.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get tourStageCOMPLETED;
+
+  /// No description provided for @tourWaitingFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for {name}'**
+  String tourWaitingFor(Object name);
+
+  /// No description provided for @tourStageRejectedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected by {name}'**
+  String tourStageRejectedBy(Object name);
+
+  /// No description provided for @tourStageCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled by the traveller'**
+  String get tourStageCancelled;
+
+  /// No description provided for @tourStageSkipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Not reached'**
+  String get tourStageSkipped;
+
+  /// No description provided for @tourStageInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get tourStageInProgress;
+
+  /// No description provided for @tourFormIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Your head of department approves first, then HR & Finance vet the budget. Overseas tours also need the MD\'s or Chairman\'s sanction.'**
+  String get tourFormIntro;
+
+  /// No description provided for @tourWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'Where are you going?'**
+  String get tourWhere;
+
+  /// No description provided for @tourLocalHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Within Bangladesh'**
+  String get tourLocalHint;
+
+  /// No description provided for @tourForeignHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Overseas · needs sanction'**
+  String get tourForeignHint;
+
+  /// No description provided for @tourPurposeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Purpose'**
+  String get tourPurposeLabel;
+
+  /// No description provided for @tourTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get tourTitleLabel;
+
+  /// No description provided for @tourTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Compressor vendor audit'**
+  String get tourTitleHint;
+
+  /// No description provided for @tourDestinationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination'**
+  String get tourDestinationLabel;
+
+  /// No description provided for @tourDestinationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Chattogram LPG refinery'**
+  String get tourDestinationHint;
+
+  /// No description provided for @tourCityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'City / site'**
+  String get tourCityLabel;
+
+  /// No description provided for @tourCountryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get tourCountryLabel;
+
+  /// No description provided for @tourDatesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel dates'**
+  String get tourDatesLabel;
+
+  /// No description provided for @tourPickDates.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your travel dates'**
+  String get tourPickDates;
+
+  /// No description provided for @tourTransportLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Transport'**
+  String get tourTransportLabel;
+
+  /// No description provided for @tourCoTravellers.
+  ///
+  /// In en, this message translates to:
+  /// **'Co-travellers'**
+  String get tourCoTravellers;
+
+  /// No description provided for @tourCoTravellerHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Name of a colleague on the same trip'**
+  String get tourCoTravellerHint;
+
+  /// No description provided for @tourCoTravellerAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add co-traveller'**
+  String get tourCoTravellerAdd;
+
+  /// No description provided for @tourRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name}'**
+  String tourRemove(Object name);
+
+  /// No description provided for @tourBudgetSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget'**
+  String get tourBudgetSection;
+
+  /// No description provided for @tourEstimatedBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated budget (৳)'**
+  String get tourEstimatedBudget;
+
+  /// No description provided for @tourBudgetHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Fares, hotel, per diem and local transport'**
+  String get tourBudgetHint;
+
+  /// No description provided for @tourAdvance.
+  ///
+  /// In en, this message translates to:
+  /// **'Advance requested (৳)'**
+  String get tourAdvance;
+
+  /// No description provided for @tourPassportSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Passport'**
+  String get tourPassportSection;
+
+  /// No description provided for @tourPassportNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Passport number'**
+  String get tourPassportNumber;
+
+  /// No description provided for @tourPassportExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Passport expiry date'**
+  String get tourPassportExpiry;
+
+  /// No description provided for @tourPassportWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Your passport expires within 6 months of your return. Most countries need 6 months\' validity — start the renewal now.'**
+  String get tourPassportWarning;
+
+  /// No description provided for @tourPassportExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Your passport expires before you return. Renew it before applying.'**
+  String get tourPassportExpired;
+
+  /// No description provided for @tourApprover.
+  ///
+  /// In en, this message translates to:
+  /// **'Approver'**
+  String get tourApprover;
+
+  /// No description provided for @tourApproverHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your head of department approves first.'**
+  String get tourApproverHint;
+
+  /// No description provided for @tourChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get tourChange;
+
+  /// No description provided for @tourChooseApprover.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose approver'**
+  String get tourChooseApprover;
+
+  /// No description provided for @tourNoManager.
+  ///
+  /// In en, this message translates to:
+  /// **'No line manager on record — choose who approves.'**
+  String get tourNoManager;
+
+  /// No description provided for @tourManagerNoAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has no ABG ONE account — choose someone else.'**
+  String tourManagerNoAccount(Object name);
+
+  /// No description provided for @tourSearchPeople.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name, ID or designation'**
+  String get tourSearchPeople;
+
+  /// No description provided for @tourNoAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'No account'**
+  String get tourNoAccount;
+
+  /// No description provided for @tourDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Details (optional)'**
+  String get tourDescriptionLabel;
+
+  /// No description provided for @tourDescriptionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Agenda, people you will meet, what the company gains'**
+  String get tourDescriptionHint;
+
+  /// No description provided for @tourSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit request'**
+  String get tourSubmit;
+
+  /// No description provided for @tourSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'{reference} sent for approval'**
+  String tourSubmitted(Object reference);
+
+  /// No description provided for @tourErrTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Give the tour a short title.'**
+  String get tourErrTitle;
+
+  /// No description provided for @tourErrDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Say where you are going.'**
+  String get tourErrDestination;
+
+  /// No description provided for @tourErrCountry.
+  ///
+  /// In en, this message translates to:
+  /// **'Give the destination country.'**
+  String get tourErrCountry;
+
+  /// No description provided for @tourErrDates.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your travel dates.'**
+  String get tourErrDates;
+
+  /// No description provided for @tourErrBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the estimated budget in Taka.'**
+  String get tourErrBudget;
+
+  /// No description provided for @tourErrAdvance.
+  ///
+  /// In en, this message translates to:
+  /// **'The advance cannot be more than the budget.'**
+  String get tourErrAdvance;
+
+  /// No description provided for @tourErrPassport.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your passport number and expiry date.'**
+  String get tourErrPassport;
+
+  /// No description provided for @tourErrApprover.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose who approves this tour.'**
+  String get tourErrApprover;
+
+  /// No description provided for @tourOfflineNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re offline. Tour requests need a connection — try again when you\'re back online.'**
+  String get tourOfflineNotice;
+
+  /// No description provided for @tourTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip'**
+  String get tourTrip;
+
+  /// No description provided for @tourDeparture.
+  ///
+  /// In en, this message translates to:
+  /// **'Departure'**
+  String get tourDeparture;
+
+  /// No description provided for @tourReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Return'**
+  String get tourReturn;
+
+  /// No description provided for @tourDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get tourDuration;
+
+  /// No description provided for @tourOffice.
+  ///
+  /// In en, this message translates to:
+  /// **'Office'**
+  String get tourOffice;
+
+  /// No description provided for @tourBudgetEstimated.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated'**
+  String get tourBudgetEstimated;
+
+  /// No description provided for @tourBudgetAdvance.
+  ///
+  /// In en, this message translates to:
+  /// **'Advance'**
+  String get tourBudgetAdvance;
+
+  /// No description provided for @tourBudgetSanctioned.
+  ///
+  /// In en, this message translates to:
+  /// **'Sanctioned'**
+  String get tourBudgetSanctioned;
+
+  /// No description provided for @tourNotYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet'**
+  String get tourNotYet;
+
+  /// No description provided for @tourNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get tourNone;
+
+  /// No description provided for @tourTraveller.
+  ///
+  /// In en, this message translates to:
+  /// **'Traveller'**
+  String get tourTraveller;
+
+  /// No description provided for @tourHod.
+  ///
+  /// In en, this message translates to:
+  /// **'Head of department'**
+  String get tourHod;
+
+  /// No description provided for @tourAlone.
+  ///
+  /// In en, this message translates to:
+  /// **'Travelling alone'**
+  String get tourAlone;
+
+  /// No description provided for @tourValidUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid until'**
+  String get tourValidUntil;
+
+  /// No description provided for @tourHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get tourHistory;
+
+  /// No description provided for @tourPassportAlertTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Passport needs renewal'**
+  String get tourPassportAlertTitle;
+
+  /// No description provided for @tourPassportAlertBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid until {expiry}; the tour ends {end}. Most countries need six months\' validity — renew before booking.'**
+  String tourPassportAlertBody(Object expiry, Object end);
+
+  /// No description provided for @tourStartableFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved and funds sanctioned. You can start the tour from {date}.'**
+  String tourStartableFrom(Object date);
+
+  /// No description provided for @tourSeparation.
+  ///
+  /// In en, this message translates to:
+  /// **'You approved this as head of department, so another HR & Finance member must vet it.'**
+  String get tourSeparation;
+
+  /// No description provided for @tourLatestNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest note'**
+  String get tourLatestNote;
+
+  /// No description provided for @tourActApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get tourActApprove;
+
+  /// No description provided for @tourActVet.
+  ///
+  /// In en, this message translates to:
+  /// **'Vet & forward'**
+  String get tourActVet;
+
+  /// No description provided for @tourActApproveSanction.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve & sanction'**
+  String get tourActApproveSanction;
+
+  /// No description provided for @tourActSanction.
+  ///
+  /// In en, this message translates to:
+  /// **'Sanction tour'**
+  String get tourActSanction;
+
+  /// No description provided for @tourActReject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get tourActReject;
+
+  /// No description provided for @tourActStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start tour'**
+  String get tourActStart;
+
+  /// No description provided for @tourActComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark completed'**
+  String get tourActComplete;
+
+  /// No description provided for @tourActCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel request'**
+  String get tourActCancel;
+
+  /// No description provided for @tourActNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Add note'**
+  String get tourActNote;
+
+  /// No description provided for @tourApproveHod.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve as head of department'**
+  String get tourApproveHod;
+
+  /// No description provided for @tourApproveHodHint.
+  ///
+  /// In en, this message translates to:
+  /// **'It goes to HR & Finance for budget vetting next.'**
+  String get tourApproveHodHint;
+
+  /// No description provided for @tourVetHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the amount to sanction. The MD / Chairman are asked next.'**
+  String get tourVetHint;
+
+  /// No description provided for @tourVetLocalHint.
+  ///
+  /// In en, this message translates to:
+  /// **'HR & Finance approval completes a local tour and sanctions the funds.'**
+  String get tourVetLocalHint;
+
+  /// No description provided for @tourSanctionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your sanction approves the tour and releases the funds.'**
+  String get tourSanctionHint;
+
+  /// No description provided for @tourRejectHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A reason is required — the traveller sees it.'**
+  String get tourRejectHint;
+
+  /// No description provided for @tourCancelHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A reason is required. Whoever is handling it is told.'**
+  String get tourCancelHint;
+
+  /// No description provided for @tourStartHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your head of department is told you are on your way.'**
+  String get tourStartHint;
+
+  /// No description provided for @tourCompleteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Closes the tour. Any advance goes to HR & Finance for settlement.'**
+  String get tourCompleteHint;
+
+  /// No description provided for @tourNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept in the history; the other side is told.'**
+  String get tourNoteHint;
+
+  /// No description provided for @tourReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get tourReason;
+
+  /// No description provided for @tourNoteOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get tourNoteOptional;
+
+  /// No description provided for @tourNoteLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get tourNoteLabel;
+
+  /// No description provided for @tourSanctionedBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Sanctioned budget (৳)'**
+  String get tourSanctionedBudget;
+
+  /// No description provided for @tourReasonRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a short reason.'**
+  String get tourReasonRequired;
+
+  /// No description provided for @tourDoneApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved — the next approver has been told.'**
+  String get tourDoneApproved;
+
+  /// No description provided for @tourDoneSanctioned.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved — funds sanctioned and the traveller told.'**
+  String get tourDoneSanctioned;
+
+  /// No description provided for @tourDoneRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected — the traveller has been told why.'**
+  String get tourDoneRejected;
+
+  /// No description provided for @tourDoneStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Tour started. Safe travels!'**
+  String get tourDoneStarted;
+
+  /// No description provided for @tourDoneCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Tour marked completed.'**
+  String get tourDoneCompleted;
+
+  /// No description provided for @tourDoneCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Request cancelled.'**
+  String get tourDoneCancelled;
+
+  /// No description provided for @tourDoneNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note added.'**
+  String get tourDoneNote;
+
+  /// No description provided for @tourEvSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Applied'**
+  String get tourEvSubmitted;
+
+  /// No description provided for @tourEvHod.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved by head of department'**
+  String get tourEvHod;
+
+  /// No description provided for @tourEvVetted.
+  ///
+  /// In en, this message translates to:
+  /// **'Vetted by HR & Finance'**
+  String get tourEvVetted;
+
+  /// No description provided for @tourEvApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved & funds sanctioned'**
+  String get tourEvApproved;
+
+  /// No description provided for @tourEvSanctioned.
+  ///
+  /// In en, this message translates to:
+  /// **'Sanctioned by MD / Chairman'**
+  String get tourEvSanctioned;
+
+  /// No description provided for @tourEvRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get tourEvRejected;
+
+  /// No description provided for @tourEvStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Tour started'**
+  String get tourEvStarted;
+
+  /// No description provided for @tourEvCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Tour completed'**
+  String get tourEvCompleted;
+
+  /// No description provided for @tourEvCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Request cancelled'**
+  String get tourEvCancelled;
+
+  /// No description provided for @tourEvNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get tourEvNote;
+
+  /// No description provided for @tourEvBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Sanctioned budget set to {amount}'**
+  String tourEvBudget(Object amount);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

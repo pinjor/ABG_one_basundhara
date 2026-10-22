@@ -1487,4 +1487,547 @@ class LEn extends L {
   @override
   String get nbAuthorNote =>
       'You published this notice. See who has read it in the admin portal.';
+
+  @override
+  String get tourTitle => 'Official tours';
+
+  @override
+  String get tourApply => 'Apply for a tour';
+
+  @override
+  String get tourMyRequests => 'My requests';
+
+  @override
+  String get tourToApprove => 'To approve';
+
+  @override
+  String get tourFilterAll => 'All';
+
+  @override
+  String get tourFilterOpen => 'In progress';
+
+  @override
+  String get tourFilterClosed => 'Closed';
+
+  @override
+  String get tourNoRequests => 'No tour requests yet';
+
+  @override
+  String get tourNoRequestsHint =>
+      'Apply for a local or overseas tour and follow every approval here.';
+
+  @override
+  String get tourNothingToApprove => 'Nothing is waiting for you';
+
+  @override
+  String get tourNothingToApproveHint =>
+      'Requests you need to approve, vet or sanction appear here.';
+
+  @override
+  String tourWaitingCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count requests waiting for you',
+      one: '1 request waiting for you',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tourYourDecision => 'Your decision';
+
+  @override
+  String get tourReview => 'Review';
+
+  @override
+  String tourSanctioned(Object amount) {
+    return 'Sanctioned $amount';
+  }
+
+  @override
+  String get tourStatusPENDING_HOD => 'Pending HOD approval';
+
+  @override
+  String get tourStatusPENDING_VETTING => 'HR & Finance vetting';
+
+  @override
+  String get tourStatusPENDING_SANCTION => 'MD / Chairman sanction';
+
+  @override
+  String get tourStatusAPPROVED => 'Approved & funds sanctioned';
+
+  @override
+  String get tourStatusACTIVE => 'Tour active';
+
+  @override
+  String get tourStatusCOMPLETED => 'Completed';
+
+  @override
+  String get tourStatusREJECTED => 'Rejected';
+
+  @override
+  String get tourStatusCANCELLED => 'Cancelled';
+
+  @override
+  String get tourTypeLOCAL => 'Local';
+
+  @override
+  String get tourTypeFOREIGN => 'Foreign';
+
+  @override
+  String get tourPurposeCONFERENCE => 'Conference';
+
+  @override
+  String get tourPurposeTECHNICAL_INSPECTION => 'Technical inspection';
+
+  @override
+  String get tourPurposeVENDOR_AUDIT => 'Vendor audit';
+
+  @override
+  String get tourPurposeTRAINING => 'Training';
+
+  @override
+  String get tourPurposeCLIENT_MEETING => 'Client meeting';
+
+  @override
+  String get tourPurposePLANT_VISIT => 'Plant / site visit';
+
+  @override
+  String get tourPurposeOTHER => 'Other';
+
+  @override
+  String get tourTransportAIR => 'Air';
+
+  @override
+  String get tourTransportROAD => 'Road';
+
+  @override
+  String get tourTransportRAIL => 'Rail';
+
+  @override
+  String get tourTransportWATER => 'Water';
+
+  @override
+  String get tourTransportPOOL_CAR => 'Pool car';
+
+  @override
+  String get tourAwaitingHOD => 'Head of department';
+
+  @override
+  String get tourAwaitingVETTING => 'HR & Finance';
+
+  @override
+  String get tourAwaitingSANCTION => 'MD / Chairman';
+
+  @override
+  String tourDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tourPipeline => 'Approval pipeline';
+
+  @override
+  String get tourStageSUBMITTED => 'Submitted';
+
+  @override
+  String get tourStagePENDING_HOD => 'HOD approval';
+
+  @override
+  String get tourStagePENDING_VETTING => 'HR & Finance vetting';
+
+  @override
+  String get tourStagePENDING_SANCTION => 'MD / Chairman sanction';
+
+  @override
+  String get tourStageAPPROVED => 'Funds sanctioned';
+
+  @override
+  String get tourStageACTIVE => 'On tour';
+
+  @override
+  String get tourStageCOMPLETED => 'Completed';
+
+  @override
+  String tourWaitingFor(Object name) {
+    return 'Waiting for $name';
+  }
+
+  @override
+  String tourStageRejectedBy(Object name) {
+    return 'Rejected by $name';
+  }
+
+  @override
+  String get tourStageCancelled => 'Cancelled by the traveller';
+
+  @override
+  String get tourStageSkipped => 'Not reached';
+
+  @override
+  String get tourStageInProgress => 'In progress';
+
+  @override
+  String get tourFormIntro =>
+      'Your head of department approves first, then HR & Finance vet the budget. Overseas tours also need the MD\'s or Chairman\'s sanction.';
+
+  @override
+  String get tourWhere => 'Where are you going?';
+
+  @override
+  String get tourLocalHint => 'Within Bangladesh';
+
+  @override
+  String get tourForeignHint => 'Overseas · needs sanction';
+
+  @override
+  String get tourPurposeLabel => 'Purpose';
+
+  @override
+  String get tourTitleLabel => 'Title';
+
+  @override
+  String get tourTitleHint => 'e.g. Compressor vendor audit';
+
+  @override
+  String get tourDestinationLabel => 'Destination';
+
+  @override
+  String get tourDestinationHint => 'e.g. Chattogram LPG refinery';
+
+  @override
+  String get tourCityLabel => 'City / site';
+
+  @override
+  String get tourCountryLabel => 'Country';
+
+  @override
+  String get tourDatesLabel => 'Travel dates';
+
+  @override
+  String get tourPickDates => 'Choose your travel dates';
+
+  @override
+  String get tourTransportLabel => 'Transport';
+
+  @override
+  String get tourCoTravellers => 'Co-travellers';
+
+  @override
+  String get tourCoTravellerHint => 'Name of a colleague on the same trip';
+
+  @override
+  String get tourCoTravellerAdd => 'Add co-traveller';
+
+  @override
+  String tourRemove(Object name) {
+    return 'Remove $name';
+  }
+
+  @override
+  String get tourBudgetSection => 'Budget';
+
+  @override
+  String get tourEstimatedBudget => 'Estimated budget (৳)';
+
+  @override
+  String get tourBudgetHint => 'Fares, hotel, per diem and local transport';
+
+  @override
+  String get tourAdvance => 'Advance requested (৳)';
+
+  @override
+  String get tourPassportSection => 'Passport';
+
+  @override
+  String get tourPassportNumber => 'Passport number';
+
+  @override
+  String get tourPassportExpiry => 'Passport expiry date';
+
+  @override
+  String get tourPassportWarning =>
+      'Your passport expires within 6 months of your return. Most countries need 6 months\' validity — start the renewal now.';
+
+  @override
+  String get tourPassportExpired =>
+      'Your passport expires before you return. Renew it before applying.';
+
+  @override
+  String get tourApprover => 'Approver';
+
+  @override
+  String get tourApproverHint => 'Your head of department approves first.';
+
+  @override
+  String get tourChange => 'Change';
+
+  @override
+  String get tourChooseApprover => 'Choose approver';
+
+  @override
+  String get tourNoManager =>
+      'No line manager on record — choose who approves.';
+
+  @override
+  String tourManagerNoAccount(Object name) {
+    return '$name has no ABG ONE account — choose someone else.';
+  }
+
+  @override
+  String get tourSearchPeople => 'Search by name, ID or designation';
+
+  @override
+  String get tourNoAccount => 'No account';
+
+  @override
+  String get tourDescriptionLabel => 'Details (optional)';
+
+  @override
+  String get tourDescriptionHint =>
+      'Agenda, people you will meet, what the company gains';
+
+  @override
+  String get tourSubmit => 'Submit request';
+
+  @override
+  String tourSubmitted(Object reference) {
+    return '$reference sent for approval';
+  }
+
+  @override
+  String get tourErrTitle => 'Give the tour a short title.';
+
+  @override
+  String get tourErrDestination => 'Say where you are going.';
+
+  @override
+  String get tourErrCountry => 'Give the destination country.';
+
+  @override
+  String get tourErrDates => 'Choose your travel dates.';
+
+  @override
+  String get tourErrBudget => 'Enter the estimated budget in Taka.';
+
+  @override
+  String get tourErrAdvance => 'The advance cannot be more than the budget.';
+
+  @override
+  String get tourErrPassport => 'Enter your passport number and expiry date.';
+
+  @override
+  String get tourErrApprover => 'Choose who approves this tour.';
+
+  @override
+  String get tourOfflineNotice =>
+      'You\'re offline. Tour requests need a connection — try again when you\'re back online.';
+
+  @override
+  String get tourTrip => 'Trip';
+
+  @override
+  String get tourDeparture => 'Departure';
+
+  @override
+  String get tourReturn => 'Return';
+
+  @override
+  String get tourDuration => 'Duration';
+
+  @override
+  String get tourOffice => 'Office';
+
+  @override
+  String get tourBudgetEstimated => 'Estimated';
+
+  @override
+  String get tourBudgetAdvance => 'Advance';
+
+  @override
+  String get tourBudgetSanctioned => 'Sanctioned';
+
+  @override
+  String get tourNotYet => 'Not yet';
+
+  @override
+  String get tourNone => 'None';
+
+  @override
+  String get tourTraveller => 'Traveller';
+
+  @override
+  String get tourHod => 'Head of department';
+
+  @override
+  String get tourAlone => 'Travelling alone';
+
+  @override
+  String get tourValidUntil => 'Valid until';
+
+  @override
+  String get tourHistory => 'History';
+
+  @override
+  String get tourPassportAlertTitle => 'Passport needs renewal';
+
+  @override
+  String tourPassportAlertBody(Object expiry, Object end) {
+    return 'Valid until $expiry; the tour ends $end. Most countries need six months\' validity — renew before booking.';
+  }
+
+  @override
+  String tourStartableFrom(Object date) {
+    return 'Approved and funds sanctioned. You can start the tour from $date.';
+  }
+
+  @override
+  String get tourSeparation =>
+      'You approved this as head of department, so another HR & Finance member must vet it.';
+
+  @override
+  String get tourLatestNote => 'Latest note';
+
+  @override
+  String get tourActApprove => 'Approve';
+
+  @override
+  String get tourActVet => 'Vet & forward';
+
+  @override
+  String get tourActApproveSanction => 'Approve & sanction';
+
+  @override
+  String get tourActSanction => 'Sanction tour';
+
+  @override
+  String get tourActReject => 'Reject';
+
+  @override
+  String get tourActStart => 'Start tour';
+
+  @override
+  String get tourActComplete => 'Mark completed';
+
+  @override
+  String get tourActCancel => 'Cancel request';
+
+  @override
+  String get tourActNote => 'Add note';
+
+  @override
+  String get tourApproveHod => 'Approve as head of department';
+
+  @override
+  String get tourApproveHodHint =>
+      'It goes to HR & Finance for budget vetting next.';
+
+  @override
+  String get tourVetHint =>
+      'Confirm the amount to sanction. The MD / Chairman are asked next.';
+
+  @override
+  String get tourVetLocalHint =>
+      'HR & Finance approval completes a local tour and sanctions the funds.';
+
+  @override
+  String get tourSanctionHint =>
+      'Your sanction approves the tour and releases the funds.';
+
+  @override
+  String get tourRejectHint => 'A reason is required — the traveller sees it.';
+
+  @override
+  String get tourCancelHint =>
+      'A reason is required. Whoever is handling it is told.';
+
+  @override
+  String get tourStartHint =>
+      'Your head of department is told you are on your way.';
+
+  @override
+  String get tourCompleteHint =>
+      'Closes the tour. Any advance goes to HR & Finance for settlement.';
+
+  @override
+  String get tourNoteHint => 'Kept in the history; the other side is told.';
+
+  @override
+  String get tourReason => 'Reason';
+
+  @override
+  String get tourNoteOptional => 'Note (optional)';
+
+  @override
+  String get tourNoteLabel => 'Note';
+
+  @override
+  String get tourSanctionedBudget => 'Sanctioned budget (৳)';
+
+  @override
+  String get tourReasonRequired => 'Write a short reason.';
+
+  @override
+  String get tourDoneApproved => 'Approved — the next approver has been told.';
+
+  @override
+  String get tourDoneSanctioned =>
+      'Approved — funds sanctioned and the traveller told.';
+
+  @override
+  String get tourDoneRejected => 'Rejected — the traveller has been told why.';
+
+  @override
+  String get tourDoneStarted => 'Tour started. Safe travels!';
+
+  @override
+  String get tourDoneCompleted => 'Tour marked completed.';
+
+  @override
+  String get tourDoneCancelled => 'Request cancelled.';
+
+  @override
+  String get tourDoneNote => 'Note added.';
+
+  @override
+  String get tourEvSubmitted => 'Applied';
+
+  @override
+  String get tourEvHod => 'Approved by head of department';
+
+  @override
+  String get tourEvVetted => 'Vetted by HR & Finance';
+
+  @override
+  String get tourEvApproved => 'Approved & funds sanctioned';
+
+  @override
+  String get tourEvSanctioned => 'Sanctioned by MD / Chairman';
+
+  @override
+  String get tourEvRejected => 'Rejected';
+
+  @override
+  String get tourEvStarted => 'Tour started';
+
+  @override
+  String get tourEvCompleted => 'Tour completed';
+
+  @override
+  String get tourEvCancelled => 'Request cancelled';
+
+  @override
+  String get tourEvNote => 'Note';
+
+  @override
+  String tourEvBudget(Object amount) {
+    return 'Sanctioned budget set to $amount';
+  }
 }

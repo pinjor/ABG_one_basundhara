@@ -611,5 +611,229 @@
   },
   "nbAckExpired": "This notice has expired and can no longer be acknowledged.",
   "nbNoAckNeeded": "For your information — no acknowledgement needed.",
-  "nbAuthorNote": "You published this notice. See who has read it in the admin portal."
+  "nbAuthorNote": "You published this notice. See who has read it in the admin portal.",
+  "tourTitle": "Official tours",
+  "tourApply": "Apply for a tour",
+  "tourMyRequests": "My requests",
+  "tourToApprove": "To approve",
+  "tourFilterAll": "All",
+  "tourFilterOpen": "In progress",
+  "tourFilterClosed": "Closed",
+  "tourNoRequests": "No tour requests yet",
+  "tourNoRequestsHint": "Apply for a local or overseas tour and follow every approval here.",
+  "tourNothingToApprove": "Nothing is waiting for you",
+  "tourNothingToApproveHint": "Requests you need to approve, vet or sanction appear here.",
+  "tourWaitingCount": "{count, plural, =1{1 request waiting for you} other{{count} requests waiting for you}}",
+  "@tourWaitingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tourYourDecision": "Your decision",
+  "tourReview": "Review",
+  "tourSanctioned": "Sanctioned {amount}",
+  "@tourSanctioned": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "tourStatusPENDING_HOD": "Pending HOD approval",
+  "tourStatusPENDING_VETTING": "HR & Finance vetting",
+  "tourStatusPENDING_SANCTION": "MD / Chairman sanction",
+  "tourStatusAPPROVED": "Approved & funds sanctioned",
+  "tourStatusACTIVE": "Tour active",
+  "tourStatusCOMPLETED": "Completed",
+  "tourStatusREJECTED": "Rejected",
+  "tourStatusCANCELLED": "Cancelled",
+  "tourTypeLOCAL": "Local",
+  "tourTypeFOREIGN": "Foreign",
+  "tourPurposeCONFERENCE": "Conference",
+  "tourPurposeTECHNICAL_INSPECTION": "Technical inspection",
+  "tourPurposeVENDOR_AUDIT": "Vendor audit",
+  "tourPurposeTRAINING": "Training",
+  "tourPurposeCLIENT_MEETING": "Client meeting",
+  "tourPurposePLANT_VISIT": "Plant / site visit",
+  "tourPurposeOTHER": "Other",
+  "tourTransportAIR": "Air",
+  "tourTransportROAD": "Road",
+  "tourTransportRAIL": "Rail",
+  "tourTransportWATER": "Water",
+  "tourTransportPOOL_CAR": "Pool car",
+  "tourAwaitingHOD": "Head of department",
+  "tourAwaitingVETTING": "HR & Finance",
+  "tourAwaitingSANCTION": "MD / Chairman",
+  "tourDays": "{count, plural, =1{1 day} other{{count} days}}",
+  "@tourDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tourPipeline": "Approval pipeline",
+  "tourStageSUBMITTED": "Submitted",
+  "tourStagePENDING_HOD": "HOD approval",
+  "tourStagePENDING_VETTING": "HR & Finance vetting",
+  "tourStagePENDING_SANCTION": "MD / Chairman sanction",
+  "tourStageAPPROVED": "Funds sanctioned",
+  "tourStageACTIVE": "On tour",
+  "tourStageCOMPLETED": "Completed",
+  "tourWaitingFor": "Waiting for {name}",
+  "@tourWaitingFor": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "tourStageRejectedBy": "Rejected by {name}",
+  "@tourStageRejectedBy": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "tourStageCancelled": "Cancelled by the traveller",
+  "tourStageSkipped": "Not reached",
+  "tourStageInProgress": "In progress",
+  "tourFormIntro": "Your head of department approves first, then HR & Finance vet the budget. Overseas tours also need the MD's or Chairman's sanction.",
+  "tourWhere": "Where are you going?",
+  "tourLocalHint": "Within Bangladesh",
+  "tourForeignHint": "Overseas · needs sanction",
+  "tourPurposeLabel": "Purpose",
+  "tourTitleLabel": "Title",
+  "tourTitleHint": "e.g. Compressor vendor audit",
+  "tourDestinationLabel": "Destination",
+  "tourDestinationHint": "e.g. Chattogram LPG refinery",
+  "tourCityLabel": "City / site",
+  "tourCountryLabel": "Country",
+  "tourDatesLabel": "Travel dates",
+  "tourPickDates": "Choose your travel dates",
+  "tourTransportLabel": "Transport",
+  "tourCoTravellers": "Co-travellers",
+  "tourCoTravellerHint": "Name of a colleague on the same trip",
+  "tourCoTravellerAdd": "Add co-traveller",
+  "tourRemove": "Remove {name}",
+  "@tourRemove": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "tourBudgetSection": "Budget",
+  "tourEstimatedBudget": "Estimated budget (৳)",
+  "tourBudgetHint": "Fares, hotel, per diem and local transport",
+  "tourAdvance": "Advance requested (৳)",
+  "tourPassportSection": "Passport",
+  "tourPassportNumber": "Passport number",
+  "tourPassportExpiry": "Passport expiry date",
+  "tourPassportWarning": "Your passport expires within 6 months of your return. Most countries need 6 months' validity — start the renewal now.",
+  "tourPassportExpired": "Your passport expires before you return. Renew it before applying.",
+  "tourApprover": "Approver",
+  "tourApproverHint": "Your head of department approves first.",
+  "tourChange": "Change",
+  "tourChooseApprover": "Choose approver",
+  "tourNoManager": "No line manager on record — choose who approves.",
+  "tourManagerNoAccount": "{name} has no ABG ONE account — choose someone else.",
+  "@tourManagerNoAccount": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "tourSearchPeople": "Search by name, ID or designation",
+  "tourNoAccount": "No account",
+  "tourDescriptionLabel": "Details (optional)",
+  "tourDescriptionHint": "Agenda, people you will meet, what the company gains",
+  "tourSubmit": "Submit request",
+  "tourSubmitted": "{reference} sent for approval",
+  "@tourSubmitted": {
+    "placeholders": {
+      "reference": {}
+    }
+  },
+  "tourErrTitle": "Give the tour a short title.",
+  "tourErrDestination": "Say where you are going.",
+  "tourErrCountry": "Give the destination country.",
+  "tourErrDates": "Choose your travel dates.",
+  "tourErrBudget": "Enter the estimated budget in Taka.",
+  "tourErrAdvance": "The advance cannot be more than the budget.",
+  "tourErrPassport": "Enter your passport number and expiry date.",
+  "tourErrApprover": "Choose who approves this tour.",
+  "tourOfflineNotice": "You're offline. Tour requests need a connection — try again when you're back online.",
+  "tourTrip": "Trip",
+  "tourDeparture": "Departure",
+  "tourReturn": "Return",
+  "tourDuration": "Duration",
+  "tourOffice": "Office",
+  "tourBudgetEstimated": "Estimated",
+  "tourBudgetAdvance": "Advance",
+  "tourBudgetSanctioned": "Sanctioned",
+  "tourNotYet": "Not yet",
+  "tourNone": "None",
+  "tourTraveller": "Traveller",
+  "tourHod": "Head of department",
+  "tourAlone": "Travelling alone",
+  "tourValidUntil": "Valid until",
+  "tourHistory": "History",
+  "tourPassportAlertTitle": "Passport needs renewal",
+  "tourPassportAlertBody": "Valid until {expiry}; the tour ends {end}. Most countries need six months' validity — renew before booking.",
+  "@tourPassportAlertBody": {
+    "placeholders": {
+      "expiry": {},
+      "end": {}
+    }
+  },
+  "tourStartableFrom": "Approved and funds sanctioned. You can start the tour from {date}.",
+  "@tourStartableFrom": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "tourSeparation": "You approved this as head of department, so another HR & Finance member must vet it.",
+  "tourLatestNote": "Latest note",
+  "tourActApprove": "Approve",
+  "tourActVet": "Vet & forward",
+  "tourActApproveSanction": "Approve & sanction",
+  "tourActSanction": "Sanction tour",
+  "tourActReject": "Reject",
+  "tourActStart": "Start tour",
+  "tourActComplete": "Mark completed",
+  "tourActCancel": "Cancel request",
+  "tourActNote": "Add note",
+  "tourApproveHod": "Approve as head of department",
+  "tourApproveHodHint": "It goes to HR & Finance for budget vetting next.",
+  "tourVetHint": "Confirm the amount to sanction. The MD / Chairman are asked next.",
+  "tourVetLocalHint": "HR & Finance approval completes a local tour and sanctions the funds.",
+  "tourSanctionHint": "Your sanction approves the tour and releases the funds.",
+  "tourRejectHint": "A reason is required — the traveller sees it.",
+  "tourCancelHint": "A reason is required. Whoever is handling it is told.",
+  "tourStartHint": "Your head of department is told you are on your way.",
+  "tourCompleteHint": "Closes the tour. Any advance goes to HR & Finance for settlement.",
+  "tourNoteHint": "Kept in the history; the other side is told.",
+  "tourReason": "Reason",
+  "tourNoteOptional": "Note (optional)",
+  "tourNoteLabel": "Note",
+  "tourSanctionedBudget": "Sanctioned budget (৳)",
+  "tourReasonRequired": "Write a short reason.",
+  "tourDoneApproved": "Approved — the next approver has been told.",
+  "tourDoneSanctioned": "Approved — funds sanctioned and the traveller told.",
+  "tourDoneRejected": "Rejected — the traveller has been told why.",
+  "tourDoneStarted": "Tour started. Safe travels!",
+  "tourDoneCompleted": "Tour marked completed.",
+  "tourDoneCancelled": "Request cancelled.",
+  "tourDoneNote": "Note added.",
+  "tourEvSubmitted": "Applied",
+  "tourEvHod": "Approved by head of department",
+  "tourEvVetted": "Vetted by HR & Finance",
+  "tourEvApproved": "Approved & funds sanctioned",
+  "tourEvSanctioned": "Sanctioned by MD / Chairman",
+  "tourEvRejected": "Rejected",
+  "tourEvStarted": "Tour started",
+  "tourEvCompleted": "Tour completed",
+  "tourEvCancelled": "Request cancelled",
+  "tourEvNote": "Note",
+  "tourEvBudget": "Sanctioned budget set to {amount}",
+  "@tourEvBudget": {
+    "placeholders": {
+      "amount": {}
+    }
+  }
 }
