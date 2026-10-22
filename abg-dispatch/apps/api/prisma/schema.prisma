@@ -973,6 +973,9 @@ model Vehicle {
   branchId           String
   branch             Branch           @relation(fields: [branchId], references: [id])
   status             String           @default("AVAILABLE")
+  /// Why it is in maintenance or out of service ("AC compressor replacement at the Tejgaon workshop").
+  statusNote         String?
+  statusChangedAt    DateTime         @default(now())
   odometerKm         Int              @default(0)
   nextServiceAt      DateTime?        @db.Date
   fitnessExpiry      DateTime?        @db.Date
@@ -1058,6 +1061,7 @@ model CarRequisition {
   @@index([approverUserId, status])
   @@index([branchId, status])
   @@index([driverId, status])
+  @@index([vehicleId, status])
   @@map("car_requisitions")
 }
 
