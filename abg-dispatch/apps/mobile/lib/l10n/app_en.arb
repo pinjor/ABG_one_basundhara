@@ -536,6 +536,177 @@
   "myCars": "My pool car requests",
   "myVisitors": "My visitors",
   "myApprovals": "Waiting for my approval",
+  "licTitle": "Licences",
+  "licRegister": "Licence register",
+  "licReadOnlyNote": "Changes are made by the compliance team in the ABG ONE portal.",
+  "licFilterAll": "All",
+  "licFilterEXPIRING": "Expiring",
+  "licFilterDUE_SOON": "Renewal due",
+  "licFilterEXPIRED": "Expired",
+  "licFilterRENEWAL_IN_PROGRESS": "Renewal in progress",
+  "licFilterVALID": "Valid",
+  "licStateVALID": "Valid",
+  "licStateDUE_SOON": "Renewal due",
+  "licStateEXPIRING": "Expiring",
+  "licStateEXPIRED": "Expired",
+  "licRetired": "Retired",
+  "licRetiredNotice": "Retired from the register — no alerts are sent.",
+  "licDaysLeft": "{count, plural, =1{1 day left} other{{count} days left}}",
+  "@licDaysLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "licExpiresToday": "Expires today",
+  "licExpiredAgo": "{count, plural, =1{Expired 1 day ago} other{Expired {count} days ago}}",
+  "@licExpiredAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "licCaptionLeft": "{count, plural, =1{day left} other{days left}}",
+  "@licCaptionLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "licCaptionOverdue": "{count, plural, =1{day overdue} other{days overdue}}",
+  "@licCaptionOverdue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "licCaptionToday": "expiry day",
+  "licToday": "Today",
+  "licWithin30": "≤ 30 days",
+  "licNextToExpire": "Next to expire",
+  "licNoLicences": "No licences here",
+  "licNoLicencesHint": "Try another filter. Licences for the offices you look after appear here.",
+  "licRenewal": "Renewal",
+  "licRenewalProgress": "Renewal progress",
+  "licStageNOT_STARTED": "Not started",
+  "licStageDOCUMENTS_PREPARED": "Documents prepared",
+  "licStageAPPLICATION_SUBMITTED": "Application submitted",
+  "licStageINSPECTION_SCHEDULED": "Inspection scheduled",
+  "licStageFEE_PAID": "Fee paid",
+  "licStageRENEWED": "Renewed",
+  "licStartedOn": "Started {date}",
+  "@licStartedOn": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "licNotStartedHint": "Renewal has not started yet. The renewal window opens on {date}.",
+  "@licNotStartedHint": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "licWindowOpenHint": "Renewal has not started yet. The renewal window opened on {date}.",
+  "@licWindowOpenHint": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "licNextStep": "Next",
+  "licCatTRADE": "Trade licence",
+  "licCatFACTORY": "Factory licence",
+  "licCatENVIRONMENT": "Environmental clearance",
+  "licCatFIRE_SAFETY": "Fire safety",
+  "licCatENERGY_REGULATORY": "Energy regulatory (BERC)",
+  "licCatEXPLOSIVES": "Explosives / LPG storage",
+  "licCatBOILER": "Boiler certificate",
+  "licCatIMPORT_EXPORT": "Import / export (IRC / ERC)",
+  "licCatSTANDARDS": "Standards (BSTI)",
+  "licCatOTHER": "Other",
+  "licDetails": "Details",
+  "licNumber": "Licence number",
+  "licKind": "Kind of licence",
+  "licAuthority": "Issuing authority",
+  "licOffice": "Office",
+  "licOwner": "Owner",
+  "licNoOwner": "Not set — alerts go to the compliance team",
+  "licIssuedOn": "Issued on",
+  "licExpiresOn": "Expires on",
+  "licExpiredOn": "Expired on",
+  "licWindow": "Renewal window",
+  "licWindowValue": "{days} days before expiry",
+  "@licWindowValue": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "licFee": "Renewal fee",
+  "licFeeValue": "Tk {amount}",
+  "@licFeeValue": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "licNotes": "Notes",
+  "licNextAlert": "Next alert on {date}",
+  "@licNextAlert": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "licAllAlertsSent": "All expiry alerts for this date have gone out.",
+  "licScan": "Scanned copy",
+  "licViewScan": "View scanned copy",
+  "licNoScan": "No scanned copy yet.",
+  "licPdf": "PDF document",
+  "licImage": "Image",
+  "licOpenFailed": "Couldn't open the document. Check your connection and try again.",
+  "licHistory": "History",
+  "licEvCreated": "Added to the register",
+  "licEvDetails": "Details changed",
+  "licEvRetired": "Retired from the register",
+  "licEvRestored": "Back in use",
+  "licEvStage": "Renewal moved to {stage}",
+  "@licEvStage": {
+    "placeholders": {
+      "stage": {}
+    }
+  },
+  "licEvStageBack": "Renewal moved back to {stage}",
+  "@licEvStageBack": {
+    "placeholders": {
+      "stage": {}
+    }
+  },
+  "licEvRenewed": "Renewed until {date}",
+  "@licEvRenewed": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "licEvDocument": "Scanned copy uploaded",
+  "licEvAlert": "Expiry alert: {days} days before",
+  "@licEvAlert": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "licEvAlertDay": "Expiry alert: expiry day",
+  "licEvNote": "Note",
+  "licEvNotified": "Sent to {names}",
+  "@licEvNotified": {
+    "placeholders": {
+      "names": {}
+    }
+  },
   "nbTitle": "Notice board",
   "nbSubtitle": "Official notices from the Chairman, the MD, HR and administration",
   "nbFilterAll": "All",

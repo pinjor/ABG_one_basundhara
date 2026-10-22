@@ -1304,6 +1304,317 @@ class LBn extends L {
   String get myApprovals => 'আমার অনুমোদনের অপেক্ষায়';
 
   @override
+  String get licTitle => 'লাইসেন্স';
+
+  @override
+  String get licRegister => 'লাইসেন্স রেজিস্টার';
+
+  @override
+  String get licReadOnlyNote =>
+      'পরিবর্তন কমপ্লায়েন্স টিম ABG ONE পোর্টালে করে।';
+
+  @override
+  String get licFilterAll => 'সব';
+
+  @override
+  String get licFilterEXPIRING => 'মেয়াদ শেষ হচ্ছে';
+
+  @override
+  String get licFilterDUE_SOON => 'নবায়নের সময়';
+
+  @override
+  String get licFilterEXPIRED => 'মেয়াদোত্তীর্ণ';
+
+  @override
+  String get licFilterRENEWAL_IN_PROGRESS => 'নবায়ন চলছে';
+
+  @override
+  String get licFilterVALID => 'বৈধ';
+
+  @override
+  String get licStateVALID => 'বৈধ';
+
+  @override
+  String get licStateDUE_SOON => 'নবায়নের সময় হয়েছে';
+
+  @override
+  String get licStateEXPIRING => 'মেয়াদ শেষ হচ্ছে';
+
+  @override
+  String get licStateEXPIRED => 'মেয়াদোত্তীর্ণ';
+
+  @override
+  String get licRetired => 'ব্যবহার বন্ধ';
+
+  @override
+  String get licRetiredNotice =>
+      'রেজিস্টার থেকে বাদ দেওয়া হয়েছে — কোনো সতর্কবার্তা পাঠানো হয় না।';
+
+  @override
+  String licDaysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count দিন বাকি',
+      one: '১ দিন বাকি',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get licExpiresToday => 'আজ মেয়াদ শেষ';
+
+  @override
+  String licExpiredAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count দিন আগে মেয়াদ শেষ',
+      one: '১ দিন আগে মেয়াদ শেষ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String licCaptionLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'দিন বাকি',
+      one: 'দিন বাকি',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String licCaptionOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'দিন পেরিয়েছে',
+      one: 'দিন পেরিয়েছে',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get licCaptionToday => 'মেয়াদের শেষ দিন';
+
+  @override
+  String get licToday => 'আজ';
+
+  @override
+  String get licWithin30 => '≤ ৩০ দিন';
+
+  @override
+  String get licNextToExpire => 'পরবর্তী মেয়াদ শেষ';
+
+  @override
+  String get licNoLicences => 'এখানে কোনো লাইসেন্স নেই';
+
+  @override
+  String get licNoLicencesHint =>
+      'অন্য ফিল্টার বেছে নিন। আপনার দায়িত্বের অফিসগুলোর লাইসেন্স এখানে দেখা যাবে।';
+
+  @override
+  String get licRenewal => 'নবায়ন';
+
+  @override
+  String get licRenewalProgress => 'নবায়নের অগ্রগতি';
+
+  @override
+  String get licStageNOT_STARTED => 'শুরু হয়নি';
+
+  @override
+  String get licStageDOCUMENTS_PREPARED => 'কাগজপত্র প্রস্তুত';
+
+  @override
+  String get licStageAPPLICATION_SUBMITTED => 'আবেদন জমা হয়েছে';
+
+  @override
+  String get licStageINSPECTION_SCHEDULED => 'পরিদর্শন নির্ধারিত';
+
+  @override
+  String get licStageFEE_PAID => 'ফি পরিশোধিত';
+
+  @override
+  String get licStageRENEWED => 'নবায়িত';
+
+  @override
+  String licStartedOn(Object date) {
+    return 'শুরু $date';
+  }
+
+  @override
+  String licNotStartedHint(Object date) {
+    return 'নবায়ন এখনো শুরু হয়নি। নবায়নের সময় শুরু $date।';
+  }
+
+  @override
+  String licWindowOpenHint(Object date) {
+    return 'নবায়ন এখনো শুরু হয়নি। নবায়নের সময় শুরু হয়েছে $date।';
+  }
+
+  @override
+  String get licNextStep => 'পরবর্তী';
+
+  @override
+  String get licCatTRADE => 'ট্রেড লাইসেন্স';
+
+  @override
+  String get licCatFACTORY => 'কারখানা লাইসেন্স';
+
+  @override
+  String get licCatENVIRONMENT => 'পরিবেশ ছাড়পত্র';
+
+  @override
+  String get licCatFIRE_SAFETY => 'অগ্নি নিরাপত্তা';
+
+  @override
+  String get licCatENERGY_REGULATORY => 'জ্বালানি নিয়ন্ত্রণ (বিইআরসি)';
+
+  @override
+  String get licCatEXPLOSIVES => 'বিস্ফোরক / এলপিজি মজুত';
+
+  @override
+  String get licCatBOILER => 'বয়লার সনদ';
+
+  @override
+  String get licCatIMPORT_EXPORT => 'আমদানি / রপ্তানি (আইআরসি / ইআরসি)';
+
+  @override
+  String get licCatSTANDARDS => 'মান সনদ (বিএসটিআই)';
+
+  @override
+  String get licCatOTHER => 'অন্যান্য';
+
+  @override
+  String get licDetails => 'বিস্তারিত';
+
+  @override
+  String get licNumber => 'লাইসেন্স নম্বর';
+
+  @override
+  String get licKind => 'লাইসেন্সের ধরন';
+
+  @override
+  String get licAuthority => 'ইস্যুকারী কর্তৃপক্ষ';
+
+  @override
+  String get licOffice => 'অফিস';
+
+  @override
+  String get licOwner => 'দায়িত্বপ্রাপ্ত ব্যক্তি';
+
+  @override
+  String get licNoOwner =>
+      'নির্ধারিত নয় — সতর্কবার্তা কমপ্লায়েন্স টিমের কাছে যায়';
+
+  @override
+  String get licIssuedOn => 'ইস্যুর তারিখ';
+
+  @override
+  String get licExpiresOn => 'মেয়াদ শেষের তারিখ';
+
+  @override
+  String get licExpiredOn => 'মেয়াদ শেষ হয়েছে';
+
+  @override
+  String get licWindow => 'নবায়নের সময়সীমা';
+
+  @override
+  String licWindowValue(int days) {
+    return 'মেয়াদ শেষের $days দিন আগে';
+  }
+
+  @override
+  String get licFee => 'নবায়ন ফি';
+
+  @override
+  String licFeeValue(Object amount) {
+    return '$amount টাকা';
+  }
+
+  @override
+  String get licNotes => 'নোট';
+
+  @override
+  String licNextAlert(Object date) {
+    return 'পরবর্তী সতর্কবার্তা $date';
+  }
+
+  @override
+  String get licAllAlertsSent => 'এই মেয়াদের সব সতর্কবার্তা পাঠানো হয়েছে।';
+
+  @override
+  String get licScan => 'স্ক্যান কপি';
+
+  @override
+  String get licViewScan => 'স্ক্যান কপি দেখুন';
+
+  @override
+  String get licNoScan => 'এখনো কোনো স্ক্যান কপি নেই।';
+
+  @override
+  String get licPdf => 'পিডিএফ ডকুমেন্ট';
+
+  @override
+  String get licImage => 'ছবি';
+
+  @override
+  String get licOpenFailed =>
+      'ডকুমেন্টটি খোলা যায়নি। সংযোগ দেখে আবার চেষ্টা করুন।';
+
+  @override
+  String get licHistory => 'ইতিহাস';
+
+  @override
+  String get licEvCreated => 'রেজিস্টারে যোগ হয়েছে';
+
+  @override
+  String get licEvDetails => 'বিস্তারিত পরিবর্তন হয়েছে';
+
+  @override
+  String get licEvRetired => 'রেজিস্টার থেকে বাদ দেওয়া হয়েছে';
+
+  @override
+  String get licEvRestored => 'আবার ব্যবহারে';
+
+  @override
+  String licEvStage(Object stage) {
+    return 'নবায়ন এখন: $stage';
+  }
+
+  @override
+  String licEvStageBack(Object stage) {
+    return 'নবায়ন ফিরে গেছে: $stage';
+  }
+
+  @override
+  String licEvRenewed(Object date) {
+    return '$date পর্যন্ত নবায়িত';
+  }
+
+  @override
+  String get licEvDocument => 'স্ক্যান কপি আপলোড হয়েছে';
+
+  @override
+  String licEvAlert(int days) {
+    return 'মেয়াদ সতর্কবার্তা: $days দিন আগে';
+  }
+
+  @override
+  String get licEvAlertDay => 'মেয়াদ সতর্কবার্তা: মেয়াদের শেষ দিন';
+
+  @override
+  String get licEvNote => 'নোট';
+
+  @override
+  String licEvNotified(Object names) {
+    return 'পাঠানো হয়েছে: $names';
+  }
+
+  @override
   String get nbTitle => 'নোটিশ বোর্ড';
 
   @override

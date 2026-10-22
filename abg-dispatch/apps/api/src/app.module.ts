@@ -43,6 +43,7 @@ import { VisitorsController } from "./visitors/visitors.controller";
 import { VisitorsService } from "./visitors/visitors.service";
 import { LicencesController } from "./licences/licences.controller";
 import { LicencesService } from "./licences/licences.service";
+import { LicenceAlertsService } from "./licences/licence-alerts.service";
 import { NoticesController } from "./notices/notices.controller";
 import { NoticesService } from "./notices/notices.service";
 
@@ -72,6 +73,7 @@ import { NoticesService } from "./notices/notices.service";
     FleetService,
     VisitorsService,
     LicencesService,
+    LicenceAlertsService,
     NoticesService,
     { provide: APP_CONFIG, useFactory: loadConfig },
     { provide: APP_GUARD, useClass: AuthGuard },

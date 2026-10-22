@@ -2497,6 +2497,510 @@ abstract class L {
   /// **'Waiting for my approval'**
   String get myApprovals;
 
+  /// No description provided for @licTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Licences'**
+  String get licTitle;
+
+  /// No description provided for @licRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Licence register'**
+  String get licRegister;
+
+  /// No description provided for @licReadOnlyNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes are made by the compliance team in the ABG ONE portal.'**
+  String get licReadOnlyNote;
+
+  /// No description provided for @licFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get licFilterAll;
+
+  /// No description provided for @licFilterEXPIRING.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiring'**
+  String get licFilterEXPIRING;
+
+  /// No description provided for @licFilterDUE_SOON.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal due'**
+  String get licFilterDUE_SOON;
+
+  /// No description provided for @licFilterEXPIRED.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get licFilterEXPIRED;
+
+  /// No description provided for @licFilterRENEWAL_IN_PROGRESS.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal in progress'**
+  String get licFilterRENEWAL_IN_PROGRESS;
+
+  /// No description provided for @licFilterVALID.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid'**
+  String get licFilterVALID;
+
+  /// No description provided for @licStateVALID.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid'**
+  String get licStateVALID;
+
+  /// No description provided for @licStateDUE_SOON.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal due'**
+  String get licStateDUE_SOON;
+
+  /// No description provided for @licStateEXPIRING.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiring'**
+  String get licStateEXPIRING;
+
+  /// No description provided for @licStateEXPIRED.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get licStateEXPIRED;
+
+  /// No description provided for @licRetired.
+  ///
+  /// In en, this message translates to:
+  /// **'Retired'**
+  String get licRetired;
+
+  /// No description provided for @licRetiredNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Retired from the register — no alerts are sent.'**
+  String get licRetiredNotice;
+
+  /// No description provided for @licDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day left} other{{count} days left}}'**
+  String licDaysLeft(int count);
+
+  /// No description provided for @licExpiresToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires today'**
+  String get licExpiresToday;
+
+  /// No description provided for @licExpiredAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Expired 1 day ago} other{Expired {count} days ago}}'**
+  String licExpiredAgo(int count);
+
+  /// No description provided for @licCaptionLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{day left} other{days left}}'**
+  String licCaptionLeft(int count);
+
+  /// No description provided for @licCaptionOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{day overdue} other{days overdue}}'**
+  String licCaptionOverdue(int count);
+
+  /// No description provided for @licCaptionToday.
+  ///
+  /// In en, this message translates to:
+  /// **'expiry day'**
+  String get licCaptionToday;
+
+  /// No description provided for @licToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get licToday;
+
+  /// No description provided for @licWithin30.
+  ///
+  /// In en, this message translates to:
+  /// **'≤ 30 days'**
+  String get licWithin30;
+
+  /// No description provided for @licNextToExpire.
+  ///
+  /// In en, this message translates to:
+  /// **'Next to expire'**
+  String get licNextToExpire;
+
+  /// No description provided for @licNoLicences.
+  ///
+  /// In en, this message translates to:
+  /// **'No licences here'**
+  String get licNoLicences;
+
+  /// No description provided for @licNoLicencesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Try another filter. Licences for the offices you look after appear here.'**
+  String get licNoLicencesHint;
+
+  /// No description provided for @licRenewal.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal'**
+  String get licRenewal;
+
+  /// No description provided for @licRenewalProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal progress'**
+  String get licRenewalProgress;
+
+  /// No description provided for @licStageNOT_STARTED.
+  ///
+  /// In en, this message translates to:
+  /// **'Not started'**
+  String get licStageNOT_STARTED;
+
+  /// No description provided for @licStageDOCUMENTS_PREPARED.
+  ///
+  /// In en, this message translates to:
+  /// **'Documents prepared'**
+  String get licStageDOCUMENTS_PREPARED;
+
+  /// No description provided for @licStageAPPLICATION_SUBMITTED.
+  ///
+  /// In en, this message translates to:
+  /// **'Application submitted'**
+  String get licStageAPPLICATION_SUBMITTED;
+
+  /// No description provided for @licStageINSPECTION_SCHEDULED.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspection scheduled'**
+  String get licStageINSPECTION_SCHEDULED;
+
+  /// No description provided for @licStageFEE_PAID.
+  ///
+  /// In en, this message translates to:
+  /// **'Fee paid'**
+  String get licStageFEE_PAID;
+
+  /// No description provided for @licStageRENEWED.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewed'**
+  String get licStageRENEWED;
+
+  /// No description provided for @licStartedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Started {date}'**
+  String licStartedOn(Object date);
+
+  /// No description provided for @licNotStartedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal has not started yet. The renewal window opens on {date}.'**
+  String licNotStartedHint(Object date);
+
+  /// No description provided for @licWindowOpenHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal has not started yet. The renewal window opened on {date}.'**
+  String licWindowOpenHint(Object date);
+
+  /// No description provided for @licNextStep.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get licNextStep;
+
+  /// No description provided for @licCatTRADE.
+  ///
+  /// In en, this message translates to:
+  /// **'Trade licence'**
+  String get licCatTRADE;
+
+  /// No description provided for @licCatFACTORY.
+  ///
+  /// In en, this message translates to:
+  /// **'Factory licence'**
+  String get licCatFACTORY;
+
+  /// No description provided for @licCatENVIRONMENT.
+  ///
+  /// In en, this message translates to:
+  /// **'Environmental clearance'**
+  String get licCatENVIRONMENT;
+
+  /// No description provided for @licCatFIRE_SAFETY.
+  ///
+  /// In en, this message translates to:
+  /// **'Fire safety'**
+  String get licCatFIRE_SAFETY;
+
+  /// No description provided for @licCatENERGY_REGULATORY.
+  ///
+  /// In en, this message translates to:
+  /// **'Energy regulatory (BERC)'**
+  String get licCatENERGY_REGULATORY;
+
+  /// No description provided for @licCatEXPLOSIVES.
+  ///
+  /// In en, this message translates to:
+  /// **'Explosives / LPG storage'**
+  String get licCatEXPLOSIVES;
+
+  /// No description provided for @licCatBOILER.
+  ///
+  /// In en, this message translates to:
+  /// **'Boiler certificate'**
+  String get licCatBOILER;
+
+  /// No description provided for @licCatIMPORT_EXPORT.
+  ///
+  /// In en, this message translates to:
+  /// **'Import / export (IRC / ERC)'**
+  String get licCatIMPORT_EXPORT;
+
+  /// No description provided for @licCatSTANDARDS.
+  ///
+  /// In en, this message translates to:
+  /// **'Standards (BSTI)'**
+  String get licCatSTANDARDS;
+
+  /// No description provided for @licCatOTHER.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get licCatOTHER;
+
+  /// No description provided for @licDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get licDetails;
+
+  /// No description provided for @licNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Licence number'**
+  String get licNumber;
+
+  /// No description provided for @licKind.
+  ///
+  /// In en, this message translates to:
+  /// **'Kind of licence'**
+  String get licKind;
+
+  /// No description provided for @licAuthority.
+  ///
+  /// In en, this message translates to:
+  /// **'Issuing authority'**
+  String get licAuthority;
+
+  /// No description provided for @licOffice.
+  ///
+  /// In en, this message translates to:
+  /// **'Office'**
+  String get licOffice;
+
+  /// No description provided for @licOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get licOwner;
+
+  /// No description provided for @licNoOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set — alerts go to the compliance team'**
+  String get licNoOwner;
+
+  /// No description provided for @licIssuedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued on'**
+  String get licIssuedOn;
+
+  /// No description provided for @licExpiresOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires on'**
+  String get licExpiresOn;
+
+  /// No description provided for @licExpiredOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired on'**
+  String get licExpiredOn;
+
+  /// No description provided for @licWindow.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal window'**
+  String get licWindow;
+
+  /// No description provided for @licWindowValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days before expiry'**
+  String licWindowValue(int days);
+
+  /// No description provided for @licFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal fee'**
+  String get licFee;
+
+  /// No description provided for @licFeeValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Tk {amount}'**
+  String licFeeValue(Object amount);
+
+  /// No description provided for @licNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get licNotes;
+
+  /// No description provided for @licNextAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'Next alert on {date}'**
+  String licNextAlert(Object date);
+
+  /// No description provided for @licAllAlertsSent.
+  ///
+  /// In en, this message translates to:
+  /// **'All expiry alerts for this date have gone out.'**
+  String get licAllAlertsSent;
+
+  /// No description provided for @licScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanned copy'**
+  String get licScan;
+
+  /// No description provided for @licViewScan.
+  ///
+  /// In en, this message translates to:
+  /// **'View scanned copy'**
+  String get licViewScan;
+
+  /// No description provided for @licNoScan.
+  ///
+  /// In en, this message translates to:
+  /// **'No scanned copy yet.'**
+  String get licNoScan;
+
+  /// No description provided for @licPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF document'**
+  String get licPdf;
+
+  /// No description provided for @licImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get licImage;
+
+  /// No description provided for @licOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open the document. Check your connection and try again.'**
+  String get licOpenFailed;
+
+  /// No description provided for @licHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get licHistory;
+
+  /// No description provided for @licEvCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to the register'**
+  String get licEvCreated;
+
+  /// No description provided for @licEvDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details changed'**
+  String get licEvDetails;
+
+  /// No description provided for @licEvRetired.
+  ///
+  /// In en, this message translates to:
+  /// **'Retired from the register'**
+  String get licEvRetired;
+
+  /// No description provided for @licEvRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'Back in use'**
+  String get licEvRestored;
+
+  /// No description provided for @licEvStage.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal moved to {stage}'**
+  String licEvStage(Object stage);
+
+  /// No description provided for @licEvStageBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal moved back to {stage}'**
+  String licEvStageBack(Object stage);
+
+  /// No description provided for @licEvRenewed.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewed until {date}'**
+  String licEvRenewed(Object date);
+
+  /// No description provided for @licEvDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanned copy uploaded'**
+  String get licEvDocument;
+
+  /// No description provided for @licEvAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry alert: {days} days before'**
+  String licEvAlert(int days);
+
+  /// No description provided for @licEvAlertDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry alert: expiry day'**
+  String get licEvAlertDay;
+
+  /// No description provided for @licEvNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get licEvNote;
+
+  /// No description provided for @licEvNotified.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent to {names}'**
+  String licEvNotified(Object names);
+
   /// No description provided for @nbTitle.
   ///
   /// In en, this message translates to:
