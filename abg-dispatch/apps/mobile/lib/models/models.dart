@@ -552,20 +552,91 @@ class Option {
   final String? code;
 }
 
-// ── Incident reports ──
+// ── Incident & facility issues ──
+// Mirrors packages/shared/src/incidents.ts.
 
-const incidentCategories = [
-  'BUILDING_DAMAGE',
-  'CLEANLINESS',
-  'CAFETERIA_HYGIENE',
-  'WASHROOM',
-  'SAFETY_HAZARD',
-  'ELECTRICAL',
+/// The four categories, in the order the report form shows them.
+const incidentGroups = [
+  'SAFETY_INDUSTRIAL',
+  'ADMIN_FACILITY',
   'SECURITY',
-  'MISCONDUCT',
-  'OTHER',
+  'IT_TECHNICAL',
 ];
-const incidentSeverities = ['LOW', 'MEDIUM', 'HIGH', 'URGENT'];
+
+/// Sub-categories of each group.
+const incidentGroupCategories = <String, List<String>>{
+  'SAFETY_INDUSTRIAL': [
+    'FIRE_HAZARD',
+    'GAS_LEAK',
+    'CHEMICAL_SPILL',
+    'INJURY_NEAR_MISS',
+    'ELECTRICAL_HAZARD',
+    'MACHINERY_FAULT',
+    'PPE_VIOLATION',
+    'SAFETY_HAZARD',
+  ],
+  'ADMIN_FACILITY': [
+    'BUILDING_DAMAGE',
+    'CLEANLINESS',
+    'CAFETERIA_HYGIENE',
+    'WASHROOM',
+    'WATER_SUPPLY',
+    'AC_VENTILATION',
+    'FURNITURE_FIXTURES',
+    'PEST_CONTROL',
+    'OTHER',
+  ],
+  'SECURITY': [
+    'UNAUTHORISED_ACCESS',
+    'THEFT_LOSS',
+    'CCTV_FAULT',
+    'GATE_LOCK',
+    'MISCONDUCT',
+  ],
+  'IT_TECHNICAL': [
+    'NETWORK_DOWN',
+    'COMPUTER_PRINTER',
+    'SOFTWARE_ACCESS',
+    'TELEPHONE',
+    'POWER_UPS',
+  ],
+};
+
+/// Every sub-category, group by group.
+final incidentCategories = [
+  for (final g in incidentGroups) ...incidentGroupCategories[g]!,
+];
+
+/// The group a sub-category belongs to (Admin & Facility if unknown).
+String incidentGroupOf(String category) => incidentGroups.firstWhere(
+  (g) => incidentGroupCategories[g]!.contains(category),
+  orElse: () => 'ADMIN_FACILITY',
+);
+
+/// Misconduct is always confidential: Head Office only, reporter hidden.
+bool incidentForcesConfidential(String category) => category == 'MISCONDUCT';
+
+/// Most severe first, as the picker shows them.
+const incidentSeverities = ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW'];
+
+/// Reported → Acknowledged → Under Investigation → Closed.
+const incidentStages = [
+  'REPORTED',
+  'ACKNOWLEDGED',
+  'UNDER_INVESTIGATION',
+  'CLOSED',
+];
+const openIncidentStatuses = [
+  'REPORTED',
+  'ACKNOWLEDGED',
+  'UNDER_INVESTIGATION',
+];
+const incidentResolutions = [
+  'RESOLVED',
+  'NO_ACTION_NEEDED',
+  'DUPLICATE',
+  'REFERRED',
+];
 const maxIncidentPhotos = 3;
 
 class IncidentRow {
@@ -573,15 +644,18 @@ class IncidentRow {
     required this.id,
     required this.referenceNumber,
     required this.title,
+    required this.group,
     required this.category,
     required this.severity,
     required this.status,
     required this.createdAt,
     required this.statusChangedAt,
     required this.branchName,
+    this.resolution,
     this.statusNote,
     this.place,
     this.anonymous = false,
+    this.confidential = false,
     this.photoCount = 0,
     this.thumbnailUrl,
   });
@@ -589,36 +663,45 @@ class IncidentRow {
   final String id;
   final String referenceNumber;
   final String title;
+  final String group;
   final String category;
   final String severity;
   final String status;
+  final String? resolution;
   final DateTime createdAt;
   final DateTime statusChangedAt;
   final String branchName;
   final String? statusNote;
   final String? place;
   final bool anonymous;
+  final bool confidential;
   final int photoCount;
   final String? thumbnailUrl;
 
-  bool get isOpen => status == 'PENDING' || status == 'PROCESSING';
+  bool get isOpen => openIncidentStatuses.contains(status);
 
-  factory IncidentRow.fromJson(Json j) => IncidentRow(
-    id: _str(j['id'])!,
-    referenceNumber: _str(j['referenceNumber']) ?? '',
-    title: _str(j['title']) ?? '',
-    category: _str(j['category']) ?? 'OTHER',
-    severity: _str(j['severity']) ?? 'MEDIUM',
-    status: _str(j['status']) ?? 'PENDING',
-    createdAt: _date(j['createdAt']) ?? DateTime.now(),
-    statusChangedAt: _date(j['statusChangedAt']) ?? DateTime.now(),
-    branchName: _str(_map(j['branch'])['name']) ?? '',
-    statusNote: _str(j['statusNote']),
-    place: _str(j['place']),
-    anonymous: j['anonymous'] == true,
-    photoCount: (j['photoCount'] as num?)?.toInt() ?? 0,
-    thumbnailUrl: _str(j['thumbnailUrl']),
-  );
+  factory IncidentRow.fromJson(Json j) {
+    final category = _str(j['category']) ?? 'OTHER';
+    return IncidentRow(
+      id: _str(j['id'])!,
+      referenceNumber: _str(j['referenceNumber']) ?? '',
+      title: _str(j['title']) ?? '',
+      group: _str(j['group']) ?? incidentGroupOf(category),
+      category: category,
+      severity: _str(j['severity']) ?? 'MEDIUM',
+      status: _str(j['status']) ?? 'REPORTED',
+      resolution: _str(j['resolution']),
+      createdAt: _date(j['createdAt']) ?? DateTime.now(),
+      statusChangedAt: _date(j['statusChangedAt']) ?? DateTime.now(),
+      branchName: _str(_map(j['branch'])['name']) ?? '',
+      statusNote: _str(j['statusNote']),
+      place: _str(j['place']),
+      anonymous: j['anonymous'] == true,
+      confidential: j['confidential'] == true,
+      photoCount: (j['photoCount'] as num?)?.toInt() ?? 0,
+      thumbnailUrl: _str(j['thumbnailUrl']),
+    );
+  }
 }
 
 class IncidentPhoto {
@@ -638,7 +721,7 @@ class IncidentUpdate {
     this.fromStatus,
     this.toStatus,
     this.note,
-    this.reopened = false,
+    this.resolution,
   });
 
   final String id;
@@ -648,7 +731,33 @@ class IncidentUpdate {
   final String? fromStatus;
   final String? toStatus;
   final String? note;
-  final bool reopened;
+
+  /// How it was closed, on a move to Closed.
+  final String? resolution;
+
+  /// A move out of Closed is a reopening.
+  bool get reopened => type == 'STATUS_CHANGED' && fromStatus == 'CLOSED';
+}
+
+/// One stage of the tracker, as the API computes it.
+class IncidentStage {
+  IncidentStage({
+    required this.status,
+    required this.state,
+    this.at,
+    this.by,
+    this.resolution,
+  });
+
+  final String status;
+
+  /// done · current · upcoming · skipped
+  final String state;
+  final DateTime? at;
+  final String? by;
+  final String? resolution;
+
+  bool get reached => state == 'done' || state == 'current';
 }
 
 class Incident {
@@ -661,46 +770,79 @@ class Incident {
   String get title => _str(raw['title']) ?? '';
   String get description => _str(raw['description']) ?? '';
   String get category => _str(raw['category']) ?? 'OTHER';
+  String get group => _str(raw['group']) ?? incidentGroupOf(category);
   String get severity => _str(raw['severity']) ?? 'MEDIUM';
-  String get status => _str(raw['status']) ?? 'PENDING';
+  String get status => _str(raw['status']) ?? 'REPORTED';
+  String? get resolution => _str(raw['resolution']);
   String? get statusNote => _str(raw['statusNote']);
   DateTime get createdAt => _date(raw['createdAt']) ?? DateTime.now();
-  DateTime? get processingAt => _date(raw['processingAt']);
-  DateTime? get doneAt => _date(raw['doneAt']);
-  DateTime? get declinedAt => _date(raw['declinedAt']);
+  DateTime? get acknowledgedAt => _date(raw['acknowledgedAt']);
+  DateTime? get investigationStartedAt => _date(raw['investigationStartedAt']);
+  DateTime? get closedAt => _date(raw['closedAt']);
   String get branchName => _str(_map(raw['branch'])['name']) ?? '';
   String? get locationPath => _str(_map(raw['location'])['path']);
   String? get locationDetail => _str(raw['locationDetail']);
   bool get anonymous => raw['anonymous'] == true;
+  bool get confidential => raw['confidential'] == true;
   String? get reporterName => _str(_map(raw['reporter'])['name']);
   bool get isReporter => _map(raw['viewer'])['isReporter'] == true;
   List<String> get actions =>
       ((_map(raw['viewer'])['actions'] as List?) ?? const []).cast<String>();
-  bool get isOpen => status == 'PENDING' || status == 'PROCESSING';
+  bool get isOpen => openIncidentStatuses.contains(status);
 
-  List<IncidentPhoto> get photos => ((raw['photos'] as List?) ?? const [])
-      .cast<Json>()
+  /// The four stages, falling back to the timestamps if the server sent none.
+  List<IncidentStage> get stages {
+    final list = _list(raw['stages']);
+    if (list.isNotEmpty) {
+      return [
+        for (final s in list)
+          IncidentStage(
+            status: _str(s['status']) ?? '',
+            state: _str(s['state']) ?? 'upcoming',
+            at: _date(s['at']),
+            by: _str(s['by']),
+            resolution: _str(s['resolution']),
+          ),
+      ];
+    }
+    final current = incidentStages.indexOf(status);
+    final times = [createdAt, acknowledgedAt, investigationStartedAt, closedAt];
+    return [
+      for (var k = 0; k < incidentStages.length; k++)
+        IncidentStage(
+          status: incidentStages[k],
+          state: k == current
+              ? (k == incidentStages.length - 1 ? 'done' : 'current')
+              : k < current
+              ? (times[k] != null ? 'done' : 'skipped')
+              : 'upcoming',
+          at: k <= current ? times[k] : null,
+          resolution: k == incidentStages.length - 1 ? resolution : null,
+        ),
+    ];
+  }
+
+  List<IncidentPhoto> get photos => _list(raw['photos'])
       .map(
         (p) => IncidentPhoto(
-          p['id'] as String,
-          p['kind'] as String,
-          p['url'] as String,
+          _str(p['id']) ?? '',
+          _str(p['kind']) ?? 'REPORT',
+          _str(p['url']) ?? '',
         ),
       )
       .toList();
 
-  List<IncidentUpdate> get updates => ((raw['updates'] as List?) ?? const [])
-      .cast<Json>()
+  List<IncidentUpdate> get updates => _list(raw['updates'])
       .map(
         (u) => IncidentUpdate(
-          id: u['id'] as String,
+          id: _str(u['id']) ?? '',
           type: _str(u['type']) ?? '',
           actor: _str(u['actor']) ?? '',
           at: _date(u['createdAt']) ?? DateTime.now(),
           fromStatus: _str(u['fromStatus']),
           toStatus: _str(u['toStatus']),
           note: _str(u['note']),
-          reopened: _map(u['metadata'])['reopened'] == true,
+          resolution: _str(_map(u['metadata'])['resolution']),
         ),
       )
       .toList();

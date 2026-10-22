@@ -81,21 +81,23 @@ unless the viewer has operations reach.
 `GET /notifications?category=&cursor=` · `GET /unread-count` · `POST /:id/read` ·
 `POST /read-all` · `GET|PUT /preferences` (`{ channel: PUSH \| SMS \| EMAIL, enabled }`; in-app is always on).
 
-## Incident reports — `/incidents`
+## Incident & facility issues — `/incidents`
+
+Full reference, including the summary shape: [modules/incidents.md](modules/incidents.md).
 
 | Method & path | Who | Purpose |
 |---|---|---|
-| `POST /incidents` | incident.report | Multipart: `title`, `category`, optional `description`, `severity`, `branchId` (defaults to the reporter's office), `locationId`, `locationDetail`, `anonymous` (`true`), and up to three `photos` files. `Idempotency-Key` recommended. 10 per minute per user. |
-| `GET /incidents/mine?state=open\|closed\|all&cursor=` | reporter | The caller's own reports |
-| `GET /incidents/:id` | reporter or staff in scope | Full report: photos (signed `url`s), `updates` history, `reporter` (`null` to staff when anonymous), `viewer.actions` |
-| `POST /incidents/:id/status` | incident.manage | `{ status: PROCESSING \| DONE \| DECLINED, note? }` — `note` required for DECLINED (`REASON_REQUIRED`); `409 INCIDENT_STATE_CONFLICT` for a move the rules forbid |
-| `POST /incidents/:id/notes` | incident.manage | `{ note }` — message the reporter without changing status |
-| `PATCH /incidents/:id` | incident.manage | `{ severity?, category? }` — may return `{ id, movedToHeadOffice: true }` |
+| `POST /incidents` | incident.report | Multipart: `title`, `category`, optional `group` (must match the sub-category), `description`, `severity` (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`), `branchId` (defaults to the reporter's office), `locationId`, `locationDetail`, `anonymous`, `confidential` (`true`/`false`; always true for misconduct), and up to three `photos` files. `Idempotency-Key` recommended. 10 per minute per user. |
+| `GET /incidents/mine?state=open\|closed\|all&status=&cursor=` | reporter | The caller's own reports; `status` narrows to one stage |
+| `GET /incidents/:id` | reporter or staff in scope | Full report: group, severity, stage, resolution, stage times, `stages` tracker, photos (signed `url`s), `updates` history, `reporter` (`null` to handlers when anonymous or confidential), `viewer.actions` |
+| `POST /incidents/:id/status` | incident.manage | `{ status: ACKNOWLEDGED \| UNDER_INVESTIGATION \| CLOSED, resolution?, note? }` — closing needs a `resolution` (`RESOLUTION_REQUIRED`); any resolution but `RESOLVED` needs a `note` (`REASON_REQUIRED`); `UNDER_INVESTIGATION` from `CLOSED` reopens; `409 INCIDENT_STATE_CONFLICT` for a move the rules forbid |
+| `POST /incidents/:id/notes` | incident.manage | `{ note }` — message the reporter without changing the stage |
+| `PATCH /incidents/:id` | incident.manage | `{ group?, category?, severity?, confidential? }` — may return `{ id, movedToHeadOffice: true }` |
 | `POST /incidents/:id/photos` | manager (fix photo) or reporter while open | Multipart `photo` (max three of each kind) |
 | `GET /incidents/:id/photos/:photoId/content` | reporter or staff in scope | Photo bytes with an auth header |
 | `GET /incident-photos/:photoId/content?exp=&sig=` | public, signed | The short-lived link the apps put in `<img>` (10 minutes) |
-| `GET /admin/incidents` | incident.view | `status` (`OPEN`, `ALL` or a status), `branchId`, `category`, `severity`, `q`, `dateFrom/To`, cursor |
-| `GET /admin/incidents/summary?branchId=` | incident.view | Counts per status, open, urgent-or-high open, oldest pending, done in 30 days, average hours to done |
+| `GET /admin/incidents` | incident.view | `status` (`OPEN`, `ALL` or a stage), `group`, `branchId`, `category`, `severity`, `resolution`, `confidential`, `q`, `dateFrom/To`, cursor |
+| `GET /admin/incidents/summary?branchId=&group=` | incident.view | `counts` per stage, `open`, `criticalOpen`, `urgentOpen`, `byGroupOpen`, `oldestReportedAt`, `closedLast30Days`, `avgHoursToClose`, `recent` (latest six) |
 
 Staff scope: branch admins see their offices' reports **except misconduct**;
 head-office admins, auditors and super admins see all. Anyone else gets 404.

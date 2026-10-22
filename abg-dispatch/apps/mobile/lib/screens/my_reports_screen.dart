@@ -14,7 +14,7 @@ import '../theme/tokens.dart';
 import '../widgets/common.dart';
 import '../widgets/vocab.dart';
 
-/// The reporter's own incident reports and where each one stands.
+/// The reporter's own reports and the stage each one has reached.
 class MyReportsScreen extends StatefulWidget {
   const MyReportsScreen({super.key});
 
@@ -22,8 +22,11 @@ class MyReportsScreen extends StatefulWidget {
   State<MyReportsScreen> createState() => _MyReportsScreenState();
 }
 
+/// Filter chips: everything, everything still open, or one stage.
+const _filters = ['all', 'open', ...incidentStages];
+
 class _MyReportsScreenState extends State<MyReportsScreen> {
-  String _state = 'all';
+  String _filter = 'all';
   List<IncidentRow> _items = [];
   String? _cursor;
   bool _loading = true;
@@ -48,12 +51,19 @@ class _MyReportsScreenState extends State<MyReportsScreen> {
     super.dispose();
   }
 
+  Future<PageOf<IncidentRow>> _fetch({String? cursor}) {
+    final stage = incidentStages.contains(_filter) ? _filter : null;
+    return context.read<DispatchRepository>().myIncidents(
+      state: stage == null ? _filter : 'all',
+      status: stage,
+      cursor: cursor,
+    );
+  }
+
   Future<void> _load() async {
     setState(() => _loading = _items.isEmpty);
     try {
-      final page = await context.read<DispatchRepository>().myIncidents(
-        state: _state,
-      );
+      final page = await _fetch();
       if (!mounted) return;
       setState(() {
         _items = page.items;
@@ -75,10 +85,7 @@ class _MyReportsScreenState extends State<MyReportsScreen> {
     if (_cursor == null || _loadingMore) return;
     setState(() => _loadingMore = true);
     try {
-      final page = await context.read<DispatchRepository>().myIncidents(
-        state: _state,
-        cursor: _cursor,
-      );
+      final page = await _fetch(cursor: _cursor);
       if (!mounted) return;
       setState(() {
         _items = [..._items, ...page.items];
@@ -93,6 +100,12 @@ class _MyReportsScreenState extends State<MyReportsScreen> {
     await context.push('/incidents/new');
     if (mounted) unawaited(_load());
   }
+
+  String _label(L l, String f) => switch (f) {
+    'all' => l.incFilterAll,
+    'open' => l.incFilterOpen,
+    _ => incidentStatusLabel(l, f),
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -114,66 +127,89 @@ class _MyReportsScreenState extends State<MyReportsScreen> {
         child: ListView(
           controller: _scroll,
           physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(
-            AbgSpace.gutter,
-            8,
-            AbgSpace.gutter,
-            40,
-          ),
+          padding: const EdgeInsets.fromLTRB(0, 8, 0, 40),
           children: [
-            Wrap(
-              spacing: 8,
-              children: [
-                for (final (value, label) in [
-                  ('all', l.incFilterAll),
-                  ('open', l.incFilterOpen),
-                  ('closed', l.incFilterClosed),
-                ])
-                  ChoiceChip(
-                    label: Text(label),
-                    selected: _state == value,
-                    onSelected: (_) {
-                      setState(() {
-                        _state = value;
-                        _items = [];
-                      });
-                      unawaited(_load());
-                    },
-                  ),
-              ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: AbgSpace.gutter),
+              child: Row(
+                children: [
+                  for (final f in _filters) ...[
+                    if (f != _filters.first) const SizedBox(width: 8),
+                    ChoiceChip(
+                      label: Text(_label(l, f)),
+                      avatar: incidentStages.contains(f)
+                          ? Icon(
+                              incidentStatusIcon(f),
+                              size: 16,
+                              color: _filter == f
+                                  ? Colors.white
+                                  : toneColors(incidentStatusTone(f)).fg,
+                            )
+                          : null,
+                      showCheckmark: false,
+                      selected: _filter == f,
+                      selectedColor: AbgColors.navy,
+                      labelStyle: AbgText.small.copyWith(
+                        color: _filter == f ? Colors.white : AbgColors.ink,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      onSelected: (_) {
+                        setState(() {
+                          _filter = f;
+                          _items = [];
+                        });
+                        unawaited(_load());
+                      },
+                    ),
+                  ],
+                ],
+              ),
             ),
             const SizedBox(height: 14),
-            if (_loading) ...[
-              const SkeletonCard(),
-              const SizedBox(height: 10),
-              const SkeletonCard(),
-            ] else if (_error != null)
-              ErrorPanel(error: _error!, onRetry: _load)
-            else if (_items.isEmpty)
-              EmptyState(
-                icon: Icons.campaign_outlined,
-                title: l.incNoReports,
-                message: l.incNoReportsHint,
-                action: l.incReport,
-                onAction: _report,
-              )
-            else
-              for (final item in _items)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: IncidentCard(
-                    item: item,
-                    onTap: () async {
-                      await context.push('/incidents/${item.id}');
-                      if (mounted) unawaited(_load());
-                    },
-                  ),
-                ),
-            if (_loadingMore)
-              const Padding(
-                padding: EdgeInsets.all(16),
-                child: Center(child: CircularProgressIndicator(strokeWidth: 2)),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AbgSpace.gutter),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (_loading) ...[
+                    const SkeletonCard(),
+                    const SizedBox(height: 10),
+                    const SkeletonCard(),
+                  ] else if (_error != null)
+                    ErrorPanel(error: _error!, onRetry: _load)
+                  else if (_items.isEmpty)
+                    EmptyState(
+                      icon: Icons.campaign_outlined,
+                      title: _filter == 'all'
+                          ? l.incNoReports
+                          : l.incNoReportsFilter,
+                      message: l.incNoReportsHint,
+                      action: l.incReport,
+                      onAction: _report,
+                    )
+                  else
+                    for (final item in _items)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: IncidentCard(
+                          item: item,
+                          onTap: () async {
+                            await context.push('/incidents/${item.id}');
+                            if (mounted) unawaited(_load());
+                          },
+                        ),
+                      ),
+                  if (_loadingMore)
+                    const Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Center(
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    ),
+                ],
               ),
+            ),
           ],
         ),
       ),
@@ -181,6 +217,7 @@ class _MyReportsScreenState extends State<MyReportsScreen> {
   }
 }
 
+/// The stage, as words and an icon (never colour alone).
 class IncidentStatusChip extends StatelessWidget {
   const IncidentStatusChip(this.status, {super.key, this.dense = false});
 
@@ -191,12 +228,36 @@ class IncidentStatusChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final label = incidentStatusLabel(L.of(context), status);
     return Semantics(
-      label: 'Status: $label',
+      label: 'Stage: $label',
       child: ExcludeSemantics(
         child: ToneBadge(
           label: label,
           tone: incidentStatusTone(status),
           icon: incidentStatusIcon(status),
+          dense: dense,
+        ),
+      ),
+    );
+  }
+}
+
+/// Critical · High · Medium · Low tag, with its icon.
+class IncidentSeverityTag extends StatelessWidget {
+  const IncidentSeverityTag(this.severity, {super.key, this.dense = true});
+
+  final String severity;
+  final bool dense;
+
+  @override
+  Widget build(BuildContext context) {
+    final label = incidentSeverityLabel(L.of(context), severity);
+    return Semantics(
+      label: 'Severity: $label',
+      child: ExcludeSemantics(
+        child: ToneBadge(
+          label: label,
+          tone: incidentSeverityTone(severity),
+          icon: incidentSeverityIcon(severity),
           dense: dense,
         ),
       ),
@@ -250,9 +311,9 @@ class IncidentCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 3),
                     Text(
-                      '${item.referenceNumber} · ${incidentCategoryLabel(l, item.category)}',
+                      '${item.referenceNumber} · ${incidentGroupLabel(l, item.group)} › ${incidentCategoryLabel(l, item.category)}',
                       style: AbgText.caption,
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
@@ -268,18 +329,40 @@ class IncidentCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              IncidentStatusChip(item.status, dense: true),
-              if (item.anonymous) ...[
-                const SizedBox(width: 6),
-                ToneBadge(
-                  label: l.incAnonymousBadge,
-                  tone: Tone.neutral,
-                  icon: Icons.visibility_off_outlined,
-                  dense: true,
+              Expanded(
+                child: Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: [
+                    IncidentStatusChip(item.status, dense: true),
+                    IncidentSeverityTag(item.severity),
+                    if (item.resolution != null)
+                      ToneBadge(
+                        label: incidentResolutionLabel(l, item.resolution!),
+                        tone: incidentResolutionTone(item.resolution!),
+                        icon: incidentResolutionIcon(item.resolution!),
+                        dense: true,
+                      ),
+                    if (item.confidential)
+                      ToneBadge(
+                        label: l.incConfidentialBadge,
+                        tone: Tone.neutral,
+                        icon: Icons.lock_outline_rounded,
+                        dense: true,
+                      ),
+                    if (item.anonymous)
+                      ToneBadge(
+                        label: l.incAnonymousBadge,
+                        tone: Tone.neutral,
+                        icon: Icons.visibility_off_outlined,
+                        dense: true,
+                      ),
+                  ],
                 ),
-              ],
-              const Spacer(),
+              ),
+              const SizedBox(width: 8),
               Text(relative(item.statusChangedAt, l), style: AbgText.caption),
             ],
           ),

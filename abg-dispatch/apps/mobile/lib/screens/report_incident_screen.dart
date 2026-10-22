@@ -17,7 +17,9 @@ import '../theme/tokens.dart';
 import '../widgets/common.dart';
 import '../widgets/vocab.dart';
 
-/// "See something, say something": one screen, a few taps, a photo, sent.
+/// "See something, say something" in two steps: pick one of the four groups,
+/// then the exact problem, a photo or three, where it is and how severe —
+/// and send. Confidential reports go to Head Office only.
 class ReportIncidentScreen extends StatefulWidget {
   const ReportIncidentScreen({super.key});
 
@@ -37,15 +39,21 @@ class _ReportIncidentScreenState extends State<ReportIncidentScreen> {
   final _title = TextEditingController();
   final _description = TextEditingController();
   final _spot = TextEditingController();
+  final _scroll = ScrollController();
   final _photos = <_Picked>[];
+  String? _group;
   String? _category;
   String _severity = 'MEDIUM';
+  bool _confidential = false;
   bool _anonymous = false;
   bool _busy = false;
   String? _branchId;
   String? _locationId;
   List<Option> _branches = [];
   List<Option> _locations = [];
+
+  bool get _forcedConfidential =>
+      _category != null && incidentForcesConfidential(_category!);
 
   @override
   void initState() {
@@ -60,6 +68,7 @@ class _ReportIncidentScreenState extends State<ReportIncidentScreen> {
     _title.dispose();
     _description.dispose();
     _spot.dispose();
+    _scroll.dispose();
     super.dispose();
   }
 
@@ -92,6 +101,27 @@ class _ReportIncidentScreenState extends State<ReportIncidentScreen> {
     if (mounted && _branchId == id) setState(() => _locations = locations);
   }
 
+  void _chooseGroup(String? group) {
+    setState(() {
+      _group = group;
+      if (group == null ||
+          !incidentGroupCategories[group]!.contains(_category)) {
+        _category = null;
+      }
+    });
+    if (_scroll.hasClients) _scroll.jumpTo(0);
+  }
+
+  void _chooseCategory(String category) {
+    setState(() {
+      // Misconduct is the classic whistle-blowing case: always confidential, start anonymous.
+      if (incidentForcesConfidential(category) && _category != category) {
+        _anonymous = true;
+      }
+      _category = category;
+    });
+  }
+
   Future<void> _pick(ImageSource source) async {
     final file = await ImagePicker().pickImage(
       source: source,
@@ -103,6 +133,17 @@ class _ReportIncidentScreenState extends State<ReportIncidentScreen> {
     if (mounted && _photos.length < maxIncidentPhotos) {
       setState(() => _photos.add(_Picked(bytes, file.name)));
     }
+  }
+
+  void _preview(int index) {
+    unawaited(
+      Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          fullscreenDialog: true,
+          builder: (_) => _PhotoPreview(photos: _photos, initial: index),
+        ),
+      ),
+    );
   }
 
   bool get _valid => _category != null && _title.text.trim().length >= 3;
@@ -123,12 +164,14 @@ class _ReportIncidentScreenState extends State<ReportIncidentScreen> {
         fields: {
           'title': _title.text.trim(),
           'description': _description.text.trim(),
+          'group': _group!,
           'category': _category!,
           'severity': _severity,
           'branchId': ?_branchId,
           'locationId': ?_locationId,
           if (_spot.text.trim().isNotEmpty) 'locationDetail': _spot.text.trim(),
           'anonymous': '$_anonymous',
+          'confidential': '${_confidential || _forcedConfidential}',
         },
         photos: [for (final p in _photos) UploadFile(p.bytes, p.name)],
         idempotencyKey: _idempotencyKey,
@@ -152,136 +195,240 @@ class _ReportIncidentScreenState extends State<ReportIncidentScreen> {
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
-    return Scaffold(
-      appBar: AppBar(title: Text(l.incReport)),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(
-          AbgSpace.gutter,
-          8,
-          AbgSpace.gutter,
-          32,
+    final group = _group;
+    return PopScope(
+      // Back from step 2 returns to the group tiles, keeping what was typed.
+      canPop: group == null || _busy,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) _chooseGroup(null);
+      },
+      child: Scaffold(
+        appBar: AppBar(title: Text(l.incReport)),
+        body: ListView(
+          controller: _scroll,
+          padding: const EdgeInsets.fromLTRB(
+            AbgSpace.gutter,
+            8,
+            AbgSpace.gutter,
+            32,
+          ),
+          children: group == null ? _stepOne(l) : _stepTwo(l, group),
         ),
-        children: [
-          _Intro(text: l.incReportHint),
-          const SizedBox(height: 22),
-          SectionTitle(l.incWhatKind),
-          _CategoryGrid(
-            selected: _category,
-            onSelected: (c) => setState(() {
-              // Misconduct is the classic whistle-blowing case: start anonymous.
-              if (c == 'MISCONDUCT' && _category != 'MISCONDUCT') {
-                _anonymous = true;
-              }
-              _category = c;
-            }),
-          ),
-          if (_category == 'MISCONDUCT') ...[
-            const SizedBox(height: 10),
-            _Note(
-              icon: Icons.verified_user_outlined,
-              text: l.incMisconductNote,
-            ),
-          ],
-          const SizedBox(height: 22),
-          TextField(
-            controller: _title,
-            maxLength: 120,
-            textCapitalization: TextCapitalization.sentences,
-            decoration: InputDecoration(
-              labelText: '${l.incTitleLabel} *',
-              hintText: l.incTitleHint,
-            ),
-          ),
-          const SizedBox(height: 4),
-          TextField(
-            controller: _description,
-            minLines: 3,
-            maxLines: 6,
-            maxLength: 2000,
-            textCapitalization: TextCapitalization.sentences,
-            decoration: InputDecoration(labelText: l.incDescriptionLabel),
-          ),
-          const SizedBox(height: 14),
-          SectionTitle(l.incPhotos),
-          Text(l.incPhotosHint, style: AbgText.small),
-          const SizedBox(height: 12),
-          _PhotoStrip(
-            photos: _photos,
-            onRemove: (i) => setState(() => _photos.removeAt(i)),
-            onCamera: () => _pick(ImageSource.camera),
-            onGallery: () => _pick(ImageSource.gallery),
-          ),
-          const SizedBox(height: 24),
-          SectionTitle(l.incWhere),
-          DropdownButtonFormField<String>(
-            initialValue: _branches.any((b) => b.id == _branchId)
-                ? _branchId
-                : null,
-            isExpanded: true,
-            decoration: InputDecoration(
-              labelText: l.incOffice,
-              prefixIcon: const Icon(Icons.apartment_rounded),
-            ),
-            items: [
-              for (final b in _branches)
-                DropdownMenuItem(
-                  value: b.id,
-                  child: Text(b.label, overflow: TextOverflow.ellipsis),
-                ),
-            ],
-            onChanged: _busy ? null : _changeBranch,
-          ),
-          const SizedBox(height: 14),
-          DropdownButtonFormField<String?>(
-            key: ValueKey('area-$_branchId-${_locations.length}'),
-            initialValue: _locationId,
-            isExpanded: true,
-            decoration: InputDecoration(
-              labelText: l.incArea,
-              prefixIcon: const Icon(Icons.place_outlined),
-            ),
-            items: [
-              DropdownMenuItem<String?>(
-                value: null,
-                child: Text(
-                  l.incAreaAny,
-                  style: const TextStyle(color: AbgColors.inkMuted),
-                ),
-              ),
-              for (final loc in _locations)
-                DropdownMenuItem<String?>(
-                  value: loc.id,
-                  child: Text(
-                    loc.subtitle ?? loc.label,
-                    overflow: TextOverflow.ellipsis,
+        bottomNavigationBar: group == null
+            ? null
+            : SafeArea(
+                top: false,
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                  decoration: const BoxDecoration(
+                    color: AbgColors.white,
+                    border: Border(top: BorderSide(color: AbgColors.border)),
+                  ),
+                  child: FilledButton.icon(
+                    onPressed: _busy ? null : _submit,
+                    icon: _busy
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.4,
+                              color: Colors.white,
+                            ),
+                          )
+                        : const Icon(Icons.send_rounded),
+                    label: Text(l.incSubmit),
                   ),
                 ),
-            ],
-            onChanged: _busy ? null : (v) => setState(() => _locationId = v),
+              ),
+      ),
+    );
+  }
+
+  List<Widget> _stepOne(L l) => [
+    _Intro(text: l.incReportHint),
+    const SizedBox(height: 22),
+    _StepHeader(
+      step: 1,
+      title: l.incChooseGroup,
+      subtitle: l.incChooseGroupHint,
+    ),
+    const SizedBox(height: 14),
+    _GroupGrid(onSelected: _chooseGroup),
+  ];
+
+  List<Widget> _stepTwo(L l, String group) {
+    final forced = _forcedConfidential;
+    return [
+      _StepHeader(step: 2, title: l.incChooseCategory),
+      const SizedBox(height: 12),
+      _ChosenGroup(group: group, onChange: () => _chooseGroup(null)),
+      const SizedBox(height: 14),
+      _CategoryChips(
+        categories: incidentGroupCategories[group]!,
+        selected: _category,
+        onSelected: _chooseCategory,
+      ),
+      AnimatedSwitcher(
+        duration: const Duration(milliseconds: 180),
+        child: _category == null
+            ? const SizedBox(height: 4)
+            : Padding(
+                key: ValueKey(_category),
+                padding: const EdgeInsets.only(top: 10),
+                child: _Note(
+                  icon: incidentCategoryIcon(_category!),
+                  text: incidentCategoryHint(l, _category!),
+                ),
+              ),
+      ),
+      if (forced) ...[
+        const SizedBox(height: 8),
+        _Note(
+          icon: Icons.lock_outline_rounded,
+          text: l.incConfidentialForced,
+          strong: true,
+        ),
+      ],
+      const SizedBox(height: 22),
+      TextField(
+        controller: _title,
+        maxLength: 120,
+        textCapitalization: TextCapitalization.sentences,
+        decoration: InputDecoration(
+          labelText: '${l.incTitleLabel} *',
+          hintText: l.incTitleHint,
+        ),
+      ),
+      const SizedBox(height: 4),
+      TextField(
+        controller: _description,
+        minLines: 3,
+        maxLines: 6,
+        maxLength: 2000,
+        textCapitalization: TextCapitalization.sentences,
+        decoration: InputDecoration(labelText: l.incDescriptionLabel),
+      ),
+      const SizedBox(height: 14),
+      Row(
+        children: [
+          Expanded(child: SectionTitle(l.incPhotos)),
+          Text(
+            l.incPhotoCount(_photos.length, maxIncidentPhotos),
+            style: AbgText.caption,
           ),
-          const SizedBox(height: 14),
-          TextField(
-            controller: _spot,
-            maxLength: 160,
-            decoration: InputDecoration(
-              labelText: l.incSpot,
-              hintText: l.incSpotHint,
-              prefixIcon: const Icon(Icons.my_location_rounded),
+        ],
+      ),
+      Text(l.incPhotosHint, style: AbgText.small),
+      const SizedBox(height: 12),
+      _PhotoStrip(
+        photos: _photos,
+        onRemove: (i) => setState(() => _photos.removeAt(i)),
+        onOpen: _preview,
+        onCamera: () => _pick(ImageSource.camera),
+        onGallery: () => _pick(ImageSource.gallery),
+      ),
+      const SizedBox(height: 24),
+      SectionTitle(l.incWhere),
+      DropdownButtonFormField<String>(
+        initialValue: _branches.any((b) => b.id == _branchId)
+            ? _branchId
+            : null,
+        isExpanded: true,
+        decoration: InputDecoration(
+          labelText: l.incOffice,
+          prefixIcon: const Icon(Icons.apartment_rounded),
+        ),
+        items: [
+          for (final b in _branches)
+            DropdownMenuItem(
+              value: b.id,
+              child: Text(b.label, overflow: TextOverflow.ellipsis),
+            ),
+        ],
+        onChanged: _busy ? null : _changeBranch,
+      ),
+      const SizedBox(height: 14),
+      DropdownButtonFormField<String?>(
+        key: ValueKey('area-$_branchId-${_locations.length}'),
+        initialValue: _locationId,
+        isExpanded: true,
+        decoration: InputDecoration(
+          labelText: l.incArea,
+          prefixIcon: const Icon(Icons.place_outlined),
+        ),
+        items: [
+          DropdownMenuItem<String?>(
+            value: null,
+            child: Text(
+              l.incAreaAny,
+              style: const TextStyle(color: AbgColors.inkMuted),
             ),
           ),
-          const SizedBox(height: 10),
-          SectionTitle(l.incHowUrgent),
-          _SeverityPicker(
-            selected: _severity,
-            onSelected: (s) => setState(() => _severity = s),
-          ),
-          const SizedBox(height: 22),
-          SectionCard(
-            padding: const EdgeInsets.fromLTRB(16, 6, 8, 6),
-            child: SwitchListTile(
+          for (final loc in _locations)
+            DropdownMenuItem<String?>(
+              value: loc.id,
+              child: Text(
+                loc.subtitle ?? loc.label,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+        ],
+        onChanged: _busy ? null : (v) => setState(() => _locationId = v),
+      ),
+      const SizedBox(height: 14),
+      TextField(
+        controller: _spot,
+        maxLength: 160,
+        decoration: InputDecoration(
+          labelText: l.incSpot,
+          hintText: l.incSpotHint,
+          prefixIcon: const Icon(Icons.my_location_rounded),
+        ),
+      ),
+      const SizedBox(height: 10),
+      SectionTitle(l.incSeverity),
+      _SeverityPicker(
+        selected: _severity,
+        onSelected: (s) => setState(() => _severity = s),
+      ),
+      const SizedBox(height: 8),
+      Text(
+        incidentSeverityHint(l, _severity),
+        style: AbgText.small.copyWith(
+          color: toneColors(incidentSeverityTone(_severity)).fg,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      const SizedBox(height: 22),
+      SectionTitle(l.incPrivacy),
+      SectionCard(
+        padding: const EdgeInsets.fromLTRB(16, 4, 8, 4),
+        child: Column(
+          children: [
+            SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              value: _confidential || forced,
+              onChanged: forced || _busy
+                  ? null
+                  : (v) => setState(() => _confidential = v),
+              secondary: const Icon(
+                Icons.lock_outline_rounded,
+                color: AbgColors.navy500,
+              ),
+              title: Text(
+                l.incConfidential,
+                style: AbgText.bodyStrong.copyWith(fontSize: 14.5),
+              ),
+              subtitle: Text(
+                forced ? l.incConfidentialForced : l.incConfidentialHint,
+                style: AbgText.caption,
+              ),
+            ),
+            const Divider(height: 1),
+            SwitchListTile(
               contentPadding: EdgeInsets.zero,
               value: _anonymous,
-              onChanged: (v) => setState(() => _anonymous = v),
+              onChanged: _busy ? null : (v) => setState(() => _anonymous = v),
               secondary: const Icon(
                 Icons.visibility_off_outlined,
                 color: AbgColors.navy500,
@@ -292,34 +439,10 @@ class _ReportIncidentScreenState extends State<ReportIncidentScreen> {
               ),
               subtitle: Text(l.incAnonymousHint, style: AbgText.caption),
             ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: SafeArea(
-        top: false,
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-          decoration: const BoxDecoration(
-            color: AbgColors.white,
-            border: Border(top: BorderSide(color: AbgColors.border)),
-          ),
-          child: FilledButton.icon(
-            onPressed: _busy ? null : _submit,
-            icon: _busy
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2.4,
-                      color: Colors.white,
-                    ),
-                  )
-                : const Icon(Icons.send_rounded),
-            label: Text(l.incSubmit),
-          ),
+          ],
         ),
       ),
-    );
+    ];
   }
 }
 
@@ -362,78 +485,78 @@ class _Intro extends StatelessWidget {
   }
 }
 
-class _Note extends StatelessWidget {
-  const _Note({required this.icon, required this.text});
-  final IconData icon;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AbgColors.activeSoft,
-        borderRadius: BorderRadius.circular(AbgRadii.md),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, size: 20, color: AbgColors.active),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              text,
-              style: AbgText.small.copyWith(color: AbgColors.navy),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _CategoryGrid extends StatelessWidget {
-  const _CategoryGrid({required this.selected, required this.onSelected});
-
-  final String? selected;
-  final ValueChanged<String> onSelected;
+class _StepHeader extends StatelessWidget {
+  const _StepHeader({required this.step, required this.title, this.subtitle});
+  final int step;
+  final String title;
+  final String? subtitle;
 
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            for (var k = 1; k <= 2; k++) ...[
+              if (k > 1) const SizedBox(width: 6),
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                width: k == step ? 28 : 14,
+                height: 5,
+                decoration: BoxDecoration(
+                  color: k <= step ? AbgColors.navy : AbgColors.softSilver,
+                  borderRadius: BorderRadius.circular(99),
+                ),
+              ),
+            ],
+            const SizedBox(width: 10),
+            Text(
+              l.incStepOf(step, 2),
+              style: AbgText.caption.copyWith(fontWeight: FontWeight.w700),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Text(title, style: AbgText.h2),
+        if (subtitle != null) ...[
+          const SizedBox(height: 4),
+          Text(subtitle!, style: AbgText.small),
+        ],
+      ],
+    );
+  }
+}
+
+/// The four groups as large tiles, two by two.
+class _GroupGrid extends StatelessWidget {
+  const _GroupGrid({required this.onSelected});
+  final ValueChanged<String> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
     // Plain rows rather than a GridView: a nested scrollable would swallow
     // mouse-wheel scrolling on web and desktop.
-    const perRow = 3;
-    final rows = <List<String>>[
-      for (var i = 0; i < incidentCategories.length; i += perRow)
-        incidentCategories.sublist(
-          i,
-          (i + perRow).clamp(0, incidentCategories.length),
-        ),
-    ];
     return Column(
       children: [
-        for (var r = 0; r < rows.length; r++) ...[
-          if (r > 0) const SizedBox(height: 8),
-          Row(
-            children: [
-              for (var c = 0; c < perRow; c++) ...[
-                if (c > 0) const SizedBox(width: 8),
-                Expanded(
-                  child: c < rows[r].length
-                      ? SizedBox(
-                          height: 92,
-                          child: _CategoryTile(
-                            label: incidentCategoryLabel(l, rows[r][c]),
-                            icon: incidentCategoryIcon(rows[r][c]),
-                            selected: selected == rows[r][c],
-                            onTap: () => onSelected(rows[r][c]),
-                          ),
-                        )
-                      : const SizedBox.shrink(),
-                ),
+        for (var r = 0; r < incidentGroups.length; r += 2) ...[
+          if (r > 0) const SizedBox(height: 10),
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (var c = r; c < r + 2; c++) ...[
+                  if (c > r) const SizedBox(width: 10),
+                  Expanded(
+                    child: _GroupTile(
+                      group: incidentGroups[c],
+                      onTap: () => onSelected(incidentGroups[c]),
+                    ),
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
         ],
       ],
@@ -441,62 +564,58 @@ class _CategoryGrid extends StatelessWidget {
   }
 }
 
-class _CategoryTile extends StatelessWidget {
-  const _CategoryTile({
-    required this.label,
-    required this.icon,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String label;
-  final IconData icon;
-  final bool selected;
+class _GroupTile extends StatelessWidget {
+  const _GroupTile({required this.group, required this.onTap});
+  final String group;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
+    final l = L.of(context);
+    final label = incidentGroupLabel(l, group);
+    final hint = incidentGroupHint(l, group);
     return Semantics(
       button: true,
-      selected: selected,
-      label: label,
+      label: '$label. $hint',
       child: ExcludeSemantics(
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          decoration: BoxDecoration(
-            color: selected ? AbgColors.navy : AbgColors.white,
-            borderRadius: BorderRadius.circular(AbgRadii.md),
-            border: Border.all(
-              color: selected ? AbgColors.navy : AbgColors.border,
-            ),
-            boxShadow: selected ? AbgShadows.card : null,
-          ),
+        child: Material(
+          color: AbgColors.white,
+          borderRadius: BorderRadius.circular(AbgRadii.lg),
           child: InkWell(
-            borderRadius: BorderRadius.circular(AbgRadii.md),
+            borderRadius: BorderRadius.circular(AbgRadii.lg),
             onTap: onTap,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
+            child: Container(
+              constraints: const BoxConstraints(minHeight: 148),
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AbgRadii.lg),
+                border: Border.all(color: AbgColors.border),
+                boxShadow: AbgShadows.card,
+              ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(
-                    icon,
-                    size: 24,
-                    color: selected
-                        ? AbgColors.platinumBright
-                        : AbgColors.navy500,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    label,
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AbgText.caption.copyWith(
-                      color: selected ? Colors.white : AbgColors.ink,
-                      fontWeight: FontWeight.w700,
-                      height: 1.15,
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      gradient: AbgGradients.hero,
+                      borderRadius: BorderRadius.circular(12),
                     ),
+                    child: Icon(
+                      incidentGroupIcon(group),
+                      color: AbgColors.platinumBright,
+                      size: 23,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(label, style: AbgText.h3.copyWith(fontSize: 15)),
+                  const SizedBox(height: 4),
+                  Text(
+                    hint,
+                    style: AbgText.caption.copyWith(height: 1.3),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
@@ -508,16 +627,139 @@ class _CategoryTile extends StatelessWidget {
   }
 }
 
+class _ChosenGroup extends StatelessWidget {
+  const _ChosenGroup({required this.group, required this.onChange});
+  final String group;
+  final VoidCallback onChange;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    return Container(
+      padding: const EdgeInsets.fromLTRB(12, 10, 6, 10),
+      decoration: BoxDecoration(
+        gradient: AbgGradients.hero,
+        borderRadius: BorderRadius.circular(AbgRadii.md),
+      ),
+      child: Row(
+        children: [
+          Icon(incidentGroupIcon(group), color: AbgColors.platinumBright),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              incidentGroupLabel(l, group),
+              style: AbgText.bodyStrong.copyWith(color: Colors.white),
+            ),
+          ),
+          TextButton.icon(
+            onPressed: onChange,
+            style: TextButton.styleFrom(
+              foregroundColor: AbgColors.platinumBright,
+              minimumSize: const Size(48, 48),
+            ),
+            icon: const Icon(Icons.swap_horiz_rounded, size: 18),
+            label: Text(l.incChangeGroup),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CategoryChips extends StatelessWidget {
+  const _CategoryChips({
+    required this.categories,
+    required this.selected,
+    required this.onSelected,
+  });
+
+  final List<String> categories;
+  final String? selected;
+  final ValueChanged<String> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: [
+        for (final c in categories)
+          ChoiceChip(
+            showCheckmark: false,
+            selected: selected == c,
+            onSelected: (_) => onSelected(c),
+            avatar: Icon(
+              incidentCategoryIcon(c),
+              size: 18,
+              color: selected == c ? Colors.white : AbgColors.navy500,
+            ),
+            label: Text(incidentCategoryLabel(l, c)),
+            labelStyle: AbgText.small.copyWith(
+              color: selected == c ? Colors.white : AbgColors.ink,
+              fontWeight: FontWeight.w600,
+            ),
+            selectedColor: AbgColors.navy,
+            backgroundColor: AbgColors.white,
+            side: BorderSide(
+              color: selected == c ? AbgColors.navy : AbgColors.border,
+            ),
+            tooltip: incidentCategoryHint(l, c),
+          ),
+      ],
+    );
+  }
+}
+
+class _Note extends StatelessWidget {
+  const _Note({required this.icon, required this.text, this.strong = false});
+  final IconData icon;
+  final String text;
+  final bool strong;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: strong ? AbgColors.navy : AbgColors.activeSoft,
+        borderRadius: BorderRadius.circular(AbgRadii.md),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            icon,
+            size: 20,
+            color: strong ? AbgColors.platinumBright : AbgColors.active,
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              text,
+              style: AbgText.small.copyWith(
+                color: strong ? Colors.white : AbgColors.navy,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _PhotoStrip extends StatelessWidget {
   const _PhotoStrip({
     required this.photos,
     required this.onRemove,
+    required this.onOpen,
     required this.onCamera,
     required this.onGallery,
   });
 
   final List<_Picked> photos;
   final ValueChanged<int> onRemove;
+  final ValueChanged<int> onOpen;
   final VoidCallback onCamera;
   final VoidCallback onGallery;
 
@@ -531,48 +773,86 @@ class _PhotoStrip extends StatelessWidget {
         if (photos.isNotEmpty) ...[
           Row(
             children: [
-              for (var i = 0; i < photos.length; i++) ...[
+              for (var i = 0; i < maxIncidentPhotos; i++) ...[
                 if (i > 0) const SizedBox(width: 10),
                 Expanded(
                   child: AspectRatio(
                     aspectRatio: 1,
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(AbgRadii.md),
-                          child: Image.memory(
-                            photos[i].bytes,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Positioned(
-                          top: 6,
-                          right: 6,
-                          child: Material(
-                            color: AbgColors.navy.withValues(alpha: 0.75),
-                            shape: const CircleBorder(),
-                            child: IconButton(
-                              tooltip: l.incRemovePhoto,
-                              visualDensity: VisualDensity.compact,
-                              icon: const Icon(
-                                Icons.close_rounded,
-                                color: Colors.white,
-                                size: 18,
+                    child: i < photos.length
+                        ? Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Semantics(
+                                button: true,
+                                label: l.incPhotoPreview(i + 1),
+                                child: GestureDetector(
+                                  onTap: () => onOpen(i),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                      AbgRadii.md,
+                                    ),
+                                    child: Image.memory(
+                                      photos[i].bytes,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
                               ),
-                              onPressed: () => onRemove(i),
+                              Positioned(
+                                left: 6,
+                                bottom: 6,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                    vertical: 2,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AbgColors.navy.withValues(
+                                      alpha: 0.75,
+                                    ),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Text(
+                                    '${i + 1}',
+                                    style: AbgText.caption.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: 4,
+                                right: 4,
+                                child: Material(
+                                  color: AbgColors.navy.withValues(alpha: 0.75),
+                                  shape: const CircleBorder(),
+                                  child: IconButton(
+                                    tooltip: l.incRemovePhoto,
+                                    visualDensity: VisualDensity.compact,
+                                    icon: const Icon(
+                                      Icons.close_rounded,
+                                      color: Colors.white,
+                                      size: 18,
+                                    ),
+                                    onPressed: () => onRemove(i),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: AbgColors.surface,
+                              borderRadius: BorderRadius.circular(AbgRadii.md),
+                              border: Border.all(color: AbgColors.border),
+                            ),
+                            child: const Icon(
+                              Icons.add_photo_alternate_outlined,
+                              color: AbgColors.borderStrong,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
                   ),
-                ),
-              ],
-              for (var i = photos.length; i < maxIncidentPhotos; i++) ...[
-                const SizedBox(width: 10),
-                const Expanded(
-                  child: AspectRatio(aspectRatio: 1, child: SizedBox()),
                 ),
               ],
             ],
@@ -603,6 +883,33 @@ class _PhotoStrip extends StatelessWidget {
   }
 }
 
+class _PhotoPreview extends StatelessWidget {
+  const _PhotoPreview({required this.photos, required this.initial});
+  final List<_Picked> photos;
+  final int initial;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+      ),
+      body: PageView.builder(
+        controller: PageController(initialPage: initial),
+        itemCount: photos.length,
+        itemBuilder: (_, k) => InteractiveViewer(
+          child: Center(
+            child: Image.memory(photos[k].bytes, fit: BoxFit.contain),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Critical · High · Medium · Low, each with its tone, icon and label.
 class _SeverityPicker extends StatelessWidget {
   const _SeverityPicker({required this.selected, required this.onSelected});
 
@@ -625,15 +932,15 @@ class _SeverityPicker extends StatelessWidget {
                 return Semantics(
                   button: true,
                   selected: on,
-                  label: incidentSeverityLabel(l, s),
+                  label:
+                      '${incidentSeverityLabel(l, s)}. ${incidentSeverityHint(l, s)}',
                   child: ExcludeSemantics(
                     child: InkWell(
                       borderRadius: BorderRadius.circular(AbgRadii.md),
                       onTap: () => onSelected(s),
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 160),
-                        height: 48,
-                        alignment: Alignment.center,
+                        height: 64,
                         decoration: BoxDecoration(
                           color: on ? c.bg : AbgColors.white,
                           borderRadius: BorderRadius.circular(AbgRadii.md),
@@ -642,12 +949,25 @@ class _SeverityPicker extends StatelessWidget {
                             width: on ? 1.6 : 1,
                           ),
                         ),
-                        child: Text(
-                          incidentSeverityLabel(l, s),
-                          style: AbgText.caption.copyWith(
-                            color: on ? c.fg : AbgColors.ink,
-                            fontWeight: FontWeight.w700,
-                          ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              incidentSeverityIcon(s),
+                              size: 20,
+                              color: on ? c.fg : AbgColors.inkSubtle,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              incidentSeverityLabel(l, s),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AbgText.caption.copyWith(
+                                color: on ? c.fg : AbgColors.ink,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

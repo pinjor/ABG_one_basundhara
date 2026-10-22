@@ -106,15 +106,18 @@ export interface IncidentRow {
   id: string;
   referenceNumber: string;
   title: string;
+  group: string;
   category: string;
   severity: string;
   status: string;
+  resolution: string | null;
+  confidential: boolean;
+  anonymous: boolean;
   statusNote: string | null;
   statusChangedAt: string;
   createdAt: string;
   branch: { id: string; name: string; code: string };
   place: string | null;
-  anonymous: boolean;
   reporterName: string | null;
   reporterCode: string | null;
   photoCount: number;
@@ -140,35 +143,64 @@ export interface IncidentUpdate {
   createdAt: string;
 }
 
+/** One stage of the Reported → Acknowledged → Under Investigation → Closed tracker. */
+export interface IncidentStage {
+  status: "REPORTED" | "ACKNOWLEDGED" | "UNDER_INVESTIGATION" | "CLOSED";
+  state: "done" | "current" | "upcoming" | "skipped";
+  at: string | null;
+  by: string | null;
+  resolution?: string | null;
+}
+
 export interface Incident {
   id: string;
   referenceNumber: string;
   title: string;
   description: string;
+  group: string;
   category: string;
   severity: string;
   status: string;
+  resolution: string | null;
+  confidential: boolean;
+  anonymous: boolean;
   statusNote: string | null;
   statusChangedAt: string;
-  processingAt: string | null;
-  doneAt: string | null;
-  declinedAt: string | null;
+  acknowledgedAt: string | null;
+  investigationStartedAt: string | null;
+  closedAt: string | null;
   createdAt: string;
   branch: { id: string; name: string; code: string };
   location: { id: string; name: string; path: string } | null;
   locationDetail: string | null;
-  anonymous: boolean;
   reporter: { name: string; employeeCode: string | null; designation: string | null; department: string | null; phone: string | null } | null;
   photos: IncidentPhoto[];
   updates: IncidentUpdate[];
+  stages: IncidentStage[];
   viewer: { isReporter: boolean; isStaff: boolean; canManage: boolean; actions: string[] };
 }
 
 export interface IncidentSummary {
-  counts: Record<"PENDING" | "PROCESSING" | "DONE" | "DECLINED", number>;
+  counts: Record<"REPORTED" | "ACKNOWLEDGED" | "UNDER_INVESTIGATION" | "CLOSED", number>;
   open: number;
+  criticalOpen: number;
+  /** Critical + High, still open. */
   urgentOpen: number;
-  oldestPendingAt: string | null;
-  doneLast30Days: number;
-  avgHoursToDone: number | null;
+  byGroupOpen: Record<"SAFETY_INDUSTRIAL" | "ADMIN_FACILITY" | "SECURITY" | "IT_TECHNICAL", number>;
+  oldestReportedAt: string | null;
+  closedLast30Days: number;
+  avgHoursToClose: number | null;
+  /** The latest six reports in the viewer's scope ("recent incident logs"). */
+  recent: {
+    id: string;
+    referenceNumber: string;
+    title: string;
+    group: string;
+    category: string;
+    severity: string;
+    status: string;
+    confidential: boolean;
+    branch: { name: string; code: string };
+    createdAt: string;
+  }[];
 }

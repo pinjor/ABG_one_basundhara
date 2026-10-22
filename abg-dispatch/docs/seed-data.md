@@ -69,22 +69,35 @@ Notifications, SLA rules (pickup, delivery, receipt reminder at 1 h, receipt
 escalation at 2 h, end-to-end at 8 h, priority-specific pickup reminders) and
 four courier providers (Pathao, REDX, Steadfast and a generic "Other") are seeded too.
 
-## Incident reports
+## Incident & facility issues
 
-Eight reports across the offices, so every state is on screen:
+Fourteen reports across all four categories, so every stage, severity and
+resolution is on screen:
 
-| Office | Report | Reported by | State |
-|---|---|---|---|
-| HO | Water leaking from the ceiling near the Level 7 lift (photo, High) | Md. Rahim | Processing — plumber on the way |
-| FCA | Cafeteria serving counter not cleaned after lunch | Anonymous (Shahin) | **Pending** |
-| FCB | Crack spreading across the store-room wall (photo) | Imran Hossain | **Pending** |
-| FCA | Exposed wires at the production-floor switchboard (Urgent) | Rafiq Islam | Processing — electrician called |
-| HO | Wet floor at reception with no warning sign (photo) | Nusrat Jahan | Done |
-| CO | No water in the 2nd floor washroom | Jamal Uddin | Done |
-| HO | Supplier asking staff for cash to speed up deliveries (**misconduct**) | Anonymous (Mehedi Hasan) | Processing — head office only |
-| DHK | Broken lock on the front-desk drawer | Laila Rahman | Declined, with the reason |
+| Office | Report | Category › sub-category | Severity | Reported by | Stage |
+|---|---|---|---|---|---|
+| FCA | Strong smell of gas near the boiler room | Safety & Industrial › Gas leak | **Critical** | Rafiq Islam | **Under Investigation** — boiler shut down, Titas Gas checking the line |
+| FCA | Exposed wires at the production-floor switchboard | Safety & Industrial › Electrical hazard | High | Farhana Islam | **Reported** |
+| FCA | Cafeteria serving counter not cleaned after lunch | Admin & Facility › Cafeteria hygiene | Medium | Anonymous (Shahin) | **Reported** |
+| FCA | CCTV camera at the security gate is offline | Security › CCTV fault | Medium | Nurul Amin | Under Investigation — cut cable being replaced |
+| FCA | Spare parts missing from the store-room cage (**confidential**) | Security › Theft or loss | High | Hidden (Kamrul Hasan) | Acknowledged by head office — Sabina cannot see it |
+| HO | Water leaking from the ceiling near the Level 7 lift (photo) | Admin & Facility › Building damage | High | Md. Rahim | Under Investigation — plumber on the way |
+| HO | Ceiling dripping by lift 2 | Admin & Facility › Building damage | Medium | Farid Uddin | Closed — **Duplicate** of the leak above |
+| HO | Internet and LAN down on Level 4 | IT / Technical › Network down | High | Sadia Rahman | **Acknowledged** — IT checking the switch |
+| HO | Wet floor at reception with no warning sign (photo) | Safety & Industrial › Other safety hazard | High | Nusrat Jahan | Closed — **Resolved** |
+| HO | Supplier asking staff for cash to speed up deliveries (**misconduct**, always confidential) | Security › Misconduct | High | Anonymous (Mehedi Hasan) | Under Investigation — head office only |
+| FCB | Crack spreading across the store-room wall (photo) | Admin & Facility › Building damage | Medium | Imran Hossain | **Reported** |
+| CO | No water in the 2nd floor washroom | Admin & Facility › Water supply | Medium | Jamal Uddin | Closed — Resolved (all four stages) |
+| DHK | Broken lock on the front-desk drawer | Security › Gate or lock | Low | Laila Rahman | Closed — **No action needed**, with the reason (straight from Reported) |
+| WH | Stores office printer jams on every page | IT / Technical › Computer or printer | Low | Selim Reza | Closed — **Referred** to the printer vendor |
+
+Each report's handler has the "new report" alert in their inbox (read once
+someone acted on it) and each reporter has the latest stage update; the
+confidential ones are marked sensitive.
 
 Sign in as **Sabina Yasmin** to handle Factory A's reports (she cannot see the
-misconduct report), **Arif Chowdhury** for every office, and **Farhana
-Islam** or **Md. Rahim** on the phone to report one and follow it.
-
+confidential spare-parts report, although it is at her office), **Tahmina
+Begum** for Factory B, **Arif Chowdhury**
+for every office including the confidential reports, **md@abg.com.bd** (the
+MD) to read everything without changing it, and **Farhana Islam** or **Md.
+Rahim** on the phone to report one and follow it.

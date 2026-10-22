@@ -188,66 +188,127 @@ monthly office summary, courier activity, and the per-parcel
 or downloaded as CSV (opens in Excel). Parcel lists export to CSV with the
 current filters. All exports respect the viewer's scope and redaction.
 
-## 13. Incident reports
+## 13. Incident & facility issues
 
-Any employee can flag a problem at work that needs an admin's attention —
-a cracked or leaking wall, a dirty floor, an unhygienic cafeteria, a washroom
-without water, exposed wiring, a security gap, or misconduct.
+Any employee can flag a problem at work in one of **four categories** — and
+follow it through **four stages** until it is closed. The full reference
+(vocabulary, endpoints, summary shape) is in
+[modules/incidents.md](modules/incidents.md).
 
-**Reporting (mobile → *Report an incident*, on Home and Profile).** The
-employee picks the kind of problem, gives a title (3–120 characters), an
-optional description, up to **three photos** (camera or gallery), the office
-(defaults to their own), an optional area and exact spot, and how urgent it
-is (Low · Medium · High · Urgent). They may report **anonymously**; misconduct
-reports default to anonymous. The report is sent as one multipart
-`POST /incidents` with an `Idempotency-Key`, so a retry on a bad connection
-never files it twice. It gets a reference `INC-YYMMDD-OFFICE-NNN` (per office
-per day, from `tracking_sequences` under key `INC:<office>`). Photos are
-sniffed from their bytes (JPEG, PNG or WebP only, 10 MB each).
+| Category | Sub-categories |
+|---|---|
+| **Safety & Industrial** | Fire hazard · Gas leak · Chemical spill · Injury or near miss · Electrical hazard · Machinery fault · PPE violation · Other safety hazard |
+| **Admin & Facility** | Building damage · Cleanliness · Cafeteria hygiene · Washroom · Water supply · AC & ventilation · Furniture & fixtures · Pest control · Other facility issue |
+| **Security** | Unauthorised access · Theft or loss · CCTV fault · Gate or lock · Misconduct (always confidential) |
+| **IT / Technical** | Network down · Computer or printer · Software or access · Telephone / PABX · Power or UPS |
+
+**Reporting (mobile → *Report an incident*, on Home and Profile).** Step 1:
+the employee taps one of the four category tiles. Step 2: they pick the
+sub-category from chips (each with a one-line hint), give a title (3–120
+characters) and an optional description, add up to **three photos** from the
+camera or gallery — previewed on the form, tap to enlarge, remove before
+sending — choose the office (their own by default), an optional area and exact
+spot, and a **severity tag**:
+
+| Severity | Meaning | Shown as |
+|---|---|---|
+| Critical | Danger to people, or work has stopped — act now | red, siren icon |
+| High | Serious; needs action today | amber, warning icon |
+| Medium | Needs fixing soon (default) | blue, info icon |
+| Low | Minor; fix when convenient | grey, down-arrow icon |
+
+Two privacy switches sit at the end of the form:
+
+- **Confidential report** — goes to **head office only** (head-office admins,
+  super admins and the MD / Chairman), never to the office's own admins or to
+  auditors, and the reporter's identity is hidden from everyone handling it.
+  It is switched on, and cannot be switched off, for **misconduct**.
+- **Report anonymously** — the reporter's name is hidden, but the report is
+  still routed to the office's admins as usual.
+
+The report is one multipart `POST /incidents` with an `Idempotency-Key`, so a
+retry on a bad connection never files it twice. It gets a reference
+`INC-YYMMDD-OFFICE-NNN` (per office per day, from `tracking_sequences` under
+key `INC:<office>`). Photos are sniffed from their bytes (JPEG, PNG or WebP
+only, 10 MB each). The group is stored with the sub-category so lists filter
+by it; the database refuses a group that doesn't match the sub-category.
 
 **Who is told.** At once, in-app and by push: the office's branch admins and
-head-office admins (super admins if there are none). High and urgent reports
-are titled *Urgent: …*. **Misconduct** goes to head office only — the
-office's own admins never see it, in the list or by id — and its push shows
-only "You have a new report to review" on the lock screen.
+head-office admins (super admins if there are none) — head-office admins only
+for a confidential report. Critical reports are titled *Critical: Gas leak
+reported at Factory A*, high ones *Urgent: …*. A confidential report's alert
+says only "New confidential report at <office>", and its push shows only
+"You have a new report to review" on the lock screen.
 
-**Handling (portal → *Incident reports*).** The sidebar shows the pending
-count and the control room shows a strip while anything is open. Tabs: Needs
-attention (Pending + Processing), Pending, Processing, Done, Declined, All;
-filters for office, kind and urgency; search by reference, title, place or
-reporter. An admin with `incident.manage`:
+**Handling (portal → *Incident & Facility Issues*).** The sidebar badge counts
+reports still **Reported** (nobody has acknowledged them); the control room
+shows a strip while anything is open, red when something Critical is open.
+The page has **category tabs** (All, Safety & Industrial, Admin & Facility,
+Security, IT/Technical — each with its icon and open count), **stage tabs**
+(Needs attention, Reported, Acknowledged, Under investigation, Closed, All),
+KPIs (waiting, Critical open, Critical-or-high open, under investigation,
+closed in 30 days, average hours to close), filters for office, sub-category,
+severity, resolution and — for head office — *Confidential only*, and search
+by reference, title, place or reporter. An admin with `incident.manage`:
 
 ```
-Pending ──▶ Processing ──▶ Done
-   │             │           │
-   └──▶ Done     └──▶ Declined (reason required)
-   └──▶ Declined        ▲
-            Done / Declined ──▶ Processing   (reopen)
+Reported ──▶ Acknowledged ──▶ Under Investigation ──▶ Closed (with a resolution)
+   │              │                    ▲                   │
+   │              └──────────▶ Closed  └───── reopen ──────┘
+   ├──────────────────────────▶ Under Investigation
+   └──────────────────────────▶ Closed
 ```
 
-- each move can carry a message for the reporter (required to decline);
-- *Send update* messages the reporter without changing the status;
-- *Add photo* attaches up to three photos of the fix;
-- *Edit* corrects urgency or kind (re-classifying as misconduct hands it to
-  head office and removes it from the office's view).
+- **Acknowledge** — "we've seen it"; **Start investigation** — someone is on
+  it; each can carry a message for the reporter.
+- **Close** — always with a **resolution**: *Resolved*, *No action needed*,
+  *Duplicate* or *Referred* (to another authority or department). Every
+  resolution other than Resolved needs a note for the reporter
+  (`REASON_REQUIRED`); closing without one is `RESOLUTION_REQUIRED`.
+- **Reopen** a closed report — it goes back to Under Investigation and the
+  resolution is cleared.
+- *Send update* messages the reporter without changing the stage; *Add photo*
+  attaches up to three photos of the fix.
+- *Edit details* corrects the category, sub-category, severity or
+  confidentiality. Marking a report confidential hands it to head office (it
+  leaves the office's view and head office is told); taking it out of
+  confidential shares it with the office's admins but keeps the reporter
+  hidden (it becomes anonymous) — they reported it in confidence.
 
-Status changes take a row lock and are checked against the transition table,
-so two admins acting at once cannot both succeed (`409
-INCIDENT_STATE_CONFLICT`). Every change appends to `incident_updates`
-(append-only by trigger) and to the audit log.
+The detail page shows the **stage tracker** — Reported ➔ Acknowledged ➔ Under
+Investigation ➔ Closed — with who moved it and when (a stage passed over shows
+as *Skipped*), the resolution, the photos of the problem and of the fix, and
+the full history. `acknowledgedAt` is the first time a handler acted on the
+report, `investigationStartedAt` the first time it went Under Investigation,
+`closedAt` the close (cleared on reopen). Stage changes take a row lock and are
+checked against the transition table, so two admins acting at once cannot both
+succeed (`409 INCIDENT_STATE_CONFLICT`). Every change appends to
+`incident_updates` (append-only by trigger) and to the audit log.
 
-**Following up (mobile → *My reports*).** The reporter is notified on every
-status change and update ("Your report is being processed", "…has been
-resolved", "…was declined", "…was reopened", "Update on your report"). The
-report shows a Submitted → Processing → Done progress bar, the admin's latest
-message, the problem and fix photos side by side, and the full history. While
-it is open they can add more photos.
+**Following up (mobile → *My reports*).** Stage chips filter the list (All,
+Open, Reported, Acknowledged, Under Investigation, Closed); each card shows the
+stage, severity tag, resolution and confidential/anonymous badges. The
+reporter is notified at every stage ("Your report has been acknowledged",
+"…is under investigation", "…has been resolved", "…was closed as a
+duplicate", "…was referred onwards", "…was closed — no action needed", "…was
+reopened") and on every update. The report shows the four-stage tracker with
+who and when, the resolution and its note when closed, the team's latest
+message, the problem and fix photos, and the history. While it is open they
+can add more photos.
 
-**Anonymity.** An anonymous report stores who sent it (so the reporter can
-follow it) but nobody handling it can find out: the API returns `reporter:
-null`, the history and photo uploads say *Anonymous employee*, the admin
-search does not match the reporter's name, and notifications to handlers
-omit it. Photos are served either to a person involved (auth header) or
-through a signed link valid for ten minutes, so the `<img>` URLs in the apps
-cannot be shared onwards.
+**Anonymity and confidentiality.** Both store who sent the report (so the
+reporter can follow it), but nobody handling it can find out: the API returns
+`reporter: null`, the history, tracker and photo uploads say *Anonymous
+employee* or *Confidential reporter*, the admin search does not match the
+reporter's name, and notifications to handlers omit it. A report marked
+confidential after it was filed also hides the name it was filed with.
+Photos are served either to a person involved (auth header) or through a
+signed link valid for ten minutes, so the `<img>` URLs in the apps cannot be
+shared onwards.
 
+**From the old model.** Migration `20261021000200_incident_stages` moved
+existing reports across: Pending → Reported; Processing → Under Investigation;
+Done → Closed (Resolved); Declined → Closed (No action needed); Urgent →
+Critical; Electrical → Electrical hazard; Security → Gate or lock; misconduct
+became confidential; the history and inbox items were rewritten to the new
+stage names. See [modules/incidents.md](modules/incidents.md#migration).

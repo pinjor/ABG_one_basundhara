@@ -9,7 +9,7 @@ import { RateLimit, RateLimitGuard } from "../common/rate-limit";
 import { safeEqual } from "../common/crypto";
 import { unauthorized } from "../common/errors";
 import { asUser } from "../admin/admin-scope";
-import { AdminIncidentsQuery, IncidentDetailsDto, IncidentNoteDto, IncidentPhotoUploadDto, IncidentStatusDto, MyIncidentsQuery, ReportIncidentDto } from "./incidents.dto";
+import { AdminIncidentsQuery, IncidentDetailsDto, IncidentNoteDto, IncidentPhotoUploadDto, IncidentStatusDto, IncidentSummaryQuery, MyIncidentsQuery, ReportIncidentDto } from "./incidents.dto";
 import { IncidentsService, type UploadedPhoto } from "./incidents.service";
 
 const Id = new ParseUUIDPipe({ version: "4", errorHttpStatusCode: 404 });
@@ -21,7 +21,7 @@ const PHOTO_LIMITS = { limits: { fileSize: 10 * 1024 * 1024, files: INCIDENT_LIM
 export class IncidentsController {
   constructor(private readonly incidents: IncidentsService) {}
 
-  /** Multipart: the form fields plus up to three `photos`. */
+  /** Multipart: the form fields (group, category, severity, confidential, anonymous…) plus up to three `photos`. */
   @RequireCapability(Capability.INCIDENT_REPORT)
   @RateLimit(10, 60)
   @Post("incidents")
@@ -42,11 +42,12 @@ export class IncidentsController {
     return this.incidents.get(asUser(actor), id);
   }
 
+  /** `{ status, resolution?, note? }` — Acknowledge, start the investigation, close (with a resolution) or reopen. */
   @RequireCapability(Capability.INCIDENT_MANAGE)
   @HttpCode(200)
   @Post("incidents/:id/status")
   status(@CurrentActor() actor: Actor, @Param("id", Id) id: string, @Body() dto: IncidentStatusDto) {
-    return this.incidents.changeStatus(asUser(actor), id, dto.status, dto.note);
+    return this.incidents.changeStatus(asUser(actor), id, dto);
   }
 
   @RequireCapability(Capability.INCIDENT_MANAGE)
@@ -56,6 +57,7 @@ export class IncidentsController {
     return this.incidents.addNote(asUser(actor), id, dto.note);
   }
 
+  /** `{ group?, category?, severity?, confidential? }` — may return `{ id, movedToHeadOffice: true }`. */
   @RequireCapability(Capability.INCIDENT_MANAGE)
   @Patch("incidents/:id")
   details(@CurrentActor() actor: Actor, @Param("id", Id) id: string, @Body() dto: IncidentDetailsDto) {
@@ -92,10 +94,11 @@ export class IncidentsController {
     return this.incidents.list(asUser(actor), q);
   }
 
+  /** Counts for the portal and the Executive Dashboard ("recent incident logs"). */
   @RequireCapability(Capability.INCIDENT_VIEW)
   @Get("admin/incidents/summary")
-  summary(@CurrentActor() actor: Actor, @Query("branchId") branchId?: string) {
-    return this.incidents.summary(asUser(actor), branchId || undefined);
+  summary(@CurrentActor() actor: Actor, @Query() q: IncidentSummaryQuery) {
+    return this.incidents.summary(asUser(actor), q.branchId, q.group);
   }
 
   private async send(res: Response, photo: { storageKey: string; mimeType: string; fileName: string }) {

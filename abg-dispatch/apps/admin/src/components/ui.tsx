@@ -5,21 +5,34 @@ import {
   AlertOctagon,
   ArrowRight,
   Ban,
+  Building2,
   CheckCircle2,
+  CircleAlert,
+  CircleArrowDown,
   CircleDashed,
+  CircleSlash,
   Clock3,
+  Copy,
+  Eye,
   FileEdit,
   Flame,
-  Hammer,
-  Hourglass,
+  Forward,
+  HardHat,
   Inbox,
   Loader2,
   Lock,
+  LockKeyhole,
   MapPin,
+  Megaphone,
+  MonitorSmartphone,
   PackageCheck,
   PauseCircle,
   RotateCcw,
+  ScanSearch,
   ShieldAlert,
+  ShieldCheck,
+  Siren,
+  TriangleAlert,
   Truck,
   Undo2,
   X,
@@ -28,9 +41,16 @@ import {
 import {
   CLASSIFICATION_LABEL,
   Classification,
+  INCIDENT_RESOLUTION_LABEL,
+  INCIDENT_RESOLUTION_TONE,
+  INCIDENT_SEVERITY_HINT,
   INCIDENT_SEVERITY_LABEL,
+  INCIDENT_SEVERITY_TONE,
+  INCIDENT_STATUS_HINT,
   INCIDENT_STATUS_LABEL,
   INCIDENT_STATUS_TONE,
+  IncidentGroup,
+  IncidentResolution,
   IncidentStatus,
   IncidentSeverity,
   PRIORITY_LABEL,
@@ -82,33 +102,93 @@ export function StatusBadge({ status, size = "md" }: { status: string; size?: "s
   );
 }
 
-const INCIDENT_ICON: Record<IncidentStatus, LucideIcon> = {
-  PENDING: Hourglass,
-  PROCESSING: Hammer,
-  DONE: CheckCircle2,
-  DECLINED: Ban,
+// ── Incident & facility issues ──
+
+/** One icon per stage, so the stage reads without colour. */
+export const INCIDENT_STATUS_ICON: Record<IncidentStatus, LucideIcon> = {
+  REPORTED: Megaphone,
+  ACKNOWLEDGED: Eye,
+  UNDER_INVESTIGATION: ScanSearch,
+  CLOSED: CheckCircle2,
+};
+
+/** One icon per group: Safety & Industrial, Admin & Facility, Security, IT / Technical. */
+export const INCIDENT_GROUP_ICON: Record<IncidentGroup, LucideIcon> = {
+  SAFETY_INDUSTRIAL: HardHat,
+  ADMIN_FACILITY: Building2,
+  SECURITY: ShieldCheck,
+  IT_TECHNICAL: MonitorSmartphone,
+};
+
+const SEVERITY_ICON: Record<IncidentSeverity, LucideIcon> = {
+  CRITICAL: Siren,
+  HIGH: TriangleAlert,
+  MEDIUM: CircleAlert,
+  LOW: CircleArrowDown,
+};
+
+const RESOLUTION_ICON: Record<IncidentResolution, LucideIcon> = {
+  RESOLVED: CheckCircle2,
+  NO_ACTION_NEEDED: CircleSlash,
+  DUPLICATE: Copy,
+  REFERRED: Forward,
 };
 
 export function IncidentStatusBadge({ status, size = "md" }: { status: string; size?: "sm" | "md" }) {
   const s = status as IncidentStatus;
-  const Icon = INCIDENT_ICON[s] ?? CircleDashed;
+  const Icon = INCIDENT_STATUS_ICON[s] ?? CircleDashed;
   return (
-    <span className={cx("inline-flex items-center gap-1.5 whitespace-nowrap rounded-full font-semibold ring-1 ring-inset", TONE_CLASS[INCIDENT_STATUS_TONE[s] ?? "neutral"], size === "sm" ? "px-2 py-0.5 text-[11px]" : "px-2.5 py-1 text-xs")}>
+    <span
+      title={INCIDENT_STATUS_HINT[s]}
+      className={cx("inline-flex items-center gap-1.5 whitespace-nowrap rounded-full font-semibold ring-1 ring-inset", TONE_CLASS[INCIDENT_STATUS_TONE[s] ?? "neutral"], size === "sm" ? "px-2 py-0.5 text-[11px]" : "px-2.5 py-1 text-xs")}
+    >
       <Icon className={size === "sm" ? "h-3 w-3" : "h-3.5 w-3.5"} aria-hidden />
       {INCIDENT_STATUS_LABEL[s] ?? status}
     </span>
   );
 }
 
-export function SeverityBadge({ severity }: { severity: string }) {
-  if (severity === IncidentSeverity.MEDIUM || severity === IncidentSeverity.LOW) return <span className="text-xs text-ink-muted">{INCIDENT_SEVERITY_LABEL[severity]}</span>;
-  const urgent = severity === IncidentSeverity.URGENT;
+/** Severity tag: Critical red, High amber, Medium blue, Low grey — always with its icon and label. */
+export function SeverityBadge({ severity, size = "sm" }: { severity: string; size?: "sm" | "md" }) {
+  const s = severity as IncidentSeverity;
+  const Icon = SEVERITY_ICON[s] ?? CircleAlert;
   return (
-    <span className={cx("inline-flex items-center gap-1 whitespace-nowrap rounded-md px-1.5 py-0.5 text-[11px] font-bold uppercase tracking-wide", urgent ? "bg-danger-soft text-danger" : "bg-pending-soft text-pending")}>
-      {urgent && <Flame className="h-3 w-3" aria-hidden />}
-      {INCIDENT_SEVERITY_LABEL[severity as IncidentSeverity] ?? severity}
+    <span
+      title={INCIDENT_SEVERITY_HINT[s]}
+      className={cx(
+        "inline-flex items-center gap-1 whitespace-nowrap rounded-md font-bold uppercase tracking-wide ring-1 ring-inset",
+        s === IncidentSeverity.CRITICAL ? "bg-danger text-white ring-danger" : TONE_CLASS[INCIDENT_SEVERITY_TONE[s] ?? "neutral"],
+        size === "sm" ? "px-1.5 py-0.5 text-[10.5px]" : "px-2 py-1 text-[11px]",
+      )}
+    >
+      <Icon className="h-3 w-3" aria-hidden />
+      {INCIDENT_SEVERITY_LABEL[s] ?? severity}
     </span>
   );
+}
+
+/** Head office only; the reporter's identity is hidden from handlers. */
+export function ConfidentialBadge({ compact = false }: { compact?: boolean }) {
+  return (
+    <span className="inline-flex items-center gap-1 whitespace-nowrap rounded-md bg-navy px-1.5 py-0.5 text-[11px] font-semibold text-platinum-bright" title="Confidential: head office only; the reporter's identity is hidden">
+      <LockKeyhole className="h-3 w-3" aria-hidden /> {compact ? "Confidential" : "Confidential · head office only"}
+    </span>
+  );
+}
+
+export function ResolutionBadge({ resolution }: { resolution: string }) {
+  const r = resolution as IncidentResolution;
+  const Icon = RESOLUTION_ICON[r] ?? CheckCircle2;
+  return (
+    <Pill tone={INCIDENT_RESOLUTION_TONE[r] ?? "neutral"}>
+      <Icon className="h-3 w-3" aria-hidden /> {INCIDENT_RESOLUTION_LABEL[r] ?? resolution}
+    </Pill>
+  );
+}
+
+export function IncidentGroupIcon({ group, className = "h-4 w-4" }: { group: string; className?: string }) {
+  const Icon = INCIDENT_GROUP_ICON[group as IncidentGroup] ?? CircleDashed;
+  return <Icon className={className} aria-hidden />;
 }
 
 export function PriorityBadge({ priority }: { priority: string }) {

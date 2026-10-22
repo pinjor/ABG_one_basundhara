@@ -74,8 +74,8 @@ Standalone tables: `AuditLog` (append-only), `IdempotencyRecord`,
 | `sla_policies` / `escalations` | Configurable rules and the record of each trigger | Unique `(parcelId, slaPolicyId)` → never double-escalates |
 | `external_provider_events` | Raw courier webhooks with outcome | Unique `(courierProviderId, externalEventId)` → replay guard |
 | `audit_logs` | Administrative and security events with before/after JSON, actor, IP, user agent, session | **Append-only trigger** |
-| `incidents` | Workplace incident reports: reference `INC-…`, title, description, category, severity, status (`PENDING`, `PROCESSING`, `DONE`, `DECLINED`), office, area, exact spot, reporter, `anonymous`, latest note for the reporter, `processingAt` / `doneAt` / `declinedAt` | Status, severity and category CHECKs; Done needs `doneAt`, Declined needs `declinedAt`; unique reference |
-| `incident_updates` | Submitted, status changes, notes, photos and detail edits, with actor snapshot (`Anonymous employee` and no user id for anonymous reporters) | **Append-only trigger** |
+| `incidents` | Incident & facility issues: reference `INC-…`, title, description, group (`SAFETY_INDUSTRIAL`, `ADMIN_FACILITY`, `SECURITY`, `IT_TECHNICAL`), sub-category, severity (`CRITICAL`…`LOW`), stage (`REPORTED`, `ACKNOWLEDGED`, `UNDER_INVESTIGATION`, `CLOSED`), resolution, office, area, exact spot, reporter, `anonymous`, `confidential`, latest note for the reporter, `acknowledgedAt` / `investigationStartedAt` / `closedAt` | Stage, severity, group, sub-category, resolution CHECKs; group must match the sub-category; Closed needs `closedAt` and a resolution, open has none; misconduct is confidential; unique reference |
+| `incident_updates` | Submitted, stage changes (with the resolution on a close), notes, photos and detail edits, with actor snapshot (`Anonymous employee` / `Confidential reporter` and no user id for hidden reporters) | **Append-only trigger** |
 | `incident_photos` | Photo metadata (`REPORT` or `RESOLUTION`); bytes in private storage | Kind CHECK; type sniffed from content |
 | `idempotency_records` | Response cache for `Idempotency-Key` on create | Unique `(actorKey, key)` |
 
@@ -92,6 +92,12 @@ Standalone tables: `AuditLog` (append-only), `IdempotencyRecord`,
 3. `20261020000300_incident_reports` — `incidents`, `incident_updates`,
    `incident_photos`; the append-only trigger on `incident_updates`; CHECK
    constraints; a `pg_trgm` index on incident titles.
+
+   `20261021000200_incident_stages` reworks them into Incident & Facility
+   Issue Management: four groups, four stages with a resolution, the
+   confidential flag, new CHECK constraints, and a move of existing reports
+   and their history onto the new vocabulary (see
+   [modules/incidents.md](modules/incidents.md#migration)).
 
 Apply with `bun run db:migrate` (or automatically when the API container starts).
 Tests assert that the database transition table equals the TypeScript one.
