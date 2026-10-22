@@ -197,18 +197,17 @@ class _NotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = L.of(context);
     final action = item.category == 'ACTION_REQUIRED';
+    // Incident alerts: a new report for a handler, or the stage the
+    // reporter's report has reached (Reported → … → Closed).
+    final incidentStage = item.eventType == 'INCIDENT_REPORTED'
+        ? 'REPORTED'
+        : (item.incidentStatus ?? 'REPORTED');
     final incidentTone = item.incidentId == null
         ? null
-        : toneColors(
-            item.eventType == 'INCIDENT_REPORTED'
-                ? Tone.pending
-                : incidentStatusTone(item.incidentStatus ?? 'PENDING'),
-          );
+        : toneColors(incidentStatusTone(incidentStage));
     final (icon, fg, bg) = switch (item.eventType) {
       _ when incidentTone != null => (
-        item.eventType == 'INCIDENT_REPORTED'
-            ? Icons.campaign_outlined
-            : incidentStatusIcon(item.incidentStatus ?? 'PENDING'),
+        incidentStatusIcon(incidentStage),
         incidentTone.fg,
         incidentTone.bg,
       ),

@@ -39,11 +39,14 @@ export const useBranches = () => useQuery({ queryKey: ["admin", "branches"], que
 export const useCategories = () => useQuery({ queryKey: ["admin", "categories"], queryFn: () => api.get<Category[]>("/admin/categories"), staleTime: 5 * 60_000 });
 export const useProviders = () => useQuery({ queryKey: ["admin", "courier-providers"], queryFn: () => api.get<Provider[]>("/admin/courier-providers"), staleTime: 5 * 60_000 });
 
-/** Incident counts for the sidebar badge, control-room strip and inbox; refreshed every minute. */
-export const useIncidentSummary = (branchId?: string, enabled = true) =>
+/**
+ * Incident counts for the sidebar badge, control-room strip and inbox (one
+ * office and/or one group optional); refreshed every minute.
+ */
+export const useIncidentSummary = (branchId?: string, enabled = true, group?: string) =>
   useQuery({
-    queryKey: ["admin", "incidents", "summary", branchId ?? ""],
-    queryFn: () => api.get<IncidentSummary>(`/admin/incidents/summary${qs({ branchId })}`),
+    queryKey: ["admin", "incidents", "summary", branchId ?? "", group ?? ""],
+    queryFn: () => api.get<IncidentSummary>(`/admin/incidents/summary${qs({ branchId, group })}`),
     refetchInterval: 60_000,
     enabled,
   });

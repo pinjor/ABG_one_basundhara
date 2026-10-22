@@ -15,8 +15,9 @@ import '../widgets/common.dart';
 import '../widgets/vocab.dart';
 import 'my_reports_screen.dart';
 
-/// One report: what was reported, where it stands, and everything the admin
-/// team has said about it.
+/// One report: what was reported, the stage it has reached (Reported ➔
+/// Acknowledged ➔ Under Investigation ➔ Closed, with who and when), how it was
+/// resolved, and everything the team has said about it.
 class IncidentDetailScreen extends StatefulWidget {
   const IncidentDetailScreen({super.key, required this.id});
 
@@ -48,10 +49,10 @@ class _IncidentDetailScreenState extends State<IncidentDetailScreen> {
     }
   }
 
-  Future<void> _addPhoto() async {
+  Future<void> _addPhoto(ImageSource source) async {
     final l = L.of(context);
     final file = await ImagePicker().pickImage(
-      source: ImageSource.camera,
+      source: source,
       maxWidth: 1600,
       imageQuality: 82,
     );
@@ -94,6 +95,10 @@ class _IncidentDetailScreenState extends State<IncidentDetailScreen> {
   Widget build(BuildContext context) {
     final l = L.of(context);
     final i = _incident;
+    final closingNote = i?.updates.reversed
+        .where((u) => u.type == 'STATUS_CHANGED' && u.toStatus == 'CLOSED')
+        .map((u) => u.note)
+        .firstOrNull;
     return Scaffold(
       appBar: AppBar(title: Text(i?.referenceNumber ?? l.incReport)),
       body: _error != null
@@ -124,8 +129,16 @@ class _IncidentDetailScreenState extends State<IncidentDetailScreen> {
                 children: [
                   _Header(incident: i),
                   const SizedBox(height: 16),
-                  _Progress(incident: i),
-                  if (i.statusNote != null && i.statusNote!.isNotEmpty) ...[
+                  IncidentStageTracker(stages: i.stages),
+                  if (i.status == 'CLOSED' && i.resolution != null) ...[
+                    const SizedBox(height: 16),
+                    _ResolutionCard(
+                      resolution: i.resolution!,
+                      note: closingNote,
+                      at: i.closedAt,
+                    ),
+                  ] else if (i.statusNote != null &&
+                      i.statusNote!.isNotEmpty) ...[
                     const SizedBox(height: 16),
                     _AdminNote(note: i.statusNote!),
                   ],
@@ -139,18 +152,34 @@ class _IncidentDetailScreenState extends State<IncidentDetailScreen> {
                     ),
                     if (i.actions.contains('ADD_PHOTO')) ...[
                       const SizedBox(height: 10),
-                      OutlinedButton.icon(
-                        onPressed: _uploading ? null : _addPhoto,
-                        icon: _uploading
-                            ? const SizedBox(
-                                width: 18,
-                                height: 18,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                ),
-                              )
-                            : const Icon(Icons.add_a_photo_outlined),
-                        label: Text(l.incAddPhoto),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: OutlinedButton.icon(
+                              onPressed: _uploading
+                                  ? null
+                                  : () => _addPhoto(ImageSource.camera),
+                              icon: _uploading
+                                  ? const SizedBox(
+                                      width: 18,
+                                      height: 18,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                      ),
+                                    )
+                                  : const Icon(Icons.add_a_photo_outlined),
+                              label: Text(l.incAddPhoto),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          IconButton.outlined(
+                            tooltip: l.incChoosePhoto,
+                            onPressed: _uploading
+                                ? null
+                                : () => _addPhoto(ImageSource.gallery),
+                            icon: const Icon(Icons.photo_library_outlined),
+                          ),
+                        ],
                       ),
                     ],
                   ],
@@ -194,20 +223,34 @@ class _Header extends StatelessWidget {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: AbgColors.platinumBright,
+                  gradient: AbgGradients.hero,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   incidentCategoryIcon(i.category),
-                  color: AbgColors.navy500,
+                  color: AbgColors.platinumBright,
                   size: 21,
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
-                child: Text(
-                  incidentCategoryLabel(l, i.category),
-                  style: AbgText.small.copyWith(fontWeight: FontWeight.w600),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      incidentGroupLabel(l, i.group),
+                      style: AbgText.caption.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      incidentCategoryLabel(l, i.category),
+                      style: AbgText.small.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: AbgColors.ink,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               IncidentStatusChip(i.status),
@@ -227,26 +270,51 @@ class _Header extends StatelessWidget {
             spacing: 6,
             runSpacing: 6,
             children: [
-              ToneBadge(
-                label: incidentSeverityLabel(l, i.severity),
-                tone: incidentSeverityTone(i.severity),
-                icon: Icons.flag_outlined,
-                dense: true,
-              ),
+              IncidentSeverityTag(i.severity, dense: false),
+              if (i.confidential)
+                ToneBadge(
+                  label: l.incConfidentialBadge,
+                  tone: Tone.neutral,
+                  icon: Icons.lock_outline_rounded,
+                ),
               if (i.anonymous)
                 ToneBadge(
                   label: l.incAnonymousBadge,
                   tone: Tone.neutral,
                   icon: Icons.visibility_off_outlined,
-                  dense: true,
                 ),
             ],
           ),
+          if (i.confidential && i.isReporter) ...[
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: AbgColors.surface,
+                borderRadius: BorderRadius.circular(AbgRadii.md),
+                border: Border.all(color: AbgColors.border),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(
+                    Icons.lock_outline_rounded,
+                    size: 18,
+                    color: AbgColors.navy500,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(l.incConfidentialDetail, style: AbgText.small),
+                  ),
+                ],
+              ),
+            ),
+          ],
           const Divider(height: 26),
           InfoRow(icon: Icons.place_outlined, label: l.incWhere, value: place),
           InfoRow(
             icon: Icons.schedule_rounded,
-            label: l.incStepSubmitted,
+            label: l.incReportedOn,
             value: fullStamp(i.createdAt, l.localeName),
           ),
           if (!i.isReporter && i.reporterName != null)
@@ -261,145 +329,210 @@ class _Header extends StatelessWidget {
   }
 }
 
-/// Submitted → Processing → Done (or Declined), with the time of each step.
-class _Progress extends StatelessWidget {
-  const _Progress({required this.incident});
-  final Incident incident;
+/// Reported ➔ Acknowledged ➔ Under Investigation ➔ Closed, top to bottom,
+/// with who moved it and when. A stage passed over shows as skipped.
+class IncidentStageTracker extends StatelessWidget {
+  const IncidentStageTracker({super.key, required this.stages});
+  final List<IncidentStage> stages;
 
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
-    final i = incident;
-    final declined = i.status == 'DECLINED';
-    final steps = [
-      (l.incStepSubmitted, i.createdAt, true, Icons.campaign_rounded),
-      (
-        l.incStepProcessing,
-        i.processingAt,
-        i.status != 'PENDING' && i.processingAt != null,
-        Icons.construction_rounded,
-      ),
-      declined
-          ? (
-              l.incStepDeclined,
-              i.declinedAt,
-              true,
-              Icons.do_not_disturb_on_outlined,
-            )
-          : (
-              l.incStepDone,
-              i.doneAt,
-              i.status == 'DONE',
-              Icons.task_alt_rounded,
-            ),
-    ];
-    final current = switch (i.status) {
-      'PENDING' => 0,
-      'PROCESSING' => 1,
-      _ => 2,
-    };
+    final waiting = stages.isNotEmpty && stages.first.state == 'current';
     return SectionCard(
-      padding: const EdgeInsets.fromLTRB(12, 16, 12, 14),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 4, bottom: 12),
-            child: Text(l.incProgress, style: AbgText.h3),
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Text(l.incProgress, style: AbgText.h3),
+          const SizedBox(height: 14),
+          for (var k = 0; k < stages.length; k++)
+            _StageRow(
+              stage: stages[k],
+              last: k == stages.length - 1,
+              nextReached:
+                  k + 1 < stages.length &&
+                  stages.skip(k + 1).any((s) => s.reached),
+            ),
+          if (waiting) ...[
+            const SizedBox(height: 4),
+            Text(l.incWaitingForAdmin, style: AbgText.small),
+            const SizedBox(height: 6),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _StageRow extends StatelessWidget {
+  const _StageRow({
+    required this.stage,
+    required this.last,
+    required this.nextReached,
+  });
+  final IncidentStage stage;
+  final bool last;
+  final bool nextReached;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final s = stage;
+    final done = s.state == 'done';
+    final current = s.state == 'current';
+    final skipped = s.state == 'skipped';
+    final closed = s.status == 'CLOSED';
+    final fill = done
+        ? (closed ? AbgColors.success : AbgColors.navy)
+        : current
+        ? AbgColors.white
+        : AbgColors.surface;
+    final detail = [
+      if (skipped) l.incStageSkipped,
+      if (current && s.at == null) l.incStageNow,
+      if (s.at != null && !skipped) dayAndTime(s.at!, l.localeName),
+      if (s.by != null && (done || current)) s.by!,
+    ].join(' · ');
+    return Semantics(
+      label: '${incidentStatusLabel(l, s.status)}. $detail',
+      child: ExcludeSemantics(
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              for (var s = 0; s < steps.length; s++)
-                Expanded(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: 2,
-                              color: s == 0
-                                  ? Colors.transparent
-                                  : (s <= current
-                                        ? AbgColors.navy
-                                        : AbgColors.softSilver),
-                            ),
-                          ),
-                          Container(
-                            width: 34,
-                            height: 34,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: steps[s].$3
-                                  ? (declined && s == 2
-                                        ? AbgColors.neutral
-                                        : s == 2
-                                        ? AbgColors.success
-                                        : AbgColors.navy)
-                                  : AbgColors.white,
-                              border: Border.all(
-                                color: steps[s].$3
-                                    ? Colors.transparent
-                                    : (s == current + 1
-                                          ? AbgColors.navy
-                                          : AbgColors.borderStrong),
-                                width: 2,
-                              ),
-                            ),
-                            child: Icon(
-                              steps[s].$4,
-                              size: 17,
-                              color: steps[s].$3
-                                  ? Colors.white
-                                  : AbgColors.inkSubtle,
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              height: 2,
-                              color: s == steps.length - 1
-                                  ? Colors.transparent
-                                  : (s < current
-                                        ? AbgColors.navy
-                                        : AbgColors.softSilver),
-                            ),
-                          ),
-                        ],
+              SizedBox(
+                width: 34,
+                child: Column(
+                  children: [
+                    Container(
+                      width: 34,
+                      height: 34,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: fill,
+                        border: Border.all(
+                          color: done
+                              ? Colors.transparent
+                              : current
+                              ? AbgColors.navy
+                              : AbgColors.borderStrong,
+                          width: 2,
+                        ),
                       ),
-                      const SizedBox(height: 8),
+                      child: Icon(
+                        done
+                            ? Icons.check_rounded
+                            : incidentStatusIcon(s.status),
+                        size: 17,
+                        color: done
+                            ? Colors.white
+                            : current
+                            ? AbgColors.navy
+                            : AbgColors.inkSubtle,
+                      ),
+                    ),
+                    if (!last)
+                      Expanded(
+                        child: Container(
+                          width: 2,
+                          margin: const EdgeInsets.symmetric(vertical: 2),
+                          color: nextReached
+                              ? AbgColors.navy
+                              : AbgColors.softSilver,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 6, bottom: last ? 4 : 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text(
-                        steps[s].$1,
-                        textAlign: TextAlign.center,
-                        style: AbgText.caption.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: steps[s].$3
+                        incidentStatusLabel(l, s.status),
+                        style: AbgText.bodyStrong.copyWith(
+                          fontSize: 14.5,
+                          color: done || current
                               ? AbgColors.navy
                               : AbgColors.inkSubtle,
                         ),
                       ),
-                      Text(
-                        steps[s].$3 && steps[s].$2 != null
-                            ? dayAndTime(steps[s].$2!, l.localeName)
-                            : '',
-                        textAlign: TextAlign.center,
-                        style: AbgText.caption.copyWith(fontSize: 11),
-                      ),
+                      if (detail.isNotEmpty)
+                        Text(detail, style: AbgText.caption),
+                      if (closed && done && s.resolution != null) ...[
+                        const SizedBox(height: 6),
+                        ToneBadge(
+                          label: incidentResolutionLabel(l, s.resolution!),
+                          tone: incidentResolutionTone(s.resolution!),
+                          icon: incidentResolutionIcon(s.resolution!),
+                          dense: true,
+                        ),
+                      ],
                     ],
                   ),
                 ),
+              ),
             ],
           ),
-          if (i.status == 'PENDING') ...[
-            const SizedBox(height: 12),
-            Center(
-              child: Text(
-                l.incWaitingForAdmin,
-                style: AbgText.small,
-                textAlign: TextAlign.center,
-              ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ResolutionCard extends StatelessWidget {
+  const _ResolutionCard({required this.resolution, this.note, this.at});
+  final String resolution;
+  final String? note;
+  final DateTime? at;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final c = toneColors(incidentResolutionTone(resolution));
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: c.bg,
+        borderRadius: BorderRadius.circular(AbgRadii.lg),
+        border: Border.all(color: c.fg.withValues(alpha: 0.25)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(incidentResolutionIcon(resolution), color: c.fg),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l.incClosedAs(incidentResolutionLabel(l, resolution)),
+                  style: AbgText.bodyStrong.copyWith(color: c.fg),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  incidentResolutionHint(l, resolution),
+                  style: AbgText.small.copyWith(color: AbgColors.ink),
+                ),
+                if (note != null && note!.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    '“$note”',
+                    style: AbgText.body.copyWith(color: AbgColors.ink),
+                  ),
+                ],
+                if (at != null) ...[
+                  const SizedBox(height: 6),
+                  Text(dayAndTime(at!, l.localeName), style: AbgText.caption),
+                ],
+              ],
             ),
-          ],
+          ),
         ],
       ),
     );
@@ -512,7 +645,7 @@ class _History extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _label(l, items[k]),
+                          incidentHistoryLabel(l, items[k]),
                           style: AbgText.bodyStrong.copyWith(fontSize: 14),
                         ),
                         Text(
@@ -539,29 +672,41 @@ class _History extends StatelessWidget {
     );
   }
 
-  String _label(L l, IncidentUpdate u) => switch (u.type) {
-    'SUBMITTED' => l.incEvSubmitted,
-    'STATUS_CHANGED' =>
-      u.reopened
-          ? l.incEvReopened
-          : l.incEvStatus(incidentStatusLabel(l, u.toStatus ?? '')),
-    'NOTE_ADDED' => l.incEvNote,
-    'PHOTO_ADDED' => l.incEvPhoto,
-    _ => l.incEvDetails,
-  };
-
   IconData _icon(IncidentUpdate u) => switch (u.type) {
     'SUBMITTED' => Icons.campaign_rounded,
+    'STATUS_CHANGED' when u.reopened => Icons.replay_rounded,
+    'STATUS_CHANGED' when u.toStatus == 'CLOSED' => incidentResolutionIcon(
+      u.resolution ?? 'RESOLVED',
+    ),
     'STATUS_CHANGED' => incidentStatusIcon(u.toStatus ?? ''),
     'NOTE_ADDED' => Icons.chat_bubble_outline_rounded,
     'PHOTO_ADDED' => Icons.photo_camera_outlined,
     _ => Icons.edit_note_rounded,
   };
 
-  Color _tone(IncidentUpdate u) => u.type == 'STATUS_CHANGED'
-      ? toneColors(incidentStatusTone(u.toStatus ?? '')).fg
-      : AbgColors.navy500;
+  Color _tone(IncidentUpdate u) => switch (u.type) {
+    'STATUS_CHANGED' when u.reopened => AbgColors.pending,
+    'STATUS_CHANGED' when u.toStatus == 'CLOSED' => toneColors(
+      incidentResolutionTone(u.resolution ?? 'RESOLVED'),
+    ).fg,
+    'STATUS_CHANGED' => toneColors(incidentStatusTone(u.toStatus ?? '')).fg,
+    _ => AbgColors.navy500,
+  };
 }
+
+/// What a history entry says, in the reader's language.
+String incidentHistoryLabel(L l, IncidentUpdate u) => switch (u.type) {
+  'SUBMITTED' => l.incEvSubmitted,
+  'STATUS_CHANGED' when u.reopened => l.incEvReopened,
+  'STATUS_CHANGED' when u.toStatus == 'ACKNOWLEDGED' => l.incEvAcknowledged,
+  'STATUS_CHANGED' when u.toStatus == 'CLOSED' => l.incEvClosed(
+    incidentResolutionLabel(l, u.resolution ?? 'RESOLVED'),
+  ),
+  'STATUS_CHANGED' => l.incEvInvestigation,
+  'NOTE_ADDED' => l.incEvNote,
+  'PHOTO_ADDED' => l.incEvPhoto,
+  _ => l.incEvDetails,
+};
 
 class _PhotoViewer extends StatelessWidget {
   const _PhotoViewer({required this.photos, required this.initial});

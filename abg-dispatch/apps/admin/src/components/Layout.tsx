@@ -113,7 +113,7 @@ export function Layout({ children }: { children: ReactNode }) {
   const [search, setSearch] = useState("");
   const caps = new Set(profile.capabilities);
   const incidents = useIncidentSummary(undefined, caps.has(Capability.INCIDENT_VIEW));
-  const pending = incidents.data?.counts.PENDING ?? 0;
+  const pending = incidents.data?.counts.REPORTED ?? 0;
   const initials = profile.displayName
     .split(" ")
     .map((p) => p[0])

@@ -27,18 +27,16 @@ class DispatchRepository {
     int limit = 25,
     String? view,
   }) async {
-    final res =
-        await api.get(
-              '/parcels',
-              query: {
-                'box': box,
-                'q': q,
-                'cursor': cursor,
-                'limit': '$limit',
-                'view': view,
-              },
-            )
-            as Json;
+    final res = await api.get(
+      '/parcels',
+      query: {
+        'box': box,
+        'q': q,
+        'cursor': cursor,
+        'limit': '$limit',
+        'view': view,
+      },
+    ) as Json;
     return PageOf(
       (res['items'] as List).cast<Json>().map(ParcelRow.fromJson).toList(),
       res['nextCursor'] as String?,
@@ -142,12 +140,10 @@ class DispatchRepository {
     String? category,
     String? cursor,
   }) async {
-    final res =
-        await api.get(
-              '/notifications',
-              query: {'category': category, 'cursor': cursor, 'limit': '40'},
-            )
-            as Json;
+    final res = await api.get(
+      '/notifications',
+      query: {'category': category, 'cursor': cursor, 'limit': '40'},
+    ) as Json;
     return PageOf(
       (res['items'] as List)
           .cast<Json>()
@@ -181,25 +177,29 @@ class DispatchRepository {
     required String idempotencyKey,
   }) async => Incident(
     await api.uploadMany(
-          '/incidents',
-          files: photos,
-          fileField: 'photos',
-          fields: fields,
-          idempotencyKey: idempotencyKey,
-        )
-        as Json,
+      '/incidents',
+      files: photos,
+      fileField: 'photos',
+      fields: fields,
+      idempotencyKey: idempotencyKey,
+    ) as Json,
   );
 
+  /// The caller's own reports: `state` open / closed / all, or one `status` (stage).
   Future<PageOf<IncidentRow>> myIncidents({
     String state = 'all',
+    String? status,
     String? cursor,
   }) async {
-    final res =
-        await api.get(
-              '/incidents/mine',
-              query: {'state': state, 'cursor': cursor, 'limit': '30'},
-            )
-            as Json;
+    final res = await api.get(
+      '/incidents/mine',
+      query: {
+        'state': state,
+        'status': status,
+        'cursor': cursor,
+        'limit': '30',
+      },
+    ) as Json;
     return PageOf(
       (res['items'] as List).cast<Json>().map(IncidentRow.fromJson).toList(),
       res['nextCursor'] as String?,
@@ -215,13 +215,12 @@ class DispatchRepository {
     required String filename,
   }) async => Incident(
     await api.upload(
-          '/incidents/$id/photos',
-          bytes: bytes,
-          filename: filename,
-          fileField: 'photo',
-          fields: const {},
-        )
-        as Json,
+      '/incidents/$id/photos',
+      bytes: bytes,
+      filename: filename,
+      fileField: 'photo',
+      fields: const {},
+    ) as Json,
   );
 
   Future<Json> uploadEvidence(
@@ -229,14 +228,12 @@ class DispatchRepository {
     required List<int> bytes,
     required String filename,
     required String kind,
-  }) async =>
-      await api.upload(
-            '/parcels/$parcelId/attachments',
-            bytes: bytes,
-            filename: filename,
-            fields: {'kind': kind},
-          )
-          as Json;
+  }) async => await api.upload(
+    '/parcels/$parcelId/attachments',
+    bytes: bytes,
+    filename: filename,
+    fields: {'kind': kind},
+  ) as Json;
 }
 
 /// Unread badge for the Alerts tab. Polls gently while the app is open.

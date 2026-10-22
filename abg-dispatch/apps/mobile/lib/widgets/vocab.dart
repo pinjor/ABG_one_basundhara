@@ -182,64 +182,203 @@ Tone eventTone(String type) => switch (type) {
   _ => Tone.neutral,
 };
 
-// ── Incident reports ──
+// ── Incident & facility issues ──
 
-String incidentStatusLabel(L l, String s) => switch (s) {
-  'PENDING' => l.incStatusPENDING,
-  'PROCESSING' => l.incStatusPROCESSING,
-  'DONE' => l.incStatusDONE,
-  'DECLINED' => l.incStatusDECLINED,
+/// Inbox items sent before the four-stage model carry the old stage names.
+String _stage(String s) => switch (s) {
+  'PENDING' => 'REPORTED',
+  'PROCESSING' => 'UNDER_INVESTIGATION',
+  'DONE' || 'DECLINED' => 'CLOSED',
   _ => s,
 };
 
-Tone incidentStatusTone(String s) => switch (s) {
-  'PENDING' => Tone.pending,
-  'PROCESSING' => Tone.active,
-  'DONE' => Tone.success,
+String incidentStatusLabel(L l, String s) => switch (_stage(s)) {
+  'REPORTED' => l.incStatusREPORTED,
+  'ACKNOWLEDGED' => l.incStatusACKNOWLEDGED,
+  'UNDER_INVESTIGATION' => l.incStatusUNDER_INVESTIGATION,
+  'CLOSED' => l.incStatusCLOSED,
+  _ => s,
+};
+
+Tone incidentStatusTone(String s) => switch (_stage(s)) {
+  'REPORTED' => Tone.pending,
+  'ACKNOWLEDGED' || 'UNDER_INVESTIGATION' => Tone.active,
+  'CLOSED' => Tone.success,
   _ => Tone.neutral,
 };
 
-IconData incidentStatusIcon(String s) => switch (s) {
-  'PENDING' => Icons.hourglass_top_rounded,
-  'PROCESSING' => Icons.construction_rounded,
-  'DONE' => Icons.task_alt_rounded,
-  _ => Icons.do_not_disturb_on_outlined,
+IconData incidentStatusIcon(String s) => switch (_stage(s)) {
+  'REPORTED' => Icons.campaign_outlined,
+  'ACKNOWLEDGED' => Icons.visibility_outlined,
+  'UNDER_INVESTIGATION' => Icons.manage_search_rounded,
+  'CLOSED' => Icons.task_alt_rounded,
+  _ => Icons.circle_outlined,
+};
+
+String incidentGroupLabel(L l, String g) => switch (g) {
+  'SAFETY_INDUSTRIAL' => l.incGrpSAFETY_INDUSTRIAL,
+  'SECURITY' => l.incGrpSECURITY,
+  'IT_TECHNICAL' => l.incGrpIT_TECHNICAL,
+  _ => l.incGrpADMIN_FACILITY,
+};
+
+String incidentGroupHint(L l, String g) => switch (g) {
+  'SAFETY_INDUSTRIAL' => l.incGrpHintSAFETY_INDUSTRIAL,
+  'SECURITY' => l.incGrpHintSECURITY,
+  'IT_TECHNICAL' => l.incGrpHintIT_TECHNICAL,
+  _ => l.incGrpHintADMIN_FACILITY,
+};
+
+IconData incidentGroupIcon(String g) => switch (g) {
+  'SAFETY_INDUSTRIAL' => Icons.engineering_outlined,
+  'SECURITY' => Icons.shield_outlined,
+  'IT_TECHNICAL' => Icons.computer_rounded,
+  _ => Icons.apartment_rounded,
 };
 
 String incidentCategoryLabel(L l, String c) => switch (c) {
+  'FIRE_HAZARD' => l.incCatFIRE_HAZARD,
+  'GAS_LEAK' => l.incCatGAS_LEAK,
+  'CHEMICAL_SPILL' => l.incCatCHEMICAL_SPILL,
+  'INJURY_NEAR_MISS' => l.incCatINJURY_NEAR_MISS,
+  'ELECTRICAL_HAZARD' => l.incCatELECTRICAL_HAZARD,
+  'MACHINERY_FAULT' => l.incCatMACHINERY_FAULT,
+  'PPE_VIOLATION' => l.incCatPPE_VIOLATION,
+  'SAFETY_HAZARD' => l.incCatSAFETY_HAZARD,
   'BUILDING_DAMAGE' => l.incCatBUILDING_DAMAGE,
   'CLEANLINESS' => l.incCatCLEANLINESS,
   'CAFETERIA_HYGIENE' => l.incCatCAFETERIA_HYGIENE,
   'WASHROOM' => l.incCatWASHROOM,
-  'SAFETY_HAZARD' => l.incCatSAFETY_HAZARD,
-  'ELECTRICAL' => l.incCatELECTRICAL,
-  'SECURITY' => l.incCatSECURITY,
+  'WATER_SUPPLY' => l.incCatWATER_SUPPLY,
+  'AC_VENTILATION' => l.incCatAC_VENTILATION,
+  'FURNITURE_FIXTURES' => l.incCatFURNITURE_FIXTURES,
+  'PEST_CONTROL' => l.incCatPEST_CONTROL,
+  'UNAUTHORISED_ACCESS' => l.incCatUNAUTHORISED_ACCESS,
+  'THEFT_LOSS' => l.incCatTHEFT_LOSS,
+  'CCTV_FAULT' => l.incCatCCTV_FAULT,
+  'GATE_LOCK' => l.incCatGATE_LOCK,
   'MISCONDUCT' => l.incCatMISCONDUCT,
+  'NETWORK_DOWN' => l.incCatNETWORK_DOWN,
+  'COMPUTER_PRINTER' => l.incCatCOMPUTER_PRINTER,
+  'SOFTWARE_ACCESS' => l.incCatSOFTWARE_ACCESS,
+  'TELEPHONE' => l.incCatTELEPHONE,
+  'POWER_UPS' => l.incCatPOWER_UPS,
   _ => l.incCatOTHER,
 };
 
+String incidentCategoryHint(L l, String c) => switch (c) {
+  'FIRE_HAZARD' => l.incCatHintFIRE_HAZARD,
+  'GAS_LEAK' => l.incCatHintGAS_LEAK,
+  'CHEMICAL_SPILL' => l.incCatHintCHEMICAL_SPILL,
+  'INJURY_NEAR_MISS' => l.incCatHintINJURY_NEAR_MISS,
+  'ELECTRICAL_HAZARD' => l.incCatHintELECTRICAL_HAZARD,
+  'MACHINERY_FAULT' => l.incCatHintMACHINERY_FAULT,
+  'PPE_VIOLATION' => l.incCatHintPPE_VIOLATION,
+  'SAFETY_HAZARD' => l.incCatHintSAFETY_HAZARD,
+  'BUILDING_DAMAGE' => l.incCatHintBUILDING_DAMAGE,
+  'CLEANLINESS' => l.incCatHintCLEANLINESS,
+  'CAFETERIA_HYGIENE' => l.incCatHintCAFETERIA_HYGIENE,
+  'WASHROOM' => l.incCatHintWASHROOM,
+  'WATER_SUPPLY' => l.incCatHintWATER_SUPPLY,
+  'AC_VENTILATION' => l.incCatHintAC_VENTILATION,
+  'FURNITURE_FIXTURES' => l.incCatHintFURNITURE_FIXTURES,
+  'PEST_CONTROL' => l.incCatHintPEST_CONTROL,
+  'UNAUTHORISED_ACCESS' => l.incCatHintUNAUTHORISED_ACCESS,
+  'THEFT_LOSS' => l.incCatHintTHEFT_LOSS,
+  'CCTV_FAULT' => l.incCatHintCCTV_FAULT,
+  'GATE_LOCK' => l.incCatHintGATE_LOCK,
+  'MISCONDUCT' => l.incCatHintMISCONDUCT,
+  'NETWORK_DOWN' => l.incCatHintNETWORK_DOWN,
+  'COMPUTER_PRINTER' => l.incCatHintCOMPUTER_PRINTER,
+  'SOFTWARE_ACCESS' => l.incCatHintSOFTWARE_ACCESS,
+  'TELEPHONE' => l.incCatHintTELEPHONE,
+  'POWER_UPS' => l.incCatHintPOWER_UPS,
+  _ => l.incCatHintOTHER,
+};
+
 IconData incidentCategoryIcon(String c) => switch (c) {
+  'FIRE_HAZARD' => Icons.local_fire_department_outlined,
+  'GAS_LEAK' => Icons.gas_meter_outlined,
+  'CHEMICAL_SPILL' => Icons.science_outlined,
+  'INJURY_NEAR_MISS' => Icons.personal_injury_outlined,
+  'ELECTRICAL_HAZARD' => Icons.electrical_services_rounded,
+  'MACHINERY_FAULT' => Icons.precision_manufacturing_outlined,
+  'PPE_VIOLATION' => Icons.masks_outlined,
+  'SAFETY_HAZARD' => Icons.warning_amber_rounded,
   'BUILDING_DAMAGE' => Icons.domain_disabled_outlined,
   'CLEANLINESS' => Icons.cleaning_services_outlined,
   'CAFETERIA_HYGIENE' => Icons.restaurant_outlined,
   'WASHROOM' => Icons.wash_outlined,
-  'SAFETY_HAZARD' => Icons.warning_amber_rounded,
-  'ELECTRICAL' => Icons.electrical_services_rounded,
-  'SECURITY' => Icons.shield_outlined,
+  'WATER_SUPPLY' => Icons.water_drop_outlined,
+  'AC_VENTILATION' => Icons.ac_unit_rounded,
+  'FURNITURE_FIXTURES' => Icons.chair_outlined,
+  'PEST_CONTROL' => Icons.pest_control_outlined,
+  'OTHER' => Icons.handyman_outlined,
+  'UNAUTHORISED_ACCESS' => Icons.person_off_outlined,
+  'THEFT_LOSS' => Icons.local_police_outlined,
+  'CCTV_FAULT' => Icons.videocam_off_outlined,
+  'GATE_LOCK' => Icons.lock_open_rounded,
   'MISCONDUCT' => Icons.gavel_rounded,
+  'NETWORK_DOWN' => Icons.wifi_off_rounded,
+  'COMPUTER_PRINTER' => Icons.print_outlined,
+  'SOFTWARE_ACCESS' => Icons.app_blocking_outlined,
+  'TELEPHONE' => Icons.phone_disabled_outlined,
+  'POWER_UPS' => Icons.power_off_outlined,
   _ => Icons.more_horiz_rounded,
 };
 
 String incidentSeverityLabel(L l, String s) => switch (s) {
-  'LOW' => l.incSevLOW,
+  'CRITICAL' || 'URGENT' => l.incSevCRITICAL,
   'HIGH' => l.incSevHIGH,
-  'URGENT' => l.incSevURGENT,
+  'LOW' => l.incSevLOW,
   _ => l.incSevMEDIUM,
 };
 
+String incidentSeverityHint(L l, String s) => switch (s) {
+  'CRITICAL' || 'URGENT' => l.incSevHintCRITICAL,
+  'HIGH' => l.incSevHintHIGH,
+  'LOW' => l.incSevHintLOW,
+  _ => l.incSevHintMEDIUM,
+};
+
+/// Critical red, High amber, Medium blue, Low grey — always with the icon and label.
 Tone incidentSeverityTone(String s) => switch (s) {
-  'LOW' => Tone.neutral,
+  'CRITICAL' || 'URGENT' => Tone.danger,
   'HIGH' => Tone.pending,
-  'URGENT' => Tone.danger,
+  'LOW' => Tone.neutral,
   _ => Tone.active,
+};
+
+IconData incidentSeverityIcon(String s) => switch (s) {
+  'CRITICAL' || 'URGENT' => Icons.report_rounded,
+  'HIGH' => Icons.warning_amber_rounded,
+  'LOW' => Icons.arrow_downward_rounded,
+  _ => Icons.error_outline_rounded,
+};
+
+String incidentResolutionLabel(L l, String r) => switch (r) {
+  'NO_ACTION_NEEDED' => l.incResNO_ACTION_NEEDED,
+  'DUPLICATE' => l.incResDUPLICATE,
+  'REFERRED' => l.incResREFERRED,
+  _ => l.incResRESOLVED,
+};
+
+String incidentResolutionHint(L l, String r) => switch (r) {
+  'NO_ACTION_NEEDED' => l.incResHintNO_ACTION_NEEDED,
+  'DUPLICATE' => l.incResHintDUPLICATE,
+  'REFERRED' => l.incResHintREFERRED,
+  _ => l.incResHintRESOLVED,
+};
+
+Tone incidentResolutionTone(String r) => switch (r) {
+  'RESOLVED' => Tone.success,
+  'REFERRED' => Tone.active,
+  _ => Tone.neutral,
+};
+
+IconData incidentResolutionIcon(String r) => switch (r) {
+  'NO_ACTION_NEEDED' => Icons.do_not_disturb_on_outlined,
+  'DUPLICATE' => Icons.content_copy_rounded,
+  'REFERRED' => Icons.forward_rounded,
+  _ => Icons.task_alt_rounded,
 };

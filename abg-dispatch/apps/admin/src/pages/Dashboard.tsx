@@ -13,6 +13,7 @@ import {
   PackagePlus,
   Radio,
   RotateCcw,
+  Siren,
   Truck,
   UserCheck,
   type LucideIcon,
@@ -56,28 +57,34 @@ function greeting(): string {
   return h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
 }
 
-/** Workplace incident reports waiting for this office, so they are seen on landing. */
+/** Open incident & facility issues for this office, so they are seen on landing. Critical ones turn the strip red. */
 function IncidentStrip({ branchId }: { branchId: string }) {
   const canView = useCan(Capability.INCIDENT_VIEW);
   const summary = useIncidentSummary(branchId || undefined, canView);
   const s = summary.data;
   if (!canView || !s || s.open === 0) return null;
+  const critical = s.criticalOpen > 0;
+  const inProgress = s.counts.ACKNOWLEDGED + s.counts.UNDER_INVESTIGATION;
   return (
-    <Link to={`/incidents${qs({ branchId })}`} className="card flex flex-wrap items-center gap-4 px-5 py-3.5 transition hover:shadow-raised">
-      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-pending-soft text-pending">
-        <Megaphone className="h-5 w-5" aria-hidden />
+    <Link
+      to={`/incidents${qs({ branchId })}`}
+      className={cx("card flex flex-wrap items-center gap-4 px-5 py-3.5 transition hover:shadow-raised", critical && "border-danger/40 bg-danger-soft/40")}
+    >
+      <span className={cx("grid h-10 w-10 shrink-0 place-items-center rounded-xl", critical ? "bg-danger text-white" : "bg-pending-soft text-pending")}>
+        {critical ? <Siren className="h-5 w-5" aria-hidden /> : <Megaphone className="h-5 w-5" aria-hidden />}
       </span>
       <div className="min-w-0 flex-1">
-        <p className="font-semibold text-navy">
-          {s.counts.PENDING} incident report{s.counts.PENDING === 1 ? "" : "s"} waiting · {s.counts.PROCESSING} being fixed
+        <p className={cx("font-semibold", critical ? "text-danger" : "text-navy")}>
+          {critical ? `${s.criticalOpen} critical incident${s.criticalOpen === 1 ? "" : "s"} open · ` : ""}
+          {s.counts.REPORTED} new report{s.counts.REPORTED === 1 ? "" : "s"} waiting · {inProgress} being handled
         </p>
         <p className="text-xs text-ink-muted">
-          {s.urgentOpen ? `${s.urgentOpen} marked high or urgent. ` : ""}
-          {s.oldestPendingAt ? `Oldest waiting since ${ago(s.oldestPendingAt)}.` : "Nothing new waiting."}
+          {s.urgentOpen ? `${s.urgentOpen} critical or high. ` : ""}
+          {s.oldestReportedAt ? `Oldest not yet acknowledged since ${ago(s.oldestReportedAt)}.` : "Every report has been acknowledged."}
         </p>
       </div>
       <span className="inline-flex items-center gap-1 text-sm font-semibold text-active">
-        Review reports <ArrowUpRight className="h-4 w-4" aria-hidden />
+        Review incidents <ArrowUpRight className="h-4 w-4" aria-hidden />
       </span>
     </Link>
   );

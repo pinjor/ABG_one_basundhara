@@ -109,14 +109,17 @@ confidential parcels.
 - **OTP**: a 6-digit code SMS'd to the receiver (or a named on-behalf
   recipient), hashed at rest, five attempts, five minutes.
 
-## Incident reports
+## Incident & facility issues
 
 Every signed-in employee role can **report** (`incident.report`). Branch
 admins **view and manage** reports in their offices; head-office admins in
-every office; auditors **view** everything and change nothing. Misconduct
-reports are visible to head office only — a branch admin gets 404 for one,
-and it never appears in their list or notifications. Anonymous reports hide
-the reporter from every handler (see [workflows §13](workflows.md#13-incident-reports)).
+every office; auditors and the MD / Chairman (`EXECUTIVE`) **view** every
+office and change nothing. **Confidential** reports (always including
+misconduct) are visible to head office only — head-office admins, super
+admins and the MD / Chairman. A branch admin or an auditor gets 404 for one,
+and it never appears in their list, summary or notifications. Anonymous and
+confidential reports hide the reporter from every handler (see
+[workflows §13](workflows.md#13-incident--facility-issues)).
 
 ## Administrative actions
 

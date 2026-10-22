@@ -790,45 +790,60 @@ model SavedView {
   @@map("saved_views")
 }
 
-// ── Workplace incident reports ──────────────────────────────────────────────
+// ── Incident & facility issues ──────────────────────────────────────────────
 
-/// An employee's report of a problem at an office (damage, hygiene, safety,
-/// misconduct…). Routed to that office's admins; misconduct goes to head office only.
+/// An employee's report of a problem at an office, in one of four groups
+/// (Safety & Industrial, Admin & Facility, Security, IT/Technical). Taken
+/// through REPORTED → ACKNOWLEDGED → UNDER_INVESTIGATION → CLOSED by that
+/// office's admins; a confidential report goes to head office only. Groups,
+/// sub-categories, severities, stages and resolutions are text checked by
+/// CHECK constraints, with the vocabulary in packages/shared.
 model Incident {
-  id              String    @id @default(uuid())
+  id                     String    @id @default(uuid())
   /// INC-YYMMDD-OFFICE-NNN
-  referenceNumber String    @unique
-  title           String
-  description     String    @default("")
-  category        String
-  severity        String    @default("MEDIUM")
-  status          String    @default("PENDING")
-  branchId        String
-  branch          Branch    @relation(fields: [branchId], references: [id])
-  locationId      String?
-  location        Location? @relation(fields: [locationId], references: [id])
+  referenceNumber        String    @unique
+  title                  String
+  description            String    @default("")
+  /// SAFETY_INDUSTRIAL, ADMIN_FACILITY, SECURITY or IT_TECHNICAL — always the group of `category`.
+  group                  String
+  category               String
+  severity               String    @default("MEDIUM")
+  status                 String    @default("REPORTED")
+  branchId               String
+  branch                 Branch    @relation(fields: [branchId], references: [id])
+  locationId             String?
+  location               Location? @relation(fields: [locationId], references: [id])
   /// "3rd floor, beside the lift"
-  locationDetail  String?
-  /// Kept even for anonymous reports, only to send status updates back to the
-  /// reporter. Never returned to anyone else by the API.
-  reporterUserId  String
-  reporter        User      @relation("IncidentReporter", fields: [reporterUserId], references: [id])
-  anonymous       Boolean   @default(false)
+  locationDetail         String?
+  /// Kept even for anonymous and confidential reports, only to send status
+  /// updates back to the reporter. Never returned to a handler by the API.
+  reporterUserId         String
+  reporter               User      @relation("IncidentReporter", fields: [reporterUserId], references: [id])
+  /// The reporter's name is hidden from everyone handling it; still routed to the office.
+  anonymous              Boolean   @default(false)
+  /// Head office only (never the office's own admins), reporter hidden. Always true for misconduct.
+  confidential           Boolean   @default(false)
+  /// How it was closed (RESOLVED, NO_ACTION_NEEDED, DUPLICATE, REFERRED); null while open.
+  resolution             String?
   /// The latest note the admins left for the reporter.
-  statusNote      String?
-  statusChangedAt DateTime  @default(now())
-  processingAt    DateTime?
-  doneAt          DateTime?
-  declinedAt      DateTime?
-  lastHandledById String?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  statusNote             String?
+  statusChangedAt        DateTime  @default(now())
+  /// When a handler first moved it on from Reported.
+  acknowledgedAt         DateTime?
+  /// When it first went Under Investigation.
+  investigationStartedAt DateTime?
+  /// When it was closed; cleared if it is reopened.
+  closedAt               DateTime?
+  lastHandledById        String?
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
 
   updates IncidentUpdate[]
   photos  IncidentPhoto[]
 
   @@index([branchId, status])
   @@index([status, createdAt])
+  @@index([group, status])
   @@index([reporterUserId, createdAt])
   @@map("incidents")
 }

@@ -44,17 +44,21 @@ Booked ─▶ Awaiting Pickup ─▶ Picked Up ─▶ In Transit ─▶ Arrived 
   lock-screen notifications and printed labels.
 - **SLA rules** remind, then escalate, and mark parcels overdue.
 
-## Incident reports
+## Incident & facility issues
 
-Any employee who sees a problem — a cracked or leaking wall, a dirty floor, an
-unhygienic cafeteria, a washroom without water, exposed wiring, misconduct —
-opens **Report an incident**, picks the kind of problem, adds a title and up
-to three photos, says where and how urgent, and submits (anonymously if they
-wish). The office's admins and head office are notified at once; misconduct
-goes to head office only. Admins move each report **Pending → Processing →
-Done** (or Declined, with a reason) from the portal, with a message and photos
-of the fix, and the reporter is notified and sees every step in *My reports*.
-Details: [workflows §13](docs/workflows.md#13-incident-reports).
+Any employee who sees a problem opens **Report an incident**, picks one of
+four categories — **Safety & Industrial, Admin & Facility, Security,
+IT/Technical** — and the exact problem (a gas leak, a broken washroom, a CCTV
+fault, the network down…), adds a title and up to three photos (previewed
+before sending), says where, tags the severity (**Critical, High, Medium,
+Low**) and submits — anonymously, or as a **confidential** report that only
+head office sees (misconduct always is). The office's admins and head office
+are notified at once. Admins take each report **Reported → Acknowledged →
+Under Investigation → Closed** (with a resolution: resolved, no action needed,
+duplicate or referred) from the portal, with messages and photos of the fix,
+and the reporter is notified and sees every stage in *My reports*.
+Details: [workflows §13](docs/workflows.md#13-incident--facility-issues) and
+[modules/incidents.md](docs/modules/incidents.md).
 
 <p>
   <img src="docs/screenshots/mobile-12-report-incident.png" width="190" alt="Report an incident" />

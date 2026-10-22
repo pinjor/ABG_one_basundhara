@@ -1633,6 +1633,12 @@ abstract class L {
   /// **'More actions'**
   String get moreActions;
 
+  /// No description provided for @incModuleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Incident & Facility Issues'**
+  String get incModuleTitle;
+
   /// No description provided for @incReport.
   ///
   /// In en, this message translates to:
@@ -1642,7 +1648,7 @@ abstract class L {
   /// No description provided for @incReportHint.
   ///
   /// In en, this message translates to:
-  /// **'Spotted a problem? Snap a photo — your office\'s admins are told at once.'**
+  /// **'Safety, facility, security or IT problem? Snap a photo — the right team is told at once.'**
   String get incReportHint;
 
   /// No description provided for @incMyReports.
@@ -1657,11 +1663,35 @@ abstract class L {
   /// **'{count, plural, =0{No open reports} =1{1 open report} other{{count} open reports}}'**
   String incOpenCount(int count);
 
-  /// No description provided for @incWhatKind.
+  /// No description provided for @incStepOf.
   ///
   /// In en, this message translates to:
-  /// **'What kind of problem?'**
-  String get incWhatKind;
+  /// **'Step {step} of {total}'**
+  String incStepOf(int step, int total);
+
+  /// No description provided for @incChooseGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'What kind of problem is it?'**
+  String get incChooseGroup;
+
+  /// No description provided for @incChooseGroupHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick one of the four categories. You choose the exact problem next.'**
+  String get incChooseGroupHint;
+
+  /// No description provided for @incChooseCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Which one fits best?'**
+  String get incChooseCategory;
+
+  /// No description provided for @incChangeGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get incChangeGroup;
 
   /// No description provided for @incTitleLabel.
   ///
@@ -1672,7 +1702,7 @@ abstract class L {
   /// No description provided for @incTitleHint.
   ///
   /// In en, this message translates to:
-  /// **'e.g. Plaster falling from the wall near lift 2'**
+  /// **'e.g. Strong smell of gas near the boiler room'**
   String get incTitleHint;
 
   /// No description provided for @incDescriptionLabel.
@@ -1680,6 +1710,48 @@ abstract class L {
   /// In en, this message translates to:
   /// **'What did you see? (optional)'**
   String get incDescriptionLabel;
+
+  /// No description provided for @incPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get incPhotos;
+
+  /// No description provided for @incPhotosHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add up to 3 photos. A clear photo helps the team act faster.'**
+  String get incPhotosHint;
+
+  /// No description provided for @incPhotoCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of {max} added'**
+  String incPhotoCount(int count, int max);
+
+  /// No description provided for @incPhotoPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo {number}'**
+  String incPhotoPreview(int number);
+
+  /// No description provided for @incTakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take photo'**
+  String get incTakePhoto;
+
+  /// No description provided for @incChoosePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get incChoosePhoto;
+
+  /// No description provided for @incRemovePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get incRemovePhoto;
 
   /// No description provided for @incWhere.
   ///
@@ -1717,41 +1789,35 @@ abstract class L {
   /// **'e.g. 3rd floor, beside the lift'**
   String get incSpotHint;
 
-  /// No description provided for @incHowUrgent.
+  /// No description provided for @incSeverity.
   ///
   /// In en, this message translates to:
-  /// **'How urgent is it?'**
-  String get incHowUrgent;
+  /// **'Severity'**
+  String get incSeverity;
 
-  /// No description provided for @incPhotos.
+  /// No description provided for @incPrivacy.
   ///
   /// In en, this message translates to:
-  /// **'Photos'**
-  String get incPhotos;
+  /// **'Privacy'**
+  String get incPrivacy;
 
-  /// No description provided for @incPhotosHint.
+  /// No description provided for @incConfidential.
   ///
   /// In en, this message translates to:
-  /// **'Add up to 3 photos. A clear photo helps the team fix it faster.'**
-  String get incPhotosHint;
+  /// **'Confidential report'**
+  String get incConfidential;
 
-  /// No description provided for @incTakePhoto.
+  /// No description provided for @incConfidentialHint.
   ///
   /// In en, this message translates to:
-  /// **'Take photo'**
-  String get incTakePhoto;
+  /// **'Goes to Head Office only — never to your own office\'s admins — and your name is hidden from everyone handling it.'**
+  String get incConfidentialHint;
 
-  /// No description provided for @incChoosePhoto.
+  /// No description provided for @incConfidentialForced.
   ///
   /// In en, this message translates to:
-  /// **'Gallery'**
-  String get incChoosePhoto;
-
-  /// No description provided for @incRemovePhoto.
-  ///
-  /// In en, this message translates to:
-  /// **'Remove photo'**
-  String get incRemovePhoto;
+  /// **'Misconduct reports are always confidential and go to Head Office only.'**
+  String get incConfidentialForced;
 
   /// No description provided for @incAnonymous.
   ///
@@ -1762,14 +1828,8 @@ abstract class L {
   /// No description provided for @incAnonymousHint.
   ///
   /// In en, this message translates to:
-  /// **'Admins won\'t see your name. It is kept only so you can follow the status.'**
+  /// **'Your office\'s admins still handle it, but won\'t see your name. It is kept only so you can follow the stages.'**
   String get incAnonymousHint;
-
-  /// No description provided for @incMisconductNote.
-  ///
-  /// In en, this message translates to:
-  /// **'Misconduct reports go to Head Office only — never to your own office\'s admins.'**
-  String get incMisconductNote;
 
   /// No description provided for @incSubmit.
   ///
@@ -1780,7 +1840,7 @@ abstract class L {
   /// No description provided for @incSubmitted.
   ///
   /// In en, this message translates to:
-  /// **'Report {ref} sent. The admin team has been notified.'**
+  /// **'Report {ref} sent. The team has been notified.'**
   String incSubmitted(Object ref);
 
   /// No description provided for @incTitleRequired.
@@ -1795,59 +1855,107 @@ abstract class L {
   /// **'Choose what kind of problem it is'**
   String get incCategoryRequired;
 
-  /// No description provided for @incNoReports.
+  /// No description provided for @incOfflineNotice.
   ///
   /// In en, this message translates to:
-  /// **'No reports yet'**
-  String get incNoReports;
+  /// **'You\'re offline. Reports with photos need a connection — try again when you\'re back online.'**
+  String get incOfflineNotice;
 
-  /// No description provided for @incNoReportsHint.
+  /// No description provided for @incGrpSAFETY_INDUSTRIAL.
   ///
   /// In en, this message translates to:
-  /// **'When you report a problem, you can follow its progress here.'**
-  String get incNoReportsHint;
+  /// **'Safety & Industrial'**
+  String get incGrpSAFETY_INDUSTRIAL;
 
-  /// No description provided for @incFilterOpen.
+  /// No description provided for @incGrpADMIN_FACILITY.
   ///
   /// In en, this message translates to:
-  /// **'Open'**
-  String get incFilterOpen;
+  /// **'Admin & Facility'**
+  String get incGrpADMIN_FACILITY;
 
-  /// No description provided for @incFilterClosed.
+  /// No description provided for @incGrpSECURITY.
   ///
   /// In en, this message translates to:
-  /// **'Closed'**
-  String get incFilterClosed;
+  /// **'Security'**
+  String get incGrpSECURITY;
 
-  /// No description provided for @incFilterAll.
+  /// No description provided for @incGrpIT_TECHNICAL.
   ///
   /// In en, this message translates to:
-  /// **'All'**
-  String get incFilterAll;
+  /// **'IT / Technical'**
+  String get incGrpIT_TECHNICAL;
 
-  /// No description provided for @incStatusPENDING.
+  /// No description provided for @incGrpHintSAFETY_INDUSTRIAL.
   ///
   /// In en, this message translates to:
-  /// **'Pending'**
-  String get incStatusPENDING;
+  /// **'Fire, gas, chemicals, injuries, electrical, machinery, PPE'**
+  String get incGrpHintSAFETY_INDUSTRIAL;
 
-  /// No description provided for @incStatusPROCESSING.
+  /// No description provided for @incGrpHintADMIN_FACILITY.
   ///
   /// In en, this message translates to:
-  /// **'Processing'**
-  String get incStatusPROCESSING;
+  /// **'Building, cleaning, cafeteria, washrooms, water, AC, furniture'**
+  String get incGrpHintADMIN_FACILITY;
 
-  /// No description provided for @incStatusDONE.
+  /// No description provided for @incGrpHintSECURITY.
   ///
   /// In en, this message translates to:
-  /// **'Done'**
-  String get incStatusDONE;
+  /// **'Access, theft, CCTV, gates and locks, misconduct'**
+  String get incGrpHintSECURITY;
 
-  /// No description provided for @incStatusDECLINED.
+  /// No description provided for @incGrpHintIT_TECHNICAL.
   ///
   /// In en, this message translates to:
-  /// **'Declined'**
-  String get incStatusDECLINED;
+  /// **'Network, computers, software, phones, power and UPS'**
+  String get incGrpHintIT_TECHNICAL;
+
+  /// No description provided for @incCatFIRE_HAZARD.
+  ///
+  /// In en, this message translates to:
+  /// **'Fire hazard'**
+  String get incCatFIRE_HAZARD;
+
+  /// No description provided for @incCatGAS_LEAK.
+  ///
+  /// In en, this message translates to:
+  /// **'Gas leak'**
+  String get incCatGAS_LEAK;
+
+  /// No description provided for @incCatCHEMICAL_SPILL.
+  ///
+  /// In en, this message translates to:
+  /// **'Chemical spill'**
+  String get incCatCHEMICAL_SPILL;
+
+  /// No description provided for @incCatINJURY_NEAR_MISS.
+  ///
+  /// In en, this message translates to:
+  /// **'Injury or near miss'**
+  String get incCatINJURY_NEAR_MISS;
+
+  /// No description provided for @incCatELECTRICAL_HAZARD.
+  ///
+  /// In en, this message translates to:
+  /// **'Electrical hazard'**
+  String get incCatELECTRICAL_HAZARD;
+
+  /// No description provided for @incCatMACHINERY_FAULT.
+  ///
+  /// In en, this message translates to:
+  /// **'Machinery fault'**
+  String get incCatMACHINERY_FAULT;
+
+  /// No description provided for @incCatPPE_VIOLATION.
+  ///
+  /// In en, this message translates to:
+  /// **'PPE violation'**
+  String get incCatPPE_VIOLATION;
+
+  /// No description provided for @incCatSAFETY_HAZARD.
+  ///
+  /// In en, this message translates to:
+  /// **'Other safety hazard'**
+  String get incCatSAFETY_HAZARD;
 
   /// No description provided for @incCatBUILDING_DAMAGE.
   ///
@@ -1873,23 +1981,59 @@ abstract class L {
   /// **'Washroom'**
   String get incCatWASHROOM;
 
-  /// No description provided for @incCatSAFETY_HAZARD.
+  /// No description provided for @incCatWATER_SUPPLY.
   ///
   /// In en, this message translates to:
-  /// **'Safety hazard'**
-  String get incCatSAFETY_HAZARD;
+  /// **'Water supply'**
+  String get incCatWATER_SUPPLY;
 
-  /// No description provided for @incCatELECTRICAL.
+  /// No description provided for @incCatAC_VENTILATION.
   ///
   /// In en, this message translates to:
-  /// **'Electrical'**
-  String get incCatELECTRICAL;
+  /// **'AC & ventilation'**
+  String get incCatAC_VENTILATION;
 
-  /// No description provided for @incCatSECURITY.
+  /// No description provided for @incCatFURNITURE_FIXTURES.
   ///
   /// In en, this message translates to:
-  /// **'Security'**
-  String get incCatSECURITY;
+  /// **'Furniture & fixtures'**
+  String get incCatFURNITURE_FIXTURES;
+
+  /// No description provided for @incCatPEST_CONTROL.
+  ///
+  /// In en, this message translates to:
+  /// **'Pest control'**
+  String get incCatPEST_CONTROL;
+
+  /// No description provided for @incCatOTHER.
+  ///
+  /// In en, this message translates to:
+  /// **'Other facility issue'**
+  String get incCatOTHER;
+
+  /// No description provided for @incCatUNAUTHORISED_ACCESS.
+  ///
+  /// In en, this message translates to:
+  /// **'Unauthorised access'**
+  String get incCatUNAUTHORISED_ACCESS;
+
+  /// No description provided for @incCatTHEFT_LOSS.
+  ///
+  /// In en, this message translates to:
+  /// **'Theft or loss'**
+  String get incCatTHEFT_LOSS;
+
+  /// No description provided for @incCatCCTV_FAULT.
+  ///
+  /// In en, this message translates to:
+  /// **'CCTV fault'**
+  String get incCatCCTV_FAULT;
+
+  /// No description provided for @incCatGATE_LOCK.
+  ///
+  /// In en, this message translates to:
+  /// **'Gate or lock'**
+  String get incCatGATE_LOCK;
 
   /// No description provided for @incCatMISCONDUCT.
   ///
@@ -1897,23 +2041,203 @@ abstract class L {
   /// **'Misconduct'**
   String get incCatMISCONDUCT;
 
-  /// No description provided for @incCatOTHER.
+  /// No description provided for @incCatNETWORK_DOWN.
   ///
   /// In en, this message translates to:
-  /// **'Other'**
-  String get incCatOTHER;
+  /// **'Network down'**
+  String get incCatNETWORK_DOWN;
 
-  /// No description provided for @incSevLOW.
+  /// No description provided for @incCatCOMPUTER_PRINTER.
   ///
   /// In en, this message translates to:
-  /// **'Low'**
-  String get incSevLOW;
+  /// **'Computer or printer'**
+  String get incCatCOMPUTER_PRINTER;
 
-  /// No description provided for @incSevMEDIUM.
+  /// No description provided for @incCatSOFTWARE_ACCESS.
   ///
   /// In en, this message translates to:
-  /// **'Medium'**
-  String get incSevMEDIUM;
+  /// **'Software or access'**
+  String get incCatSOFTWARE_ACCESS;
+
+  /// No description provided for @incCatTELEPHONE.
+  ///
+  /// In en, this message translates to:
+  /// **'Telephone / PABX'**
+  String get incCatTELEPHONE;
+
+  /// No description provided for @incCatPOWER_UPS.
+  ///
+  /// In en, this message translates to:
+  /// **'Power or UPS'**
+  String get incCatPOWER_UPS;
+
+  /// No description provided for @incCatHintFIRE_HAZARD.
+  ///
+  /// In en, this message translates to:
+  /// **'Smoke, sparks, blocked fire exits, missing or expired extinguishers'**
+  String get incCatHintFIRE_HAZARD;
+
+  /// No description provided for @incCatHintGAS_LEAK.
+  ///
+  /// In en, this message translates to:
+  /// **'Smell of gas, hissing pipes or cylinders, faulty gas lines'**
+  String get incCatHintGAS_LEAK;
+
+  /// No description provided for @incCatHintCHEMICAL_SPILL.
+  ///
+  /// In en, this message translates to:
+  /// **'Spilled or leaking chemicals, dyes, oil or fuel'**
+  String get incCatHintCHEMICAL_SPILL;
+
+  /// No description provided for @incCatHintINJURY_NEAR_MISS.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone was hurt at work, or very nearly was'**
+  String get incCatHintINJURY_NEAR_MISS;
+
+  /// No description provided for @incCatHintELECTRICAL_HAZARD.
+  ///
+  /// In en, this message translates to:
+  /// **'Exposed wiring, sparking sockets, overloaded or open switchboards'**
+  String get incCatHintELECTRICAL_HAZARD;
+
+  /// No description provided for @incCatHintMACHINERY_FAULT.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsafe or broken machines, missing guards, unusual noise or smoke'**
+  String get incCatHintMACHINERY_FAULT;
+
+  /// No description provided for @incCatHintPPE_VIOLATION.
+  ///
+  /// In en, this message translates to:
+  /// **'Helmets, gloves, masks or harnesses not worn or not available'**
+  String get incCatHintPPE_VIOLATION;
+
+  /// No description provided for @incCatHintSAFETY_HAZARD.
+  ///
+  /// In en, this message translates to:
+  /// **'Wet floors, trip hazards, blocked walkways, unsafe heights'**
+  String get incCatHintSAFETY_HAZARD;
+
+  /// No description provided for @incCatHintBUILDING_DAMAGE.
+  ///
+  /// In en, this message translates to:
+  /// **'Cracked or fallen walls and ceilings, leaks, broken doors or windows'**
+  String get incCatHintBUILDING_DAMAGE;
+
+  /// No description provided for @incCatHintCLEANLINESS.
+  ///
+  /// In en, this message translates to:
+  /// **'Dirty floors, corridors and stairs, overflowing bins'**
+  String get incCatHintCLEANLINESS;
+
+  /// No description provided for @incCatHintCAFETERIA_HYGIENE.
+  ///
+  /// In en, this message translates to:
+  /// **'Unclean kitchen or serving area, food safety'**
+  String get incCatHintCAFETERIA_HYGIENE;
+
+  /// No description provided for @incCatHintWASHROOM.
+  ///
+  /// In en, this message translates to:
+  /// **'Unclean washroom, no soap or tissue, blocked drains'**
+  String get incCatHintWASHROOM;
+
+  /// No description provided for @incCatHintWATER_SUPPLY.
+  ///
+  /// In en, this message translates to:
+  /// **'No water, low pressure, dirty or unsafe drinking water'**
+  String get incCatHintWATER_SUPPLY;
+
+  /// No description provided for @incCatHintAC_VENTILATION.
+  ///
+  /// In en, this message translates to:
+  /// **'AC not cooling or leaking, fans not working, stuffy rooms'**
+  String get incCatHintAC_VENTILATION;
+
+  /// No description provided for @incCatHintFURNITURE_FIXTURES.
+  ///
+  /// In en, this message translates to:
+  /// **'Broken chairs, desks or cabinets, lights or fittings'**
+  String get incCatHintFURNITURE_FIXTURES;
+
+  /// No description provided for @incCatHintPEST_CONTROL.
+  ///
+  /// In en, this message translates to:
+  /// **'Rats, cockroaches, mosquitoes or termites'**
+  String get incCatHintPEST_CONTROL;
+
+  /// No description provided for @incCatHintOTHER.
+  ///
+  /// In en, this message translates to:
+  /// **'Anything else the admin team should look at'**
+  String get incCatHintOTHER;
+
+  /// No description provided for @incCatHintUNAUTHORISED_ACCESS.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown person inside, tailgating, misuse of ID cards'**
+  String get incCatHintUNAUTHORISED_ACCESS;
+
+  /// No description provided for @incCatHintTHEFT_LOSS.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing equipment, stock, documents or belongings'**
+  String get incCatHintTHEFT_LOSS;
+
+  /// No description provided for @incCatHintCCTV_FAULT.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera offline, blind spot, recorder not working'**
+  String get incCatHintCCTV_FAULT;
+
+  /// No description provided for @incCatHintGATE_LOCK.
+  ///
+  /// In en, this message translates to:
+  /// **'Unattended gate, broken lock, faulty barrier or access door'**
+  String get incCatHintGATE_LOCK;
+
+  /// No description provided for @incCatHintMISCONDUCT.
+  ///
+  /// In en, this message translates to:
+  /// **'Harassment, bribery, fraud or other wrongdoing — always confidential'**
+  String get incCatHintMISCONDUCT;
+
+  /// No description provided for @incCatHintNETWORK_DOWN.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet, Wi-Fi or LAN outage, very slow connection'**
+  String get incCatHintNETWORK_DOWN;
+
+  /// No description provided for @incCatHintCOMPUTER_PRINTER.
+  ///
+  /// In en, this message translates to:
+  /// **'PC, laptop, printer or scanner not working'**
+  String get incCatHintCOMPUTER_PRINTER;
+
+  /// No description provided for @incCatHintSOFTWARE_ACCESS.
+  ///
+  /// In en, this message translates to:
+  /// **'ERP, email or app errors, password or permission problems'**
+  String get incCatHintSOFTWARE_ACCESS;
+
+  /// No description provided for @incCatHintTELEPHONE.
+  ///
+  /// In en, this message translates to:
+  /// **'Desk phone, PABX or intercom not working'**
+  String get incCatHintTELEPHONE;
+
+  /// No description provided for @incCatHintPOWER_UPS.
+  ///
+  /// In en, this message translates to:
+  /// **'Power cut, UPS or generator failure, voltage problems'**
+  String get incCatHintPOWER_UPS;
+
+  /// No description provided for @incSevCRITICAL.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get incSevCRITICAL;
 
   /// No description provided for @incSevHIGH.
   ///
@@ -1921,11 +2245,65 @@ abstract class L {
   /// **'High'**
   String get incSevHIGH;
 
-  /// No description provided for @incSevURGENT.
+  /// No description provided for @incSevMEDIUM.
   ///
   /// In en, this message translates to:
-  /// **'Urgent'**
-  String get incSevURGENT;
+  /// **'Medium'**
+  String get incSevMEDIUM;
+
+  /// No description provided for @incSevLOW.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get incSevLOW;
+
+  /// No description provided for @incSevHintCRITICAL.
+  ///
+  /// In en, this message translates to:
+  /// **'Danger to people, or work has stopped — act now'**
+  String get incSevHintCRITICAL;
+
+  /// No description provided for @incSevHintHIGH.
+  ///
+  /// In en, this message translates to:
+  /// **'Serious; needs action today'**
+  String get incSevHintHIGH;
+
+  /// No description provided for @incSevHintMEDIUM.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs fixing soon'**
+  String get incSevHintMEDIUM;
+
+  /// No description provided for @incSevHintLOW.
+  ///
+  /// In en, this message translates to:
+  /// **'Minor; fix when convenient'**
+  String get incSevHintLOW;
+
+  /// No description provided for @incStatusREPORTED.
+  ///
+  /// In en, this message translates to:
+  /// **'Reported'**
+  String get incStatusREPORTED;
+
+  /// No description provided for @incStatusACKNOWLEDGED.
+  ///
+  /// In en, this message translates to:
+  /// **'Acknowledged'**
+  String get incStatusACKNOWLEDGED;
+
+  /// No description provided for @incStatusUNDER_INVESTIGATION.
+  ///
+  /// In en, this message translates to:
+  /// **'Under Investigation'**
+  String get incStatusUNDER_INVESTIGATION;
+
+  /// No description provided for @incStatusCLOSED.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get incStatusCLOSED;
 
   /// No description provided for @incProgress.
   ///
@@ -1933,34 +2311,118 @@ abstract class L {
   /// **'Progress'**
   String get incProgress;
 
-  /// No description provided for @incStepSubmitted.
+  /// No description provided for @incStageSkipped.
   ///
   /// In en, this message translates to:
-  /// **'Submitted'**
-  String get incStepSubmitted;
+  /// **'Skipped'**
+  String get incStageSkipped;
 
-  /// No description provided for @incStepProcessing.
+  /// No description provided for @incStageNow.
   ///
   /// In en, this message translates to:
-  /// **'Processing'**
-  String get incStepProcessing;
+  /// **'Now'**
+  String get incStageNow;
 
-  /// No description provided for @incStepDone.
+  /// No description provided for @incWaitingForAdmin.
   ///
   /// In en, this message translates to:
-  /// **'Done'**
-  String get incStepDone;
+  /// **'Waiting for the team to acknowledge it.'**
+  String get incWaitingForAdmin;
 
-  /// No description provided for @incStepDeclined.
+  /// No description provided for @incResRESOLVED.
   ///
   /// In en, this message translates to:
-  /// **'Declined'**
-  String get incStepDeclined;
+  /// **'Resolved'**
+  String get incResRESOLVED;
+
+  /// No description provided for @incResNO_ACTION_NEEDED.
+  ///
+  /// In en, this message translates to:
+  /// **'No action needed'**
+  String get incResNO_ACTION_NEEDED;
+
+  /// No description provided for @incResDUPLICATE.
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate'**
+  String get incResDUPLICATE;
+
+  /// No description provided for @incResREFERRED.
+  ///
+  /// In en, this message translates to:
+  /// **'Referred'**
+  String get incResREFERRED;
+
+  /// No description provided for @incResHintRESOLVED.
+  ///
+  /// In en, this message translates to:
+  /// **'The problem has been fixed.'**
+  String get incResHintRESOLVED;
+
+  /// No description provided for @incResHintNO_ACTION_NEEDED.
+  ///
+  /// In en, this message translates to:
+  /// **'The team checked and nothing needs to be done.'**
+  String get incResHintNO_ACTION_NEEDED;
+
+  /// No description provided for @incResHintDUPLICATE.
+  ///
+  /// In en, this message translates to:
+  /// **'It was already reported and is being handled under that report.'**
+  String get incResHintDUPLICATE;
+
+  /// No description provided for @incResHintREFERRED.
+  ///
+  /// In en, this message translates to:
+  /// **'It has been passed to another authority or department.'**
+  String get incResHintREFERRED;
+
+  /// No description provided for @incResolution.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolution'**
+  String get incResolution;
+
+  /// No description provided for @incClosedAs.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed as {resolution}'**
+  String incClosedAs(Object resolution);
+
+  /// No description provided for @incFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get incFilterAll;
+
+  /// No description provided for @incFilterOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get incFilterOpen;
+
+  /// No description provided for @incNoReports.
+  ///
+  /// In en, this message translates to:
+  /// **'No reports yet'**
+  String get incNoReports;
+
+  /// No description provided for @incNoReportsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'When you report a problem, you can follow every stage here.'**
+  String get incNoReportsHint;
+
+  /// No description provided for @incNoReportsFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'No reports at this stage.'**
+  String get incNoReportsFilter;
 
   /// No description provided for @incAdminUpdate.
   ///
   /// In en, this message translates to:
-  /// **'Update from the admin team'**
+  /// **'Update from the team'**
   String get incAdminUpdate;
 
   /// No description provided for @incReportedBy.
@@ -1969,11 +2431,29 @@ abstract class L {
   /// **'Reported by'**
   String get incReportedBy;
 
+  /// No description provided for @incReportedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Reported'**
+  String get incReportedOn;
+
   /// No description provided for @incAnonymousBadge.
   ///
   /// In en, this message translates to:
   /// **'Anonymous'**
   String get incAnonymousBadge;
+
+  /// No description provided for @incConfidentialBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidential'**
+  String get incConfidentialBadge;
+
+  /// No description provided for @incConfidentialDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidential: handled by Head Office only. Your name is hidden from everyone handling it.'**
+  String get incConfidentialDetail;
 
   /// No description provided for @incAddPhoto.
   ///
@@ -2005,11 +2485,23 @@ abstract class L {
   /// **'Report submitted'**
   String get incEvSubmitted;
 
-  /// No description provided for @incEvStatus.
+  /// No description provided for @incEvAcknowledged.
   ///
   /// In en, this message translates to:
-  /// **'Marked {status}'**
-  String incEvStatus(Object status);
+  /// **'Acknowledged'**
+  String get incEvAcknowledged;
+
+  /// No description provided for @incEvInvestigation.
+  ///
+  /// In en, this message translates to:
+  /// **'Investigation started'**
+  String get incEvInvestigation;
+
+  /// No description provided for @incEvClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed — {resolution}'**
+  String incEvClosed(Object resolution);
 
   /// No description provided for @incEvReopened.
   ///
@@ -2034,18 +2526,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Details updated'**
   String get incEvDetails;
-
-  /// No description provided for @incWaitingForAdmin.
-  ///
-  /// In en, this message translates to:
-  /// **'Waiting for the admin team to pick it up.'**
-  String get incWaitingForAdmin;
-
-  /// No description provided for @incOfflineNotice.
-  ///
-  /// In en, this message translates to:
-  /// **'You\'re offline. Reports with photos need a connection — try again when you\'re back online.'**
-  String get incOfflineNotice;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

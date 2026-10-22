@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -835,11 +836,14 @@ class LEn extends L {
   String get moreActions => 'More actions';
 
   @override
+  String get incModuleTitle => 'Incident & Facility Issues';
+
+  @override
   String get incReport => 'Report an incident';
 
   @override
   String get incReportHint =>
-      'Spotted a problem? Snap a photo — your office\'s admins are told at once.';
+      'Safety, facility, security or IT problem? Snap a photo — the right team is told at once.';
 
   @override
   String get incMyReports => 'My reports';
@@ -857,16 +861,57 @@ class LEn extends L {
   }
 
   @override
-  String get incWhatKind => 'What kind of problem?';
+  String incStepOf(int step, int total) {
+    return 'Step $step of $total';
+  }
+
+  @override
+  String get incChooseGroup => 'What kind of problem is it?';
+
+  @override
+  String get incChooseGroupHint =>
+      'Pick one of the four categories. You choose the exact problem next.';
+
+  @override
+  String get incChooseCategory => 'Which one fits best?';
+
+  @override
+  String get incChangeGroup => 'Change';
 
   @override
   String get incTitleLabel => 'Title';
 
   @override
-  String get incTitleHint => 'e.g. Plaster falling from the wall near lift 2';
+  String get incTitleHint => 'e.g. Strong smell of gas near the boiler room';
 
   @override
   String get incDescriptionLabel => 'What did you see? (optional)';
+
+  @override
+  String get incPhotos => 'Photos';
+
+  @override
+  String get incPhotosHint =>
+      'Add up to 3 photos. A clear photo helps the team act faster.';
+
+  @override
+  String incPhotoCount(int count, int max) {
+    return '$count of $max added';
+  }
+
+  @override
+  String incPhotoPreview(int number) {
+    return 'Photo $number';
+  }
+
+  @override
+  String get incTakePhoto => 'Take photo';
+
+  @override
+  String get incChoosePhoto => 'Gallery';
+
+  @override
+  String get incRemovePhoto => 'Remove photo';
 
   @override
   String get incWhere => 'Where is it?';
@@ -887,41 +932,35 @@ class LEn extends L {
   String get incSpotHint => 'e.g. 3rd floor, beside the lift';
 
   @override
-  String get incHowUrgent => 'How urgent is it?';
+  String get incSeverity => 'Severity';
 
   @override
-  String get incPhotos => 'Photos';
+  String get incPrivacy => 'Privacy';
 
   @override
-  String get incPhotosHint =>
-      'Add up to 3 photos. A clear photo helps the team fix it faster.';
+  String get incConfidential => 'Confidential report';
 
   @override
-  String get incTakePhoto => 'Take photo';
+  String get incConfidentialHint =>
+      'Goes to Head Office only — never to your own office\'s admins — and your name is hidden from everyone handling it.';
 
   @override
-  String get incChoosePhoto => 'Gallery';
-
-  @override
-  String get incRemovePhoto => 'Remove photo';
+  String get incConfidentialForced =>
+      'Misconduct reports are always confidential and go to Head Office only.';
 
   @override
   String get incAnonymous => 'Report anonymously';
 
   @override
   String get incAnonymousHint =>
-      'Admins won\'t see your name. It is kept only so you can follow the status.';
-
-  @override
-  String get incMisconductNote =>
-      'Misconduct reports go to Head Office only — never to your own office\'s admins.';
+      'Your office\'s admins still handle it, but won\'t see your name. It is kept only so you can follow the stages.';
 
   @override
   String get incSubmit => 'Submit report';
 
   @override
   String incSubmitted(Object ref) {
-    return 'Report $ref sent. The admin team has been notified.';
+    return 'Report $ref sent. The team has been notified.';
   }
 
   @override
@@ -931,32 +970,60 @@ class LEn extends L {
   String get incCategoryRequired => 'Choose what kind of problem it is';
 
   @override
-  String get incNoReports => 'No reports yet';
+  String get incOfflineNotice =>
+      'You\'re offline. Reports with photos need a connection — try again when you\'re back online.';
 
   @override
-  String get incNoReportsHint =>
-      'When you report a problem, you can follow its progress here.';
+  String get incGrpSAFETY_INDUSTRIAL => 'Safety & Industrial';
 
   @override
-  String get incFilterOpen => 'Open';
+  String get incGrpADMIN_FACILITY => 'Admin & Facility';
 
   @override
-  String get incFilterClosed => 'Closed';
+  String get incGrpSECURITY => 'Security';
 
   @override
-  String get incFilterAll => 'All';
+  String get incGrpIT_TECHNICAL => 'IT / Technical';
 
   @override
-  String get incStatusPENDING => 'Pending';
+  String get incGrpHintSAFETY_INDUSTRIAL =>
+      'Fire, gas, chemicals, injuries, electrical, machinery, PPE';
 
   @override
-  String get incStatusPROCESSING => 'Processing';
+  String get incGrpHintADMIN_FACILITY =>
+      'Building, cleaning, cafeteria, washrooms, water, AC, furniture';
 
   @override
-  String get incStatusDONE => 'Done';
+  String get incGrpHintSECURITY =>
+      'Access, theft, CCTV, gates and locks, misconduct';
 
   @override
-  String get incStatusDECLINED => 'Declined';
+  String get incGrpHintIT_TECHNICAL =>
+      'Network, computers, software, phones, power and UPS';
+
+  @override
+  String get incCatFIRE_HAZARD => 'Fire hazard';
+
+  @override
+  String get incCatGAS_LEAK => 'Gas leak';
+
+  @override
+  String get incCatCHEMICAL_SPILL => 'Chemical spill';
+
+  @override
+  String get incCatINJURY_NEAR_MISS => 'Injury or near miss';
+
+  @override
+  String get incCatELECTRICAL_HAZARD => 'Electrical hazard';
+
+  @override
+  String get incCatMACHINERY_FAULT => 'Machinery fault';
+
+  @override
+  String get incCatPPE_VIOLATION => 'PPE violation';
+
+  @override
+  String get incCatSAFETY_HAZARD => 'Other safety hazard';
 
   @override
   String get incCatBUILDING_DAMAGE => 'Building damage';
@@ -971,55 +1038,274 @@ class LEn extends L {
   String get incCatWASHROOM => 'Washroom';
 
   @override
-  String get incCatSAFETY_HAZARD => 'Safety hazard';
+  String get incCatWATER_SUPPLY => 'Water supply';
 
   @override
-  String get incCatELECTRICAL => 'Electrical';
+  String get incCatAC_VENTILATION => 'AC & ventilation';
 
   @override
-  String get incCatSECURITY => 'Security';
+  String get incCatFURNITURE_FIXTURES => 'Furniture & fixtures';
+
+  @override
+  String get incCatPEST_CONTROL => 'Pest control';
+
+  @override
+  String get incCatOTHER => 'Other facility issue';
+
+  @override
+  String get incCatUNAUTHORISED_ACCESS => 'Unauthorised access';
+
+  @override
+  String get incCatTHEFT_LOSS => 'Theft or loss';
+
+  @override
+  String get incCatCCTV_FAULT => 'CCTV fault';
+
+  @override
+  String get incCatGATE_LOCK => 'Gate or lock';
 
   @override
   String get incCatMISCONDUCT => 'Misconduct';
 
   @override
-  String get incCatOTHER => 'Other';
+  String get incCatNETWORK_DOWN => 'Network down';
 
   @override
-  String get incSevLOW => 'Low';
+  String get incCatCOMPUTER_PRINTER => 'Computer or printer';
 
   @override
-  String get incSevMEDIUM => 'Medium';
+  String get incCatSOFTWARE_ACCESS => 'Software or access';
+
+  @override
+  String get incCatTELEPHONE => 'Telephone / PABX';
+
+  @override
+  String get incCatPOWER_UPS => 'Power or UPS';
+
+  @override
+  String get incCatHintFIRE_HAZARD =>
+      'Smoke, sparks, blocked fire exits, missing or expired extinguishers';
+
+  @override
+  String get incCatHintGAS_LEAK =>
+      'Smell of gas, hissing pipes or cylinders, faulty gas lines';
+
+  @override
+  String get incCatHintCHEMICAL_SPILL =>
+      'Spilled or leaking chemicals, dyes, oil or fuel';
+
+  @override
+  String get incCatHintINJURY_NEAR_MISS =>
+      'Someone was hurt at work, or very nearly was';
+
+  @override
+  String get incCatHintELECTRICAL_HAZARD =>
+      'Exposed wiring, sparking sockets, overloaded or open switchboards';
+
+  @override
+  String get incCatHintMACHINERY_FAULT =>
+      'Unsafe or broken machines, missing guards, unusual noise or smoke';
+
+  @override
+  String get incCatHintPPE_VIOLATION =>
+      'Helmets, gloves, masks or harnesses not worn or not available';
+
+  @override
+  String get incCatHintSAFETY_HAZARD =>
+      'Wet floors, trip hazards, blocked walkways, unsafe heights';
+
+  @override
+  String get incCatHintBUILDING_DAMAGE =>
+      'Cracked or fallen walls and ceilings, leaks, broken doors or windows';
+
+  @override
+  String get incCatHintCLEANLINESS =>
+      'Dirty floors, corridors and stairs, overflowing bins';
+
+  @override
+  String get incCatHintCAFETERIA_HYGIENE =>
+      'Unclean kitchen or serving area, food safety';
+
+  @override
+  String get incCatHintWASHROOM =>
+      'Unclean washroom, no soap or tissue, blocked drains';
+
+  @override
+  String get incCatHintWATER_SUPPLY =>
+      'No water, low pressure, dirty or unsafe drinking water';
+
+  @override
+  String get incCatHintAC_VENTILATION =>
+      'AC not cooling or leaking, fans not working, stuffy rooms';
+
+  @override
+  String get incCatHintFURNITURE_FIXTURES =>
+      'Broken chairs, desks or cabinets, lights or fittings';
+
+  @override
+  String get incCatHintPEST_CONTROL =>
+      'Rats, cockroaches, mosquitoes or termites';
+
+  @override
+  String get incCatHintOTHER => 'Anything else the admin team should look at';
+
+  @override
+  String get incCatHintUNAUTHORISED_ACCESS =>
+      'Unknown person inside, tailgating, misuse of ID cards';
+
+  @override
+  String get incCatHintTHEFT_LOSS =>
+      'Missing equipment, stock, documents or belongings';
+
+  @override
+  String get incCatHintCCTV_FAULT =>
+      'Camera offline, blind spot, recorder not working';
+
+  @override
+  String get incCatHintGATE_LOCK =>
+      'Unattended gate, broken lock, faulty barrier or access door';
+
+  @override
+  String get incCatHintMISCONDUCT =>
+      'Harassment, bribery, fraud or other wrongdoing — always confidential';
+
+  @override
+  String get incCatHintNETWORK_DOWN =>
+      'No internet, Wi-Fi or LAN outage, very slow connection';
+
+  @override
+  String get incCatHintCOMPUTER_PRINTER =>
+      'PC, laptop, printer or scanner not working';
+
+  @override
+  String get incCatHintSOFTWARE_ACCESS =>
+      'ERP, email or app errors, password or permission problems';
+
+  @override
+  String get incCatHintTELEPHONE => 'Desk phone, PABX or intercom not working';
+
+  @override
+  String get incCatHintPOWER_UPS =>
+      'Power cut, UPS or generator failure, voltage problems';
+
+  @override
+  String get incSevCRITICAL => 'Critical';
 
   @override
   String get incSevHIGH => 'High';
 
   @override
-  String get incSevURGENT => 'Urgent';
+  String get incSevMEDIUM => 'Medium';
+
+  @override
+  String get incSevLOW => 'Low';
+
+  @override
+  String get incSevHintCRITICAL =>
+      'Danger to people, or work has stopped — act now';
+
+  @override
+  String get incSevHintHIGH => 'Serious; needs action today';
+
+  @override
+  String get incSevHintMEDIUM => 'Needs fixing soon';
+
+  @override
+  String get incSevHintLOW => 'Minor; fix when convenient';
+
+  @override
+  String get incStatusREPORTED => 'Reported';
+
+  @override
+  String get incStatusACKNOWLEDGED => 'Acknowledged';
+
+  @override
+  String get incStatusUNDER_INVESTIGATION => 'Under Investigation';
+
+  @override
+  String get incStatusCLOSED => 'Closed';
 
   @override
   String get incProgress => 'Progress';
 
   @override
-  String get incStepSubmitted => 'Submitted';
+  String get incStageSkipped => 'Skipped';
 
   @override
-  String get incStepProcessing => 'Processing';
+  String get incStageNow => 'Now';
 
   @override
-  String get incStepDone => 'Done';
+  String get incWaitingForAdmin => 'Waiting for the team to acknowledge it.';
 
   @override
-  String get incStepDeclined => 'Declined';
+  String get incResRESOLVED => 'Resolved';
 
   @override
-  String get incAdminUpdate => 'Update from the admin team';
+  String get incResNO_ACTION_NEEDED => 'No action needed';
+
+  @override
+  String get incResDUPLICATE => 'Duplicate';
+
+  @override
+  String get incResREFERRED => 'Referred';
+
+  @override
+  String get incResHintRESOLVED => 'The problem has been fixed.';
+
+  @override
+  String get incResHintNO_ACTION_NEEDED =>
+      'The team checked and nothing needs to be done.';
+
+  @override
+  String get incResHintDUPLICATE =>
+      'It was already reported and is being handled under that report.';
+
+  @override
+  String get incResHintREFERRED =>
+      'It has been passed to another authority or department.';
+
+  @override
+  String get incResolution => 'Resolution';
+
+  @override
+  String incClosedAs(Object resolution) {
+    return 'Closed as $resolution';
+  }
+
+  @override
+  String get incFilterAll => 'All';
+
+  @override
+  String get incFilterOpen => 'Open';
+
+  @override
+  String get incNoReports => 'No reports yet';
+
+  @override
+  String get incNoReportsHint =>
+      'When you report a problem, you can follow every stage here.';
+
+  @override
+  String get incNoReportsFilter => 'No reports at this stage.';
+
+  @override
+  String get incAdminUpdate => 'Update from the team';
 
   @override
   String get incReportedBy => 'Reported by';
 
   @override
+  String get incReportedOn => 'Reported';
+
+  @override
   String get incAnonymousBadge => 'Anonymous';
+
+  @override
+  String get incConfidentialBadge => 'Confidential';
+
+  @override
+  String get incConfidentialDetail =>
+      'Confidential: handled by Head Office only. Your name is hidden from everyone handling it.';
 
   @override
   String get incAddPhoto => 'Add another photo';
@@ -1037,8 +1323,14 @@ class LEn extends L {
   String get incEvSubmitted => 'Report submitted';
 
   @override
-  String incEvStatus(Object status) {
-    return 'Marked $status';
+  String get incEvAcknowledged => 'Acknowledged';
+
+  @override
+  String get incEvInvestigation => 'Investigation started';
+
+  @override
+  String incEvClosed(Object resolution) {
+    return 'Closed — $resolution';
   }
 
   @override
@@ -1052,11 +1344,4 @@ class LEn extends L {
 
   @override
   String get incEvDetails => 'Details updated';
-
-  @override
-  String get incWaitingForAdmin => 'Waiting for the admin team to pick it up.';
-
-  @override
-  String get incOfflineNotice =>
-      'You\'re offline. Reports with photos need a connection — try again when you\'re back online.';
 }

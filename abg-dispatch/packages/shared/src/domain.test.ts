@@ -2,10 +2,25 @@ import { describe, expect, test } from "bun:test";
 import {
   Capability,
   Classification,
+  INCIDENT_CATEGORY_GROUP,
+  INCIDENT_CATEGORY_HINT,
+  INCIDENT_CATEGORY_LABEL,
+  INCIDENT_CONFIDENTIAL_ROLES,
+  INCIDENT_GROUP_CATEGORIES,
+  INCIDENT_GROUPS,
+  INCIDENT_SEVERITY_TONE,
+  INCIDENT_STAGES,
   INCIDENT_TRANSITIONS,
+  IncidentCategory,
+  IncidentGroup,
+  IncidentResolution,
   IncidentStatus,
+  OPEN_INCIDENT_STATUSES,
   canIncidentTransition,
   formatIncidentNumber,
+  incidentForcesConfidential,
+  incidentGroupOf,
+  incidentResolutionNeedsNote,
   isIncidentNumber,
   ParcelStatus,
   RoleCode,
@@ -154,14 +169,57 @@ describe("tracking numbers and QR payloads", () => {
   });
 });
 
-describe("incident reports", () => {
-  test("move forward, can be reopened, and never return to Pending", () => {
-    expect(canIncidentTransition("PENDING", "PROCESSING")).toBe(true);
-    expect(canIncidentTransition("PROCESSING", "DONE")).toBe(true);
-    expect(canIncidentTransition("DONE", "PROCESSING")).toBe(true);
-    expect(canIncidentTransition("DECLINED", "PROCESSING")).toBe(true);
-    for (const from of Object.values(IncidentStatus)) expect(INCIDENT_TRANSITIONS[from]).not.toContain("PENDING");
-    expect(canIncidentTransition("DONE", "DECLINED")).toBe(false);
+describe("incident & facility issues", () => {
+  test("four stages, forward only, skippable, and a closed report reopens into investigation", () => {
+    expect(INCIDENT_STAGES).toEqual(["REPORTED", "ACKNOWLEDGED", "UNDER_INVESTIGATION", "CLOSED"]);
+    expect(canIncidentTransition("REPORTED", "ACKNOWLEDGED")).toBe(true);
+    expect(canIncidentTransition("REPORTED", "UNDER_INVESTIGATION")).toBe(true);
+    expect(canIncidentTransition("REPORTED", "CLOSED")).toBe(true);
+    expect(canIncidentTransition("ACKNOWLEDGED", "UNDER_INVESTIGATION")).toBe(true);
+    expect(canIncidentTransition("ACKNOWLEDGED", "CLOSED")).toBe(true);
+    expect(canIncidentTransition("UNDER_INVESTIGATION", "CLOSED")).toBe(true);
+    expect(canIncidentTransition("CLOSED", "UNDER_INVESTIGATION")).toBe(true);
+    expect(canIncidentTransition("UNDER_INVESTIGATION", "ACKNOWLEDGED")).toBe(false);
+    expect(canIncidentTransition("CLOSED", "ACKNOWLEDGED")).toBe(false);
+    expect(canIncidentTransition("ACKNOWLEDGED", "ACKNOWLEDGED")).toBe(false);
+    for (const from of Object.values(IncidentStatus)) expect(INCIDENT_TRANSITIONS[from]).not.toContain("REPORTED");
+    expect(OPEN_INCIDENT_STATUSES).toEqual(["REPORTED", "ACKNOWLEDGED", "UNDER_INVESTIGATION"]);
+  });
+
+  test("every sub-category belongs to exactly one of the four groups, with a label and a hint", () => {
+    expect(INCIDENT_GROUPS).toEqual([IncidentGroup.SAFETY_INDUSTRIAL, IncidentGroup.ADMIN_FACILITY, IncidentGroup.SECURITY, IncidentGroup.IT_TECHNICAL]);
+    const listed = INCIDENT_GROUPS.flatMap((g) => INCIDENT_GROUP_CATEGORIES[g]);
+    expect(new Set(listed).size).toBe(listed.length);
+    expect([...listed].sort()).toEqual(Object.values(IncidentCategory).sort());
+    for (const c of Object.values(IncidentCategory)) {
+      expect(INCIDENT_GROUP_CATEGORIES[INCIDENT_CATEGORY_GROUP[c]]).toContain(c);
+      expect(INCIDENT_CATEGORY_LABEL[c]).toBeTruthy();
+      expect(INCIDENT_CATEGORY_HINT[c]).toBeTruthy();
+    }
+    expect(incidentGroupOf("GAS_LEAK")).toBe("SAFETY_INDUSTRIAL");
+    expect(incidentGroupOf("WATER_SUPPLY")).toBe("ADMIN_FACILITY");
+    expect(incidentGroupOf("CCTV_FAULT")).toBe("SECURITY");
+    expect(incidentGroupOf("NETWORK_DOWN")).toBe("IT_TECHNICAL");
+    expect(incidentGroupOf("ELECTRICAL")).toBeNull();
+  });
+
+  test("severity tones: Critical red, High amber, Medium blue, Low grey", () => {
+    expect(INCIDENT_SEVERITY_TONE).toEqual({ CRITICAL: "danger", HIGH: "pending", MEDIUM: "active", LOW: "neutral" });
+  });
+
+  test("closing needs a resolution; anything but Resolved needs a note", () => {
+    expect(incidentResolutionNeedsNote(IncidentResolution.RESOLVED)).toBe(false);
+    for (const r of [IncidentResolution.NO_ACTION_NEEDED, IncidentResolution.DUPLICATE, IncidentResolution.REFERRED]) expect(incidentResolutionNeedsNote(r)).toBe(true);
+  });
+
+  test("misconduct is always confidential, and confidential reports are for head office only", () => {
+    expect(incidentForcesConfidential("MISCONDUCT")).toBe(true);
+    expect(incidentForcesConfidential("THEFT_LOSS")).toBe(false);
+    expect(INCIDENT_CONFIDENTIAL_ROLES).toContain(RoleCode.HEAD_OFFICE_ADMIN);
+    expect(INCIDENT_CONFIDENTIAL_ROLES).toContain(RoleCode.EXECUTIVE);
+    expect(INCIDENT_CONFIDENTIAL_ROLES).not.toContain(RoleCode.BRANCH_ADMIN);
+    expect(INCIDENT_CONFIDENTIAL_ROLES).not.toContain(RoleCode.AUDITOR);
+    expect(capabilitiesFor([RoleCode.EXECUTIVE]).has(Capability.INCIDENT_VIEW)).toBe(true);
   });
 
   test("reference numbers name the day and the office", () => {

@@ -18,8 +18,8 @@ do. PostgreSQL triggers are part of what is tested.
 | Shared domain (state machine, permissions, tracking numbers, redaction) | `packages/shared/src/domain.test.ts` | 23 |
 | Mandatory acceptance tests | `apps/api/test/acceptance.test.ts` | 20 |
 | Authorisation, integrity and courier mapping | `apps/api/test/authorization.test.ts` | 20 |
-| Incident reports (reporting with photos, who is notified, signed photo links, status rules, anonymity, misconduct routing, scope, image checks, idempotency, append-only history, summary) | `apps/api/test/incidents.test.ts` | 11 |
-| Mobile (status tones and icons, status chips, Bangla labels, parcel card, timeline, viewer actions, incident status chip, incident parsing) | `apps/mobile/test/widget_test.dart` | 8 |
+| Incident & facility issues (reporting with photos, group from sub-category, Critical/Urgent alerts, signed photo links, the four-stage flow, resolutions and their notes, reopen, anonymity, confidential routing and visibility, misconduct, handing to and from head office, detail edits, group/stage/severity/resolution/confidential filters, scope, image checks, idempotency, append-only history and database checks, summary) | `apps/api/test/incidents.test.ts` | 18 |
+| Mobile (status tones and icons, status chips, Bangla labels, parcel card, timeline, viewer actions, incident stage chip, severity tags, groups and sub-categories in both languages, incident parsing, stage tracker, history wording) | `apps/mobile/test/widget_test.dart` | 13 |
 
 ## The 20 acceptance tests
 
@@ -61,20 +61,33 @@ status changes are rejected even by direct SQL; `RECEIVED` requires receiver,
 time and verification; proofs and audit entries cannot be altered; event
 sequences are gap-free; each provider's vocabulary maps onto ABG statuses.
 
-## Incident report tests
+## Incident & facility issue tests
 
 An employee reports with a photo and only that office's admins and head
-office are told; photos open only for people involved or through an
-unforged, unexpired signed link; Pending → Processing → Done notifies the
-reporter each time and the history reads back in order; a closed report
-cannot be declined, declining needs a reason, and Done can be reopened; an
+office are told, titled *Urgent:* or *Critical:* by severity; the group comes
+from the sub-category and a mismatch (or the old vocabulary) is refused;
+photos open only for people involved or through an unforged, unexpired signed
+link; Reported → Acknowledged → Under Investigation → Closed notifies the
+reporter at each stage, the history and the stage tracker read back with who
+and when, and the viewer's actions follow the stage; closing needs a
+resolution and every resolution but Resolved needs a note, a close straight
+from Reported skips the investigation; stages only move forward, and a closed
+report reopens into Under Investigation with its resolution cleared; an
 anonymous report never reveals the reporter to handlers — not in the report,
-the list, search or notifications — while the reporter still follows it;
-misconduct reaches head office only; unrelated employees and other offices'
-admins get 404, auditors read but cannot change; non-images and a fourth
-photo are refused; a repeated `Idempotency-Key` files once; the history
-cannot be changed even by direct SQL; the summary counts the viewer's
-offices.
+the list, search or notifications — while staying with the office; a
+confidential report reaches head office only (not the office's admins, not
+auditors), hides the reporter even from head office, is readable but not
+changeable by the MD, and its reporter updates stay off the lock screen;
+misconduct is always confidential; marking a report confidential hands it to
+head office and taking it back out keeps the reporter hidden; group,
+sub-category and severity edits are kept in the history; the admin list
+filters by group, stage, severity, resolution and confidentiality; unrelated
+employees and other offices' admins get 404, auditors read but cannot change;
+non-images and a fourth photo are refused; a repeated `Idempotency-Key` files
+once; the history cannot be changed, and the database refuses a closed report
+without a resolution or a mismatched group, even by direct SQL; the summary's
+shape, stage and group counts, Critical and urgent counts, recent log and
+scope (office, group, head office, MD, auditor) are checked against the list.
 
 ## UI verification
 
