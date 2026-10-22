@@ -1,10 +1,7 @@
-/** The official notice board. App.tsx routes to the pages exported here; split into more files in this folder as needed. */
-import { PageHeader } from "../../components/ui";
-
-export function NoticesPage() {
-  return <PageHeader title="Official Notice Board" />;
-}
-
-export function NoticeDetailPage() {
-  return <PageHeader title="Notice" />;
-}
+/**
+ * The official notice board. App.tsx routes to the pages exported here:
+ *   /notices       NoticesPage — the board, publisher tabs, "Post a notice" (also opened by ?new=1)
+ *   /notices/:id   NoticeDetailPage — letterhead, PDF preview, acknowledgement, receipts
+ */
+export { NoticesPage } from "./NoticesPage";
+export { NoticeDetailPage } from "./NoticeDetailPage";

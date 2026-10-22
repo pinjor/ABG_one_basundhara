@@ -2496,6 +2496,318 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Waiting for my approval'**
   String get myApprovals;
+
+  /// No description provided for @nbTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notice board'**
+  String get nbTitle;
+
+  /// No description provided for @nbSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Official notices from the Chairman, the MD, HR and administration'**
+  String get nbSubtitle;
+
+  /// No description provided for @nbFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get nbFilterAll;
+
+  /// No description provided for @nbFilterUnread.
+  ///
+  /// In en, this message translates to:
+  /// **'Unread'**
+  String get nbFilterUnread;
+
+  /// No description provided for @nbChannelCHAIRMAN.
+  ///
+  /// In en, this message translates to:
+  /// **'Chairman'**
+  String get nbChannelCHAIRMAN;
+
+  /// No description provided for @nbChannelMANAGING_DIRECTOR.
+  ///
+  /// In en, this message translates to:
+  /// **'Managing Director'**
+  String get nbChannelMANAGING_DIRECTOR;
+
+  /// No description provided for @nbChannelHR.
+  ///
+  /// In en, this message translates to:
+  /// **'Human Resources'**
+  String get nbChannelHR;
+
+  /// No description provided for @nbChannelADMINISTRATION.
+  ///
+  /// In en, this message translates to:
+  /// **'Administration'**
+  String get nbChannelADMINISTRATION;
+
+  /// No description provided for @nbChannelCOMPLIANCE.
+  ///
+  /// In en, this message translates to:
+  /// **'Compliance'**
+  String get nbChannelCOMPLIANCE;
+
+  /// No description provided for @nbChannelIT.
+  ///
+  /// In en, this message translates to:
+  /// **'IT'**
+  String get nbChannelIT;
+
+  /// No description provided for @nbCatGENERAL.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get nbCatGENERAL;
+
+  /// No description provided for @nbCatCIRCULAR.
+  ///
+  /// In en, this message translates to:
+  /// **'Circular'**
+  String get nbCatCIRCULAR;
+
+  /// No description provided for @nbCatPOLICY.
+  ///
+  /// In en, this message translates to:
+  /// **'Policy'**
+  String get nbCatPOLICY;
+
+  /// No description provided for @nbCatHR.
+  ///
+  /// In en, this message translates to:
+  /// **'HR'**
+  String get nbCatHR;
+
+  /// No description provided for @nbCatSAFETY.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety'**
+  String get nbCatSAFETY;
+
+  /// No description provided for @nbCatEVENT.
+  ///
+  /// In en, this message translates to:
+  /// **'Event'**
+  String get nbCatEVENT;
+
+  /// No description provided for @nbCatHOLIDAY.
+  ///
+  /// In en, this message translates to:
+  /// **'Holiday'**
+  String get nbCatHOLIDAY;
+
+  /// No description provided for @nbUrgent.
+  ///
+  /// In en, this message translates to:
+  /// **'Urgent'**
+  String get nbUrgent;
+
+  /// No description provided for @nbPinned.
+  ///
+  /// In en, this message translates to:
+  /// **'Pinned'**
+  String get nbPinned;
+
+  /// No description provided for @nbNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get nbNew;
+
+  /// No description provided for @nbAcknowledged.
+  ///
+  /// In en, this message translates to:
+  /// **'Acknowledged'**
+  String get nbAcknowledged;
+
+  /// No description provided for @nbAckNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Please acknowledge'**
+  String get nbAckNeeded;
+
+  /// No description provided for @nbHasPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF attached'**
+  String get nbHasPdf;
+
+  /// No description provided for @nbUnreadCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Everything read} =1{1 unread notice} other{{count} unread notices}}'**
+  String nbUnreadCount(int count);
+
+  /// No description provided for @nbToAckCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 waiting for your acknowledgement} other{{count} waiting for your acknowledgement}}'**
+  String nbToAckCount(int count);
+
+  /// No description provided for @nbEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No notices here'**
+  String get nbEmpty;
+
+  /// No description provided for @nbEmptyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Notices addressed to you appear here, urgent ones first.'**
+  String get nbEmptyHint;
+
+  /// No description provided for @nbEmptyUnreadHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You have read every notice on the board.'**
+  String get nbEmptyUnreadHint;
+
+  /// No description provided for @nbShowAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all notices'**
+  String get nbShowAll;
+
+  /// No description provided for @nbFromOffice.
+  ///
+  /// In en, this message translates to:
+  /// **'From the office of the {channel}'**
+  String nbFromOffice(Object channel);
+
+  /// No description provided for @nbUrgentBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Urgent notice — please read it now'**
+  String get nbUrgentBanner;
+
+  /// No description provided for @nbPublished.
+  ///
+  /// In en, this message translates to:
+  /// **'Published'**
+  String get nbPublished;
+
+  /// No description provided for @nbAudience.
+  ///
+  /// In en, this message translates to:
+  /// **'Addressed to'**
+  String get nbAudience;
+
+  /// No description provided for @nbAudienceAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone in the group'**
+  String get nbAudienceAll;
+
+  /// No description provided for @nbOnBoardUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'On the board until'**
+  String get nbOnBoardUntil;
+
+  /// No description provided for @nbExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'This notice has expired.'**
+  String get nbExpired;
+
+  /// No description provided for @nbArchived.
+  ///
+  /// In en, this message translates to:
+  /// **'This notice has been taken off the board.'**
+  String get nbArchived;
+
+  /// No description provided for @nbSignedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed by'**
+  String get nbSignedBy;
+
+  /// No description provided for @nbAttachment.
+  ///
+  /// In en, this message translates to:
+  /// **'Attached document'**
+  String get nbAttachment;
+
+  /// No description provided for @nbOpenPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the PDF'**
+  String get nbOpenPdf;
+
+  /// No description provided for @nbPdfHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens in your phone\'s PDF viewer'**
+  String get nbPdfHint;
+
+  /// No description provided for @nbPdfFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The PDF could not be opened. Check your connection and try again.'**
+  String get nbPdfFailed;
+
+  /// No description provided for @nbAckPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'The sender asks you to confirm that you have read and understood this notice.'**
+  String get nbAckPrompt;
+
+  /// No description provided for @nbAckButton.
+  ///
+  /// In en, this message translates to:
+  /// **'I have read and understood'**
+  String get nbAckButton;
+
+  /// No description provided for @nbAckTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Acknowledge this notice'**
+  String get nbAckTitle;
+
+  /// No description provided for @nbAckBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You confirm that you have read and understood this notice. Your name and the time are recorded for the sender.'**
+  String get nbAckBody;
+
+  /// No description provided for @nbAckConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get nbAckConfirm;
+
+  /// No description provided for @nbAckDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you — your acknowledgement is recorded.'**
+  String get nbAckDone;
+
+  /// No description provided for @nbAckedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'You acknowledged this notice · {time}'**
+  String nbAckedOn(Object time);
+
+  /// No description provided for @nbAckExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'This notice has expired and can no longer be acknowledged.'**
+  String get nbAckExpired;
+
+  /// No description provided for @nbNoAckNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'For your information — no acknowledgement needed.'**
+  String get nbNoAckNeeded;
+
+  /// No description provided for @nbAuthorNote.
+  ///
+  /// In en, this message translates to:
+  /// **'You published this notice. See who has read it in the admin portal.'**
+  String get nbAuthorNote;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

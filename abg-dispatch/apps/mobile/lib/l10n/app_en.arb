@@ -535,5 +535,81 @@
   "myTours": "My tour requests",
   "myCars": "My pool car requests",
   "myVisitors": "My visitors",
-  "myApprovals": "Waiting for my approval"
+  "myApprovals": "Waiting for my approval",
+  "nbTitle": "Notice board",
+  "nbSubtitle": "Official notices from the Chairman, the MD, HR and administration",
+  "nbFilterAll": "All",
+  "nbFilterUnread": "Unread",
+  "nbChannelCHAIRMAN": "Chairman",
+  "nbChannelMANAGING_DIRECTOR": "Managing Director",
+  "nbChannelHR": "Human Resources",
+  "nbChannelADMINISTRATION": "Administration",
+  "nbChannelCOMPLIANCE": "Compliance",
+  "nbChannelIT": "IT",
+  "nbCatGENERAL": "General",
+  "nbCatCIRCULAR": "Circular",
+  "nbCatPOLICY": "Policy",
+  "nbCatHR": "HR",
+  "nbCatSAFETY": "Safety",
+  "nbCatEVENT": "Event",
+  "nbCatHOLIDAY": "Holiday",
+  "nbUrgent": "Urgent",
+  "nbPinned": "Pinned",
+  "nbNew": "New",
+  "nbAcknowledged": "Acknowledged",
+  "nbAckNeeded": "Please acknowledge",
+  "nbHasPdf": "PDF attached",
+  "nbUnreadCount": "{count, plural, =0{Everything read} =1{1 unread notice} other{{count} unread notices}}",
+  "@nbUnreadCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbToAckCount": "{count, plural, =1{1 waiting for your acknowledgement} other{{count} waiting for your acknowledgement}}",
+  "@nbToAckCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbEmpty": "No notices here",
+  "nbEmptyHint": "Notices addressed to you appear here, urgent ones first.",
+  "nbEmptyUnreadHint": "You have read every notice on the board.",
+  "nbShowAll": "Show all notices",
+  "nbFromOffice": "From the office of the {channel}",
+  "@nbFromOffice": {
+    "placeholders": {
+      "channel": {}
+    }
+  },
+  "nbUrgentBanner": "Urgent notice — please read it now",
+  "nbPublished": "Published",
+  "nbAudience": "Addressed to",
+  "nbAudienceAll": "Everyone in the group",
+  "nbOnBoardUntil": "On the board until",
+  "nbExpired": "This notice has expired.",
+  "nbArchived": "This notice has been taken off the board.",
+  "nbSignedBy": "Signed by",
+  "nbAttachment": "Attached document",
+  "nbOpenPdf": "Open the PDF",
+  "nbPdfHint": "Opens in your phone's PDF viewer",
+  "nbPdfFailed": "The PDF could not be opened. Check your connection and try again.",
+  "nbAckPrompt": "The sender asks you to confirm that you have read and understood this notice.",
+  "nbAckButton": "I have read and understood",
+  "nbAckTitle": "Acknowledge this notice",
+  "nbAckBody": "You confirm that you have read and understood this notice. Your name and the time are recorded for the sender.",
+  "nbAckConfirm": "Confirm",
+  "nbAckDone": "Thank you — your acknowledgement is recorded.",
+  "nbAckedOn": "You acknowledged this notice · {time}",
+  "@nbAckedOn": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "nbAckExpired": "This notice has expired and can no longer be acknowledged.",
+  "nbNoAckNeeded": "For your information — no acknowledgement needed.",
+  "nbAuthorNote": "You published this notice. See who has read it in the admin portal."
 }

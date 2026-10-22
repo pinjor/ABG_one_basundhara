@@ -1302,4 +1302,189 @@ class LEn extends L {
 
   @override
   String get myApprovals => 'Waiting for my approval';
+
+  @override
+  String get nbTitle => 'Notice board';
+
+  @override
+  String get nbSubtitle =>
+      'Official notices from the Chairman, the MD, HR and administration';
+
+  @override
+  String get nbFilterAll => 'All';
+
+  @override
+  String get nbFilterUnread => 'Unread';
+
+  @override
+  String get nbChannelCHAIRMAN => 'Chairman';
+
+  @override
+  String get nbChannelMANAGING_DIRECTOR => 'Managing Director';
+
+  @override
+  String get nbChannelHR => 'Human Resources';
+
+  @override
+  String get nbChannelADMINISTRATION => 'Administration';
+
+  @override
+  String get nbChannelCOMPLIANCE => 'Compliance';
+
+  @override
+  String get nbChannelIT => 'IT';
+
+  @override
+  String get nbCatGENERAL => 'General';
+
+  @override
+  String get nbCatCIRCULAR => 'Circular';
+
+  @override
+  String get nbCatPOLICY => 'Policy';
+
+  @override
+  String get nbCatHR => 'HR';
+
+  @override
+  String get nbCatSAFETY => 'Safety';
+
+  @override
+  String get nbCatEVENT => 'Event';
+
+  @override
+  String get nbCatHOLIDAY => 'Holiday';
+
+  @override
+  String get nbUrgent => 'Urgent';
+
+  @override
+  String get nbPinned => 'Pinned';
+
+  @override
+  String get nbNew => 'New';
+
+  @override
+  String get nbAcknowledged => 'Acknowledged';
+
+  @override
+  String get nbAckNeeded => 'Please acknowledge';
+
+  @override
+  String get nbHasPdf => 'PDF attached';
+
+  @override
+  String nbUnreadCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count unread notices',
+      one: '1 unread notice',
+      zero: 'Everything read',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nbToAckCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count waiting for your acknowledgement',
+      one: '1 waiting for your acknowledgement',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nbEmpty => 'No notices here';
+
+  @override
+  String get nbEmptyHint =>
+      'Notices addressed to you appear here, urgent ones first.';
+
+  @override
+  String get nbEmptyUnreadHint => 'You have read every notice on the board.';
+
+  @override
+  String get nbShowAll => 'Show all notices';
+
+  @override
+  String nbFromOffice(Object channel) {
+    return 'From the office of the $channel';
+  }
+
+  @override
+  String get nbUrgentBanner => 'Urgent notice — please read it now';
+
+  @override
+  String get nbPublished => 'Published';
+
+  @override
+  String get nbAudience => 'Addressed to';
+
+  @override
+  String get nbAudienceAll => 'Everyone in the group';
+
+  @override
+  String get nbOnBoardUntil => 'On the board until';
+
+  @override
+  String get nbExpired => 'This notice has expired.';
+
+  @override
+  String get nbArchived => 'This notice has been taken off the board.';
+
+  @override
+  String get nbSignedBy => 'Signed by';
+
+  @override
+  String get nbAttachment => 'Attached document';
+
+  @override
+  String get nbOpenPdf => 'Open the PDF';
+
+  @override
+  String get nbPdfHint => 'Opens in your phone\'s PDF viewer';
+
+  @override
+  String get nbPdfFailed =>
+      'The PDF could not be opened. Check your connection and try again.';
+
+  @override
+  String get nbAckPrompt =>
+      'The sender asks you to confirm that you have read and understood this notice.';
+
+  @override
+  String get nbAckButton => 'I have read and understood';
+
+  @override
+  String get nbAckTitle => 'Acknowledge this notice';
+
+  @override
+  String get nbAckBody =>
+      'You confirm that you have read and understood this notice. Your name and the time are recorded for the sender.';
+
+  @override
+  String get nbAckConfirm => 'Confirm';
+
+  @override
+  String get nbAckDone => 'Thank you — your acknowledgement is recorded.';
+
+  @override
+  String nbAckedOn(Object time) {
+    return 'You acknowledged this notice · $time';
+  }
+
+  @override
+  String get nbAckExpired =>
+      'This notice has expired and can no longer be acknowledged.';
+
+  @override
+  String get nbNoAckNeeded =>
+      'For your information — no acknowledgement needed.';
+
+  @override
+  String get nbAuthorNote =>
+      'You published this notice. See who has read it in the admin portal.';
 }
