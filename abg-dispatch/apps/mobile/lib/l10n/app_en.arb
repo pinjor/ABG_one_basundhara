@@ -438,5 +438,230 @@
   "incEvPhoto": "Photo added",
   "incEvDetails": "Details updated",
   "incWaitingForAdmin": "Waiting for the admin team to pick it up.",
-  "incOfflineNotice": "You're offline. Reports with photos need a connection — try again when you're back online."
+  "incOfflineNotice": "You're offline. Reports with photos need a connection — try again when you're back online.",
+  "pcTitle": "Pool car",
+  "pcRequestCar": "Request a car",
+  "pcTabMine": "My requests",
+  "pcTabApprove": "To approve",
+  "pcTabTrips": "My trips",
+  "pcFilterAll": "All",
+  "pcFilterOpen": "Active",
+  "pcFilterClosed": "Closed",
+  "pcNoRequests": "No car requests yet",
+  "pcNoRequestsHint": "Request a pool car for an official trip. Once it is assigned you will see the driver and your gate pass here.",
+  "pcNoApprovals": "Nothing to approve",
+  "pcNoApprovalsHint": "Car requests from your team that name you as head of department appear here.",
+  "pcNoTrips": "No trips assigned",
+  "pcNoTripsHint": "Trips the fleet manager gives you appear here, with Start and Complete.",
+  "pcUrgent": "Urgent",
+  "pcPeople": "{count, plural, =1{1 person} other{{count} people}}",
+  "@pcPeople": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pcSeats": "{count} seats",
+  "@pcSeats": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pcStatusPENDING_HOD": "Pending HOD",
+  "pcStatusPENDING_FLEET": "Pending fleet manager",
+  "pcStatusASSIGNED": "Assigned",
+  "pcStatusIN_PROGRESS": "In progress",
+  "pcStatusCOMPLETED": "Completed",
+  "pcStatusREJECTED": "Rejected",
+  "pcStatusCANCELLED": "Cancelled",
+  "pcTripONE_WAY": "One way",
+  "pcTripROUND_TRIP": "Round trip",
+  "pcTripFULL_DAY": "Full day",
+  "pcTripAIRPORT": "Airport transfer",
+  "pcTripHintONE_WAY": "Drop only",
+  "pcTripHintROUND_TRIP": "There and back",
+  "pcTripHintFULL_DAY": "Car stays with you",
+  "pcTripHintAIRPORT": "Pickup or drop",
+  "pcVehANY": "Any car",
+  "pcVehSEDAN": "Sedan",
+  "pcVehSUV": "SUV",
+  "pcVehMICROBUS": "Microbus",
+  "pcVehPICKUP": "Pickup",
+  "pcVehCOASTER": "Coaster",
+  "pcFormTitle": "Request a pool car",
+  "pcFormIntro": "Your head of department approves, then the fleet manager assigns a car and driver. You get the driver's number and a QR gate pass.",
+  "pcTripKind": "Kind of trip",
+  "pcPurpose": "Purpose of the trip",
+  "pcPurposeHint": "e.g. Hearing at the Supreme Court",
+  "pcPickupFrom": "Pick up from",
+  "pcGoingTo": "Going to",
+  "pcPickupTime": "Pickup",
+  "pcReturnTime": "Back by",
+  "pcReturnOptional": "Back by (optional)",
+  "pcChooseTime": "Choose date and time",
+  "pcClearReturn": "No return",
+  "pcPassengers": "Passengers",
+  "pcAddPassenger": "Add passenger",
+  "pcPassengerName": "Full name",
+  "pcPassengerPhone": "Mobile (optional)",
+  "pcRemovePassenger": "Remove passenger",
+  "pcPeopleCount": "People travelling",
+  "pcPeopleCountHint": "Including you · at most {max}",
+  "@pcPeopleCountHint": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "pcVehiclePreference": "Vehicle preference",
+  "pcUrgentHint": "Needed at short notice — your approver sees it first",
+  "pcApprover": "Approver",
+  "pcApproverHint": "Your head of department",
+  "pcChange": "Change",
+  "pcNoManager": "No head of department on record — choose an approver",
+  "pcApproverNoAccount": "{name} cannot sign in to approve. Choose someone else.",
+  "@pcApproverNoAccount": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "pcSearchApprover": "Search name, ID or department",
+  "pcNoAccount": "No account",
+  "pcSend": "Send for approval",
+  "pcSent": "{ref} sent for approval",
+  "@pcSent": {
+    "placeholders": {
+      "ref": {}
+    }
+  },
+  "pcPurposeRequired": "Say what the car is for",
+  "pcPlacesRequired": "Give the pickup and drop places",
+  "pcPickupPast": "The pickup time has passed",
+  "pcReturnRequired": "Round trips and full days need a return time",
+  "pcReturnBeforePickup": "The return must be after the pickup",
+  "pcTooManyNamed": "More names than people travelling",
+  "pcApproverRequired": "Choose who approves this request",
+  "pcProgress": "Progress",
+  "pcStepHod": "HOD",
+  "pcStepFleet": "Fleet",
+  "pcStepAssigned": "Assigned",
+  "pcStepOnTrip": "On trip",
+  "pcStepDone": "Done",
+  "pcWaitingHod": "Waiting for {name} to approve.",
+  "@pcWaitingHod": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "pcWaitingFleet": "Approved. The fleet manager assigns a car and driver next.",
+  "pcTrip": "Trip",
+  "pcVehicleWanted": "Vehicle wanted",
+  "pcCarDriver": "Car & driver",
+  "pcCallDriver": "Call driver",
+  "pcDriver": "Driver",
+  "pcNotAssignedYet": "A car and driver are assigned after approval. You will see the driver's number and your gate pass here.",
+  "pcNoCar": "No car was assigned.",
+  "pcGatePass": "Gate pass",
+  "pcShowPass": "Show gate pass",
+  "pcPassHint": "Show this at the gate. Security scans it when the car leaves and when it returns.",
+  "pcPassValid": "Valid {from} – {until}",
+  "@pcPassValid": {
+    "placeholders": {
+      "from": {},
+      "until": {}
+    }
+  },
+  "pcOdometerRun": "{start} → {end} km · {distance} km driven",
+  "@pcOdometerRun": {
+    "placeholders": {
+      "start": {},
+      "end": {},
+      "distance": {}
+    }
+  },
+  "pcHistory": "History",
+  "pcEvSubmitted": "Requested",
+  "pcEvApproved": "Approved by head of department",
+  "pcEvRejected": "Rejected",
+  "pcEvCancelled": "Cancelled",
+  "pcEvAssigned": "Car assigned",
+  "pcEvReassigned": "Car changed",
+  "pcEvStarted": "Trip started",
+  "pcEvCompleted": "Trip completed",
+  "pcEvExit": "Left through the gate",
+  "pcEvReturn": "Back through the gate",
+  "pcRequestedBy": "Requested by",
+  "pcHod": "Head of department",
+  "pcApprove": "Approve",
+  "pcReject": "Reject",
+  "pcAssign": "Assign car",
+  "pcReassign": "Reassign",
+  "pcStart": "Start trip",
+  "pcComplete": "Complete trip",
+  "pcCancelRequest": "Cancel request",
+  "pcApproveTitle": "Approve this request?",
+  "pcApproveBody": "It goes to the fleet manager, who assigns a car and driver. The requester is told.",
+  "pcRejectTitle": "Reject this request",
+  "pcRejectReason": "Reason for the requester",
+  "pcReasonRequired": "Give a reason of at least 3 characters",
+  "pcCancelTitle": "Cancel this request?",
+  "pcCancelBody": "The approver or fleet manager is told. An assigned car and driver are released and the gate pass stops working.",
+  "pcCancelReason": "Reason (optional)",
+  "pcOdometer": "Odometer reading (km, optional)",
+  "pcStartTitle": "Start the trip",
+  "pcCompleteTitle": "Complete the trip",
+  "pcLastOdometer": "Last recorded {km} km",
+  "@pcLastOdometer": {
+    "placeholders": {
+      "km": {}
+    }
+  },
+  "pcApproved": "Approved — sent to the fleet manager",
+  "pcRejected": "Rejected — the requester has been told",
+  "pcStarted": "Trip started",
+  "pcCompleted": "Trip completed — the car is free again",
+  "pcCancelled": "Request cancelled",
+  "pcAssigned": "Car and driver assigned",
+  "pcChooseVehicle": "Vehicle",
+  "pcChooseDriver": "Driver",
+  "pcFreeForTrip": "Free for this trip",
+  "pcMatchesRequest": "Matches request",
+  "pcReassignNote": "Reassigning issues a new gate pass; the old QR stops working.",
+  "pcPassTitle": "Vehicle gate pass",
+  "pcPassVALID": "Valid gate pass",
+  "pcPassOUT": "Car is out on this trip",
+  "pcPassUSED": "Trip complete — pass used",
+  "pcPassCANCELLED": "Not valid — trip cancelled",
+  "pcPassEXPIRED": "Not valid — pass expired",
+  "pcPassNOT_YET_VALID": "Not valid yet",
+  "pcPassINVALID": "Not a valid gate pass",
+  "pcPassInvalidBody": "This code was not issued by ABG ONE, or it has been replaced. Do not let the vehicle through — call the fleet desk.",
+  "pcRecordExit": "Record exit",
+  "pcRecordReturn": "Record return",
+  "pcExitRecorded": "Exit recorded — the trip has started",
+  "pcReturnRecorded": "Return recorded — the trip is complete",
+  "pcGateRecord": "Gate record",
+  "pcLeftGate": "Left the gate",
+  "pcReturned": "Returned",
+  "pcPassNotAllowed": "Only security, front desks and the fleet manager can verify gate passes.",
+  "pcTravelling": "{count} travelling",
+  "@pcTravelling": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pcValidity": "Pass valid",
+  "pcLicence": "Licence {number}",
+  "@pcLicence": {
+    "placeholders": {
+      "number": {}
+    }
+  },
+  "pcRequester": "Requester"
 }

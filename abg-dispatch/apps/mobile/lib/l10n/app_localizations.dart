@@ -2046,6 +2046,960 @@ abstract class L {
   /// In en, this message translates to:
   /// **'You\'re offline. Reports with photos need a connection — try again when you\'re back online.'**
   String get incOfflineNotice;
+
+  /// No description provided for @pcTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pool car'**
+  String get pcTitle;
+
+  /// No description provided for @pcRequestCar.
+  ///
+  /// In en, this message translates to:
+  /// **'Request a car'**
+  String get pcRequestCar;
+
+  /// No description provided for @pcTabMine.
+  ///
+  /// In en, this message translates to:
+  /// **'My requests'**
+  String get pcTabMine;
+
+  /// No description provided for @pcTabApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'To approve'**
+  String get pcTabApprove;
+
+  /// No description provided for @pcTabTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'My trips'**
+  String get pcTabTrips;
+
+  /// No description provided for @pcFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get pcFilterAll;
+
+  /// No description provided for @pcFilterOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get pcFilterOpen;
+
+  /// No description provided for @pcFilterClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get pcFilterClosed;
+
+  /// No description provided for @pcNoRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'No car requests yet'**
+  String get pcNoRequests;
+
+  /// No description provided for @pcNoRequestsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Request a pool car for an official trip. Once it is assigned you will see the driver and your gate pass here.'**
+  String get pcNoRequestsHint;
+
+  /// No description provided for @pcNoApprovals.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to approve'**
+  String get pcNoApprovals;
+
+  /// No description provided for @pcNoApprovalsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Car requests from your team that name you as head of department appear here.'**
+  String get pcNoApprovalsHint;
+
+  /// No description provided for @pcNoTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'No trips assigned'**
+  String get pcNoTrips;
+
+  /// No description provided for @pcNoTripsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Trips the fleet manager gives you appear here, with Start and Complete.'**
+  String get pcNoTripsHint;
+
+  /// No description provided for @pcUrgent.
+  ///
+  /// In en, this message translates to:
+  /// **'Urgent'**
+  String get pcUrgent;
+
+  /// No description provided for @pcPeople.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 person} other{{count} people}}'**
+  String pcPeople(int count);
+
+  /// No description provided for @pcSeats.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} seats'**
+  String pcSeats(int count);
+
+  /// No description provided for @pcStatusPENDING_HOD.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending HOD'**
+  String get pcStatusPENDING_HOD;
+
+  /// No description provided for @pcStatusPENDING_FLEET.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending fleet manager'**
+  String get pcStatusPENDING_FLEET;
+
+  /// No description provided for @pcStatusASSIGNED.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned'**
+  String get pcStatusASSIGNED;
+
+  /// No description provided for @pcStatusIN_PROGRESS.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get pcStatusIN_PROGRESS;
+
+  /// No description provided for @pcStatusCOMPLETED.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get pcStatusCOMPLETED;
+
+  /// No description provided for @pcStatusREJECTED.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get pcStatusREJECTED;
+
+  /// No description provided for @pcStatusCANCELLED.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get pcStatusCANCELLED;
+
+  /// No description provided for @pcTripONE_WAY.
+  ///
+  /// In en, this message translates to:
+  /// **'One way'**
+  String get pcTripONE_WAY;
+
+  /// No description provided for @pcTripROUND_TRIP.
+  ///
+  /// In en, this message translates to:
+  /// **'Round trip'**
+  String get pcTripROUND_TRIP;
+
+  /// No description provided for @pcTripFULL_DAY.
+  ///
+  /// In en, this message translates to:
+  /// **'Full day'**
+  String get pcTripFULL_DAY;
+
+  /// No description provided for @pcTripAIRPORT.
+  ///
+  /// In en, this message translates to:
+  /// **'Airport transfer'**
+  String get pcTripAIRPORT;
+
+  /// No description provided for @pcTripHintONE_WAY.
+  ///
+  /// In en, this message translates to:
+  /// **'Drop only'**
+  String get pcTripHintONE_WAY;
+
+  /// No description provided for @pcTripHintROUND_TRIP.
+  ///
+  /// In en, this message translates to:
+  /// **'There and back'**
+  String get pcTripHintROUND_TRIP;
+
+  /// No description provided for @pcTripHintFULL_DAY.
+  ///
+  /// In en, this message translates to:
+  /// **'Car stays with you'**
+  String get pcTripHintFULL_DAY;
+
+  /// No description provided for @pcTripHintAIRPORT.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup or drop'**
+  String get pcTripHintAIRPORT;
+
+  /// No description provided for @pcVehANY.
+  ///
+  /// In en, this message translates to:
+  /// **'Any car'**
+  String get pcVehANY;
+
+  /// No description provided for @pcVehSEDAN.
+  ///
+  /// In en, this message translates to:
+  /// **'Sedan'**
+  String get pcVehSEDAN;
+
+  /// No description provided for @pcVehSUV.
+  ///
+  /// In en, this message translates to:
+  /// **'SUV'**
+  String get pcVehSUV;
+
+  /// No description provided for @pcVehMICROBUS.
+  ///
+  /// In en, this message translates to:
+  /// **'Microbus'**
+  String get pcVehMICROBUS;
+
+  /// No description provided for @pcVehPICKUP.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup'**
+  String get pcVehPICKUP;
+
+  /// No description provided for @pcVehCOASTER.
+  ///
+  /// In en, this message translates to:
+  /// **'Coaster'**
+  String get pcVehCOASTER;
+
+  /// No description provided for @pcFormTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Request a pool car'**
+  String get pcFormTitle;
+
+  /// No description provided for @pcFormIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Your head of department approves, then the fleet manager assigns a car and driver. You get the driver\'s number and a QR gate pass.'**
+  String get pcFormIntro;
+
+  /// No description provided for @pcTripKind.
+  ///
+  /// In en, this message translates to:
+  /// **'Kind of trip'**
+  String get pcTripKind;
+
+  /// No description provided for @pcPurpose.
+  ///
+  /// In en, this message translates to:
+  /// **'Purpose of the trip'**
+  String get pcPurpose;
+
+  /// No description provided for @pcPurposeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Hearing at the Supreme Court'**
+  String get pcPurposeHint;
+
+  /// No description provided for @pcPickupFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick up from'**
+  String get pcPickupFrom;
+
+  /// No description provided for @pcGoingTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Going to'**
+  String get pcGoingTo;
+
+  /// No description provided for @pcPickupTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup'**
+  String get pcPickupTime;
+
+  /// No description provided for @pcReturnTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Back by'**
+  String get pcReturnTime;
+
+  /// No description provided for @pcReturnOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Back by (optional)'**
+  String get pcReturnOptional;
+
+  /// No description provided for @pcChooseTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose date and time'**
+  String get pcChooseTime;
+
+  /// No description provided for @pcClearReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'No return'**
+  String get pcClearReturn;
+
+  /// No description provided for @pcPassengers.
+  ///
+  /// In en, this message translates to:
+  /// **'Passengers'**
+  String get pcPassengers;
+
+  /// No description provided for @pcAddPassenger.
+  ///
+  /// In en, this message translates to:
+  /// **'Add passenger'**
+  String get pcAddPassenger;
+
+  /// No description provided for @pcPassengerName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get pcPassengerName;
+
+  /// No description provided for @pcPassengerPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile (optional)'**
+  String get pcPassengerPhone;
+
+  /// No description provided for @pcRemovePassenger.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove passenger'**
+  String get pcRemovePassenger;
+
+  /// No description provided for @pcPeopleCount.
+  ///
+  /// In en, this message translates to:
+  /// **'People travelling'**
+  String get pcPeopleCount;
+
+  /// No description provided for @pcPeopleCountHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Including you · at most {max}'**
+  String pcPeopleCountHint(int max);
+
+  /// No description provided for @pcVehiclePreference.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle preference'**
+  String get pcVehiclePreference;
+
+  /// No description provided for @pcUrgentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Needed at short notice — your approver sees it first'**
+  String get pcUrgentHint;
+
+  /// No description provided for @pcApprover.
+  ///
+  /// In en, this message translates to:
+  /// **'Approver'**
+  String get pcApprover;
+
+  /// No description provided for @pcApproverHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your head of department'**
+  String get pcApproverHint;
+
+  /// No description provided for @pcChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get pcChange;
+
+  /// No description provided for @pcNoManager.
+  ///
+  /// In en, this message translates to:
+  /// **'No head of department on record — choose an approver'**
+  String get pcNoManager;
+
+  /// No description provided for @pcApproverNoAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} cannot sign in to approve. Choose someone else.'**
+  String pcApproverNoAccount(Object name);
+
+  /// No description provided for @pcSearchApprover.
+  ///
+  /// In en, this message translates to:
+  /// **'Search name, ID or department'**
+  String get pcSearchApprover;
+
+  /// No description provided for @pcNoAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'No account'**
+  String get pcNoAccount;
+
+  /// No description provided for @pcSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send for approval'**
+  String get pcSend;
+
+  /// No description provided for @pcSent.
+  ///
+  /// In en, this message translates to:
+  /// **'{ref} sent for approval'**
+  String pcSent(Object ref);
+
+  /// No description provided for @pcPurposeRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Say what the car is for'**
+  String get pcPurposeRequired;
+
+  /// No description provided for @pcPlacesRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Give the pickup and drop places'**
+  String get pcPlacesRequired;
+
+  /// No description provided for @pcPickupPast.
+  ///
+  /// In en, this message translates to:
+  /// **'The pickup time has passed'**
+  String get pcPickupPast;
+
+  /// No description provided for @pcReturnRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Round trips and full days need a return time'**
+  String get pcReturnRequired;
+
+  /// No description provided for @pcReturnBeforePickup.
+  ///
+  /// In en, this message translates to:
+  /// **'The return must be after the pickup'**
+  String get pcReturnBeforePickup;
+
+  /// No description provided for @pcTooManyNamed.
+  ///
+  /// In en, this message translates to:
+  /// **'More names than people travelling'**
+  String get pcTooManyNamed;
+
+  /// No description provided for @pcApproverRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose who approves this request'**
+  String get pcApproverRequired;
+
+  /// No description provided for @pcProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get pcProgress;
+
+  /// No description provided for @pcStepHod.
+  ///
+  /// In en, this message translates to:
+  /// **'HOD'**
+  String get pcStepHod;
+
+  /// No description provided for @pcStepFleet.
+  ///
+  /// In en, this message translates to:
+  /// **'Fleet'**
+  String get pcStepFleet;
+
+  /// No description provided for @pcStepAssigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned'**
+  String get pcStepAssigned;
+
+  /// No description provided for @pcStepOnTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'On trip'**
+  String get pcStepOnTrip;
+
+  /// No description provided for @pcStepDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get pcStepDone;
+
+  /// No description provided for @pcWaitingHod.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for {name} to approve.'**
+  String pcWaitingHod(Object name);
+
+  /// No description provided for @pcWaitingFleet.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved. The fleet manager assigns a car and driver next.'**
+  String get pcWaitingFleet;
+
+  /// No description provided for @pcTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip'**
+  String get pcTrip;
+
+  /// No description provided for @pcVehicleWanted.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle wanted'**
+  String get pcVehicleWanted;
+
+  /// No description provided for @pcCarDriver.
+  ///
+  /// In en, this message translates to:
+  /// **'Car & driver'**
+  String get pcCarDriver;
+
+  /// No description provided for @pcCallDriver.
+  ///
+  /// In en, this message translates to:
+  /// **'Call driver'**
+  String get pcCallDriver;
+
+  /// No description provided for @pcDriver.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver'**
+  String get pcDriver;
+
+  /// No description provided for @pcNotAssignedYet.
+  ///
+  /// In en, this message translates to:
+  /// **'A car and driver are assigned after approval. You will see the driver\'s number and your gate pass here.'**
+  String get pcNotAssignedYet;
+
+  /// No description provided for @pcNoCar.
+  ///
+  /// In en, this message translates to:
+  /// **'No car was assigned.'**
+  String get pcNoCar;
+
+  /// No description provided for @pcGatePass.
+  ///
+  /// In en, this message translates to:
+  /// **'Gate pass'**
+  String get pcGatePass;
+
+  /// No description provided for @pcShowPass.
+  ///
+  /// In en, this message translates to:
+  /// **'Show gate pass'**
+  String get pcShowPass;
+
+  /// No description provided for @pcPassHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Show this at the gate. Security scans it when the car leaves and when it returns.'**
+  String get pcPassHint;
+
+  /// No description provided for @pcPassValid.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid {from} – {until}'**
+  String pcPassValid(Object from, Object until);
+
+  /// No description provided for @pcOdometerRun.
+  ///
+  /// In en, this message translates to:
+  /// **'{start} → {end} km · {distance} km driven'**
+  String pcOdometerRun(Object start, Object end, Object distance);
+
+  /// No description provided for @pcHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get pcHistory;
+
+  /// No description provided for @pcEvSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested'**
+  String get pcEvSubmitted;
+
+  /// No description provided for @pcEvApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved by head of department'**
+  String get pcEvApproved;
+
+  /// No description provided for @pcEvRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get pcEvRejected;
+
+  /// No description provided for @pcEvCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get pcEvCancelled;
+
+  /// No description provided for @pcEvAssigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Car assigned'**
+  String get pcEvAssigned;
+
+  /// No description provided for @pcEvReassigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Car changed'**
+  String get pcEvReassigned;
+
+  /// No description provided for @pcEvStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip started'**
+  String get pcEvStarted;
+
+  /// No description provided for @pcEvCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip completed'**
+  String get pcEvCompleted;
+
+  /// No description provided for @pcEvExit.
+  ///
+  /// In en, this message translates to:
+  /// **'Left through the gate'**
+  String get pcEvExit;
+
+  /// No description provided for @pcEvReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Back through the gate'**
+  String get pcEvReturn;
+
+  /// No description provided for @pcRequestedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested by'**
+  String get pcRequestedBy;
+
+  /// No description provided for @pcHod.
+  ///
+  /// In en, this message translates to:
+  /// **'Head of department'**
+  String get pcHod;
+
+  /// No description provided for @pcApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get pcApprove;
+
+  /// No description provided for @pcReject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get pcReject;
+
+  /// No description provided for @pcAssign.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign car'**
+  String get pcAssign;
+
+  /// No description provided for @pcReassign.
+  ///
+  /// In en, this message translates to:
+  /// **'Reassign'**
+  String get pcReassign;
+
+  /// No description provided for @pcStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start trip'**
+  String get pcStart;
+
+  /// No description provided for @pcComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete trip'**
+  String get pcComplete;
+
+  /// No description provided for @pcCancelRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel request'**
+  String get pcCancelRequest;
+
+  /// No description provided for @pcApproveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve this request?'**
+  String get pcApproveTitle;
+
+  /// No description provided for @pcApproveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'It goes to the fleet manager, who assigns a car and driver. The requester is told.'**
+  String get pcApproveBody;
+
+  /// No description provided for @pcRejectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject this request'**
+  String get pcRejectTitle;
+
+  /// No description provided for @pcRejectReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason for the requester'**
+  String get pcRejectReason;
+
+  /// No description provided for @pcReasonRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Give a reason of at least 3 characters'**
+  String get pcReasonRequired;
+
+  /// No description provided for @pcCancelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this request?'**
+  String get pcCancelTitle;
+
+  /// No description provided for @pcCancelBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The approver or fleet manager is told. An assigned car and driver are released and the gate pass stops working.'**
+  String get pcCancelBody;
+
+  /// No description provided for @pcCancelReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason (optional)'**
+  String get pcCancelReason;
+
+  /// No description provided for @pcOdometer.
+  ///
+  /// In en, this message translates to:
+  /// **'Odometer reading (km, optional)'**
+  String get pcOdometer;
+
+  /// No description provided for @pcStartTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Start the trip'**
+  String get pcStartTitle;
+
+  /// No description provided for @pcCompleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete the trip'**
+  String get pcCompleteTitle;
+
+  /// No description provided for @pcLastOdometer.
+  ///
+  /// In en, this message translates to:
+  /// **'Last recorded {km} km'**
+  String pcLastOdometer(Object km);
+
+  /// No description provided for @pcApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved — sent to the fleet manager'**
+  String get pcApproved;
+
+  /// No description provided for @pcRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected — the requester has been told'**
+  String get pcRejected;
+
+  /// No description provided for @pcStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip started'**
+  String get pcStarted;
+
+  /// No description provided for @pcCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip completed — the car is free again'**
+  String get pcCompleted;
+
+  /// No description provided for @pcCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Request cancelled'**
+  String get pcCancelled;
+
+  /// No description provided for @pcAssigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Car and driver assigned'**
+  String get pcAssigned;
+
+  /// No description provided for @pcChooseVehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle'**
+  String get pcChooseVehicle;
+
+  /// No description provided for @pcChooseDriver.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver'**
+  String get pcChooseDriver;
+
+  /// No description provided for @pcFreeForTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Free for this trip'**
+  String get pcFreeForTrip;
+
+  /// No description provided for @pcMatchesRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Matches request'**
+  String get pcMatchesRequest;
+
+  /// No description provided for @pcReassignNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Reassigning issues a new gate pass; the old QR stops working.'**
+  String get pcReassignNote;
+
+  /// No description provided for @pcPassTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle gate pass'**
+  String get pcPassTitle;
+
+  /// No description provided for @pcPassVALID.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid gate pass'**
+  String get pcPassVALID;
+
+  /// No description provided for @pcPassOUT.
+  ///
+  /// In en, this message translates to:
+  /// **'Car is out on this trip'**
+  String get pcPassOUT;
+
+  /// No description provided for @pcPassUSED.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip complete — pass used'**
+  String get pcPassUSED;
+
+  /// No description provided for @pcPassCANCELLED.
+  ///
+  /// In en, this message translates to:
+  /// **'Not valid — trip cancelled'**
+  String get pcPassCANCELLED;
+
+  /// No description provided for @pcPassEXPIRED.
+  ///
+  /// In en, this message translates to:
+  /// **'Not valid — pass expired'**
+  String get pcPassEXPIRED;
+
+  /// No description provided for @pcPassNOT_YET_VALID.
+  ///
+  /// In en, this message translates to:
+  /// **'Not valid yet'**
+  String get pcPassNOT_YET_VALID;
+
+  /// No description provided for @pcPassINVALID.
+  ///
+  /// In en, this message translates to:
+  /// **'Not a valid gate pass'**
+  String get pcPassINVALID;
+
+  /// No description provided for @pcPassInvalidBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This code was not issued by ABG ONE, or it has been replaced. Do not let the vehicle through — call the fleet desk.'**
+  String get pcPassInvalidBody;
+
+  /// No description provided for @pcRecordExit.
+  ///
+  /// In en, this message translates to:
+  /// **'Record exit'**
+  String get pcRecordExit;
+
+  /// No description provided for @pcRecordReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Record return'**
+  String get pcRecordReturn;
+
+  /// No description provided for @pcExitRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit recorded — the trip has started'**
+  String get pcExitRecorded;
+
+  /// No description provided for @pcReturnRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'Return recorded — the trip is complete'**
+  String get pcReturnRecorded;
+
+  /// No description provided for @pcGateRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Gate record'**
+  String get pcGateRecord;
+
+  /// No description provided for @pcLeftGate.
+  ///
+  /// In en, this message translates to:
+  /// **'Left the gate'**
+  String get pcLeftGate;
+
+  /// No description provided for @pcReturned.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned'**
+  String get pcReturned;
+
+  /// No description provided for @pcPassNotAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Only security, front desks and the fleet manager can verify gate passes.'**
+  String get pcPassNotAllowed;
+
+  /// No description provided for @pcTravelling.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} travelling'**
+  String pcTravelling(int count);
+
+  /// No description provided for @pcValidity.
+  ///
+  /// In en, this message translates to:
+  /// **'Pass valid'**
+  String get pcValidity;
+
+  /// No description provided for @pcLicence.
+  ///
+  /// In en, this message translates to:
+  /// **'Licence {number}'**
+  String pcLicence(Object number);
+
+  /// No description provided for @pcRequester.
+  ///
+  /// In en, this message translates to:
+  /// **'Requester'**
+  String get pcRequester;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

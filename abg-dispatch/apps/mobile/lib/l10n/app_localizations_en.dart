@@ -1059,4 +1059,523 @@ class LEn extends L {
   @override
   String get incOfflineNotice =>
       'You\'re offline. Reports with photos need a connection — try again when you\'re back online.';
+
+  @override
+  String get pcTitle => 'Pool car';
+
+  @override
+  String get pcRequestCar => 'Request a car';
+
+  @override
+  String get pcTabMine => 'My requests';
+
+  @override
+  String get pcTabApprove => 'To approve';
+
+  @override
+  String get pcTabTrips => 'My trips';
+
+  @override
+  String get pcFilterAll => 'All';
+
+  @override
+  String get pcFilterOpen => 'Active';
+
+  @override
+  String get pcFilterClosed => 'Closed';
+
+  @override
+  String get pcNoRequests => 'No car requests yet';
+
+  @override
+  String get pcNoRequestsHint =>
+      'Request a pool car for an official trip. Once it is assigned you will see the driver and your gate pass here.';
+
+  @override
+  String get pcNoApprovals => 'Nothing to approve';
+
+  @override
+  String get pcNoApprovalsHint =>
+      'Car requests from your team that name you as head of department appear here.';
+
+  @override
+  String get pcNoTrips => 'No trips assigned';
+
+  @override
+  String get pcNoTripsHint =>
+      'Trips the fleet manager gives you appear here, with Start and Complete.';
+
+  @override
+  String get pcUrgent => 'Urgent';
+
+  @override
+  String pcPeople(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count people',
+      one: '1 person',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String pcSeats(int count) {
+    return '$count seats';
+  }
+
+  @override
+  String get pcStatusPENDING_HOD => 'Pending HOD';
+
+  @override
+  String get pcStatusPENDING_FLEET => 'Pending fleet manager';
+
+  @override
+  String get pcStatusASSIGNED => 'Assigned';
+
+  @override
+  String get pcStatusIN_PROGRESS => 'In progress';
+
+  @override
+  String get pcStatusCOMPLETED => 'Completed';
+
+  @override
+  String get pcStatusREJECTED => 'Rejected';
+
+  @override
+  String get pcStatusCANCELLED => 'Cancelled';
+
+  @override
+  String get pcTripONE_WAY => 'One way';
+
+  @override
+  String get pcTripROUND_TRIP => 'Round trip';
+
+  @override
+  String get pcTripFULL_DAY => 'Full day';
+
+  @override
+  String get pcTripAIRPORT => 'Airport transfer';
+
+  @override
+  String get pcTripHintONE_WAY => 'Drop only';
+
+  @override
+  String get pcTripHintROUND_TRIP => 'There and back';
+
+  @override
+  String get pcTripHintFULL_DAY => 'Car stays with you';
+
+  @override
+  String get pcTripHintAIRPORT => 'Pickup or drop';
+
+  @override
+  String get pcVehANY => 'Any car';
+
+  @override
+  String get pcVehSEDAN => 'Sedan';
+
+  @override
+  String get pcVehSUV => 'SUV';
+
+  @override
+  String get pcVehMICROBUS => 'Microbus';
+
+  @override
+  String get pcVehPICKUP => 'Pickup';
+
+  @override
+  String get pcVehCOASTER => 'Coaster';
+
+  @override
+  String get pcFormTitle => 'Request a pool car';
+
+  @override
+  String get pcFormIntro =>
+      'Your head of department approves, then the fleet manager assigns a car and driver. You get the driver\'s number and a QR gate pass.';
+
+  @override
+  String get pcTripKind => 'Kind of trip';
+
+  @override
+  String get pcPurpose => 'Purpose of the trip';
+
+  @override
+  String get pcPurposeHint => 'e.g. Hearing at the Supreme Court';
+
+  @override
+  String get pcPickupFrom => 'Pick up from';
+
+  @override
+  String get pcGoingTo => 'Going to';
+
+  @override
+  String get pcPickupTime => 'Pickup';
+
+  @override
+  String get pcReturnTime => 'Back by';
+
+  @override
+  String get pcReturnOptional => 'Back by (optional)';
+
+  @override
+  String get pcChooseTime => 'Choose date and time';
+
+  @override
+  String get pcClearReturn => 'No return';
+
+  @override
+  String get pcPassengers => 'Passengers';
+
+  @override
+  String get pcAddPassenger => 'Add passenger';
+
+  @override
+  String get pcPassengerName => 'Full name';
+
+  @override
+  String get pcPassengerPhone => 'Mobile (optional)';
+
+  @override
+  String get pcRemovePassenger => 'Remove passenger';
+
+  @override
+  String get pcPeopleCount => 'People travelling';
+
+  @override
+  String pcPeopleCountHint(int max) {
+    return 'Including you · at most $max';
+  }
+
+  @override
+  String get pcVehiclePreference => 'Vehicle preference';
+
+  @override
+  String get pcUrgentHint =>
+      'Needed at short notice — your approver sees it first';
+
+  @override
+  String get pcApprover => 'Approver';
+
+  @override
+  String get pcApproverHint => 'Your head of department';
+
+  @override
+  String get pcChange => 'Change';
+
+  @override
+  String get pcNoManager =>
+      'No head of department on record — choose an approver';
+
+  @override
+  String pcApproverNoAccount(Object name) {
+    return '$name cannot sign in to approve. Choose someone else.';
+  }
+
+  @override
+  String get pcSearchApprover => 'Search name, ID or department';
+
+  @override
+  String get pcNoAccount => 'No account';
+
+  @override
+  String get pcSend => 'Send for approval';
+
+  @override
+  String pcSent(Object ref) {
+    return '$ref sent for approval';
+  }
+
+  @override
+  String get pcPurposeRequired => 'Say what the car is for';
+
+  @override
+  String get pcPlacesRequired => 'Give the pickup and drop places';
+
+  @override
+  String get pcPickupPast => 'The pickup time has passed';
+
+  @override
+  String get pcReturnRequired => 'Round trips and full days need a return time';
+
+  @override
+  String get pcReturnBeforePickup => 'The return must be after the pickup';
+
+  @override
+  String get pcTooManyNamed => 'More names than people travelling';
+
+  @override
+  String get pcApproverRequired => 'Choose who approves this request';
+
+  @override
+  String get pcProgress => 'Progress';
+
+  @override
+  String get pcStepHod => 'HOD';
+
+  @override
+  String get pcStepFleet => 'Fleet';
+
+  @override
+  String get pcStepAssigned => 'Assigned';
+
+  @override
+  String get pcStepOnTrip => 'On trip';
+
+  @override
+  String get pcStepDone => 'Done';
+
+  @override
+  String pcWaitingHod(Object name) {
+    return 'Waiting for $name to approve.';
+  }
+
+  @override
+  String get pcWaitingFleet =>
+      'Approved. The fleet manager assigns a car and driver next.';
+
+  @override
+  String get pcTrip => 'Trip';
+
+  @override
+  String get pcVehicleWanted => 'Vehicle wanted';
+
+  @override
+  String get pcCarDriver => 'Car & driver';
+
+  @override
+  String get pcCallDriver => 'Call driver';
+
+  @override
+  String get pcDriver => 'Driver';
+
+  @override
+  String get pcNotAssignedYet =>
+      'A car and driver are assigned after approval. You will see the driver\'s number and your gate pass here.';
+
+  @override
+  String get pcNoCar => 'No car was assigned.';
+
+  @override
+  String get pcGatePass => 'Gate pass';
+
+  @override
+  String get pcShowPass => 'Show gate pass';
+
+  @override
+  String get pcPassHint =>
+      'Show this at the gate. Security scans it when the car leaves and when it returns.';
+
+  @override
+  String pcPassValid(Object from, Object until) {
+    return 'Valid $from – $until';
+  }
+
+  @override
+  String pcOdometerRun(Object start, Object end, Object distance) {
+    return '$start → $end km · $distance km driven';
+  }
+
+  @override
+  String get pcHistory => 'History';
+
+  @override
+  String get pcEvSubmitted => 'Requested';
+
+  @override
+  String get pcEvApproved => 'Approved by head of department';
+
+  @override
+  String get pcEvRejected => 'Rejected';
+
+  @override
+  String get pcEvCancelled => 'Cancelled';
+
+  @override
+  String get pcEvAssigned => 'Car assigned';
+
+  @override
+  String get pcEvReassigned => 'Car changed';
+
+  @override
+  String get pcEvStarted => 'Trip started';
+
+  @override
+  String get pcEvCompleted => 'Trip completed';
+
+  @override
+  String get pcEvExit => 'Left through the gate';
+
+  @override
+  String get pcEvReturn => 'Back through the gate';
+
+  @override
+  String get pcRequestedBy => 'Requested by';
+
+  @override
+  String get pcHod => 'Head of department';
+
+  @override
+  String get pcApprove => 'Approve';
+
+  @override
+  String get pcReject => 'Reject';
+
+  @override
+  String get pcAssign => 'Assign car';
+
+  @override
+  String get pcReassign => 'Reassign';
+
+  @override
+  String get pcStart => 'Start trip';
+
+  @override
+  String get pcComplete => 'Complete trip';
+
+  @override
+  String get pcCancelRequest => 'Cancel request';
+
+  @override
+  String get pcApproveTitle => 'Approve this request?';
+
+  @override
+  String get pcApproveBody =>
+      'It goes to the fleet manager, who assigns a car and driver. The requester is told.';
+
+  @override
+  String get pcRejectTitle => 'Reject this request';
+
+  @override
+  String get pcRejectReason => 'Reason for the requester';
+
+  @override
+  String get pcReasonRequired => 'Give a reason of at least 3 characters';
+
+  @override
+  String get pcCancelTitle => 'Cancel this request?';
+
+  @override
+  String get pcCancelBody =>
+      'The approver or fleet manager is told. An assigned car and driver are released and the gate pass stops working.';
+
+  @override
+  String get pcCancelReason => 'Reason (optional)';
+
+  @override
+  String get pcOdometer => 'Odometer reading (km, optional)';
+
+  @override
+  String get pcStartTitle => 'Start the trip';
+
+  @override
+  String get pcCompleteTitle => 'Complete the trip';
+
+  @override
+  String pcLastOdometer(Object km) {
+    return 'Last recorded $km km';
+  }
+
+  @override
+  String get pcApproved => 'Approved — sent to the fleet manager';
+
+  @override
+  String get pcRejected => 'Rejected — the requester has been told';
+
+  @override
+  String get pcStarted => 'Trip started';
+
+  @override
+  String get pcCompleted => 'Trip completed — the car is free again';
+
+  @override
+  String get pcCancelled => 'Request cancelled';
+
+  @override
+  String get pcAssigned => 'Car and driver assigned';
+
+  @override
+  String get pcChooseVehicle => 'Vehicle';
+
+  @override
+  String get pcChooseDriver => 'Driver';
+
+  @override
+  String get pcFreeForTrip => 'Free for this trip';
+
+  @override
+  String get pcMatchesRequest => 'Matches request';
+
+  @override
+  String get pcReassignNote =>
+      'Reassigning issues a new gate pass; the old QR stops working.';
+
+  @override
+  String get pcPassTitle => 'Vehicle gate pass';
+
+  @override
+  String get pcPassVALID => 'Valid gate pass';
+
+  @override
+  String get pcPassOUT => 'Car is out on this trip';
+
+  @override
+  String get pcPassUSED => 'Trip complete — pass used';
+
+  @override
+  String get pcPassCANCELLED => 'Not valid — trip cancelled';
+
+  @override
+  String get pcPassEXPIRED => 'Not valid — pass expired';
+
+  @override
+  String get pcPassNOT_YET_VALID => 'Not valid yet';
+
+  @override
+  String get pcPassINVALID => 'Not a valid gate pass';
+
+  @override
+  String get pcPassInvalidBody =>
+      'This code was not issued by ABG ONE, or it has been replaced. Do not let the vehicle through — call the fleet desk.';
+
+  @override
+  String get pcRecordExit => 'Record exit';
+
+  @override
+  String get pcRecordReturn => 'Record return';
+
+  @override
+  String get pcExitRecorded => 'Exit recorded — the trip has started';
+
+  @override
+  String get pcReturnRecorded => 'Return recorded — the trip is complete';
+
+  @override
+  String get pcGateRecord => 'Gate record';
+
+  @override
+  String get pcLeftGate => 'Left the gate';
+
+  @override
+  String get pcReturned => 'Returned';
+
+  @override
+  String get pcPassNotAllowed =>
+      'Only security, front desks and the fleet manager can verify gate passes.';
+
+  @override
+  String pcTravelling(int count) {
+    return '$count travelling';
+  }
+
+  @override
+  String get pcValidity => 'Pass valid';
+
+  @override
+  String pcLicence(Object number) {
+    return 'Licence $number';
+  }
+
+  @override
+  String get pcRequester => 'Requester';
 }
