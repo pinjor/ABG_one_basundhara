@@ -2046,6 +2046,978 @@ abstract class L {
   /// In en, this message translates to:
   /// **'You\'re offline. Reports with photos need a connection — try again when you\'re back online.'**
   String get incOfflineNotice;
+
+  /// No description provided for @visTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Visitors'**
+  String get visTitle;
+
+  /// No description provided for @visMyVisitors.
+  ///
+  /// In en, this message translates to:
+  /// **'My visitors'**
+  String get visMyVisitors;
+
+  /// No description provided for @visGate.
+  ///
+  /// In en, this message translates to:
+  /// **'Gate'**
+  String get visGate;
+
+  /// No description provided for @visInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite a visitor'**
+  String get visInvite;
+
+  /// No description provided for @visUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get visUpcoming;
+
+  /// No description provided for @visPast.
+  ///
+  /// In en, this message translates to:
+  /// **'Past'**
+  String get visPast;
+
+  /// No description provided for @visNoUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'No visitors coming'**
+  String get visNoUpcoming;
+
+  /// No description provided for @visNoUpcomingHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite a visitor and they get a gate pass number by SMS. You are told when they arrive and leave.'**
+  String get visNoUpcomingHint;
+
+  /// No description provided for @visNoPast.
+  ///
+  /// In en, this message translates to:
+  /// **'No past visitors yet'**
+  String get visNoPast;
+
+  /// No description provided for @visStatusEXPECTED.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected'**
+  String get visStatusEXPECTED;
+
+  /// No description provided for @visStatusCHECKED_IN.
+  ///
+  /// In en, this message translates to:
+  /// **'On site'**
+  String get visStatusCHECKED_IN;
+
+  /// No description provided for @visStatusCHECKED_OUT.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked out'**
+  String get visStatusCHECKED_OUT;
+
+  /// No description provided for @visStatusCANCELLED.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get visStatusCANCELLED;
+
+  /// No description provided for @visStatusEXPIRED.
+  ///
+  /// In en, this message translates to:
+  /// **'Did not arrive'**
+  String get visStatusEXPIRED;
+
+  /// No description provided for @visStatusSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Status: {status}'**
+  String visStatusSemantics(Object status);
+
+  /// No description provided for @visPurposeMEETING.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting'**
+  String get visPurposeMEETING;
+
+  /// No description provided for @visPurposeINTERVIEW.
+  ///
+  /// In en, this message translates to:
+  /// **'Interview'**
+  String get visPurposeINTERVIEW;
+
+  /// No description provided for @visPurposeVENDOR_SUPPLIER.
+  ///
+  /// In en, this message translates to:
+  /// **'Vendor / supplier'**
+  String get visPurposeVENDOR_SUPPLIER;
+
+  /// No description provided for @visPurposeCONTRACTOR.
+  ///
+  /// In en, this message translates to:
+  /// **'Contractor work'**
+  String get visPurposeCONTRACTOR;
+
+  /// No description provided for @visPurposeAUDIT_INSPECTION.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit / inspection'**
+  String get visPurposeAUDIT_INSPECTION;
+
+  /// No description provided for @visPurposeGOVERNMENT_OFFICIAL.
+  ///
+  /// In en, this message translates to:
+  /// **'Government official'**
+  String get visPurposeGOVERNMENT_OFFICIAL;
+
+  /// No description provided for @visPurposeDELIVERY.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery'**
+  String get visPurposeDELIVERY;
+
+  /// No description provided for @visPurposePERSONAL.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal'**
+  String get visPurposePERSONAL;
+
+  /// No description provided for @visPurposeOTHER.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get visPurposeOTHER;
+
+  /// No description provided for @visWalkIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk-in'**
+  String get visWalkIn;
+
+  /// No description provided for @visOverstay.
+  ///
+  /// In en, this message translates to:
+  /// **'Past expected time'**
+  String get visOverstay;
+
+  /// No description provided for @visInSince.
+  ///
+  /// In en, this message translates to:
+  /// **'In since {time}'**
+  String visInSince(Object time);
+
+  /// No description provided for @visLeftAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Left at {time}'**
+  String visLeftAt(Object time);
+
+  /// No description provided for @visExpectedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected {time}'**
+  String visExpectedAt(Object time);
+
+  /// No description provided for @visHostIs.
+  ///
+  /// In en, this message translates to:
+  /// **'Host: {name}'**
+  String visHostIs(Object name);
+
+  /// No description provided for @visCheckIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Check in'**
+  String get visCheckIn;
+
+  /// No description provided for @visCheckOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Check out'**
+  String get visCheckOut;
+
+  /// No description provided for @visCheckedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} checked in — the host has been told.'**
+  String visCheckedIn(Object name);
+
+  /// No description provided for @visCheckedOut.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} checked out.'**
+  String visCheckedOut(Object name);
+
+  /// No description provided for @visPassTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Visitor gate pass'**
+  String get visPassTitle;
+
+  /// No description provided for @visQrSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'QR code for gate pass {number}'**
+  String visQrSemantics(Object number);
+
+  /// No description provided for @visCopyPassNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy pass number'**
+  String get visCopyPassNumber;
+
+  /// No description provided for @visPassNumberCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Pass number copied'**
+  String get visPassNumberCopied;
+
+  /// No description provided for @visValidToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid today only · show it at the gate in and out'**
+  String get visValidToday;
+
+  /// No description provided for @visValidOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid on {date} only · show it at the gate in and out'**
+  String visValidOn(Object date);
+
+  /// No description provided for @visHost.
+  ///
+  /// In en, this message translates to:
+  /// **'Host'**
+  String get visHost;
+
+  /// No description provided for @visPurpose.
+  ///
+  /// In en, this message translates to:
+  /// **'Purpose'**
+  String get visPurpose;
+
+  /// No description provided for @visArea.
+  ///
+  /// In en, this message translates to:
+  /// **'Area'**
+  String get visArea;
+
+  /// No description provided for @visTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get visTime;
+
+  /// No description provided for @visParty.
+  ///
+  /// In en, this message translates to:
+  /// **'Party'**
+  String get visParty;
+
+  /// No description provided for @visPartyCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 person} other{{count} people}}'**
+  String visPartyCount(int count);
+
+  /// No description provided for @visVehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle number'**
+  String get visVehicle;
+
+  /// No description provided for @visNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get visNone;
+
+  /// No description provided for @visCarrying.
+  ///
+  /// In en, this message translates to:
+  /// **'Carrying'**
+  String get visCarrying;
+
+  /// No description provided for @visPassFooter.
+  ///
+  /// In en, this message translates to:
+  /// **'Wear the visitor badge on site and return it at the gate. Issued by ABG ONE.'**
+  String get visPassFooter;
+
+  /// No description provided for @visLiveOnSite.
+  ///
+  /// In en, this message translates to:
+  /// **'Live · on site now'**
+  String get visLiveOnSite;
+
+  /// No description provided for @visOnSiteSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Nobody on site now} =1{1 visitor on site now} other{{count} visitors on site now}}'**
+  String visOnSiteSemantics(int count);
+
+  /// No description provided for @visCounting.
+  ///
+  /// In en, this message translates to:
+  /// **'Counting…'**
+  String get visCounting;
+
+  /// No description provided for @visPeopleOnSite.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 person on site} other{{count} people on site}}'**
+  String visPeopleOnSite(int count);
+
+  /// No description provided for @visStillExpected.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} still expected today'**
+  String visStillExpected(int count);
+
+  /// No description provided for @visOverstaying.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 visitor past their expected time} other{{count} visitors past their expected time}}'**
+  String visOverstaying(int count);
+
+  /// No description provided for @visLongest.
+  ///
+  /// In en, this message translates to:
+  /// **'Longest on site: {name} · {time}'**
+  String visLongest(Object name, Object time);
+
+  /// No description provided for @visScanPass.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan pass'**
+  String get visScanPass;
+
+  /// No description provided for @visWalkInAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk-in'**
+  String get visWalkInAction;
+
+  /// No description provided for @visStatCheckedOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked out today'**
+  String get visStatCheckedOut;
+
+  /// No description provided for @visStatWalkIns.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk-ins today'**
+  String get visStatWalkIns;
+
+  /// No description provided for @visStatVisits.
+  ///
+  /// In en, this message translates to:
+  /// **'Visits today'**
+  String get visStatVisits;
+
+  /// No description provided for @visPassNumberHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Type a pass number, e.g. VP-261021-FCA-012'**
+  String get visPassNumberHint;
+
+  /// No description provided for @visVerify.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify pass'**
+  String get visVerify;
+
+  /// No description provided for @visOnSiteNow.
+  ///
+  /// In en, this message translates to:
+  /// **'On site now'**
+  String get visOnSiteNow;
+
+  /// No description provided for @visExpectedToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected today'**
+  String get visExpectedToday;
+
+  /// No description provided for @visNobodyOnSite.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody is on site right now.'**
+  String get visNobodyOnSite;
+
+  /// No description provided for @visNobodyExpected.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody else is expected today.'**
+  String get visNobodyExpected;
+
+  /// No description provided for @visWalkInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Register a walk-in'**
+  String get visWalkInTitle;
+
+  /// No description provided for @visInviteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You are the host. Your visitor gets the gate pass number by SMS, and you are told when they arrive and leave.'**
+  String get visInviteHint;
+
+  /// No description provided for @visWalkInHint.
+  ///
+  /// In en, this message translates to:
+  /// **'For someone who arrived without a pass. They are checked in now and their host is told they are at the gate.'**
+  String get visWalkInHint;
+
+  /// No description provided for @visVisitorSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Visitor'**
+  String get visVisitorSection;
+
+  /// No description provided for @visVisitor.
+  ///
+  /// In en, this message translates to:
+  /// **'Visitor'**
+  String get visVisitor;
+
+  /// No description provided for @visNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Visitor\'s name'**
+  String get visNameLabel;
+
+  /// No description provided for @visPhoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile number'**
+  String get visPhoneLabel;
+
+  /// No description provided for @visPhoneHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'The gate pass number is texted here.'**
+  String get visPhoneHelper;
+
+  /// No description provided for @visCompanyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Company or organisation'**
+  String get visCompanyLabel;
+
+  /// No description provided for @visCompanyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Akij Packaging Ltd, DIFE Narayanganj'**
+  String get visCompanyHint;
+
+  /// No description provided for @visPurposeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Purpose of the visit'**
+  String get visPurposeTitle;
+
+  /// No description provided for @visDetailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'What for (optional)'**
+  String get visDetailLabel;
+
+  /// No description provided for @visDetailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Carton sample approval'**
+  String get visDetailHint;
+
+  /// No description provided for @visHereToSee.
+  ///
+  /// In en, this message translates to:
+  /// **'Here to see'**
+  String get visHereToSee;
+
+  /// No description provided for @visSearchDirectory.
+  ///
+  /// In en, this message translates to:
+  /// **'Search directory'**
+  String get visSearchDirectory;
+
+  /// No description provided for @visNotListed.
+  ///
+  /// In en, this message translates to:
+  /// **'Not listed?'**
+  String get visNotListed;
+
+  /// No description provided for @visHostNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name of the person or team being visited'**
+  String get visHostNameLabel;
+
+  /// No description provided for @visChooseHost.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the employee being visited'**
+  String get visChooseHost;
+
+  /// No description provided for @visHostNoAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Not on ABG ONE — tell them in person'**
+  String get visHostNoAccount;
+
+  /// No description provided for @visHostSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Name, employee ID or department'**
+  String get visHostSearchHint;
+
+  /// No description provided for @visWhenWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'When and where'**
+  String get visWhenWhere;
+
+  /// No description provided for @visDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get visDate;
+
+  /// No description provided for @visFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get visFrom;
+
+  /// No description provided for @visUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'Until'**
+  String get visUntil;
+
+  /// No description provided for @visLeaveBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected to leave by'**
+  String get visLeaveBy;
+
+  /// No description provided for @visOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get visOptional;
+
+  /// No description provided for @visClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get visClear;
+
+  /// No description provided for @visOffice.
+  ///
+  /// In en, this message translates to:
+  /// **'Office'**
+  String get visOffice;
+
+  /// No description provided for @visAreaAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Anywhere in the office'**
+  String get visAreaAny;
+
+  /// No description provided for @visPartyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'People on this pass'**
+  String get visPartyLabel;
+
+  /// No description provided for @visPartyFewer.
+  ///
+  /// In en, this message translates to:
+  /// **'One fewer person'**
+  String get visPartyFewer;
+
+  /// No description provided for @visPartyMore.
+  ///
+  /// In en, this message translates to:
+  /// **'One more person'**
+  String get visPartyMore;
+
+  /// No description provided for @visAtTheGate.
+  ///
+  /// In en, this message translates to:
+  /// **'For the gate'**
+  String get visAtTheGate;
+
+  /// No description provided for @visBadgeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Badge number (optional)'**
+  String get visBadgeLabel;
+
+  /// No description provided for @visCarryingHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Laptop, tools, samples'**
+  String get visCarryingHint;
+
+  /// No description provided for @visIdLast4Label.
+  ///
+  /// In en, this message translates to:
+  /// **'ID card — last 4 only'**
+  String get visIdLast4Label;
+
+  /// No description provided for @visIdLast4Helper.
+  ///
+  /// In en, this message translates to:
+  /// **'Never type the full NID number.'**
+  String get visIdLast4Helper;
+
+  /// No description provided for @visNotesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Note for the gate'**
+  String get visNotesLabel;
+
+  /// No description provided for @visSubmitInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'Create gate pass'**
+  String get visSubmitInvite;
+
+  /// No description provided for @visSubmitWalkIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Register and check in'**
+  String get visSubmitWalkIn;
+
+  /// No description provided for @visNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the visitor\'s name.'**
+  String get visNameRequired;
+
+  /// No description provided for @visPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a Bangladeshi mobile number, e.g. 01711 223344.'**
+  String get visPhoneInvalid;
+
+  /// No description provided for @visPurposeRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the purpose of the visit.'**
+  String get visPurposeRequired;
+
+  /// No description provided for @visIdLast4Invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'ID: only the last 4 digits or letters.'**
+  String get visIdLast4Invalid;
+
+  /// No description provided for @visHostRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Say who the visitor has come to see.'**
+  String get visHostRequired;
+
+  /// No description provided for @visUntilPassed.
+  ///
+  /// In en, this message translates to:
+  /// **'That leaving time has already passed.'**
+  String get visUntilPassed;
+
+  /// No description provided for @visTimePast.
+  ///
+  /// In en, this message translates to:
+  /// **'That time has already passed. Choose a time from now on.'**
+  String get visTimePast;
+
+  /// No description provided for @visUntilBeforeStart.
+  ///
+  /// In en, this message translates to:
+  /// **'The visit must end after it starts.'**
+  String get visUntilBeforeStart;
+
+  /// No description provided for @visPassCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Gate pass {pass} created — the visitor has been sent the number by SMS.'**
+  String visPassCreated(Object pass);
+
+  /// No description provided for @visWalkInDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is checked in with pass {pass}.'**
+  String visWalkInDone(Object name, Object pass);
+
+  /// No description provided for @visCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy number'**
+  String get visCopy;
+
+  /// No description provided for @visSendSms.
+  ///
+  /// In en, this message translates to:
+  /// **'Send by SMS'**
+  String get visSendSms;
+
+  /// No description provided for @visDetailsCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Pass details copied'**
+  String get visDetailsCopied;
+
+  /// No description provided for @visSmsText.
+  ///
+  /// In en, this message translates to:
+  /// **'ABG gate pass {pass} · {office} · {time} · Host: {host}. Please show this at the gate.'**
+  String visSmsText(Object office, Object time, Object host, Object pass);
+
+  /// No description provided for @visPassHidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the host and this office\'s gate staff can see the QR gate pass.'**
+  String get visPassHidden;
+
+  /// No description provided for @visProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Where the visit stands'**
+  String get visProgress;
+
+  /// No description provided for @visDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get visDetails;
+
+  /// No description provided for @visStepExpected.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected'**
+  String get visStepExpected;
+
+  /// No description provided for @visStepWalkIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk-in registered'**
+  String get visStepWalkIn;
+
+  /// No description provided for @visStepOnSite.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in'**
+  String get visStepOnSite;
+
+  /// No description provided for @visStepOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked out'**
+  String get visStepOut;
+
+  /// No description provided for @visStepCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get visStepCancelled;
+
+  /// No description provided for @visStepExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Did not arrive'**
+  String get visStepExpired;
+
+  /// No description provided for @visStepExpiredHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The pass lapsed at the end of its day.'**
+  String get visStepExpiredHint;
+
+  /// No description provided for @visBy.
+  ///
+  /// In en, this message translates to:
+  /// **'by {name}'**
+  String visBy(Object name);
+
+  /// No description provided for @visOnSiteFor.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} on site'**
+  String visOnSiteFor(Object time);
+
+  /// No description provided for @visCheckInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check in {name}?'**
+  String visCheckInTitle(Object name);
+
+  /// No description provided for @visCheckInBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Check their ID card and hand over a visitor badge. The host is told at once.'**
+  String get visCheckInBody;
+
+  /// No description provided for @visCheckInBodyId.
+  ///
+  /// In en, this message translates to:
+  /// **'Compare the ID card (last 4: {last4}) and hand over a visitor badge. The host is told at once.'**
+  String visCheckInBodyId(Object last4);
+
+  /// No description provided for @visCheckOutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check out {name}?'**
+  String visCheckOutTitle(Object name);
+
+  /// No description provided for @visCheckOutBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The pass cannot be used again after check-out.'**
+  String get visCheckOutBody;
+
+  /// No description provided for @visCheckOutBodyBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Collect badge {badge}. The pass cannot be used again after check-out.'**
+  String visCheckOutBodyBadge(Object badge);
+
+  /// No description provided for @visCancelPass.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel pass'**
+  String get visCancelPass;
+
+  /// No description provided for @visCancelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this gate pass?'**
+  String get visCancelTitle;
+
+  /// No description provided for @visCancelBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is sent an SMS that the visit is cancelled, and the pass stops working at the gate.'**
+  String visCancelBody(Object name);
+
+  /// No description provided for @visCancelReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason (optional)'**
+  String get visCancelReason;
+
+  /// No description provided for @visCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Gate pass cancelled — the visitor has been told by SMS.'**
+  String get visCancelled;
+
+  /// No description provided for @visPassNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Pass not recognised'**
+  String get visPassNotFound;
+
+  /// No description provided for @visPassNotFoundHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Do not admit the visitor on it — call the host or register them as a walk-in.'**
+  String get visPassNotFoundHint;
+
+  /// No description provided for @visScanAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan another pass'**
+  String get visScanAnother;
+
+  /// No description provided for @visBlockWrongOffice.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong office'**
+  String get visBlockWrongOffice;
+
+  /// No description provided for @visBlockWrongDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Not valid today'**
+  String get visBlockWrongDay;
+
+  /// No description provided for @visBlockCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Pass cancelled'**
+  String get visBlockCancelled;
+
+  /// No description provided for @visBlockExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Pass expired'**
+  String get visBlockExpired;
+
+  /// No description provided for @visBlockAlreadyOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Pass already used'**
+  String get visBlockAlreadyOut;
+
+  /// No description provided for @visBlockGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Not valid'**
+  String get visBlockGeneric;
+
+  /// No description provided for @visVerdictValid.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid pass'**
+  String get visVerdictValid;
+
+  /// No description provided for @visVerdictValidBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected {time} to see {host}. Check the ID, then check the visitor in.'**
+  String visVerdictValidBody(Object time, Object host);
+
+  /// No description provided for @visVerdictOnSite.
+  ///
+  /// In en, this message translates to:
+  /// **'On site'**
+  String get visVerdictOnSite;
+
+  /// No description provided for @visVerdictOnSiteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in at {time}. Check them out as they leave.'**
+  String visVerdictOnSiteBody(Object time);
+
+  /// No description provided for @visVerdictGenuine.
+  ///
+  /// In en, this message translates to:
+  /// **'Genuine pass'**
+  String get visVerdictGenuine;
+
+  /// No description provided for @visVerdictGenuineBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your role can verify passes but not check visitors in or out. Ask security or the front desk.'**
+  String get visVerdictGenuineBody;
+
+  /// No description provided for @visIdCompare.
+  ///
+  /// In en, this message translates to:
+  /// **'Compare with the ID card — last 4'**
+  String get visIdCompare;
+
+  /// No description provided for @visOpenVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the visit'**
+  String get visOpenVisit;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {
