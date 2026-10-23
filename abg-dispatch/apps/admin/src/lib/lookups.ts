@@ -36,6 +36,9 @@ export interface Provider {
 
 /** Reference data used by filters and forms; cached for the session. */
 export const useBranches = () => useQuery({ queryKey: ["admin", "branches"], queryFn: () => api.get<Branch[]>("/admin/branches"), staleTime: 5 * 60_000 });
+/** Every office, for module filters and forms: readable by any signed-in user (the admin list needs dashboard.view). */
+export const useOffices = () =>
+  useQuery({ queryKey: ["directory", "branches"], queryFn: () => api.get<Pick<Branch, "id" | "name" | "code" | "type" | "city">[]>("/directory/branches"), staleTime: 5 * 60_000 });
 export const useCategories = () => useQuery({ queryKey: ["admin", "categories"], queryFn: () => api.get<Category[]>("/admin/categories"), staleTime: 5 * 60_000 });
 export const useProviders = () => useQuery({ queryKey: ["admin", "courier-providers"], queryFn: () => api.get<Provider[]>("/admin/courier-providers"), staleTime: 5 * 60_000 });
 

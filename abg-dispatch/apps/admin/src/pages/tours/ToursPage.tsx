@@ -4,7 +4,7 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tansta
 import { ChevronRight, Globe, Hourglass, Loader2, Pencil, Plane, Plus, Search, ShieldCheck, TriangleAlert, Wallet, X } from "lucide-react";
 import { Capability, TOUR_AWAITING_LABEL, TOUR_LIMITS, TourType, formatTaka, formatTakaShort } from "@abg-dispatch/shared";
 import { api, qs } from "../../lib/api";
-import { useBranches } from "../../lib/lookups";
+import { useOffices } from "../../lib/lookups";
 import { useCan } from "../../lib/auth";
 import { toast } from "../../components/toast";
 import { Empty, ErrorNote, Field, Modal, PageHeader, Spinner, cx } from "../../components/ui";
@@ -160,7 +160,7 @@ export function ToursPage() {
   const canVet = useCan(Capability.TOUR_VET);
   const canConfigure = useCan(Capability.CONFIG_MANAGE);
   const canSetBudget = canVet || canConfigure;
-  const branches = useBranches();
+  const branches = useOffices();
   const [search, setSearch] = useState(params.get("q") ?? "");
   const [budgetOpen, setBudgetOpen] = useState(false);
 

@@ -51,7 +51,7 @@ export class DirectoryController {
         department: { select: { id: true, name: true } },
         branch: { select: { id: true, name: true, code: true } },
         defaultLocation: { select: { id: true, name: true, path: true } },
-        user: { select: { active: true } },
+        user: { select: { id: true, active: true } },
       },
       orderBy: { fullName: "asc" },
       take: 25,
@@ -69,6 +69,8 @@ export class DirectoryController {
       isMe: e.id === me.employeeId,
       /** Can sign in, so can approve requests and receive notifications. */
       hasAccount: !!e.user?.active,
+      /** Their account, when they can sign in (audit action owners, appointment hosts are users). */
+      userId: e.user?.active ? e.user.id : null,
     }));
   }
 

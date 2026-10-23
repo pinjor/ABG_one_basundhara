@@ -12,6 +12,9 @@ import { CarRequisitionDetailPage, PoolCarPage, VehiclePassPage } from "./pages/
 import { VisitDetailPage, VisitorPassPage, VisitorsPage } from "./pages/visitors";
 import { LicenceDetailPage, LicencesPage } from "./pages/licences";
 import { NoticeDetailPage, NoticesPage } from "./pages/notices";
+import { AppointmentDetailPage, AppointmentsPage } from "./pages/appointments";
+import { AuditDetailPage, AuditsPage } from "./pages/audits";
+import { LeaveDetailPage, LeavePage } from "./pages/leave";
 import { ParcelsPage } from "./pages/Parcels";
 import { ParcelDetailPage } from "./pages/ParcelDetail";
 import { IncidentsPage } from "./pages/Incidents";
@@ -64,6 +67,12 @@ export function App() {
       <Route path="/licences/:id" element={<RequireAuth><LicenceDetailPage /></RequireAuth>} />
       <Route path="/notices" element={<RequireAuth><NoticesPage /></RequireAuth>} />
       <Route path="/notices/:id" element={<RequireAuth><NoticeDetailPage /></RequireAuth>} />
+      <Route path="/appointments" element={<RequireAuth><AppointmentsPage /></RequireAuth>} />
+      <Route path="/appointments/:id" element={<RequireAuth><AppointmentDetailPage /></RequireAuth>} />
+      <Route path="/audits" element={<RequireAuth><AuditsPage /></RequireAuth>} />
+      <Route path="/audits/:id" element={<RequireAuth><AuditDetailPage /></RequireAuth>} />
+      <Route path="/leave" element={<RequireAuth><LeavePage /></RequireAuth>} />
+      <Route path="/leave/:id" element={<RequireAuth><LeaveDetailPage /></RequireAuth>} />
       <Route path="/analytics" element={<RequireAuth><AnalyticsPage /></RequireAuth>} />
       <Route path="/reports" element={<RequireAuth><ReportsPage /></RequireAuth>} />
       <Route path="/config" element={<RequireAuth><ConfigPage /></RequireAuth>} />

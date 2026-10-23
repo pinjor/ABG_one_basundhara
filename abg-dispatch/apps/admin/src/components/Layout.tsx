@@ -4,8 +4,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import {
   BarChart3,
   Building2,
+  CalendarClock,
   CalendarDays,
   CarFront,
+  ClipboardCheck,
   FileBadge,
   FileSpreadsheet,
   IdCard,
@@ -14,6 +16,7 @@ import {
   Menu,
   Newspaper,
   Package,
+  Palmtree,
   Plane,
   PlugZap,
   Radio,
@@ -47,31 +50,28 @@ interface NavItem {
 const NAV: { section: string; items: NavItem[] }[] = [
   {
     section: "Main console",
-    items: [
-      { to: "/", label: "Dashboard", icon: LayoutDashboard },
-      { to: "/tours", label: "Official Tour Request", icon: Plane, cap: Capability.TOUR_REQUEST, tag: "New" },
-    ],
+    items: [{ to: "/", label: "Dashboard", icon: LayoutDashboard }],
   },
   {
-    section: "Facility & transport",
+    // The group's agreed order, the same as the services on the phone.
+    section: "Services",
     items: [
-      { to: "/pool-car", label: "Pool Car Requisition", icon: CarFront, cap: Capability.FLEET_REQUEST },
-      { to: "/visitors", label: "Factory Visitor Mgmt", icon: IdCard, cap: Capability.VISITOR_INVITE },
-      { to: "/incidents", label: "Incident & Facility Issues", icon: TriangleAlert, cap: Capability.INCIDENT_VIEW, badge: "incidents" },
-    ],
-  },
-  {
-    section: "Operations & governance",
-    items: [
-      { to: "/parcels", label: "Parcel Dispatch & Track", icon: Package, cap: Capability.DASHBOARD_VIEW },
-      { to: "/parcels/control-room", label: "Parcel control room", icon: Radio, cap: Capability.DASHBOARD_VIEW },
-      { to: "/licences", label: "Regulatory Licences", icon: FileBadge, cap: Capability.LICENCE_VIEW },
-      { to: "/notices", label: "Notice Board", icon: Newspaper, cap: Capability.NOTICE_READ },
+      { to: "/notices", label: "Notice board", icon: Newspaper, cap: Capability.NOTICE_READ },
+      { to: "/appointments", label: "Request for Appointment", icon: CalendarClock, cap: Capability.APPOINTMENT_REQUEST, tag: "New" },
+      { to: "/incidents", label: "Incident record", icon: TriangleAlert, cap: Capability.INCIDENT_VIEW, badge: "incidents" },
+      { to: "/licences", label: "Regulatory Affairs", icon: FileBadge, cap: Capability.LICENCE_VIEW },
+      { to: "/audits", label: "Audit", icon: ClipboardCheck, tag: "New" },
+      { to: "/parcels", label: "Office parcel", icon: Package, cap: Capability.DASHBOARD_VIEW },
+      { to: "/visitors", label: "Visitor Management", icon: IdCard, cap: Capability.VISITOR_INVITE },
+      { to: "/leave", label: "Leave apply", icon: Palmtree, cap: Capability.LEAVE_APPLY, tag: "New" },
+      { to: "/pool-car", label: "Pool car request", icon: CarFront, cap: Capability.FLEET_REQUEST },
+      { to: "/tours", label: "Official Tour Request", icon: Plane, cap: Capability.TOUR_REQUEST },
     ],
   },
   {
     section: "Insight",
     items: [
+      { to: "/parcels/control-room", label: "Parcel control room", icon: Radio, cap: Capability.DASHBOARD_VIEW },
       { to: "/analytics", label: "Analytics", icon: BarChart3, cap: Capability.ANALYTICS_VIEW },
       { to: "/reports", label: "Reports", icon: FileSpreadsheet, cap: Capability.REPORTS_EXPORT },
       { to: "/audit", label: "Audit log", icon: ScrollText, cap: Capability.AUDIT_VIEW },
@@ -86,6 +86,18 @@ const NAV: { section: string; items: NavItem[] }[] = [
       { to: "/security", label: "My security", icon: ShieldCheck },
     ],
   },
+];
+
+/** Reference-number prefixes and the module page that searches them. */
+const REFERENCE_ROUTES: [string, string][] = [
+  ["ABG-NB-", "/notices"],
+  ["ABG-AP-", "/appointments"],
+  ["INC-", "/incidents"],
+  ["ABG-AU-", "/audits"],
+  ["VP-", "/visitors"],
+  ["ABG-LV-", "/leave"],
+  ["PC-", "/pool-car"],
+  ["ABG-TR-", "/tours"],
 ];
 
 function primaryRole(roles: string[]): string {
@@ -245,24 +257,14 @@ export function Layout({ children }: { children: ReactNode }) {
               }
               // Reference numbers go to their module; anything else searches parcels.
               const upper = q.toUpperCase();
-              const target = upper.startsWith("ABG-TR-")
-                ? "/tours"
-                : upper.startsWith("PC-")
-                  ? "/pool-car"
-                  : upper.startsWith("VP-")
-                    ? "/visitors"
-                    : upper.startsWith("INC-")
-                      ? "/incidents"
-                      : upper.startsWith("ABG-NB-")
-                        ? "/notices"
-                        : "/parcels";
+              const target = REFERENCE_ROUTES.find(([prefix]) => upper.startsWith(prefix))?.[1] ?? "/parcels";
               navigate(`${target}?q=${encodeURIComponent(q)}`);
             }}
           >
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-subtle" aria-hidden />
             <input
               className="input h-10 rounded-full bg-surface pl-9"
-              placeholder="Search parcels, tours, pool cars, visitors, licences…"
+              placeholder="Search notices, appointments, audits, parcels, visitors, leave…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               aria-label="Search"

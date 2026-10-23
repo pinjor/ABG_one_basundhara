@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Bell, BellRing, CarFront, CheckCheck, ChevronDown, FileBadge, IdCard, Newspaper, Plane, Plus, type LucideIcon } from "lucide-react";
+import { Bell, BellRing, CalendarClock, CarFront, CheckCheck, ChevronDown, ClipboardCheck, FileBadge, IdCard, Newspaper, Palmtree, Plane, Plus, type LucideIcon } from "lucide-react";
 import { Capability } from "@abg-dispatch/shared";
 import { api } from "../lib/api";
 import { useAuth } from "../lib/auth";
@@ -34,12 +34,16 @@ interface QuickAction {
   cap: string;
 }
 
+/** In the menu order: notice board, appointments, regulatory affairs, audit, visitors, leave, pool car, tours. */
 const QUICK_ACTIONS: QuickAction[] = [
-  { label: "Official tour request", hint: "Local or foreign", icon: Plane, to: "/tours?new=1", cap: Capability.TOUR_REQUEST },
-  { label: "Pool car requisition", hint: "Car with driver", icon: CarFront, to: "/pool-car?new=1", cap: Capability.FLEET_REQUEST },
-  { label: "Pre-register a visitor", hint: "Digital gate pass", icon: IdCard, to: "/visitors?new=1", cap: Capability.VISITOR_INVITE },
   { label: "Post a notice", hint: "Notice board broadcast", icon: Newspaper, to: "/notices?new=1", cap: Capability.NOTICE_PUBLISH },
+  { label: "Request a meeting", hint: "MD, Chairman or head of department", icon: CalendarClock, to: "/appointments?new=1", cap: Capability.APPOINTMENT_REQUEST },
   { label: "Add a licence", hint: "Regulatory register", icon: FileBadge, to: "/licences?new=1", cap: Capability.LICENCE_MANAGE },
+  { label: "Plan an audit", hint: "Findings and corrective actions", icon: ClipboardCheck, to: "/audits?new=1", cap: Capability.AUDITS_MANAGE },
+  { label: "Pre-register a visitor", hint: "Digital gate pass", icon: IdCard, to: "/visitors?new=1", cap: Capability.VISITOR_INVITE },
+  { label: "Apply for leave", hint: "Head of department, then HR", icon: Palmtree, to: "/leave?new=1", cap: Capability.LEAVE_APPLY },
+  { label: "Pool car requisition", hint: "Car with driver", icon: CarFront, to: "/pool-car?new=1", cap: Capability.FLEET_REQUEST },
+  { label: "Official tour request", hint: "Local or foreign", icon: Plane, to: "/tours?new=1", cap: Capability.TOUR_REQUEST },
 ];
 
 /** "New request" in the header: one click to start any request the user may make. */

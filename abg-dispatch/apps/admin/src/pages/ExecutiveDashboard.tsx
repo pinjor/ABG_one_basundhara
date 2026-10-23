@@ -4,6 +4,7 @@ import {
   AlertTriangle,
   ArrowRight,
   Building2,
+  CalendarClock,
   CarFront,
   ClipboardCheck,
   FileBadge,
@@ -14,6 +15,7 @@ import {
   Megaphone,
   Newspaper,
   Package,
+  Palmtree,
   Plane,
   Radio,
   ShieldAlert,
@@ -189,6 +191,10 @@ export function ExecutiveDashboardPage() {
   const canIncidents = useCan(Capability.INCIDENT_VIEW);
   const canNotices = useCan(Capability.NOTICE_READ);
   const canParcels = useCan(Capability.DASHBOARD_VIEW);
+  const canAppointments = useCan(Capability.APPOINTMENT_REQUEST);
+  const canAudits = useCan(Capability.AUDITS_VIEW);
+  const canLeave = useCan(Capability.LEAVE_VIEW);
+  const canLeaveApply = useCan(Capability.LEAVE_APPLY);
 
   const tours = useSummary<ToursSummary>("tours", "/admin/tours/summary", canTours);
   const tourRows = useSummary<{ items: TourRow[] }>("tour-rows", "/admin/tours?limit=5", canTours);
@@ -198,6 +204,9 @@ export function ExecutiveDashboardPage() {
   const incidents = useSummary<IncidentsSummary>("incidents", "/admin/incidents/summary", canIncidents);
   const notices = useSummary<{ items: NoticeRow[] }>("notices", "/notices?limit=4", canNotices);
   const parcels = useSummary<ParcelDashboard>("parcels", "/admin/dashboard", canParcels);
+  const appointments = useSummary<{ awaitingAnswer: number; confirmedToday: number; myOpenRequests: number; answersFor: string }>("appointments", "/appointments/summary", canAppointments);
+  const audits = useSummary<{ openActions: number; overdueActions: number; openAudits: number }>("audits", "/admin/audits/summary", canAudits);
+  const leave = useSummary<{ onLeaveToday: number; pendingApprovals: number }>("leave", "/admin/leave/summary", canLeave);
 
   const t = tours.data;
   const f = fleet.data;
@@ -313,13 +322,20 @@ export function ExecutiveDashboardPage() {
     .filter((k): k is NonNullable<typeof k> => !!k)
     .slice(0, 8);
 
+  // Every module, in the group's menu order (the same as the services on the phone).
+  const ap = appointments.data;
+  const au = audits.data;
+  const lv = leave.data;
   const tiles = [
-    canFleet && f && { icon: CarFront, tone: "text-active", title: "Pool Car", line: `${f.pendingHod + f.pendingFleet} pending requisitions`, to: "/pool-car" },
-    canVisitors && v && { icon: ClipboardCheck, tone: "text-success", title: "Visitors", line: `${v.visitsToday} gate passes today`, to: "/visitors" },
-    canLicences && lc && { icon: FileBadge, tone: "text-pending", title: "Licences", line: `${lc.renewalsInProgress + lc.dueSoon} renewal${lc.renewalsInProgress + lc.dueSoon === 1 ? "" : "s"} pending`, to: "/licences" },
-    canParcels && pk && { icon: Package, tone: "text-[#4B4FC4]", title: "Parcels", line: `${pk.inRoute} in transit`, to: "/parcels" },
-    canIncidents && inc && { icon: TriangleAlert, tone: "text-danger", title: "Incidents", line: `${inc.open} open`, to: "/incidents" },
     canNotices && { icon: Newspaper, tone: "text-navy-500", title: "Notice board", line: "Circulars & announcements", to: "/notices" },
+    canAppointments && ap && { icon: CalendarClock, tone: "text-[#4B4FC4]", title: "Appointments", line: ap.answersFor === "EXECUTIVES" || ap.awaitingAnswer ? `${ap.awaitingAnswer} to answer · ${ap.confirmedToday} today` : `${ap.myOpenRequests} open request${ap.myOpenRequests === 1 ? "" : "s"}`, to: "/appointments" },
+    canIncidents && inc && { icon: TriangleAlert, tone: "text-danger", title: "Incidents", line: `${inc.open} open`, to: "/incidents" },
+    canLicences && lc && { icon: FileBadge, tone: "text-pending", title: "Regulatory affairs", line: `${lc.renewalsInProgress + lc.dueSoon} renewal${lc.renewalsInProgress + lc.dueSoon === 1 ? "" : "s"} pending`, to: "/licences" },
+    canAudits && au && { icon: ClipboardCheck, tone: "text-[#0E8A8A]", title: "Audit", line: `${au.openActions} action${au.openActions === 1 ? "" : "s"} open${au.overdueActions ? ` · ${au.overdueActions} overdue` : ""}`, to: "/audits" },
+    canParcels && pk && { icon: Package, tone: "text-[#4B4FC4]", title: "Office parcel", line: `${pk.inRoute} in transit`, to: "/parcels" },
+    canVisitors && v && { icon: IdCard, tone: "text-success", title: "Visitors", line: `${v.visitsToday} gate passes today`, to: "/visitors" },
+    (canLeave || canLeaveApply) && { icon: Palmtree, tone: "text-[#0E8A8A]", title: "Leave", line: lv ? `${lv.onLeaveToday} on leave today · ${lv.pendingApprovals} pending` : "Apply and track leave", to: "/leave" },
+    canFleet && f && { icon: CarFront, tone: "text-active", title: "Pool Car", line: `${f.pendingHod + f.pendingFleet} pending requisitions`, to: "/pool-car" },
   ].filter(Boolean) as { icon: LucideIcon; tone: string; title: string; line: string; to: string }[];
 
   const rows = tourRows.data?.items ?? [];
@@ -479,7 +495,7 @@ export function ExecutiveDashboardPage() {
           {tiles.length > 0 && (
             <Card title="Other operational modules">
               <div className="grid grid-cols-2 gap-3">
-                {tiles.slice(0, 6).map((tile) => (
+                {tiles.map((tile) => (
                   <ModuleTile key={tile.title} {...tile} />
                 ))}
               </div>

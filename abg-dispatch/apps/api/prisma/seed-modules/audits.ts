@@ -244,6 +244,8 @@ export async function seedAudits(ctx: SeedContext) {
     let fseq = 0;
     for (const f of seed.findings ?? []) {
       fseq += 1;
+      // Recorded a few minutes apart, in order.
+      const recorded = f.ago - fseq * 0.003;
       const owner = f.owner ? users[f.owner] : null;
       const finding = await prisma.auditFinding.create({
         data: {
@@ -265,17 +267,17 @@ export async function seedAudits(ctx: SeedContext) {
           verifiedByName: f.verifiedAgo !== undefined ? lead.name : null,
           // The overdue alert for an action already past its date has gone out.
           overdueNotifiedAt: f.status === F.OPEN && f.due !== undefined && f.due < 0 ? ago(Math.max(0.1, -f.due - 1)) : null,
-          createdAt: ago(f.ago),
+          createdAt: ago(recorded),
         },
       });
-      history.push({ type: AuditUpdateType.FINDING_ADDED, to: f.severity === FindingSeverity.OBSERVATION ? F.NOTED : F.OPEN, note: f.title, by: seed.lead, at: ago(f.ago), findingId: finding.id, metadata: { number: finding.number, severity: f.severity, owner: owner?.name ?? null } });
+      history.push({ type: AuditUpdateType.FINDING_ADDED, to: f.severity === FindingSeverity.OBSERVATION ? F.NOTED : F.OPEN, note: f.title, by: seed.lead, at: ago(recorded), findingId: finding.id, metadata: { number: finding.number, severity: f.severity, owner: owner?.name ?? null } });
       if (f.submittedAgo !== undefined) history.push({ type: AuditUpdateType.FINDING_SUBMITTED, from: F.OPEN, to: F.SUBMITTED, note: f.response, by: f.owner!, at: ago(f.submittedAgo), findingId: finding.id, metadata: { number: finding.number } });
       if (f.verifiedAgo !== undefined) history.push({ type: AuditUpdateType.FINDING_VERIFIED, from: F.SUBMITTED, to: F.VERIFIED, by: seed.lead, at: ago(f.verifiedAgo), findingId: finding.id, metadata: { number: finding.number } });
 
       // Inbox: open actions for their owners, fixes for the lead to verify, overdue alerts.
       const data = { module: "audits", objectId: audit.id, reference: audit.referenceNumber, route: `/audits/${audit.id}`, status: seed.status };
       const send = (code: string, eventType: string, title: string, body: string) =>
-        prisma.notification.create({ data: { userId: users[code].id, eventType, category: NotificationCategory.ACTION_REQUIRED, title, body, data, createdAt: ago(f.ago), dedupeKey: `seed:audit:${audit.referenceNumber}:${finding.number}:${code}:${eventType}` } });
+        prisma.notification.create({ data: { userId: users[code].id, eventType, category: NotificationCategory.ACTION_REQUIRED, title, body, data, createdAt: ago(recorded), dedupeKey: `seed:audit:${audit.referenceNumber}:${finding.number}:${code}:${eventType}` } });
       if (f.status === F.OPEN && owner) {
         if (f.due! < 0) await send(f.owner!, "AUDIT_ACTION_OVERDUE", "Corrective action overdue", `${finding.number} · ${f.title} was due ${shortDay.format(date(f.due!))}. ${audit.referenceNumber}`);
         else await send(f.owner!, "AUDIT_ACTION_ASSIGNED", `${FINDING_SEVERITY_LABEL[f.severity]} finding to fix by ${shortDay.format(date(f.due!))}`, `${finding.number} · ${f.title} — ${seed.title}. ${audit.referenceNumber}`);
