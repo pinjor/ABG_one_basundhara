@@ -12,42 +12,80 @@ relies on the UI hiding a button.
 
 Generated from [`packages/shared/src/permissions.ts`](../packages/shared/src/permissions.ts).
 
-| Capability | Emp | Snd | Rcv | Cour | Disp | BrAdm | HOAdm | Aud | Super |
-|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| `parcel.create` | ● | ● |  |  | ● | ● | ● |  | ● |
-| `parcel.view.own` | ● | ● | ● | ● | ● | ● | ● |  | ● |
-| `parcel.view.branch` |  |  |  |  | ● | ● | ● |  | ● |
-| `parcel.view.all` |  |  |  |  |  |  | ● | ● | ● |
-| `courier.actions` |  |  |  | ● | ● |  |  |  | ● |
-| `parcel.carrier.assign` |  |  |  |  | ● | ● | ● |  | ● |
-| `parcel.handover.officer` |  |  |  |  | ● | ● | ● |  | ● |
-| `parcel.receive.desk` |  |  |  |  | ● | ● | ● |  | ● |
-| `parcel.exception.record` | ● | ● | ● | ● | ● | ● | ● |  | ● |
-| `parcel.exception.resolve` |  |  |  |  | ● | ● | ● |  | ● |
-| `parcel.hold` |  |  |  |  |  | ● | ● |  | ● |
-| `parcel.cancel.any` |  |  |  |  |  | ● | ● |  | ● |
-| `parcel.return.any` |  |  |  |  |  | ● | ● |  | ● |
-| `parcel.correct` |  |  |  |  |  | ● | ● |  | ● |
-| `parcel.notify.resend` |  |  |  |  | ● | ● | ● |  | ● |
-| `parcel.sla.update` |  |  |  |  |  | ● | ● |  | ● |
-| `parcel.external.update` |  |  |  |  | ● | ● | ● |  | ● |
-| `dashboard.view` |  |  |  |  | ● | ● | ● | ● | ● |
-| `analytics.view` |  |  |  |  |  | ● | ● | ● | ● |
-| `reports.export` |  |  |  |  | ● | ● | ● | ● | ● |
-| `audit.view` |  |  |  |  |  | ● | ● | ● | ● |
-| `config.manage` |  |  |  |  |  |  |  |  | ● |
-| `users.manage` |  |  |  |  |  |  |  |  | ● |
-| `integrations.manage` |  |  |  |  |  |  |  |  | ● |
-| `incident.report` | ● | ● | ● | ● | ● | ● | ● |  | ● |
-| `incident.view` |  |  |  |  |  | ● | ● | ● | ● |
-| `incident.manage` |  |  |  |  |  | ● | ● |  | ● |
+| Capability | Emp | Snd | Rcv | Cour | Disp | BrAdm | HOAdm | Aud | Super | Fleet | Drv | Sec | HRF | Exec | Comp |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| `parcel.create` | ● | ● |  |  | ● | ● | ● |  | ● | ● |  |  | ● | ● | ● |
+| `parcel.view.own` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● | ● | ● | ● | ● |
+| `parcel.view.branch` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |
+| `parcel.view.all` |  |  |  |  |  |  | ● | ● | ● |  |  |  |  |  |  |
+| `courier.actions` |  |  |  | ● | ● |  |  |  | ● |  |  |  |  |  |  |
+| `parcel.carrier.assign` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |
+| `parcel.handover.officer` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |
+| `parcel.receive.desk` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |
+| `parcel.exception.record` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● |  | ● | ● | ● |
+| `parcel.exception.resolve` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |
+| `parcel.hold` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |
+| `parcel.cancel.any` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |
+| `parcel.return.any` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |
+| `parcel.correct` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |
+| `parcel.notify.resend` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |
+| `parcel.sla.update` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |
+| `parcel.external.update` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |
+| `dashboard.view` |  |  |  |  | ● | ● | ● | ● | ● |  |  |  |  |  |  |
+| `analytics.view` |  |  |  |  |  | ● | ● | ● | ● |  |  |  |  |  |  |
+| `reports.export` |  |  |  |  | ● | ● | ● | ● | ● |  |  |  |  |  |  |
+| `audit.view` |  |  |  |  |  | ● | ● | ● | ● |  |  |  |  |  |  |
+| `config.manage` |  |  |  |  |  |  |  |  | ● |  |  |  |  |  |  |
+| `users.manage` |  |  |  |  |  |  |  |  | ● |  |  |  |  |  |  |
+| `integrations.manage` |  |  |  |  |  |  |  |  | ● |  |  |  |  |  |  |
+| `incident.report` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● | ● | ● | ● | ● |
+| `incident.view` |  |  |  |  |  | ● | ● | ● | ● |  |  |  |  | ● |  |
+| `incident.manage` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |
+| `tour.request` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● | ● | ● | ● | ● |
+| `tour.view` |  |  |  |  |  | ● | ● | ● | ● |  |  |  | ● | ● |  |
+| `tour.vet` |  |  |  |  |  |  |  |  | ● |  |  |  | ● |  |  |
+| `tour.sanction` |  |  |  |  |  |  |  |  | ● |  |  |  |  | ● |  |
+| `fleet.request` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● | ● | ● | ● | ● |
+| `fleet.view` |  |  |  |  |  | ● | ● | ● | ● | ● |  |  |  |  |  |
+| `fleet.manage` |  |  |  |  |  |  |  |  | ● | ● |  |  |  |  |  |
+| `fleet.drive` |  |  |  |  |  |  |  |  | ● |  | ● |  |  |  |  |
+| `visitor.invite` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● | ● | ● | ● | ● |
+| `visitor.view` |  |  |  |  | ● | ● | ● | ● | ● |  |  | ● |  |  |  |
+| `visitor.manage` |  |  |  |  | ● | ● | ● |  | ● |  |  | ● |  |  |  |
+| `gate.verify` |  |  |  |  | ● | ● | ● |  | ● | ● |  | ● |  |  |  |
+| `licence.view` |  |  |  |  |  | ● | ● | ● | ● |  |  |  |  | ● | ● |
+| `licence.manage` |  |  |  |  |  |  | ● |  | ● |  |  |  |  |  | ● |
+| `notice.read` | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● |
+| `notice.publish` |  |  |  |  |  | ● | ● |  | ● |  |  |  | ● | ● | ● |
+| `notice.manage` |  |  |  |  |  |  | ● |  | ● |  |  |  |  | ● |  |
 
-Emp = Employee · Snd = Sender · Rcv = Receiver · Cour = Courier / Runner · Disp = Dispatch Officer · BrAdm = Branch Admin · HOAdm = Head Office Admin · Aud = Auditor · Super = Super Admin
+Emp = Employee · Snd = Sender · Rcv = Receiver · Cour = Courier / Runner · Disp = Dispatch Officer · BrAdm = Branch Admin · HOAdm = Head Office Admin · Aud = Auditor · Super = Super Admin · Fleet = Fleet Manager · Drv = Driver · Sec = Security · HRF = HR & Finance · Exec = MD / Chairman · Comp = Compliance Officer
 
 Roles can be **branch-scoped** (`user_roles.branchId`): a dispatch officer or
 branch admin for Factory A sees and operates on parcels that start or end at
-Factory A only. Head office admins and auditors see every office. A user may
+Factory A only, and a security guard posted at Factory A verifies passes for
+Factory A's gate only. Head office admins and auditors see every office. A user may
 hold several roles; capabilities are the union.
+
+### ABG ONE roles
+
+Every employee can report an incident, request a tour or a pool car, invite a
+visitor and read the notice board — the self-service capabilities. The roles
+added for the ABG ONE modules then grant the desk work:
+
+| Role | What it adds |
+|---|---|
+| **Fleet Manager** | Assigns vehicles and drivers to approved pool car requests, keeps the vehicle and driver register (service, fitness, insurance dates), verifies vehicle gate passes. |
+| **Driver** | Sees the trips assigned to them, starts and completes them. |
+| **Security** | The gate desk: scans visitor and vehicle passes, registers walk-ins, checks visitors in and out — for the office they are posted at. |
+| **HR & Finance** | Vets official tour requests (budget, policy, passport) before they go to the MD / Chairman; publishes notices to the HR channel. |
+| **MD / Chairman** | Sanctions or rejects vetted tour requests, sees the executive dashboard, the licence register and incident reports, and publishes and manages notices. |
+| **Compliance Officer** | Owns the regulatory licence register: adds licences, uploads scanned copies, records each renewal step; publishes compliance notices. |
+
+Heads of department are not a role: the approver named on a tour or pool car
+request — the requester's line manager in the directory by default — approves
+it first, whatever roles either of them hold. See the module specifications in
+[modules/](modules/README.md) for every rule.
 
 The **Auditor** role is read-only by construction: every write route requires a
 capability auditors do not have, and the guard refuses writes from a

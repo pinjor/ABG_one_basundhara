@@ -37,6 +37,25 @@ gate) and departments.
 | Mahmuda Akter | ABG-9002 | HO | Auditor | Read-only everything, audit log |
 | System Administrator | ABG-0001 | HO | Super Admin | Configuration, people and roles, integrations |
 
+For the ABG ONE modules:
+
+| Person | ID | Office | Role | Good for |
+|---|---|---|---|---|
+| Shafiqul Alam | ABG-1003 | HO | MD / Chairman (`chairman@abg.com.bd`) | Sanctioning overseas tours, Chairman's notices, executive dashboard |
+| Kazi Ashraful Haque | ABG-1002 | HO | MD / Chairman (`md@abg.com.bd`) | The same as the Managing Director |
+| Farid Uddin | ABG-2210 | HO | Employee, head of department | Approving tours and pool cars on the phone (*Approvals*) |
+| Nusrat Jahan, Sadia Rahman | ABG-2055, ABG-2101 | HO | HR & Finance | Vetting tour requests, HR notices |
+| Shirin Akhter | ABG-2400 | HO | Compliance Officer | The licence register, compliance notices |
+| Jahangir Alam | ABG-3610 | HO | Fleet Manager | Assigning cars and drivers, the vehicle register |
+| Abul Kalam, Mizanur Rahman | ABG-3620, ABG-3621 | HO | Driver | *My trips* on the phone |
+| Sohel Rana | ABG-7620 | FCA | Driver | Factory A trips |
+| Rezaul Karim | ABG-3700 | HO | Security | Head-office reception and gate: visitor and vehicle passes |
+| Nurul Amin | ABG-5290 | FCA | Security | Factory A gate desk |
+
+Everyone with an account except the Chairman has a line manager in the
+directory, who is the default approver on their tour and pool car requests. The seed creates 31 accounts in
+all.
+
 Emails follow `firstname.lastname@abg.com.bd` (Rahim is `rahim@abg.com.bd`,
 the super admin `admin@abg.com.bd`). Five directory-only employees have no
 account, to try *Create account* in the portal.
@@ -101,3 +120,24 @@ Begum** for Factory B, **Arif Chowdhury**
 for every office including the confidential reports, **md@abg.com.bd** (the
 MD) to read everything without changing it, and **Farhana Islam** or **Md.
 Rahim** on the phone to report one and follow it.
+
+## ABG ONE modules
+
+Each module seeds its own data, dated relative to today, so every stage is on
+screen:
+
+- **Official tours** — twelve requests `ABG-TR-<year>-079…090`, from waiting
+  for the head of department to completed, and the ৳ 65,00,000 annual travel
+  budget. [tours.md](modules/tours.md#demo-data)
+- **Pool cars** — seven vehicles, five drivers and thirteen requisitions in
+  every state, including a trip on the road and an assigned airport pickup
+  with a live gate pass. [fleet.md](modules/fleet.md#demo-data)
+- **Visitors** — today's board at Factory A and head office (on site,
+  expected, checked out, cancelled) and six days of history.
+  [visitors.md](modules/visitors.md#demo-data)
+- **Licences** — sixteen licences across the six offices: two expired, three
+  expiring within 30 days, three due soon, eight valid; five with a scanned
+  copy. [licences.md](modules/licences.md#demo-data)
+- **Notices** — nine notices on every channel, with PDFs, an urgent circular,
+  a draft, an archived notice and read receipts.
+  [notices.md](modules/notices.md#demo-data)

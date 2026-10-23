@@ -399,7 +399,7 @@ export function ExecutiveDashboardPage() {
                         return (
                           <tr key={r.id} className="align-top">
                             <td className="px-5 py-4">
-                              <Link to={`/tours/${r.id}`} className="mono font-semibold text-navy hover:text-active hover:underline">
+                              <Link to={`/tours/${r.id}`} className="mono whitespace-nowrap font-semibold text-navy hover:text-active hover:underline">
                                 {r.referenceNumber}
                               </Link>
                               <p className="text-ink-muted">{r.traveller?.name ?? r.travellerName ?? ""}</p>
