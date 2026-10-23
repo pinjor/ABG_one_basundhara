@@ -920,6 +920,526 @@ class LBn extends L {
   String get apprDetails => 'বিস্তারিত';
 
   @override
+  String get pcTitle => 'পুল কার';
+
+  @override
+  String get pcRequestCar => 'গাড়ির অনুরোধ';
+
+  @override
+  String get pcTabMine => 'আমার অনুরোধ';
+
+  @override
+  String get pcTabApprove => 'অনুমোদনের জন্য';
+
+  @override
+  String get pcTabTrips => 'আমার ট্রিপ';
+
+  @override
+  String get pcFilterAll => 'সব';
+
+  @override
+  String get pcFilterOpen => 'চলমান';
+
+  @override
+  String get pcFilterClosed => 'সমাপ্ত';
+
+  @override
+  String get pcNoRequests => 'এখনও কোনো গাড়ির অনুরোধ নেই';
+
+  @override
+  String get pcNoRequestsHint =>
+      'অফিসিয়াল কাজে পুল কারের অনুরোধ করুন। বরাদ্দ হলে এখানে চালকের তথ্য ও আপনার গেট পাস দেখবেন।';
+
+  @override
+  String get pcNoApprovals => 'অনুমোদনের কিছু নেই';
+
+  @override
+  String get pcNoApprovalsHint =>
+      'আপনাকে বিভাগীয় প্রধান হিসেবে উল্লেখ করা আপনার দলের গাড়ির অনুরোধ এখানে দেখাবে।';
+
+  @override
+  String get pcNoTrips => 'কোনো ট্রিপ বরাদ্দ নেই';
+
+  @override
+  String get pcNoTripsHint =>
+      'ফ্লিট ম্যানেজার যে ট্রিপ দেন তা এখানে দেখাবে, শুরু ও সম্পন্ন করার বোতামসহ।';
+
+  @override
+  String get pcUrgent => 'জরুরি';
+
+  @override
+  String pcPeople(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count জন',
+      one: '১ জন',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String pcSeats(int count) {
+    return '$count আসন';
+  }
+
+  @override
+  String get pcStatusPENDING_HOD => 'বিভাগীয় প্রধানের অপেক্ষায়';
+
+  @override
+  String get pcStatusPENDING_FLEET => 'ফ্লিট ম্যানেজারের অপেক্ষায়';
+
+  @override
+  String get pcStatusASSIGNED => 'বরাদ্দকৃত';
+
+  @override
+  String get pcStatusIN_PROGRESS => 'চলমান';
+
+  @override
+  String get pcStatusCOMPLETED => 'সম্পন্ন';
+
+  @override
+  String get pcStatusREJECTED => 'প্রত্যাখ্যাত';
+
+  @override
+  String get pcStatusCANCELLED => 'বাতিল';
+
+  @override
+  String get pcTripONE_WAY => 'একমুখী';
+
+  @override
+  String get pcTripROUND_TRIP => 'যাওয়া-আসা';
+
+  @override
+  String get pcTripFULL_DAY => 'সারা দিন';
+
+  @override
+  String get pcTripAIRPORT => 'বিমানবন্দর ট্রান্সফার';
+
+  @override
+  String get pcTripHintONE_WAY => 'শুধু পৌঁছে দেওয়া';
+
+  @override
+  String get pcTripHintROUND_TRIP => 'গিয়ে ফিরে আসা';
+
+  @override
+  String get pcTripHintFULL_DAY => 'গাড়ি সারা দিন সঙ্গে';
+
+  @override
+  String get pcTripHintAIRPORT => 'আনা বা পৌঁছে দেওয়া';
+
+  @override
+  String get pcVehANY => 'যেকোনো গাড়ি';
+
+  @override
+  String get pcVehSEDAN => 'সেডান';
+
+  @override
+  String get pcVehSUV => 'এসইউভি';
+
+  @override
+  String get pcVehMICROBUS => 'মাইক্রোবাস';
+
+  @override
+  String get pcVehPICKUP => 'পিকআপ';
+
+  @override
+  String get pcVehCOASTER => 'কোস্টার';
+
+  @override
+  String get pcFormTitle => 'পুল কারের অনুরোধ';
+
+  @override
+  String get pcFormIntro =>
+      'আপনার বিভাগীয় প্রধান অনুমোদন করবেন, তারপর ফ্লিট ম্যানেজার গাড়ি ও চালক বরাদ্দ দেবেন। আপনি চালকের নম্বর ও একটি QR গেট পাস পাবেন।';
+
+  @override
+  String get pcTripKind => 'ট্রিপের ধরন';
+
+  @override
+  String get pcPurpose => 'ট্রিপের উদ্দেশ্য';
+
+  @override
+  String get pcPurposeHint => 'যেমন: সুপ্রিম কোর্টে শুনানি';
+
+  @override
+  String get pcPickupFrom => 'যেখান থেকে উঠবেন';
+
+  @override
+  String get pcGoingTo => 'যেখানে যাবেন';
+
+  @override
+  String get pcPickupTime => 'যাত্রার সময়';
+
+  @override
+  String get pcReturnTime => 'ফেরার সময়';
+
+  @override
+  String get pcReturnOptional => 'ফেরার সময় (ঐচ্ছিক)';
+
+  @override
+  String get pcChooseTime => 'তারিখ ও সময় বেছে নিন';
+
+  @override
+  String get pcClearReturn => 'ফেরা নেই';
+
+  @override
+  String get pcPassengers => 'যাত্রী';
+
+  @override
+  String get pcAddPassenger => 'যাত্রী যোগ করুন';
+
+  @override
+  String get pcPassengerName => 'পূর্ণ নাম';
+
+  @override
+  String get pcPassengerPhone => 'মোবাইল (ঐচ্ছিক)';
+
+  @override
+  String get pcRemovePassenger => 'যাত্রী সরান';
+
+  @override
+  String get pcPeopleCount => 'যাত্রীর সংখ্যা';
+
+  @override
+  String pcPeopleCountHint(int max) {
+    return 'আপনাসহ · সর্বোচ্চ $max জন';
+  }
+
+  @override
+  String get pcVehiclePreference => 'পছন্দের গাড়ি';
+
+  @override
+  String get pcUrgentHint =>
+      'অল্প সময়ের নোটিশে দরকার — অনুমোদনকারী এটি আগে দেখবেন';
+
+  @override
+  String get pcApprover => 'অনুমোদনকারী';
+
+  @override
+  String get pcApproverHint => 'আপনার বিভাগীয় প্রধান';
+
+  @override
+  String get pcChange => 'পরিবর্তন';
+
+  @override
+  String get pcNoManager =>
+      'রেকর্ডে কোনো বিভাগীয় প্রধান নেই — একজন অনুমোদনকারী বেছে নিন';
+
+  @override
+  String pcApproverNoAccount(Object name) {
+    return '$name অনুমোদনের জন্য সাইন ইন করতে পারেন না। অন্য কাউকে বেছে নিন।';
+  }
+
+  @override
+  String get pcSearchApprover => 'নাম, আইডি বা বিভাগ খুঁজুন';
+
+  @override
+  String get pcNoAccount => 'অ্যাকাউন্ট নেই';
+
+  @override
+  String get pcSend => 'অনুমোদনের জন্য পাঠান';
+
+  @override
+  String pcSent(Object ref) {
+    return '$ref অনুমোদনের জন্য পাঠানো হয়েছে';
+  }
+
+  @override
+  String get pcPurposeRequired => 'গাড়ি কী কাজে লাগবে তা লিখুন';
+
+  @override
+  String get pcPlacesRequired => 'ওঠা ও নামার স্থান দিন';
+
+  @override
+  String get pcPickupPast => 'যাত্রার সময় পেরিয়ে গেছে';
+
+  @override
+  String get pcReturnRequired =>
+      'যাওয়া-আসা ও সারা দিনের ট্রিপে ফেরার সময় দিতে হবে';
+
+  @override
+  String get pcReturnBeforePickup => 'ফেরার সময় যাত্রার পরে হতে হবে';
+
+  @override
+  String get pcTooManyNamed => 'যাত্রীর সংখ্যার চেয়ে বেশি নাম দেওয়া হয়েছে';
+
+  @override
+  String get pcApproverRequired => 'কে অনুমোদন করবেন তা বেছে নিন';
+
+  @override
+  String get pcProgress => 'অগ্রগতি';
+
+  @override
+  String get pcStepHod => 'বিভাগীয় প্রধান';
+
+  @override
+  String get pcStepFleet => 'ফ্লিট';
+
+  @override
+  String get pcStepAssigned => 'বরাদ্দ';
+
+  @override
+  String get pcStepOnTrip => 'যাত্রাপথে';
+
+  @override
+  String get pcStepDone => 'সম্পন্ন';
+
+  @override
+  String pcWaitingHod(Object name) {
+    return '$name-এর অনুমোদনের অপেক্ষায়।';
+  }
+
+  @override
+  String get pcWaitingFleet =>
+      'অনুমোদিত। এরপর ফ্লিট ম্যানেজার গাড়ি ও চালক বরাদ্দ দেবেন।';
+
+  @override
+  String get pcTrip => 'ট্রিপ';
+
+  @override
+  String get pcVehicleWanted => 'চাওয়া গাড়ি';
+
+  @override
+  String get pcCarDriver => 'গাড়ি ও চালক';
+
+  @override
+  String get pcCallDriver => 'চালককে কল করুন';
+
+  @override
+  String get pcDriver => 'চালক';
+
+  @override
+  String get pcNotAssignedYet =>
+      'অনুমোদনের পর গাড়ি ও চালক বরাদ্দ হবে। এখানে চালকের নম্বর ও আপনার গেট পাস দেখবেন।';
+
+  @override
+  String get pcNoCar => 'কোনো গাড়ি বরাদ্দ হয়নি।';
+
+  @override
+  String get pcGatePass => 'গেট পাস';
+
+  @override
+  String get pcShowPass => 'গেট পাস দেখান';
+
+  @override
+  String get pcPassHint =>
+      'গেটে এটি দেখান। গাড়ি বের হওয়া ও ফেরার সময় নিরাপত্তাকর্মী এটি স্ক্যান করবেন।';
+
+  @override
+  String pcPassValid(Object from, Object until) {
+    return 'বৈধ $from – $until';
+  }
+
+  @override
+  String pcOdometerRun(Object start, Object end, Object distance) {
+    return '$start → $end কিমি · $distance কিমি চলেছে';
+  }
+
+  @override
+  String get pcHistory => 'ইতিহাস';
+
+  @override
+  String get pcEvSubmitted => 'অনুরোধ করা হয়েছে';
+
+  @override
+  String get pcEvApproved => 'বিভাগীয় প্রধান অনুমোদন করেছেন';
+
+  @override
+  String get pcEvRejected => 'প্রত্যাখ্যাত';
+
+  @override
+  String get pcEvCancelled => 'বাতিল';
+
+  @override
+  String get pcEvAssigned => 'গাড়ি বরাদ্দ হয়েছে';
+
+  @override
+  String get pcEvReassigned => 'গাড়ি পরিবর্তন হয়েছে';
+
+  @override
+  String get pcEvStarted => 'ট্রিপ শুরু হয়েছে';
+
+  @override
+  String get pcEvCompleted => 'ট্রিপ সম্পন্ন হয়েছে';
+
+  @override
+  String get pcEvExit => 'গেট দিয়ে বের হয়েছে';
+
+  @override
+  String get pcEvReturn => 'গেট দিয়ে ফিরেছে';
+
+  @override
+  String get pcRequestedBy => 'অনুরোধকারী';
+
+  @override
+  String get pcHod => 'বিভাগীয় প্রধান';
+
+  @override
+  String get pcApprove => 'অনুমোদন';
+
+  @override
+  String get pcReject => 'প্রত্যাখ্যান';
+
+  @override
+  String get pcAssign => 'গাড়ি বরাদ্দ';
+
+  @override
+  String get pcReassign => 'পুনরায় বরাদ্দ';
+
+  @override
+  String get pcStart => 'ট্রিপ শুরু';
+
+  @override
+  String get pcComplete => 'ট্রিপ সম্পন্ন';
+
+  @override
+  String get pcCancelRequest => 'অনুরোধ বাতিল';
+
+  @override
+  String get pcApproveTitle => 'এই অনুরোধ অনুমোদন করবেন?';
+
+  @override
+  String get pcApproveBody =>
+      'এটি ফ্লিট ম্যানেজারের কাছে যাবে, তিনি গাড়ি ও চালক বরাদ্দ দেবেন। অনুরোধকারীকে জানানো হবে।';
+
+  @override
+  String get pcRejectTitle => 'এই অনুরোধ প্রত্যাখ্যান করুন';
+
+  @override
+  String get pcRejectReason => 'অনুরোধকারীর জন্য কারণ';
+
+  @override
+  String get pcReasonRequired => 'কমপক্ষে ৩ অক্ষরের একটি কারণ লিখুন';
+
+  @override
+  String get pcCancelTitle => 'এই অনুরোধ বাতিল করবেন?';
+
+  @override
+  String get pcCancelBody =>
+      'অনুমোদনকারী বা ফ্লিট ম্যানেজারকে জানানো হবে। বরাদ্দকৃত গাড়ি ও চালক মুক্ত হবে এবং গেট পাস আর কাজ করবে না।';
+
+  @override
+  String get pcCancelReason => 'কারণ (ঐচ্ছিক)';
+
+  @override
+  String get pcOdometer => 'ওডোমিটার রিডিং (কিমি, ঐচ্ছিক)';
+
+  @override
+  String get pcStartTitle => 'ট্রিপ শুরু করুন';
+
+  @override
+  String get pcCompleteTitle => 'ট্রিপ সম্পন্ন করুন';
+
+  @override
+  String pcLastOdometer(Object km) {
+    return 'সর্বশেষ রেকর্ড $km কিমি';
+  }
+
+  @override
+  String get pcApproved => 'অনুমোদিত — ফ্লিট ম্যানেজারের কাছে পাঠানো হয়েছে';
+
+  @override
+  String get pcRejected => 'প্রত্যাখ্যাত — অনুরোধকারীকে জানানো হয়েছে';
+
+  @override
+  String get pcStarted => 'ট্রিপ শুরু হয়েছে';
+
+  @override
+  String get pcCompleted => 'ট্রিপ সম্পন্ন — গাড়ি আবার খালি';
+
+  @override
+  String get pcCancelled => 'অনুরোধ বাতিল হয়েছে';
+
+  @override
+  String get pcAssigned => 'গাড়ি ও চালক বরাদ্দ হয়েছে';
+
+  @override
+  String get pcChooseVehicle => 'গাড়ি';
+
+  @override
+  String get pcChooseDriver => 'চালক';
+
+  @override
+  String get pcFreeForTrip => 'এই ট্রিপের জন্য খালি';
+
+  @override
+  String get pcMatchesRequest => 'অনুরোধের সাথে মেলে';
+
+  @override
+  String get pcReassignNote =>
+      'পুনরায় বরাদ্দ দিলে নতুন গেট পাস তৈরি হবে; পুরোনো QR আর কাজ করবে না।';
+
+  @override
+  String get pcPassTitle => 'গাড়ির গেট পাস';
+
+  @override
+  String get pcPassVALID => 'বৈধ গেট পাস';
+
+  @override
+  String get pcPassOUT => 'গাড়ি এই ট্রিপে বাইরে আছে';
+
+  @override
+  String get pcPassUSED => 'ট্রিপ সম্পন্ন — পাস ব্যবহৃত';
+
+  @override
+  String get pcPassCANCELLED => 'বৈধ নয় — ট্রিপ বাতিল';
+
+  @override
+  String get pcPassEXPIRED => 'বৈধ নয় — পাসের মেয়াদ শেষ';
+
+  @override
+  String get pcPassNOT_YET_VALID => 'এখনও বৈধ নয়';
+
+  @override
+  String get pcPassINVALID => 'বৈধ গেট পাস নয়';
+
+  @override
+  String get pcPassInvalidBody =>
+      'এই কোড ABG ONE দেয়নি, অথবা এটি বদলে গেছে। গাড়িকে যেতে দেবেন না — ফ্লিট ডেস্কে কল করুন।';
+
+  @override
+  String get pcRecordExit => 'বের হওয়া রেকর্ড';
+
+  @override
+  String get pcRecordReturn => 'ফেরা রেকর্ড';
+
+  @override
+  String get pcExitRecorded => 'বের হওয়া রেকর্ড হয়েছে — ট্রিপ শুরু';
+
+  @override
+  String get pcReturnRecorded => 'ফেরা রেকর্ড হয়েছে — ট্রিপ সম্পন্ন';
+
+  @override
+  String get pcGateRecord => 'গেট রেকর্ড';
+
+  @override
+  String get pcLeftGate => 'গেট দিয়ে বের হয়েছে';
+
+  @override
+  String get pcReturned => 'ফিরেছে';
+
+  @override
+  String get pcPassNotAllowed =>
+      'শুধু নিরাপত্তাকর্মী, ফ্রন্ট ডেস্ক ও ফ্লিট ম্যানেজার গেট পাস যাচাই করতে পারেন।';
+
+  @override
+  String pcTravelling(int count) {
+    return '$count জন যাচ্ছেন';
+  }
+
+  @override
+  String get pcValidity => 'পাসের মেয়াদ';
+
+  @override
+  String pcLicence(Object number) {
+    return 'লাইসেন্স $number';
+  }
+
+  @override
+  String get pcRequester => 'অনুরোধকারী';
+
+  @override
   String get navMyAbg => 'আমার ABG';
 
   @override

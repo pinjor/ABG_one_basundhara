@@ -143,13 +143,119 @@ export const CAR_REQUISITION_STATUS_TONE: Record<CarRequisitionStatus, StatusTon
   CANCELLED: "neutral",
 };
 
+export const DRIVER_STATUS_TONE: Record<DriverStatus, StatusTone> = {
+  AVAILABLE: "success",
+  ON_TRIP: "active",
+  OFF_DUTY: "neutral",
+};
+
+/** What the requester would like: any car, or a type (a microbus for a team, an SUV for site roads). */
+export const VEHICLE_PREFERENCE_ANY = "ANY";
+export type VehiclePreference = typeof VEHICLE_PREFERENCE_ANY | VehicleType;
+export const VEHICLE_PREFERENCES: readonly VehiclePreference[] = [VEHICLE_PREFERENCE_ANY, ...Object.values(VehicleType)];
+export const VEHICLE_PREFERENCE_LABEL: Record<VehiclePreference, string> = {
+  ANY: "Any available car",
+  ...VEHICLE_TYPE_LABEL,
+};
+
+/** The buttons a viewer may see on a requisition (`viewer.actions`). The API re-checks every one. */
+export const CarRequisitionAction = {
+  APPROVE: "APPROVE",
+  REJECT: "REJECT",
+  ASSIGN: "ASSIGN",
+  REASSIGN: "REASSIGN",
+  START: "START",
+  COMPLETE: "COMPLETE",
+  CANCEL: "CANCEL",
+} as const;
+export type CarRequisitionAction = (typeof CarRequisitionAction)[keyof typeof CarRequisitionAction];
+
+/** Security scans the gate pass when the car leaves (EXIT → In progress) and comes back (RETURN → Completed). */
+export const GateScanDirection = {
+  EXIT: "EXIT",
+  RETURN: "RETURN",
+} as const;
+export type GateScanDirection = (typeof GateScanDirection)[keyof typeof GateScanDirection];
+
+export const GATE_SCAN_DIRECTION_LABEL: Record<GateScanDirection, string> = {
+  EXIT: "Exit",
+  RETURN: "Return",
+};
+
+/** Round trips and full-day bookings must say when the car comes back. */
+export const TRIP_TYPES_NEEDING_RETURN: readonly TripType[] = [TripType.ROUND_TRIP, TripType.FULL_DAY];
+
+export function tripNeedsReturn(tripType: string): boolean {
+  return TRIP_TYPES_NEEDING_RETURN.includes(tripType as TripType);
+}
+
+/** How long a car and driver are blocked when no return time is given. */
+export const TRIP_DEFAULT_HOURS: Record<TripType, number> = {
+  ONE_WAY: 3,
+  ROUND_TRIP: 4,
+  FULL_DAY: 10,
+  AIRPORT: 4,
+};
+
 export const FLEET_LIMITS = {
   purposeMin: 3,
   purposeMax: 200,
   placeMax: 200,
   noteMax: 1000,
   maxPassengers: 14,
+  passengerNameMax: 80,
+  /** Passenger seats, not counting the driver. */
+  maxSeats: 40,
+  registrationMax: 40,
+  odometerMaxKm: 2_000_000,
+  /** Service, fitness, insurance and licence dates turn amber this many days ahead. */
+  dueSoonDays: 30,
+  /** A gate pass opens this many hours before the pickup day and closes this many after the trip's last day. */
+  gatePassGraceHours: 6,
 } as const;
+
+const HOUR_MS = 3_600_000;
+const DHAKA_OFFSET_MS = 6 * HOUR_MS;
+
+/** 00:00 Asia/Dhaka (UTC+6, no daylight saving) of the day `date` falls on. */
+function dhakaMidnight(date: Date): Date {
+  const shifted = new Date(date.getTime() + DHAKA_OFFSET_MS);
+  return new Date(Date.UTC(shifted.getUTCFullYear(), shifted.getUTCMonth(), shifted.getUTCDate()) - DHAKA_OFFSET_MS);
+}
+
+/** The span a booking holds its car and driver: pickup until the return time (or a default length for the trip type). */
+export function carTripWindow(pickupAt: Date, returnAt: Date | null | undefined, tripType: string): { start: Date; end: Date } {
+  const hours = TRIP_DEFAULT_HOURS[tripType as TripType] ?? 4;
+  const end = returnAt && returnAt.getTime() > pickupAt.getTime() ? returnAt : new Date(pickupAt.getTime() + hours * HOUR_MS);
+  return { start: pickupAt, end };
+}
+
+export function carWindowsOverlap(a: { start: Date; end: Date }, b: { start: Date; end: Date }): boolean {
+  return a.start.getTime() < b.end.getTime() && b.start.getTime() < a.end.getTime();
+}
+
+/** When a vehicle gate pass lets the car out: the pickup day (through the trip's last day) ± the grace window. */
+export function gatePassValidity(pickupAt: Date, returnAt?: Date | null): { validFrom: Date; validUntil: Date } {
+  const grace = FLEET_LIMITS.gatePassGraceHours * HOUR_MS;
+  const lastDay = returnAt && returnAt.getTime() > pickupAt.getTime() ? returnAt : pickupAt;
+  return {
+    validFrom: new Date(dhakaMidnight(pickupAt).getTime() - grace),
+    validUntil: new Date(dhakaMidnight(lastDay).getTime() + 24 * HOUR_MS + grace),
+  };
+}
+
+export type FleetDateState = "OVERDUE" | "DUE_SOON";
+
+/** Overdue once the day has passed, due soon within `dueSoonDays`; null when comfortably ahead or not set. */
+export function fleetDateState(date: Date | string | null | undefined, now: Date = new Date()): FleetDateState | null {
+  if (!date) return null;
+  const d = typeof date === "string" ? new Date(date) : date;
+  if (Number.isNaN(d.getTime())) return null;
+  const today = dhakaMidnight(now).getTime();
+  if (d.getTime() < today) return "OVERDUE";
+  if (d.getTime() < today + FLEET_LIMITS.dueSoonDays * 24 * HOUR_MS) return "DUE_SOON";
+  return null;
+}
 
 /** PC-YYMMDD-OFFICE-NNN, e.g. PC-261021-HO-004. */
 export function formatCarRequisitionNumber(dayStamp: string, branchCode: string, sequence: number): string {
