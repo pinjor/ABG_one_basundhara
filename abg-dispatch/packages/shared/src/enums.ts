@@ -81,6 +81,8 @@ export const RoleCode = {
   EXECUTIVE: "EXECUTIVE",
   /** Keeps the regulatory licence register. */
   COMPLIANCE_OFFICER: "COMPLIANCE_OFFICER",
+  /** The MD's and Chairman's office (PA): answers appointment requests and keeps their diaries. */
+  EXECUTIVE_ASSISTANT: "EXECUTIVE_ASSISTANT",
 } as const;
 export type RoleCode = (typeof RoleCode)[keyof typeof RoleCode];
 

@@ -46,6 +46,13 @@ import { LicencesService } from "./licences/licences.service";
 import { LicenceAlertsService } from "./licences/licence-alerts.service";
 import { NoticesController } from "./notices/notices.controller";
 import { NoticesService } from "./notices/notices.service";
+import { LeaveController } from "./leave/leave.controller";
+import { LeaveService } from "./leave/leave.service";
+import { AppointmentsController } from "./appointments/appointments.controller";
+import { AppointmentsService } from "./appointments/appointments.service";
+import { AuditsController } from "./audits/audits.controller";
+import { AuditsService } from "./audits/audits.service";
+import { AuditAlertsService } from "./audits/audit-alerts.service";
 
 @Module({
   imports: [PrismaModule, AuditModule, RealtimeModule, JwtModule.register({})],
@@ -66,6 +73,9 @@ import { NoticesService } from "./notices/notices.service";
     VisitorsController,
     LicencesController,
     NoticesController,
+    LeaveController,
+    AppointmentsController,
+    AuditsController,
   ],
   providers: [
     IncidentsService,
@@ -75,6 +85,10 @@ import { NoticesService } from "./notices/notices.service";
     LicencesService,
     LicenceAlertsService,
     NoticesService,
+    LeaveService,
+    AppointmentsService,
+    AuditsService,
+    AuditAlertsService,
     { provide: APP_CONFIG, useFactory: loadConfig },
     { provide: APP_GUARD, useClass: AuthGuard },
     RateLimitGuard,

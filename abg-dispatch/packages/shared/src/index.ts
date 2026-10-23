@@ -11,3 +11,6 @@ export * from "./fleet";
 export * from "./visitors";
 export * from "./licences";
 export * from "./notices";
+export * from "./appointments";
+export * from "./audits";
+export * from "./leave";

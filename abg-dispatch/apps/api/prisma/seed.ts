@@ -20,6 +20,9 @@ import { seedLicences } from "./seed-modules/licences";
 import { seedNotices } from "./seed-modules/notices";
 import { seedTours } from "./seed-modules/tours";
 import { seedVisitors } from "./seed-modules/visitors";
+import { seedLeave } from "./seed-modules/leave";
+import { seedAppointments } from "./seed-modules/appointments";
+import { seedAudits } from "./seed-modules/audits";
 import {
   ANONYMOUS_REPORTER,
   ActorType,
@@ -183,6 +186,7 @@ export const PEOPLE: PersonSeed[] = [
   // Leadership and the people who run the ABG ONE modules.
   { code: "ABG-1003", name: "Shafiqul Alam", branch: "HO", dept: "DIR", designation: "Chairman", phone: "01711000103", email: "chairman@abg.com.bd", roles: [{ role: RoleCode.EXECUTIVE }, { role: RoleCode.EMPLOYEE }] },
   { code: "ABG-1002", name: "Kazi Ashraful Haque", branch: "HO", dept: "DIR", designation: "Managing Director", phone: "01711000102", email: "md@abg.com.bd", roles: [{ role: RoleCode.EXECUTIVE }, { role: RoleCode.EMPLOYEE }], manager: "ABG-1003" },
+  { code: "ABG-1010", name: "Rumana Ahmed", branch: "HO", dept: "DIR", designation: "Executive Assistant to the MD & Chairman", phone: "01744101000", email: "rumana.ahmed@abg.com.bd", roles: [{ role: RoleCode.EXECUTIVE_ASSISTANT }, { role: RoleCode.EMPLOYEE }], manager: "ABG-1002", loc: "HO:DIR" },
   { code: "ABG-2400", name: "Shirin Akhter", branch: "HO", dept: "ADMIN", designation: "Compliance & Licensing Manager", phone: "01737240000", email: "shirin.akhter@abg.com.bd", roles: [{ role: RoleCode.COMPLIANCE_OFFICER }, { role: RoleCode.EMPLOYEE }], manager: "ABG-2210" },
   { code: "ABG-3610", name: "Jahangir Alam", branch: "HO", dept: "ADMIN", designation: "Transport & Fleet Manager", phone: "01738361000", email: "jahangir.alam@abg.com.bd", roles: [{ role: RoleCode.FLEET_MANAGER }, { role: RoleCode.EMPLOYEE }], manager: "ABG-1001" },
   { code: "ABG-3620", name: "Abul Kalam", branch: "HO", dept: "ADMIN", designation: "Driver", phone: "01739362000", email: "abul.kalam@abg.com.bd", roles: [{ role: RoleCode.DRIVER }], manager: "ABG-3610", loc: "HO:GATE" },
@@ -972,6 +976,9 @@ export async function seed(prisma: PrismaClient, opts: { now?: Date; history?: b
   await seedFleet(moduleCtx);
   await seedTours(moduleCtx);
   await seedVisitors(moduleCtx);
+  await seedLeave(moduleCtx);
+  await seedAppointments(moduleCtx);
+  await seedAudits(moduleCtx);
 
   await prisma.auditLog.create({ data: { actorType: ActorType.SYSTEM, actorName: "Seed", action: "system.seeded", objectType: "system", objectId: "seed", summary: "Demo data loaded", actorUserId: admin.id } });
 

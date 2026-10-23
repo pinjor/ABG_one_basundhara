@@ -97,6 +97,7 @@ function primaryRole(roles: string[]): string {
     RoleCode.HR_FINANCE,
     RoleCode.FLEET_MANAGER,
     RoleCode.COMPLIANCE_OFFICER,
+    RoleCode.EXECUTIVE_ASSISTANT,
     RoleCode.AUDITOR,
     RoleCode.DISPATCH_OFFICER,
     RoleCode.SECURITY_GUARD,

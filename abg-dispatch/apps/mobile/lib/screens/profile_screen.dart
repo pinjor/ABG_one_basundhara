@@ -33,6 +33,7 @@ const _roleLabels = {
   'HR_FINANCE': 'HR & Finance',
   'EXECUTIVE': 'MD / Chairman',
   'COMPLIANCE_OFFICER': 'Compliance Officer',
+  'EXECUTIVE_ASSISTANT': 'Executive Office / PA',
 };
 
 class ProfileScreen extends StatefulWidget {

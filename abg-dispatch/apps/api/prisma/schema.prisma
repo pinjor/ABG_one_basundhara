@@ -70,6 +70,9 @@ model Branch {
   carRequisitions    CarRequisition[]
   visits             Visit[]
   licences           Licence[]
+  appointments       Appointment[]
+  audits             Audit[]
+  leaveRequests      LeaveRequest[]
 
   @@map("branches")
 }
@@ -153,6 +156,7 @@ model Employee {
   addressedParcels   Parcel[]            @relation("ReceiverEmployee")
   receivedParcels    Parcel[]            @relation("ActualReceiverEmployee")
   carrierAssignments CarrierAssignment[]
+  relievingLeaves    LeaveRequest[]      @relation("LeaveReliever")
 
   @@index([fullName])
   @@index([phone])
@@ -197,6 +201,13 @@ model User {
   noticesAuthored   Notice[]                 @relation("NoticeAuthor")
   noticeReceipts    NoticeReceipt[]          @relation("NoticeReader")
   assignmentsMade   CarrierAssignment[]      @relation("AssignedBy")
+  appointmentsAsked Appointment[]            @relation("AppointmentRequester")
+  appointmentsHeld  Appointment[]            @relation("AppointmentHost")
+  auditsLed         Audit[]                  @relation("AuditLead")
+  auditFindings     AuditFinding[]           @relation("AuditFindingOwner")
+  leaveApplications LeaveRequest[]           @relation("LeaveApplicant")
+  leavesToApprove   LeaveRequest[]           @relation("LeaveApprover")
+  leaveEntitlements LeaveEntitlement[]       @relation("LeaveEntitlements")
 
   @@map("users")
 }
@@ -1101,33 +1112,33 @@ model CarRequisitionUpdate {
 // ── Visitors ──
 
 model Visit {
-  id             String    @id @default(uuid())
+  id               String    @id @default(uuid())
   /// VP-YYMMDD-OFFICE-NNN — the gate pass number.
-  passNumber     String    @unique
-  visitorName    String
-  visitorPhone   String
-  company        String?
+  passNumber       String    @unique
+  visitorName      String
+  visitorPhone     String
+  company          String?
   /// Last 4 digits only; never the full national ID.
-  idLast4        String?
-  purpose        String
-  purposeDetail  String?
-  partySize      Int       @default(1)
-  vehicleNumber  String?
-  carrying       String?
-  branchId       String
-  branch         Branch    @relation(fields: [branchId], references: [id])
-  locationId     String?
-  location       Location? @relation(fields: [locationId], references: [id])
-  hostUserId     String?
-  host           User?     @relation("VisitHost", fields: [hostUserId], references: [id])
-  hostName       String
-  expectedAt     DateTime
-  expectedUntil  DateTime?
-  status         String    @default("EXPECTED")
-  walkIn         Boolean   @default(false)
-  badgeNumber    String?
+  idLast4          String?
+  purpose          String
+  purposeDetail    String?
+  partySize        Int       @default(1)
+  vehicleNumber    String?
+  carrying         String?
+  branchId         String
+  branch           Branch    @relation(fields: [branchId], references: [id])
+  locationId       String?
+  location         Location? @relation(fields: [locationId], references: [id])
+  hostUserId       String?
+  host             User?     @relation("VisitHost", fields: [hostUserId], references: [id])
+  hostName         String
+  expectedAt       DateTime
+  expectedUntil    DateTime?
+  status           String    @default("EXPECTED")
+  walkIn           Boolean   @default(false)
+  badgeNumber      String?
   /// Opaque token behind the QR gate pass (/g/v/<token>).
-  passToken      String    @unique
+  passToken        String    @unique
   checkedInAt      DateTime?
   checkedInById    String?
   /// Name snapshot of the guard or desk officer who checked the visitor in.
@@ -1263,4 +1274,255 @@ model NoticeReceipt {
   @@unique([noticeId, userId])
   @@index([userId])
   @@map("notice_receipts")
+}
+
+// ── Request for appointment ─────────────────────────────────────────────────
+
+/// A meeting asked of the MD, the Chairman or a head of department.
+model Appointment {
+  id              String    @id @default(uuid())
+  /// ABG-AP-YYYY-NNN
+  referenceNumber String    @unique
+  subject         String
+  purpose         String
+  agenda          String    @default("")
+  mode            String    @default("IN_PERSON")
+  durationMinutes Int
+  preferredAt     DateTime
+  alternativeAt   DateTime?
+  /// The time on the table: confirmed (CONFIRMED, COMPLETED) or proposed (PROPOSED).
+  scheduledAt     DateTime?
+  location        String?
+  /// Names of colleagues joining the requester.
+  attendees       Json      @default("[]")
+  urgent          Boolean   @default(false)
+  requesterUserId String
+  requester       User      @relation("AppointmentRequester", fields: [requesterUserId], references: [id])
+  /// The person asked for the meeting.
+  hostUserId      String
+  host            User      @relation("AppointmentHost", fields: [hostUserId], references: [id])
+  /// The requester's office.
+  branchId        String
+  branch          Branch    @relation(fields: [branchId], references: [id])
+  status          String    @default("PENDING")
+  statusNote      String?
+  statusChangedAt DateTime  @default(now())
+  /// Who last answered for the host (the host or their office).
+  respondedByName String?
+  confirmedAt     DateTime?
+  completedAt     DateTime?
+  declinedAt      DateTime?
+  cancelledAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  updates AppointmentUpdate[]
+
+  @@index([hostUserId, status, scheduledAt])
+  @@index([requesterUserId, createdAt])
+  @@index([status, scheduledAt])
+  @@map("appointments")
+}
+
+/// Append-only history of an appointment.
+model AppointmentUpdate {
+  id            String      @id @default(uuid())
+  appointmentId String
+  appointment   Appointment @relation(fields: [appointmentId], references: [id])
+  type          String
+  fromStatus    String?
+  toStatus      String?
+  note          String?
+  actorUserId   String?
+  actorName     String
+  metadata      Json        @default("{}")
+  createdAt     DateTime    @default(now())
+
+  @@index([appointmentId, createdAt])
+  @@map("appointment_updates")
+}
+
+// ── Audits ──────────────────────────────────────────────────────────────────
+
+/// An audit of one office: internal, regulatory, fire & safety, buyer, ISO…
+model Audit {
+  id                   String    @id @default(uuid())
+  /// ABG-AU-YYYY-NNN
+  referenceNumber      String    @unique
+  title                String
+  type                 String
+  scope                String    @default("")
+  branchId             String
+  branch               Branch    @relation(fields: [branchId], references: [id])
+  /// The outside body or firm, e.g. "Bureau Veritas" or "DIFE".
+  externalBody         String?
+  /// Names of the auditors.
+  team                 Json      @default("[]")
+  /// Who runs the audit for the group.
+  leadUserId           String
+  lead                 User      @relation("AuditLead", fields: [leadUserId], references: [id])
+  plannedStart         DateTime  @db.Date
+  plannedEnd           DateTime  @db.Date
+  status               String    @default("PLANNED")
+  rating               String?
+  /// 0–100 where the auditors give one.
+  score                Int?
+  /// The auditors' conclusion, recorded when fieldwork ends.
+  conclusion           String?
+  statusNote           String?
+  statusChangedAt      DateTime  @default(now())
+  startedAt            DateTime?
+  fieldworkCompletedAt DateTime?
+  closedAt             DateTime?
+  cancelledAt          DateTime?
+  createdByName        String
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  findings AuditFinding[]
+  updates  AuditUpdate[]
+
+  @@index([branchId, status])
+  @@index([status, plannedStart])
+  @@index([leadUserId])
+  @@map("audits")
+}
+
+/// Something the auditors found, and the corrective action it needs.
+model AuditFinding {
+  id                String    @id @default(uuid())
+  auditId           String
+  audit             Audit     @relation(fields: [auditId], references: [id])
+  sequence          Int
+  /// F-01, F-02… within the audit.
+  number            String
+  title             String
+  detail            String    @default("")
+  /// The standard or clause, e.g. "Fire Act 2003 s.12" or "ISO 45001 8.1.2".
+  clause            String?
+  /// Where in the office, e.g. "Boiler room".
+  area              String?
+  severity          String
+  status            String    @default("OPEN")
+  /// What the auditors recommend.
+  recommendation    String?
+  ownerUserId       String?
+  owner             User?     @relation("AuditFindingOwner", fields: [ownerUserId], references: [id])
+  dueDate           DateTime? @db.Date
+  /// The owner's account of the corrective action taken.
+  response          String?
+  submittedAt       DateTime?
+  verifiedAt        DateTime?
+  verifiedByName    String?
+  overdueNotifiedAt DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@unique([auditId, sequence])
+  @@index([ownerUserId, status])
+  @@index([status, dueDate])
+  @@map("audit_findings")
+}
+
+/// Append-only history of an audit and its findings.
+model AuditUpdate {
+  id          String   @id @default(uuid())
+  auditId     String
+  audit       Audit    @relation(fields: [auditId], references: [id])
+  findingId   String?
+  type        String
+  fromStatus  String?
+  toStatus    String?
+  note        String?
+  actorUserId String?
+  actorName   String
+  metadata    Json     @default("{}")
+  createdAt   DateTime @default(now())
+
+  @@index([auditId, createdAt])
+  @@map("audit_updates")
+}
+
+// ── Leave ───────────────────────────────────────────────────────────────────
+
+/// A leave application: HOD approval, then HR.
+model LeaveRequest {
+  id                 String    @id @default(uuid())
+  /// ABG-LV-YYYY-NNN
+  referenceNumber    String    @unique
+  type               String
+  startDate          DateTime  @db.Date
+  endDate            DateTime  @db.Date
+  /// FIRST_HALF or SECOND_HALF for half a day (one-day applications only).
+  halfDay            String?
+  /// Days taken from the balance, in steps of 0.5.
+  days               Float
+  /// The leave year the days come from (the start date's year, Asia/Dhaka).
+  year               Int
+  reason             String
+  addressDuringLeave String?
+  contactPhone       String?
+  applicantUserId    String
+  applicant          User      @relation("LeaveApplicant", fields: [applicantUserId], references: [id])
+  branchId           String
+  branch             Branch    @relation(fields: [branchId], references: [id])
+  departmentId       String?
+  /// The head of department who approves first.
+  approverUserId     String
+  approver           User      @relation("LeaveApprover", fields: [approverUserId], references: [id])
+  /// The colleague covering the work.
+  relieverEmployeeId String?
+  reliever           Employee? @relation("LeaveReliever", fields: [relieverEmployeeId], references: [id])
+  status             String    @default("PENDING_HOD")
+  statusNote         String?
+  statusChangedAt    DateTime  @default(now())
+  hodApprovedAt      DateTime?
+  approvedAt         DateTime?
+  rejectedAt         DateTime?
+  cancelledAt        DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  updates LeaveUpdate[]
+
+  @@index([applicantUserId, startDate])
+  @@index([approverUserId, status])
+  @@index([status, startDate])
+  @@index([branchId, status])
+  @@map("leave_requests")
+}
+
+/// Append-only history of a leave application.
+model LeaveUpdate {
+  id          String       @id @default(uuid())
+  leaveId     String
+  leave       LeaveRequest @relation(fields: [leaveId], references: [id])
+  type        String
+  fromStatus  String?
+  toStatus    String?
+  note        String?
+  actorUserId String?
+  actorName   String
+  metadata    Json         @default("{}")
+  createdAt   DateTime     @default(now())
+
+  @@index([leaveId, createdAt])
+  @@map("leave_updates")
+}
+
+/// HR's entitlement for one person, type and year where it differs from the policy (carried-forward earned leave, a part-year joiner).
+model LeaveEntitlement {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation("LeaveEntitlements", fields: [userId], references: [id])
+  year      Int
+  type      String
+  days      Float
+  note      String?
+  updatedBy String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, year, type])
+  @@map("leave_entitlements")
 }
