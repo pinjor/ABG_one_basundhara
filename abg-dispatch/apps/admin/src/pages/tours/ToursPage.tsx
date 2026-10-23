@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronRight, Globe, Hourglass, Loader2, Pencil, Plane, Plus, Search, ShieldCheck, TriangleAlert, Wallet, X } from "lucide-react";
 import { Capability, TOUR_AWAITING_LABEL, TOUR_LIMITS, TourType, formatTaka, formatTakaShort } from "@abg-dispatch/shared";
@@ -415,28 +415,33 @@ export function ToursPage() {
                         <th className="px-4 py-3 font-semibold">Travel dates</th>
                         <th className="px-4 py-3 text-right font-semibold">Est. budget (৳)</th>
                         <th className="px-4 py-3 font-semibold">Status</th>
-                        <th className="px-4 py-3 text-right font-semibold">Action</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-line">
                       {rows.map((r) => (
                         <tr key={r.id} className="cursor-pointer transition hover:bg-surface/80" onClick={() => navigate(`/tours/${r.id}`)}>
-                          <td className="max-w-[300px] px-4 py-3 align-top">
-                            <p className="mono text-[12.5px] text-navy">{r.referenceNumber}</p>
-                            <p className="truncate font-medium text-ink">{r.traveller}</p>
-                            <p className="truncate text-xs text-ink-subtle">{r.travellerSub}</p>
-                          </td>
-                          <td className="max-w-[320px] px-4 py-3 align-top">
-                            <div className="flex flex-wrap items-center gap-1.5">
-                              <TourTypeTag type={r.type} />
-                              {r.passportAlert && <PassportTag />}
+                          <td className="px-4 py-3 align-top">
+                            <div className="max-w-[230px]">
+                              <Link to={`/tours/${r.id}`} onClick={(e) => e.stopPropagation()} className="mono text-[12.5px] text-navy hover:text-active hover:underline">
+                                {r.referenceNumber}
+                              </Link>
+                              <p className="truncate font-medium text-ink">{r.traveller}</p>
+                              <p className="truncate text-xs text-ink-subtle">{r.travellerSub}</p>
                             </div>
-                            <p className="mt-1 truncate font-medium text-ink" title={r.where}>
-                              {r.where}
-                            </p>
-                            <p className="truncate text-xs text-ink-muted" title={r.title}>
-                              {r.title}
-                            </p>
+                          </td>
+                          <td className="px-4 py-3 align-top">
+                            <div className="max-w-[280px]">
+                              <div className="flex flex-wrap items-center gap-1.5">
+                                <TourTypeTag type={r.type} />
+                                {r.passportAlert && <PassportTag />}
+                              </div>
+                              <p className="mt-1 truncate font-medium text-ink" title={r.where}>
+                                {r.where}
+                              </p>
+                              <p className="truncate text-xs text-ink-muted" title={r.title}>
+                                {r.title}
+                              </p>
+                            </div>
                           </td>
                           <td className="whitespace-nowrap px-4 py-3 align-top text-ink">{travelDates(r.startDate, r.endDate)}</td>
                           <td className="whitespace-nowrap px-4 py-3 text-right align-top">
@@ -448,17 +453,6 @@ export function ToursPage() {
                               <TourStatusBadge status={r.status} size="sm" />
                               {r.awaiting && <span className="text-[11px] text-ink-subtle">{r.awaitingMe ? "Waiting for you" : `With ${TOUR_AWAITING_LABEL[r.awaiting]}`}</span>}
                             </div>
-                          </td>
-                          <td className="px-4 py-3 text-right align-top">
-                            <button
-                              className={cx(r.awaitingMe ? "btn-primary" : "btn-secondary", "h-8 px-3 text-xs")}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                navigate(`/tours/${r.id}`);
-                              }}
-                            >
-                              {r.awaitingMe ? "Review" : "Details"}
-                            </button>
                           </td>
                         </tr>
                       ))}

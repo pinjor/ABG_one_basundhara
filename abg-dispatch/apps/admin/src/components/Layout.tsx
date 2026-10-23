@@ -171,7 +171,7 @@ export function Layout({ children }: { children: ReactNode }) {
                     >
                       <item.icon className="h-[18px] w-[18px]" aria-hidden />
                       {item.label}
-                      {item.tag && <span className="ml-auto rounded-full bg-active/20 px-2 text-[10px] font-bold uppercase leading-[18px] tracking-wide text-[#8DB8FF]">{item.tag}</span>}
+                      {item.tag && <span className="ml-auto rounded-full bg-active px-2 text-[10px] font-bold uppercase leading-[18px] tracking-wide text-white">{item.tag}</span>}
                       {item.badge === "incidents" && pending > 0 && (
                         <span className="tabular ml-auto rounded-full bg-pending px-1.5 text-[11px] font-bold leading-[18px] text-white" aria-label={`${pending} pending`}>
                           {pending}

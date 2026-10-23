@@ -331,7 +331,7 @@ function VisitorBoard() {
         </div>
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[1fr_380px]">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_380px]">
         <div className="min-w-0">
           <div className="card mb-3 p-3">
             <div className="mb-3">
@@ -417,7 +417,7 @@ function VisitorBoard() {
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="min-w-0 space-y-4">
           <Card title="Today's visitors by purpose" action={<span className="text-xs text-ink-subtle">Checked in today</span>}>
             {summary.isLoading ? (
               <Spinner />

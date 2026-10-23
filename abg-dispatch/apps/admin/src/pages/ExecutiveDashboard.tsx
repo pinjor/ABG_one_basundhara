@@ -383,7 +383,7 @@ export function ExecutiveDashboardPage() {
                 <Empty icon={Plane} title={tourRows.isLoading ? "Loading tour requests…" : "No tour requests yet"} />
               ) : (
                 <div className="overflow-x-auto">
-                  <table className="w-full min-w-[760px] text-left text-sm">
+                  <table className="w-full min-w-[620px] text-left text-sm">
                     <thead className="bg-surface/70 text-[11.5px] font-bold uppercase tracking-wide text-ink-muted">
                       <tr>
                         <th className="px-5 py-3">Ref / traveller</th>
@@ -391,7 +391,6 @@ export function ExecutiveDashboardPage() {
                         <th className="px-4 py-3">Travel dates</th>
                         <th className="px-4 py-3">Est. budget</th>
                         <th className="px-4 py-3">Status</th>
-                        <th className="px-5 py-3 text-right">Action</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-line">
@@ -400,7 +399,9 @@ export function ExecutiveDashboardPage() {
                         return (
                           <tr key={r.id} className="align-top">
                             <td className="px-5 py-4">
-                              <p className="mono font-semibold text-navy">{r.referenceNumber}</p>
+                              <Link to={`/tours/${r.id}`} className="mono font-semibold text-navy hover:text-active hover:underline">
+                                {r.referenceNumber}
+                              </Link>
                               <p className="text-ink-muted">{r.traveller?.name ?? r.travellerName ?? ""}</p>
                             </td>
                             <td className="px-4 py-4">
@@ -413,11 +414,6 @@ export function ExecutiveDashboardPage() {
                             <td className="tabular whitespace-nowrap px-4 py-4 text-ink">৳ {new Intl.NumberFormat("en-IN").format(r.estimatedBudget)}</td>
                             <td className="px-4 py-4">
                               <span className={cx("inline-block rounded-md px-2 py-1 text-xs font-semibold", TONE_TEXT[tone])}>{TOUR_STATUS_LABEL[r.status as TourStatus] ?? r.status}</span>
-                            </td>
-                            <td className="px-5 py-4 text-right">
-                              <Link to={`/tours/${r.id}`} className="font-semibold text-active hover:underline">
-                                Details
-                              </Link>
                             </td>
                           </tr>
                         );
