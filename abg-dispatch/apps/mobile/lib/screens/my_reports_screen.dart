@@ -112,7 +112,7 @@ class _MyReportsScreenState extends State<MyReportsScreen> {
     final l = L.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(l.incMyReports),
+        title: Text(l.svcIncidentRecord),
         actions: [
           IconButton(
             tooltip: l.incReport,
@@ -121,13 +121,20 @@ class _MyReportsScreenState extends State<MyReportsScreen> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _report,
+        backgroundColor: AbgColors.danger,
+        foregroundColor: Colors.white,
+        icon: const Icon(Icons.campaign_rounded),
+        label: Text(l.incReport),
+      ),
       body: RefreshIndicator(
         color: AbgColors.navy,
         onRefresh: _load,
         child: ListView(
           controller: _scroll,
           physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(0, 8, 0, 40),
+          padding: const EdgeInsets.fromLTRB(0, 8, 0, 96),
           children: [
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,

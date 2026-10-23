@@ -5,15 +5,16 @@
 # ABG ONE
 
 **One app and one portal for the everyday operations of Anvir Bashundhara
-Group:** official tours, pool cars, factory visitors, incidents, the
-regulatory licence register, the official notice board and the parcel
-chain of custody. Every request follows a set approval path, every step is
-recorded on an append-only history, and the right people are told at once.
+Group:** the notice board, appointments with the MD and Chairman, incidents,
+the regulatory licence register, audits, the parcel chain of custody, factory
+visitors, leave, pool cars and official tours. Every request follows a set
+approval path, every step is recorded on an append-only history, and the
+right people are told at once.
 
 | | |
 |---|---|
-| **Mobile app** (Flutter · Android & iOS) | A services home for every employee: request a tour or a pool car, invite a visitor, report an incident, read and acknowledge notices, send and receive parcels. Approvers approve from their phone, security runs the gate desk (scan visitor and vehicle passes), drivers see their trips. English and Bangla. |
-| **Admin portal** (React) | The executive dashboard, then one page per module: tour pipeline, pool car and fleet desk, visitor desk with a live on-site counter, incident inbox, licence register with expiry countdowns, notice board with read receipts, and the parcel control room, analytics, registers and audit log. |
+| **Mobile app** (Flutter · Android & iOS) | A services home for every employee: read and acknowledge notices, ask the MD or Chairman for a meeting, report an incident, fix audit findings, send and receive parcels, invite a visitor, apply for leave, request a pool car or a tour. Approvers approve leave, meetings, cars and tours from one inbox; security runs the gate desk; drivers see their trips. English and Bangla. |
+| **Admin portal** (React) | The executive dashboard, then one page per module in the same order as the app: notice board with read receipts, the executive diary, incident inbox, licence register with expiry countdowns, audits with corrective actions, the parcel control room, visitor desk with a live on-site counter, leave with balances and a team calendar, pool car and fleet desk, tour pipeline — plus analytics, registers and the audit log. |
 | **API** (NestJS · PostgreSQL) | Object-level authorisation on every request, state machines enforced in code *and* in the database, signed QR gate passes, notifications (in-app, push, SMS), licence expiry escalation, SLA escalation, courier adapters. |
 
 <p>
@@ -27,19 +28,45 @@ recorded on an append-only history, and the right people are told at once.
 
 ## Modules
 
-| Module | What it does | Spec |
-|---|---|---|
-| **Executive dashboard** | Live KPIs across every module: overseas tours, pending approvals, travel budget used, passport alerts, pool car availability, visitors on site, open incidents, expiring licences; recent tours, visitor trend, incident log, announcements. | — |
-| **Official tour request** | Local and overseas business travel: head of department → HR & Finance vetting → MD / Chairman sanction (overseas) → active → completed. Passport-validity alert, budget and sanctioned amount, four-eyes rules. `ABG-TR-2026-088` | [tours.md](docs/modules/tours.md) |
-| **Pool car requisition & fleet** | Request a car → head of department → fleet manager assigns a vehicle and driver → QR vehicle gate pass scanned out and back in. Vehicle and driver register with service, fitness and insurance dates. `PC-261023-HO-004` | [fleet.md](docs/modules/fleet.md) |
-| **Factory visitor management** | Pre-register a visitor or a walk-in, one-day QR gate pass texted to the visitor, check-in / check-out at the gate, host told at each step, live on-site counter. `VP-261023-FCA-012` | [visitors.md](docs/modules/visitors.md) |
-| **Incident & facility issues** | Four groups (Safety & Industrial, Admin & Facility, Security, IT / Technical), 27 problem types, photos, severity Critical → Low, anonymous or confidential; Reported → Acknowledged → Under Investigation → Closed. | [incidents.md](docs/modules/incidents.md) |
-| **Regulatory licence register** | Trade, factory, fire, environmental, BERC, explosives, boiler, IRC / ERC, BSTI: expiry countdown badges, renewal progress, scanned copies, alerts at 90 / 60 / 30 / 15 / 7 / 0 days escalating up to the MD / Chairman. | [licences.md](docs/modules/licences.md) |
-| **Official notice board** | Chairman, MD, HR, Administration, Compliance and IT channels; urgent notices first, PDF attachments, "I have read and understood" acknowledgements with read receipts per person. `ABG-NB-2026-014` | [notices.md](docs/modules/notices.md) |
-| **Parcel dispatch & tracking** | The chain of custody for documents, parcels and instruments — see below. | [workflows.md](docs/workflows.md) |
+The menu runs in the same order in the app and the portal: **1 Notice board ·
+2 Request for Appointment · 3 Incident record · 4 Regulatory Affairs ·
+5 Audit · 6 Office parcel · 7 Visitor Management · 8 Leave apply · 9 Pool car
+request** — then Official tour request. The portal opens on the Executive
+dashboard; on the phone the first eight services show on the home screen and
+the rest sit behind *See more*. A service someone's role does not include is
+left out, and the others keep their order.
+
+| # | Module | What it does | Spec |
+|---|---|---|---|
+| — | **Executive dashboard** | Live KPIs across every module: overseas tours, pending approvals, travel budget used, passport alerts, pool car availability, visitors on site, open incidents, expiring licences; a tile per module in menu order; recent tours, visitor trend, incident log, announcements. | — |
+| 1 | **Notice board** | Chairman, MD, HR, Administration, Compliance and IT channels; urgent notices first, PDF attachments, "I have read and understood" acknowledgements with read receipts per person. `ABG-NB-2026-014` | [notices.md](docs/modules/notices.md) |
+| 2 | **Request for Appointment** | Ask the MD, the Chairman or a head of department for a meeting (purpose, in person / video / phone, length, preferred and alternative time). The executive office (PA) or the person asked confirms, proposes another time or declines; a host is never double-booked. `ABG-AP-2026-012` | [appointments.md](docs/modules/appointments.md) |
+| 3 | **Incident record** | Four groups (Safety & Industrial, Admin & Facility, Security, IT / Technical), 27 problem types, photos, severity Critical → Low, anonymous or confidential; Reported → Acknowledged → Under Investigation → Closed. | [incidents.md](docs/modules/incidents.md) |
+| 4 | **Regulatory Affairs** | The licence register — trade, factory, fire, environmental, BERC, explosives, boiler, IRC / ERC, BSTI: expiry countdown badges, renewal progress, scanned copies, alerts at 90 / 60 / 30 / 15 / 7 / 0 days escalating up to the MD / Chairman. | [licences.md](docs/modules/licences.md) |
+| 5 | **Audit** | Plan audits per office (internal, compliance, fire & safety, buyer, ISO, financial, environmental), record findings by severity, give each corrective action an owner and a due date, verify the fixes and close; overdue actions alert the owner and the lead. `ABG-AU-2026-005` | [audits.md](docs/modules/audits.md) |
+| 6 | **Office parcel** | The chain of custody for documents, parcels and instruments — see below. | [workflows.md](docs/workflows.md) |
+| 7 | **Visitor Management** | Pre-register a visitor or a walk-in, one-day QR gate pass texted to the visitor, check-in / check-out at the gate, host told at each step, live on-site counter. `VP-261023-FCA-012` | [visitors.md](docs/modules/visitors.md) |
+| 8 | **Leave apply** | Casual, sick, earned, maternity, paternity and unpaid leave with yearly balances; apply → head of department → HR; working days counted without the weekly and public holidays; no overlapping leave; team calendar. `ABG-LV-2026-015` | [leave.md](docs/modules/leave.md) |
+| 9 | **Pool car request** | Request a car → head of department → fleet manager assigns a vehicle and driver → QR vehicle gate pass scanned out and back in. Vehicle and driver register with service, fitness and insurance dates. `PC-261023-HO-004` | [fleet.md](docs/modules/fleet.md) |
+| — | **Official tour request** | Local and overseas business travel: head of department → HR & Finance vetting → MD / Chairman sanction (overseas) → active → completed. Passport-validity alert, budget and sanctioned amount, four-eyes rules. `ABG-TR-2026-088` | [tours.md](docs/modules/tours.md) |
 
 Every module follows one contract across the API, the portal and the app:
 [docs/modules/README.md](docs/modules/README.md).
+
+### Request for Appointment, Audit and Leave
+
+<p>
+  <img src="docs/screenshots/mobile-33-request-meeting.png" width="190" alt="Request a meeting" />
+  <img src="docs/screenshots/mobile-35-pa-confirm.png" width="190" alt="The executive office confirms a time" />
+  <img src="docs/screenshots/mobile-36-audit-my-actions.png" width="190" alt="My corrective actions" />
+  <img src="docs/screenshots/mobile-31-apply-leave.png" width="190" alt="Apply for leave" />
+</p>
+
+![Executive diary](docs/screenshots/portal-25-executive-diary.png)
+
+![Audit with corrective actions](docs/screenshots/portal-28-audit-detail.png)
+
+![Leave calendar](docs/screenshots/portal-31-leave-calendar.png)
 
 ### Official tours
 
@@ -93,7 +120,7 @@ Details: [workflows §13](docs/workflows.md#13-incident--facility-issues) and
   <img src="docs/screenshots/mobile-12-report-incident.png" width="190" alt="Report an incident" />
   <img src="docs/screenshots/mobile-15-incident-progress.png" width="190" alt="Report under investigation" />
   <img src="docs/screenshots/mobile-13-incident-closed.png" width="190" alt="Report closed" />
-  <img src="docs/screenshots/mobile-14-my-reports.png" width="190" alt="My reports" />
+  <img src="docs/screenshots/mobile-14-my-reports.png" width="190" alt="Incident record" />
 </p>
 
 ![Incident reports in the portal](docs/screenshots/portal-11-incident-reports.png)
@@ -142,10 +169,11 @@ docker compose exec api bun prisma/seed.ts
 
 Sign in at http://localhost:18490 as `arif.chowdhury@abg.com.bd` /
 `Dispatch@2026` (you'll be asked to set up two-factor first — production
-mode). The seed creates 31 accounts covering every role — the MD and the
-Chairman, HR & Finance, the fleet manager and drivers, security guards, the
-compliance officer — with tours, pool car trips, visitors, licences, notices,
-incidents and parcels to work with. Development setup without Docker, mobile
+mode). The seed creates 32 accounts covering every role — the MD and the
+Chairman and their executive office (PA), HR & Finance, the fleet manager and
+drivers, security guards, the compliance officer — with notices, meeting
+requests, incidents, licences, audits, parcels, visitors, leave, pool car
+trips and tours to work with. Development setup without Docker, mobile
 builds and production deployment: **[docs/deployment.md](docs/deployment.md)**.
 Demo people and data: **[docs/seed-data.md](docs/seed-data.md)**.
 
@@ -201,8 +229,18 @@ cd apps/mobile && flutter analyze && flutter test
 |---|---|---|---|
 | <img src="docs/screenshots/mobile-11-home-services.png" width="180" /> | <img src="docs/screenshots/mobile-28-my-abg.png" width="180" /> | <img src="docs/screenshots/mobile-23-invite-visitor.png" width="180" /> | <img src="docs/screenshots/mobile-01-sign-in.png" width="180" /> |
 | <img src="docs/screenshots/mobile-06-book-parcel.png" width="180" /> | <img src="docs/screenshots/mobile-04-receive.png" width="180" /> | <img src="docs/screenshots/mobile-05-custody-timeline.png" width="180" /> | <img src="docs/screenshots/mobile-09-guest-carrier.png" width="180" /> |
+| <img src="docs/screenshots/mobile-30-leave.png" width="180" /> | <img src="docs/screenshots/mobile-32-leave-approve.png" width="180" /> | <img src="docs/screenshots/mobile-34-pa-to-answer.png" width="180" /> | <img src="docs/screenshots/mobile-37-audit-detail.png" width="180" /> |
 
 Admin portal: [executive dashboard](docs/screenshots/portal-13-executive-dashboard.png) ·
+[executive diary](docs/screenshots/portal-25-executive-diary.png) ·
+[appointments to answer](docs/screenshots/portal-26-appointments-to-answer.png) ·
+[appointment detail](docs/screenshots/portal-27-appointment-detail.png) ·
+[audits](docs/screenshots/portal-29-audits.png) ·
+[audit detail](docs/screenshots/portal-28-audit-detail.png) ·
+[leave](docs/screenshots/portal-30-leave.png) ·
+[leave awaiting approval](docs/screenshots/portal-32-leave-awaiting.png) ·
+[leave calendar](docs/screenshots/portal-31-leave-calendar.png) ·
+[holidays & entitlements](docs/screenshots/portal-33-leave-hr.png) ·
 [tours](docs/screenshots/portal-14-tours.png) ·
 [tour detail](docs/screenshots/portal-15-tour-detail.png) ·
 [pool cars](docs/screenshots/portal-16-pool-car.png) ·

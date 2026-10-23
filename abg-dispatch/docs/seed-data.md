@@ -43,9 +43,11 @@ For the ABG ONE modules:
 |---|---|---|---|---|
 | Shafiqul Alam | ABG-1003 | HO | MD / Chairman (`chairman@abg.com.bd`) | Sanctioning overseas tours, Chairman's notices, executive dashboard |
 | Kazi Ashraful Haque | ABG-1002 | HO | MD / Chairman (`md@abg.com.bd`) | The same as the Managing Director |
-| Farid Uddin | ABG-2210 | HO | Employee, head of department | Approving tours and pool cars on the phone (*Approvals*) |
-| Nusrat Jahan, Sadia Rahman | ABG-2055, ABG-2101 | HO | HR & Finance | Vetting tour requests, HR notices |
-| Shirin Akhter | ABG-2400 | HO | Compliance Officer | The licence register, compliance notices |
+| Rumana Ahmed | ABG-1010 | HO | Executive Office / PA (`rumana.ahmed@abg.com.bd`) | Answering meeting requests for the MD and the Chairman, the executive diary |
+| Farid Uddin | ABG-2210 | HO | Employee, head of department | Approving leave, tours and pool cars and answering meeting requests on the phone (*Approvals*) |
+| Nusrat Jahan, Sadia Rahman | ABG-2055, ABG-2101 | HO | HR & Finance | Vetting tour requests, the HR approval on leave, holidays and entitlements, HR notices |
+| Shirin Akhter | ABG-2400 | HO | Compliance Officer | The licence register, running audits, compliance notices |
+| Imran Hossain, Tahmina Begum | ABG-7420, ABG-7455 | FCB | Employee, Branch Admin | Corrective actions from the Factory B buyer audit (*Audit · My actions*) |
 | Jahangir Alam | ABG-3610 | HO | Fleet Manager | Assigning cars and drivers, the vehicle register |
 | Abul Kalam, Mizanur Rahman | ABG-3620, ABG-3621 | HO | Driver | *My trips* on the phone |
 | Sohel Rana | ABG-7620 | FCA | Driver | Factory A trips |
@@ -53,8 +55,8 @@ For the ABG ONE modules:
 | Nurul Amin | ABG-5290 | FCA | Security | Factory A gate desk |
 
 Everyone with an account except the Chairman has a line manager in the
-directory, who is the default approver on their tour and pool car requests. The seed creates 31 accounts in
-all.
+directory, who is the default approver on their leave, tour and pool car
+requests. The seed creates 32 accounts in all.
 
 Emails follow `firstname.lastname@abg.com.bd` (Rahim is `rahim@abg.com.bd`,
 the super admin `admin@abg.com.bd`). Five directory-only employees have no
@@ -141,3 +143,16 @@ screen:
 - **Notices** — nine notices on every channel, with PDFs, an urgent circular,
   a draft, an archived notice and read receipts.
   [notices.md](modules/notices.md#demo-data)
+- **Appointments** — twelve meeting requests `ABG-AP-<year>-001…012`: two
+  waiting for the executive office (one urgent), one with a new time
+  proposed to Imran Hossain, confirmed meetings with the Chairman, the MD and
+  Farid Uddin, and held, declined and cancelled ones.
+  [appointments.md](modules/appointments.md#demo-data)
+- **Audits** — seven audits `ABG-AU-<year>-001…007`: a Factory B buyer audit
+  with corrective actions open and one overdue, an ISO 45001 audit of
+  Factory A in progress with a critical finding, planned and closed audits.
+  [audits.md](modules/audits.md#demo-data)
+- **Leave** — sixteen applications `ABG-LV-<year>-001…016` in every status
+  (two waiting for Farid Uddin, three for HR), Bangladesh public holidays for
+  2026–27, and an HR-set earned-leave entitlement for Md. Rahim.
+  [leave.md](modules/leave.md#demo-data)

@@ -37,66 +37,20 @@ class AbgService {
 const _teal = Color(0xFF0E8A8A);
 const _indigo = Color(0xFF4B4FC4);
 const _rose = Color(0xFFC0466A);
+const _plum = Color(0xFF8E4EC6);
+const _ocean = Color(0xFF1F6F9F);
+const _steel = Color(0xFF2B6CB0);
 
-/// The services this person may use, most-used first. The first eight show on
-/// the home screen; the rest sit behind "See more".
+/// The services this person may use, in the order the group agreed for the
+/// menu (the admin portal's sidebar follows the same order):
+/// 1 Notice board · 2 Request for Appointment · 3 Incident record ·
+/// 4 Regulatory Affairs · 5 Audit · 6 Office parcel · 7 Visitor Management ·
+/// 8 Leave apply · 9 Pool car request — then tours, approvals, scanning and
+/// a driver's trips. The first eight show on the home screen; the rest sit
+/// behind "See more".
 List<AbgService> servicesFor(Profile? p, L l) {
   bool can(String cap) => p?.can(cap) ?? false;
   return [
-    if (can('parcel.create'))
-      AbgService(
-        id: 'send',
-        label: l.svcSendParcel,
-        icon: Icons.send_rounded,
-        accent: AbgColors.active,
-        route: '/create',
-        keywords: const ['parcel', 'document', 'book', 'courier', 'পার্সেল'],
-      ),
-    if (can('parcel.view.own'))
-      AbgService(
-        id: 'parcels',
-        label: l.svcMyParcels,
-        icon: Icons.inventory_2_rounded,
-        accent: AbgColors.navy500,
-        route: '/parcels',
-        keywords: const ['track', 'receive', 'tracking', 'ট্র্যাক'],
-      ),
-    if (can('fleet.request'))
-      AbgService(
-        id: 'pool-car',
-        label: l.svcPoolCar,
-        icon: Icons.directions_car_filled_rounded,
-        accent: _teal,
-        route: '/pool-car',
-        keywords: const ['car', 'vehicle', 'transport', 'driver', 'গাড়ি'],
-      ),
-    if (can('incident.report'))
-      AbgService(
-        id: 'report',
-        label: l.svcReportIssue,
-        icon: Icons.campaign_rounded,
-        accent: AbgColors.danger,
-        route: '/incidents/new',
-        keywords: const ['incident', 'safety', 'facility', 'complaint', 'ঘটনা'],
-      ),
-    if (can('visitor.invite'))
-      AbgService(
-        id: 'visitors',
-        label: can('visitor.manage') ? l.svcGateDesk : l.svcVisitors,
-        icon: Icons.badge_rounded,
-        accent: AbgColors.pending,
-        route: '/visitors',
-        keywords: const ['guest', 'gate pass', 'visitor', 'অতিথি'],
-      ),
-    if (can('tour.request'))
-      AbgService(
-        id: 'tours',
-        label: l.svcTours,
-        icon: Icons.flight_takeoff_rounded,
-        accent: _indigo,
-        route: '/tours',
-        keywords: const ['travel', 'tour', 'trip', 'foreign', 'ভ্রমণ'],
-      ),
     if (can('notice.read'))
       AbgService(
         id: 'notices',
@@ -106,13 +60,135 @@ List<AbgService> servicesFor(Profile? p, L l) {
         route: '/notices',
         keywords: const ['notice', 'circular', 'announcement', 'নোটিশ'],
       ),
+    if (can('appointment.request'))
+      AbgService(
+        id: 'appointments',
+        label: l.svcAppointment,
+        icon: Icons.event_rounded,
+        accent: _plum,
+        route: '/appointments',
+        keywords: const [
+          'appointment',
+          'meeting',
+          'md',
+          'chairman',
+          'schedule',
+          'সাক্ষাৎ',
+        ],
+      ),
+    if (can('incident.report'))
+      AbgService(
+        id: 'incidents',
+        label: l.svcIncidentRecord,
+        icon: Icons.campaign_rounded,
+        accent: AbgColors.danger,
+        route: '/incidents',
+        keywords: const [
+          'incident',
+          'report',
+          'safety',
+          'facility',
+          'complaint',
+          'ঘটনা',
+        ],
+      ),
+    if (can('licence.view'))
+      AbgService(
+        id: 'licences',
+        label: l.svcRegulatory,
+        icon: Icons.verified_rounded,
+        accent: _indigo,
+        route: '/licences',
+        keywords: const [
+          'licence',
+          'license',
+          'permit',
+          'renewal',
+          'regulatory',
+          'লাইসেন্স',
+        ],
+      ),
+    if (p?.employee != null)
+      AbgService(
+        id: 'audits',
+        label: l.svcAudit,
+        icon: Icons.fact_check_rounded,
+        accent: _ocean,
+        route: '/audits',
+        keywords: const [
+          'audit',
+          'finding',
+          'corrective',
+          'compliance',
+          'অডিট',
+        ],
+      ),
+    if (can('parcel.view.own') || can('parcel.create'))
+      AbgService(
+        id: 'parcels',
+        label: l.svcOfficeParcel,
+        icon: Icons.inventory_2_rounded,
+        accent: AbgColors.navy500,
+        route: '/parcels',
+        keywords: const [
+          'parcel',
+          'document',
+          'send',
+          'courier',
+          'track',
+          'পার্সেল',
+        ],
+      ),
+    if (can('visitor.invite'))
+      AbgService(
+        id: 'visitors',
+        label: l.svcVisitorManagement,
+        icon: Icons.badge_rounded,
+        accent: AbgColors.pending,
+        route: '/visitors',
+        keywords: const ['guest', 'gate pass', 'visitor', 'gate', 'অতিথি'],
+      ),
+    if (can('leave.apply'))
+      AbgService(
+        id: 'leave',
+        label: l.svcLeave,
+        icon: Icons.beach_access_rounded,
+        accent: _rose,
+        route: '/leave',
+        keywords: const [
+          'leave',
+          'holiday',
+          'casual',
+          'sick',
+          'vacation',
+          'ছুটি',
+        ],
+      ),
+    if (can('fleet.request'))
+      AbgService(
+        id: 'pool-car',
+        label: l.svcPoolCarRequest,
+        icon: Icons.directions_car_filled_rounded,
+        accent: _teal,
+        route: '/pool-car',
+        keywords: const ['car', 'vehicle', 'transport', 'driver', 'গাড়ি'],
+      ),
+    if (can('tour.request'))
+      AbgService(
+        id: 'tours',
+        label: l.svcTours,
+        icon: Icons.flight_takeoff_rounded,
+        accent: _steel,
+        route: '/tours',
+        keywords: const ['travel', 'tour', 'trip', 'foreign', 'ভ্রমণ'],
+      ),
     AbgService(
       id: 'approvals',
       label: l.svcApprovals,
-      icon: Icons.fact_check_rounded,
-      accent: _rose,
+      icon: Icons.fact_check_outlined,
+      accent: AbgColors.active,
       route: '/approvals',
-      keywords: const ['approve', 'hod', 'sanction', 'অনুমোদন'],
+      keywords: const ['approve', 'hod', 'sanction', 'leave', 'অনুমোদন'],
     ),
     AbgService(
       id: 'scan',
@@ -122,15 +198,6 @@ List<AbgService> servicesFor(Profile? p, L l) {
       route: '/scan',
       keywords: const ['qr', 'scan', 'label', 'gate pass', 'স্ক্যান'],
     ),
-    if (can('incident.report'))
-      AbgService(
-        id: 'my-reports',
-        label: l.svcMyReports,
-        icon: Icons.assignment_rounded,
-        accent: AbgColors.pending,
-        route: '/incidents',
-        keywords: const ['report', 'incident', 'রিপোর্ট'],
-      ),
     if (can('fleet.drive'))
       AbgService(
         id: 'my-trips',
@@ -139,15 +206,6 @@ List<AbgService> servicesFor(Profile? p, L l) {
         accent: _teal,
         route: '/pool-car',
         keywords: const ['trip', 'driver', 'ট্রিপ'],
-      ),
-    if (can('licence.view'))
-      AbgService(
-        id: 'licences',
-        label: l.svcLicences,
-        icon: Icons.verified_rounded,
-        accent: _indigo,
-        route: '/licences',
-        keywords: const ['licence', 'license', 'permit', 'renewal', 'লাইসেন্স'],
       ),
   ];
 }

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'core/session.dart';
+import 'modules/appointments/appointments.dart';
 import 'modules/approvals/approvals.dart';
+import 'modules/audits/audits.dart';
 import 'modules/fleet/fleet.dart';
+import 'modules/leave/leave.dart';
 import 'modules/licences/licences.dart';
 import 'modules/notices/notices.dart';
 import 'modules/tours/tours.dart';
@@ -106,6 +109,57 @@ GoRouter buildRouter(SessionController session) {
         ],
       ),
       // ── ABG ONE modules ──
+      GoRoute(
+        path: '/appointments',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (_, _) => const AppointmentsScreen(),
+        routes: [
+          GoRoute(
+            path: 'new',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, _) => const AppointmentFormScreen(),
+          ),
+          GoRoute(
+            path: ':id',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, s) =>
+                AppointmentDetailScreen(id: s.pathParameters['id']!),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/audits',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (_, _) => const AuditsScreen(),
+        routes: [
+          GoRoute(
+            path: ':id',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, s) => AuditDetailScreen(
+              id: s.pathParameters['id']!,
+              findingId: s.uri.queryParameters['finding'],
+            ),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/leave',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (_, _) => const LeaveScreen(),
+        routes: [
+          GoRoute(
+            path: 'new',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, s) =>
+                LeaveFormScreen(initialType: s.uri.queryParameters['type']),
+          ),
+          GoRoute(
+            path: ':id',
+            parentNavigatorKey: rootNavigatorKey,
+            builder: (_, s) => LeaveDetailScreen(id: s.pathParameters['id']!),
+          ),
+        ],
+      ),
       GoRoute(
         path: '/tours',
         parentNavigatorKey: rootNavigatorKey,

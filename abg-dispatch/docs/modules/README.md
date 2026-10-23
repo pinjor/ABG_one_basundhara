@@ -1,11 +1,36 @@
 # ABG ONE modules — how a module is built
 
-ABG ONE grew out of ABG Dispatch (parcels). Each further module — official
-tours, pool cars, visitors, licences, notices, incidents — follows the same
-shape across the API, the admin portal and the mobile app, so they feel like
-one product and can be maintained the same way. The incident reports module
+ABG ONE grew out of ABG Dispatch (parcels). Each further module — notices,
+appointments, incidents, licences, audits, visitors, leave, pool cars and
+official tours — follows the same shape across the API, the admin portal and
+the mobile app, so they feel like one product and can be maintained the same
+way. The incident reports module
 (`apps/api/src/incidents`, `apps/admin/src/pages/Incident*.tsx`,
 `apps/mobile/lib/screens/*incident*`) is the reference implementation.
+
+## Menu order
+
+The group agreed one order for the menu, and both apps follow it:
+
+| # | Service | Spec | Portal (`components/Layout.tsx` `NAV`) | Phone (`core/services.dart` `servicesFor`) |
+|---|---|---|---|---|
+| 1 | Notice board | [notices.md](notices.md) | `/notices` | `/notices` |
+| 2 | Request for Appointment | [appointments.md](appointments.md) | `/appointments` | `/appointments` |
+| 3 | Incident record | [incidents.md](incidents.md) | `/incidents` | `/incidents` (report from there) |
+| 4 | Regulatory Affairs | [licences.md](licences.md) | `/licences` | `/licences` |
+| 5 | Audit | [audits.md](audits.md) | `/audits` | `/audits` |
+| 6 | Office parcel | [../workflows.md](../workflows.md) | `/parcels` | `/parcels` (send from there) |
+| 7 | Visitor Management | [visitors.md](visitors.md) | `/visitors` | `/visitors` |
+| 8 | Leave apply | [leave.md](leave.md) | `/leave` | `/leave` |
+| 9 | Pool car request | [fleet.md](fleet.md) | `/pool-car` | `/pool-car` |
+| — | Official tour request | [tours.md](tours.md) | `/tours` | `/tours` |
+
+The portal opens on the Executive dashboard, whose module tiles, the header's
+*New request* menu and the global search's reference prefixes follow the same
+order. On the phone the first eight services show on the home screen and the
+rest (tours, approvals, scanning, a driver's trips) sit behind *See more*. A
+service someone's role does not include is left out; the others keep their
+order. A new module takes its place in this table, in both files.
 
 ## Files a module owns
 
@@ -79,8 +104,14 @@ Flutter + provider + go_router. Get the HTTP client with
 `context.read<SessionController>().profile` (`profile.can('<capability>')`).
 Use `widgets/common.dart` (`SectionCard`, `SectionTitle`, `ToneBadge`,
 `EmptyState`, `ErrorPanel`, `SkeletonCard`, `InfoRow`, `showSnack`,
-`errorText`, `confirmDialog`), `theme/tokens.dart` (`AbgColors`, `AbgText`,
-`AbgSpace`, `AbgRadii`) and `core/formatting.dart`. Every visible string comes
+`errorText`, `confirmDialog`), `widgets/module_kit.dart` (`ModuleHero`,
+`ToneBanner`, `ProgressSteps`, `HistoryCard`, `BottomActions`, `askNote`,
+`pickPerson`, `PersonField`, `PickerTile`, `SegmentTabs`, `FilterChips`,
+`IconChoiceChips`, `SubmitBar`, `IntroBanner` — the appointment, audit and
+leave screens are built from these), `theme/tokens.dart` (`AbgColors`,
+`AbgText`, `AbgSpace`, `AbgRadii`) and `core/formatting.dart`. Anything that
+waits for the signed-in person's decision also belongs in the **Approvals**
+inbox (`modules/approvals/approvals.dart`). Every visible string comes
 from `L.of(context)`; add strings to `tool/strings/<module>.py` and run
 `python3 tool/generate_arb.py lib/l10n && flutter gen-l10n`. Touch targets
 are 48 px or larger; `flutter analyze` must be clean.

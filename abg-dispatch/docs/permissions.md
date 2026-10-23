@@ -12,54 +12,61 @@ relies on the UI hiding a button.
 
 Generated from [`packages/shared/src/permissions.ts`](../packages/shared/src/permissions.ts).
 
-| Capability | Emp | Snd | Rcv | Cour | Disp | BrAdm | HOAdm | Aud | Super | Fleet | Drv | Sec | HRF | Exec | Comp |
-|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| `parcel.create` | ● | ● |  |  | ● | ● | ● |  | ● | ● |  |  | ● | ● | ● |
-| `parcel.view.own` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● | ● | ● | ● | ● |
-| `parcel.view.branch` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |
-| `parcel.view.all` |  |  |  |  |  |  | ● | ● | ● |  |  |  |  |  |  |
-| `courier.actions` |  |  |  | ● | ● |  |  |  | ● |  |  |  |  |  |  |
-| `parcel.carrier.assign` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |
-| `parcel.handover.officer` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |
-| `parcel.receive.desk` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |
-| `parcel.exception.record` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● |  | ● | ● | ● |
-| `parcel.exception.resolve` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |
-| `parcel.hold` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |
-| `parcel.cancel.any` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |
-| `parcel.return.any` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |
-| `parcel.correct` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |
-| `parcel.notify.resend` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |
-| `parcel.sla.update` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |
-| `parcel.external.update` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |
-| `dashboard.view` |  |  |  |  | ● | ● | ● | ● | ● |  |  |  |  |  |  |
-| `analytics.view` |  |  |  |  |  | ● | ● | ● | ● |  |  |  |  |  |  |
-| `reports.export` |  |  |  |  | ● | ● | ● | ● | ● |  |  |  |  |  |  |
-| `audit.view` |  |  |  |  |  | ● | ● | ● | ● |  |  |  |  |  |  |
-| `config.manage` |  |  |  |  |  |  |  |  | ● |  |  |  |  |  |  |
-| `users.manage` |  |  |  |  |  |  |  |  | ● |  |  |  |  |  |  |
-| `integrations.manage` |  |  |  |  |  |  |  |  | ● |  |  |  |  |  |  |
-| `incident.report` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● | ● | ● | ● | ● |
-| `incident.view` |  |  |  |  |  | ● | ● | ● | ● |  |  |  |  | ● |  |
-| `incident.manage` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |
-| `tour.request` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● | ● | ● | ● | ● |
-| `tour.view` |  |  |  |  |  | ● | ● | ● | ● |  |  |  | ● | ● |  |
-| `tour.vet` |  |  |  |  |  |  |  |  | ● |  |  |  | ● |  |  |
-| `tour.sanction` |  |  |  |  |  |  |  |  | ● |  |  |  |  | ● |  |
-| `fleet.request` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● | ● | ● | ● | ● |
-| `fleet.view` |  |  |  |  |  | ● | ● | ● | ● | ● |  |  |  |  |  |
-| `fleet.manage` |  |  |  |  |  |  |  |  | ● | ● |  |  |  |  |  |
-| `fleet.drive` |  |  |  |  |  |  |  |  | ● |  | ● |  |  |  |  |
-| `visitor.invite` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● | ● | ● | ● | ● |
-| `visitor.view` |  |  |  |  | ● | ● | ● | ● | ● |  |  | ● |  |  |  |
-| `visitor.manage` |  |  |  |  | ● | ● | ● |  | ● |  |  | ● |  |  |  |
-| `gate.verify` |  |  |  |  | ● | ● | ● |  | ● | ● |  | ● |  |  |  |
-| `licence.view` |  |  |  |  |  | ● | ● | ● | ● |  |  |  |  | ● | ● |
-| `licence.manage` |  |  |  |  |  |  | ● |  | ● |  |  |  |  |  | ● |
-| `notice.read` | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● |
-| `notice.publish` |  |  |  |  |  | ● | ● |  | ● |  |  |  | ● | ● | ● |
-| `notice.manage` |  |  |  |  |  |  | ● |  | ● |  |  |  |  | ● |  |
+| Capability | Emp | Snd | Rcv | Cour | Disp | BrAdm | HOAdm | Aud | Super | Fleet | Drv | Sec | HRF | Exec | Comp | PA |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| `parcel.create` | ● | ● |  |  | ● | ● | ● |  | ● | ● |  |  | ● | ● | ● | ● |
+| `parcel.view.own` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● | ● | ● | ● | ● | ● |
+| `parcel.view.branch` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |  |
+| `parcel.view.all` |  |  |  |  |  |  | ● | ● | ● |  |  |  |  |  |  |  |
+| `courier.actions` |  |  |  | ● | ● |  |  |  | ● |  |  |  |  |  |  |  |
+| `parcel.carrier.assign` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |  |
+| `parcel.handover.officer` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |  |
+| `parcel.receive.desk` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |  |
+| `parcel.exception.record` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● |  | ● | ● | ● | ● |
+| `parcel.exception.resolve` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |  |
+| `parcel.hold` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |  |
+| `parcel.cancel.any` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |  |
+| `parcel.return.any` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |  |
+| `parcel.correct` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |  |
+| `parcel.notify.resend` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |  |
+| `parcel.sla.update` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |  |
+| `parcel.external.update` |  |  |  |  | ● | ● | ● |  | ● |  |  |  |  |  |  |  |
+| `dashboard.view` |  |  |  |  | ● | ● | ● | ● | ● |  |  |  |  |  |  |  |
+| `analytics.view` |  |  |  |  |  | ● | ● | ● | ● |  |  |  |  |  |  |  |
+| `reports.export` |  |  |  |  | ● | ● | ● | ● | ● |  |  |  |  |  |  |  |
+| `audit.view` |  |  |  |  |  | ● | ● | ● | ● |  |  |  |  |  |  |  |
+| `config.manage` |  |  |  |  |  |  |  |  | ● |  |  |  |  |  |  |  |
+| `users.manage` |  |  |  |  |  |  |  |  | ● |  |  |  |  |  |  |  |
+| `integrations.manage` |  |  |  |  |  |  |  |  | ● |  |  |  |  |  |  |  |
+| `incident.report` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● | ● | ● | ● | ● | ● |
+| `incident.view` |  |  |  |  |  | ● | ● | ● | ● |  |  |  |  | ● |  |  |
+| `incident.manage` |  |  |  |  |  | ● | ● |  | ● |  |  |  |  |  |  |  |
+| `tour.request` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● | ● | ● | ● | ● | ● |
+| `tour.view` |  |  |  |  |  | ● | ● | ● | ● |  |  |  | ● | ● |  |  |
+| `tour.vet` |  |  |  |  |  |  |  |  | ● |  |  |  | ● |  |  |  |
+| `tour.sanction` |  |  |  |  |  |  |  |  | ● |  |  |  |  | ● |  |  |
+| `fleet.request` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● | ● | ● | ● | ● | ● |
+| `fleet.view` |  |  |  |  |  | ● | ● | ● | ● | ● |  |  |  |  |  |  |
+| `fleet.manage` |  |  |  |  |  |  |  |  | ● | ● |  |  |  |  |  |  |
+| `fleet.drive` |  |  |  |  |  |  |  |  | ● |  | ● |  |  |  |  |  |
+| `visitor.invite` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● | ● | ● | ● | ● | ● |
+| `visitor.view` |  |  |  |  | ● | ● | ● | ● | ● |  |  | ● |  |  |  |  |
+| `visitor.manage` |  |  |  |  | ● | ● | ● |  | ● |  |  | ● |  |  |  |  |
+| `gate.verify` |  |  |  |  | ● | ● | ● |  | ● | ● |  | ● |  |  |  |  |
+| `licence.view` |  |  |  |  |  | ● | ● | ● | ● |  |  |  |  | ● | ● |  |
+| `licence.manage` |  |  |  |  |  |  | ● |  | ● |  |  |  |  |  | ● |  |
+| `notice.read` | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● |
+| `notice.publish` |  |  |  |  |  | ● | ● |  | ● |  |  |  | ● | ● | ● |  |
+| `notice.manage` |  |  |  |  |  |  | ● |  | ● |  |  |  |  | ● |  |  |
+| `appointment.request` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● | ● | ● | ● | ● | ● |
+| `appointment.manage` |  |  |  |  |  |  |  |  | ● |  |  |  |  |  |  | ● |
+| `audits.view` |  |  |  |  |  | ● | ● | ● | ● |  |  |  |  | ● | ● |  |
+| `audits.manage` |  |  |  |  |  |  | ● |  | ● |  |  |  |  |  | ● |  |
+| `leave.apply` | ● | ● | ● | ● | ● | ● | ● |  | ● | ● | ● | ● | ● | ● | ● | ● |
+| `leave.view` |  |  |  |  |  | ● | ● | ● | ● |  |  |  | ● | ● |  |  |
+| `leave.manage` |  |  |  |  |  |  |  |  | ● |  |  |  | ● |  |  |  |
 
-Emp = Employee · Snd = Sender · Rcv = Receiver · Cour = Courier / Runner · Disp = Dispatch Officer · BrAdm = Branch Admin · HOAdm = Head Office Admin · Aud = Auditor · Super = Super Admin · Fleet = Fleet Manager · Drv = Driver · Sec = Security · HRF = HR & Finance · Exec = MD / Chairman · Comp = Compliance Officer
+Emp = Employee · Snd = Sender · Rcv = Receiver · Cour = Courier / Runner · Disp = Dispatch Officer · BrAdm = Branch Admin · HOAdm = Head Office Admin · Aud = Auditor · Super = Super Admin · Fleet = Fleet Manager · Drv = Driver · Sec = Security · HRF = HR & Finance · Exec = MD / Chairman · Comp = Compliance Officer · PA = Executive Office / PA
 
 Roles can be **branch-scoped** (`user_roles.branchId`): a dispatch officer or
 branch admin for Factory A sees and operates on parcels that start or end at
@@ -69,22 +76,27 @@ hold several roles; capabilities are the union.
 
 ### ABG ONE roles
 
-Every employee can report an incident, request a tour or a pool car, invite a
-visitor and read the notice board — the self-service capabilities. The roles
-added for the ABG ONE modules then grant the desk work:
+Every employee can read the notice board, ask for an appointment, report an
+incident, invite a visitor, apply for leave, request a pool car or a tour, and
+see and fix the audit findings assigned to them — the self-service
+capabilities. The roles added for the ABG ONE modules then grant the desk
+work:
 
 | Role | What it adds |
 |---|---|
 | **Fleet Manager** | Assigns vehicles and drivers to approved pool car requests, keeps the vehicle and driver register (service, fitness, insurance dates), verifies vehicle gate passes. |
 | **Driver** | Sees the trips assigned to them, starts and completes them. |
 | **Security** | The gate desk: scans visitor and vehicle passes, registers walk-ins, checks visitors in and out — for the office they are posted at. |
-| **HR & Finance** | Vets official tour requests (budget, policy, passport) before they go to the MD / Chairman; publishes notices to the HR channel. |
-| **MD / Chairman** | Sanctions or rejects vetted tour requests, sees the executive dashboard, the licence register and incident reports, and publishes and manages notices. |
-| **Compliance Officer** | Owns the regulatory licence register: adds licences, uploads scanned copies, records each renewal step; publishes compliance notices. |
+| **HR & Finance** | Vets official tour requests (budget, policy, passport) before they go to the MD / Chairman; gives the HR approval on leave, sets leave entitlements, the weekly holiday and public holidays; publishes notices to the HR channel. |
+| **MD / Chairman** | Sanctions or rejects vetted tour requests, sees the executive dashboard, the licence register, audits, the leave calendar and incident reports, and publishes and manages notices. Meeting requests to them are answered by the executive office. |
+| **Executive Office / PA** | Answers meeting requests for the MD and the Chairman — confirms, proposes another time or declines — and keeps their diary (`appointment.manage`). |
+| **Compliance Officer** | Owns the regulatory licence register (adds licences, uploads scanned copies, records each renewal step) and runs audits group-wide (`audits.manage`): plans them, records findings, verifies corrective actions, closes them; publishes compliance notices. |
 
-Heads of department are not a role: the approver named on a tour or pool car
-request — the requester's line manager in the directory by default — approves
-it first, whatever roles either of them hold. See the module specifications in
+Heads of department are not a role: the approver named on a leave
+application, a tour or a pool car request — the applicant's line manager in
+the directory by default — approves it first, whatever roles either of them
+hold. Likewise anyone can be asked for a meeting and answers it themselves,
+and anyone named as the owner of an audit finding can submit its fix. See the module specifications in
 [modules/](modules/README.md) for every rule.
 
 The **Auditor** role is read-only by construction: every write route requires a

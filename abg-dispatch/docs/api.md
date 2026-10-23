@@ -74,7 +74,9 @@ actions this user may take next. Build buttons from it.
 
 `GET employees?q=&branchId=&departmentId=` · `branches` · `locations?branchId=` ·
 `departments` · `categories` · `courier-providers`. Phone numbers are masked
-unless the viewer has operations reach.
+unless the viewer has operations reach. Each employee row carries `userId`
+(null when the person cannot sign in), so pickers can tell who can approve,
+host a meeting or own an audit finding.
 
 ## Notifications — `/notifications`
 
@@ -101,6 +103,22 @@ Full reference, including the summary shape: [modules/incidents.md](modules/inci
 
 Staff scope: branch admins see their offices' reports **except misconduct**;
 head-office admins, auditors and super admins see all. Anyone else gets 404.
+
+## The other ABG ONE modules
+
+Each module's endpoints, request bodies, error codes and notifications are in
+its own specification, in menu order:
+
+| Module | Paths | Specification |
+|---|---|---|
+| Notice board | `/notices`, `/admin/notices` | [modules/notices.md](modules/notices.md) |
+| Request for Appointment | `/appointments` (`hosts`, `mine`, `inbox`, `desk`, `diary`, `summary`, `:id/confirm\|propose\|accept\|decline\|cancel\|complete\|notes`) | [modules/appointments.md](modules/appointments.md) |
+| Regulatory Affairs | `/licences`, `/admin/licences` | [modules/licences.md](modules/licences.md) |
+| Audit | `/admin/audits`, `/admin/audits/summary`, `/audits/actions/mine`, `/audits/:id/…`, `/audits/findings/:id/submit\|verify\|reopen\|reassign` | [modules/audits.md](modules/audits.md) |
+| Visitor Management | `/visitors`, `/admin/visitors` | [modules/visitors.md](modules/visitors.md) |
+| Leave apply | `/leave` (`mine`, `balance`, `calendar-settings`, `approvals`, `team`, `:id/decision\|cancel\|notes`), `/admin/leave/…` | [modules/leave.md](modules/leave.md) |
+| Pool car request | `/pool-car`, `/admin/pool-car` | [modules/fleet.md](modules/fleet.md) |
+| Official tour request | `/tours`, `/admin/tours` | [modules/tours.md](modules/tours.md) |
 
 ## Control centre — `/admin`
 

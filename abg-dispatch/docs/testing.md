@@ -15,11 +15,19 @@ do. PostgreSQL triggers are part of what is tested.
 
 | Suite | File | Count |
 |---|---|---|
-| Shared domain (state machine, permissions, tracking numbers, redaction) | `packages/shared/src/domain.test.ts` | 23 |
+| Shared domain (state machine, permissions, tracking numbers, redaction) | `packages/shared/src/domain.test.ts` | 27 |
+| Shared: licences, notices, tours | `packages/shared/src/{licences,notices,tours}.test.ts` | 22 |
+| Shared: leave day counting, meeting hours, audit due dates and overdue | `packages/shared/src/workplace.test.ts` | 8 |
 | Mandatory acceptance tests | `apps/api/test/acceptance.test.ts` | 20 |
 | Authorisation, integrity and courier mapping | `apps/api/test/authorization.test.ts` | 20 |
 | Incident & facility issues (reporting with photos, group from sub-category, Critical/Urgent alerts, signed photo links, the four-stage flow, resolutions and their notes, reopen, anonymity, confidential routing and visibility, misconduct, handing to and from head office, detail edits, group/stage/severity/resolution/confidential filters, scope, image checks, idempotency, append-only history and database checks, summary) | `apps/api/test/incidents.test.ts` | 18 |
-| Mobile (status tones and icons, status chips, Bangla labels, parcel card, timeline, viewer actions, incident stage chip, severity tags, groups and sub-categories in both languages, incident parsing, stage tracker, history wording) | `apps/mobile/test/widget_test.dart` | 13 |
+| Notices, licences, visitors, pool cars, tours | `apps/api/test/{notices,licences,visitors,fleet,tours}.test.ts` | 71 |
+| Request for Appointment (hosts order, the executive office answering for the MD, the no-double-booking constraint, propose and accept, decline and cancel reasons, meeting hours, held only after the time, diary and summary, append-only history) | `apps/api/test/appointments.test.ts` | 8 |
+| Audit (plan → start → findings with owners → submit → verify → close, the close guard, cancel guard, office scope, read-only roles, summary, overdue alerts once, append-only history) | `apps/api/test/audits.test.ts` | 6 |
+| Leave (HOD → HR → approved spending the balance, separation of duties, reject reasons, notice / back-dating / half days / holidays / caps / balance, the overlap constraint, visibility, cancellation rules, approvals inbox and calendars, holiday settings, append-only history) | `apps/api/test/leave.test.ts` | 10 |
+| Mobile: parcels and incidents (status tones and icons, status chips, Bangla labels, parcel card, timeline, viewer actions, incident stage chip, severity tags, groups and sub-categories in both languages, incident parsing, stage tracker, history wording) | `apps/mobile/test/widget_test.dart` | 13 |
+| Mobile: notices, licences, visitors, pool cars, tours | `apps/mobile/test/{notices,licences,visitors,fleet,tours}_test.dart` | 41 |
+| Mobile: the menu in the agreed order, leave day counting and rules, meeting hours, the leave approver and form, the executive office's request screen, a finding owner's fix | `apps/mobile/test/workplace_test.dart` | 11 |
 
 ## The 20 acceptance tests
 

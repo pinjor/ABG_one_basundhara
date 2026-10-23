@@ -54,6 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int? _openReports;
   int? _approvals;
   int? _unreadNotices;
+  int _leaveToApprove = 0;
+  int _meetingsToAnswer = 0;
+  int _auditActions = 0;
   Object? _error;
   bool _loading = true;
   bool _expanded = false;
@@ -103,7 +106,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  /// Notices, approvals and reports for the banners and the glance strip.
+  /// Notices, approvals, reports, meetings to answer and audit actions for
+  /// the banners, the tile badges and the glance strip.
   /// Each is optional: the home screen works without any of them.
   Future<void> _loadModules() async {
     final api = context.read<ApiClient>();
@@ -138,6 +142,12 @@ class _HomeScreenState extends State<HomeScreen> {
         attempt<Object?>(() => repo.myIncidents(state: 'open'))
       else
         Future.value(null),
+      attempt<Object?>(() => api.get('/leave/approvals')),
+      if (can('appointment.request'))
+        attempt<Object?>(() => api.get('/appointments/inbox'))
+      else
+        Future.value(null),
+      attempt<Object?>(() => api.get('/audits/actions/mine')),
     ]);
     if (!mounted) return;
     final notices = results[0];
@@ -145,6 +155,9 @@ class _HomeScreenState extends State<HomeScreen> {
     final tours = results[2];
     final cars = results[3];
     final reports = results[4];
+    final leave = results[5];
+    final meetings = results[6];
+    final audits = results[7];
     setState(() {
       if (notices is Map && notices['items'] is List) {
         _notices = [
@@ -162,8 +175,15 @@ class _HomeScreenState extends State<HomeScreen> {
       if (unread is Map && unread['unread'] is num) {
         _unreadNotices = (unread['unread'] as num).toInt();
       }
-      if (tours != null || cars != null) {
-        _approvals = count(tours) + count(cars);
+      _leaveToApprove = count(leave);
+      _meetingsToAnswer = count(meetings);
+      if (audits is Map && audits['counts'] is Map) {
+        final c = audits['counts'] as Map;
+        _auditActions = (c['open'] as num? ?? 0).toInt();
+      }
+      if (tours != null || cars != null || leave != null || meetings != null) {
+        _approvals =
+            count(tours) + count(cars) + _leaveToApprove + _meetingsToAnswer;
       }
       if (reports is PageOf) _openReports = reports.items.length;
     });
@@ -183,6 +203,9 @@ class _HomeScreenState extends State<HomeScreen> {
       'approvals': _approvals ?? 0,
       'notices': _unreadNotices ?? 0,
       'parcels': _summary?.waitingForMe ?? 0,
+      'leave': _leaveToApprove,
+      'appointments': _meetingsToAnswer,
+      'audits': _auditActions,
     };
 
     return Scaffold(

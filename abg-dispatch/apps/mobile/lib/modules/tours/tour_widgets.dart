@@ -115,7 +115,7 @@ IconData tourStageIcon(String key) => switch (key) {
 /// "14 Nov 2026" for a calendar date.
 String tourDay(DateTime d, String locale) => DateFormat.yMMMd(locale).format(d);
 
-/// "14–18 Nov", "28 Nov – 3 Dec" (year added when it differs from this year).
+/// "Nov 14–18", "Nov 28 – Dec 3" (year added when it differs from this year).
 String tourDateRange(DateTime start, DateTime end, String locale) {
   final thisYear = dhakaToday().year;
   final withYear = start.year != thisYear || end.year != thisYear;
@@ -124,6 +124,11 @@ String tourDateRange(DateTime start, DateTime end, String locale) {
   if (start == end) return withYear ? ymd.format(start) : md.format(start);
   if (start.year == end.year && start.month == end.month) {
     final day = DateFormat.d(locale);
+    // "Nov 14–18" where the month comes first (English), "১৪–১৮ নভে" otherwise.
+    if (md.pattern!.startsWith('M')) {
+      final year = withYear ? ', ${DateFormat.y(locale).format(end)}' : '';
+      return '${md.format(start)}–${day.format(end)}$year';
+    }
     final last = withYear ? ymd.format(end) : md.format(end);
     return '${day.format(start)}–$last';
   }

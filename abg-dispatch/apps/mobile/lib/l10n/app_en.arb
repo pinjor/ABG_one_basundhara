@@ -353,9 +353,199 @@
   },
   "you": "You",
   "moreActions": "More actions",
+  "aptTitle": "Appointments",
+  "aptRequest": "Request a meeting",
+  "aptMine": "My requests",
+  "aptToAnswer": "To answer",
+  "aptDiary": "Diary",
+  "aptNoRequests": "No meeting requests yet",
+  "aptNoRequestsHint": "Ask the MD, the Chairman or a head of department for time. Their office confirms or proposes another slot.",
+  "aptNothingToAnswer": "No requests waiting",
+  "aptNothingToAnswerHint": "Meeting requests addressed to you (or, for the executive office, to the MD and Chairman) appear here.",
+  "aptDiaryEmpty": "Nothing confirmed in the next two weeks.",
+  "aptWaitingCount": "{count, plural, =1{1 request is waiting for an answer} other{{count} requests are waiting for an answer}}",
+  "@aptWaitingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "aptStatusPENDING": "Awaiting confirmation",
+  "aptStatusPROPOSED": "New time proposed",
+  "aptStatusCONFIRMED": "Confirmed",
+  "aptStatusCOMPLETED": "Held",
+  "aptStatusDECLINED": "Declined",
+  "aptStatusCANCELLED": "Cancelled",
+  "aptPurposeBUSINESS_REVIEW": "Business review / report",
+  "aptPurposeAPPROVAL": "Approval or signature",
+  "aptPurposePROJECT_UPDATE": "Project update",
+  "aptPurposePROPOSAL": "New proposal",
+  "aptPurposePERSONAL": "Personal / HR matter",
+  "aptPurposeCOURTESY": "Courtesy call",
+  "aptPurposeOTHER": "Other",
+  "aptModeIN_PERSON": "In person",
+  "aptModeVIDEO": "Video call",
+  "aptModePHONE": "Phone call",
+  "aptMinutes": "{count} min",
+  "@aptMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "aptUrgent": "Urgent",
+  "aptWith": "With {name}",
+  "@aptWith": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "aptFrom": "From {name}",
+  "@aptFrom": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "aptAsked": "Asked for {when}",
+  "@aptAsked": {
+    "placeholders": {
+      "when": {}
+    }
+  },
+  "aptProposedFor": "Proposed: {when}",
+  "@aptProposedFor": {
+    "placeholders": {
+      "when": {}
+    }
+  },
+  "aptFormIntro": "The executive office (for the MD and Chairman) or the person you ask confirms the time, proposes another one, or declines.",
+  "aptWhoSection": "Who do you want to meet?",
+  "aptChooseHost": "Choose who to meet",
+  "aptHostHint": "The MD, the Chairman and heads of department are listed first. Search for anyone else.",
+  "aptSearchHosts": "Search by name, designation or department",
+  "aptExecutive": "Executive",
+  "aptHeadOfDept": "Head of department",
+  "aptOfficeAnswers": "The executive office answers for them.",
+  "aptAboutSection": "What is it about?",
+  "aptSubjectLabel": "Subject",
+  "aptSubjectHint": "e.g. Q3 sales review for the steel division",
+  "aptAgendaLabel": "Agenda or background (optional)",
+  "aptHowSection": "How and how long",
+  "aptWhenSection": "When suits you",
+  "aptPreferred": "Preferred time",
+  "aptAlternative": "Alternative time (optional)",
+  "aptPickTime": "Choose a day and time",
+  "aptHoursNote": "Meetings are between 8:00 and 20:00, Dhaka time.",
+  "aptAttendees": "Others joining (optional)",
+  "aptAttendeeHint": "Name, then add",
+  "aptAdd": "Add",
+  "aptUrgentSwitch": "Urgent",
+  "aptUrgentHint": "Only when it cannot wait — the office sees it first.",
+  "aptSubmit": "Send request",
+  "aptSubmitted": "{ref} sent. You will be told when it is answered.",
+  "@aptSubmitted": {
+    "placeholders": {
+      "ref": {}
+    }
+  },
+  "aptErrHost": "Choose who you want to meet.",
+  "aptErrSubject": "Write a short subject.",
+  "aptErrTime": "Choose the preferred day and time.",
+  "aptErrPast": "Choose a time at least 15 minutes from now.",
+  "aptErrHours": "Meetings are between 8:00 and 20:00 and must end by 20:00.",
+  "aptErrFar": "Meetings can be asked for at most 90 days ahead.",
+  "aptErrSame": "The alternative time is the same as the preferred one.",
+  "aptMeeting": "Meeting",
+  "aptWhen": "When",
+  "aptLength": "Length",
+  "aptModeLabel": "How",
+  "aptLocation": "Where",
+  "aptPurposeLabel": "Purpose",
+  "aptAgenda": "Agenda",
+  "aptJoining": "Also joining",
+  "aptPeople": "People",
+  "aptRequester": "Asked by",
+  "aptHost": "Meeting with",
+  "aptAnsweredBy": "Answered by",
+  "aptTimesAsked": "Times asked for",
+  "aptPreferredShort": "Preferred",
+  "aptAlternativeShort": "Alternative",
+  "aptClashTitle": "Clashes with the diary",
+  "aptClashBody": "{name} already has: {list}",
+  "@aptClashBody": {
+    "placeholders": {
+      "name": {},
+      "list": {}
+    }
+  },
+  "aptProposedBanner": "{who} proposed {when} instead.",
+  "@aptProposedBanner": {
+    "placeholders": {
+      "who": {},
+      "when": {}
+    }
+  },
+  "aptProposedAccept": "Accept this time, or cancel the request if it does not suit you.",
+  "aptConfirmedBanner": "Confirmed for {when}.",
+  "@aptConfirmedBanner": {
+    "placeholders": {
+      "when": {}
+    }
+  },
+  "aptActConfirm": "Confirm",
+  "aptActPropose": "Propose a time",
+  "aptActReschedule": "Move the meeting",
+  "aptActDecline": "Decline",
+  "aptActAccept": "Accept the time",
+  "aptActCancel": "Cancel",
+  "aptActComplete": "Mark as held",
+  "aptConfirmTitle": "Confirm the meeting",
+  "aptConfirmHint": "Pick one of the times asked for, add the place, and the requester is told.",
+  "aptLocationLabel": "Place or link (optional)",
+  "aptLocationHint": "e.g. MD's office, Level 12",
+  "aptProposeTitle": "Propose another time",
+  "aptProposeHint": "The requester accepts the new time or cancels.",
+  "aptNewTime": "New time",
+  "aptProposeReason": "Why another time (shown to the requester)",
+  "aptDeclineHint": "Tell the requester why. They can ask again.",
+  "aptCancelHint": "Say why. The other side is told.",
+  "aptCompleteHint": "Add a short note of the outcome if useful.",
+  "aptSend": "Send",
+  "aptDoneConfirmed": "Confirmed — the requester has been told.",
+  "aptDoneProposed": "New time sent to the requester.",
+  "aptDoneDeclined": "Declined — the requester has been told.",
+  "aptDoneAccepted": "Accepted — the meeting is confirmed.",
+  "aptDoneCancelled": "Cancelled.",
+  "aptDoneCompleted": "Marked as held.",
+  "aptStageAsked": "Requested",
+  "aptStageAnswer": "Answer",
+  "aptStageMeeting": "Meeting",
+  "aptEvSubmitted": "Requested",
+  "aptEvProposed": "New time proposed: {when}",
+  "@aptEvProposed": {
+    "placeholders": {
+      "when": {}
+    }
+  },
+  "aptEvConfirmed": "Confirmed",
+  "aptEvDeclined": "Declined",
+  "aptEvCancelled": "Cancelled",
+  "aptEvCompleted": "Held",
+  "aptEvNote": "Note",
+  "aptToday": "Today",
+  "aptTomorrow": "Tomorrow",
+  "aptFromTo": "From {from} · for {to}",
+  "@aptFromTo": {
+    "placeholders": {
+      "from": {},
+      "to": {}
+    }
+  },
   "apprTitle": "Approvals",
   "apprEmpty": "Nothing is waiting for you",
-  "apprEmptyHint": "Tour and pool car requests that need your approval appear here.",
+  "apprEmptyHint": "Leave, meeting, pool car and tour requests that need you appear here.",
   "apprAll": "All",
   "apprTours": "Official tours",
   "apprPoolCar": "Pool car",
@@ -394,6 +584,178 @@
     }
   },
   "apprDetails": "Details",
+  "apprLeave": "Leave",
+  "apprMeetings": "Meetings",
+  "apprAwaitingHR": "Your approval as HR",
+  "apprAwaitingANSWER": "Waiting for your answer",
+  "apprConfirmMeetingTitle": "Confirm at the time asked for?",
+  "apprDeclineMeetingTitle": "Decline this meeting?",
+  "apprMeetingConfirmed": "Confirmed — the requester has been told.",
+  "apprMeetingDeclined": "Declined — the requester has been told.",
+  "audTitle": "Audit",
+  "audMyActions": "My actions",
+  "audAudits": "Audits",
+  "audNoActions": "No corrective actions for you",
+  "audNoActionsHint": "When an audit finds something you need to fix, it appears here with its due date.",
+  "audNoAudits": "No audits",
+  "audNoAuditsHint": "Audits planned for your offices appear here.",
+  "audActionsBanner": "{open} to fix · {submitted} with the auditor",
+  "@audActionsBanner": {
+    "placeholders": {
+      "open": {
+        "type": "int"
+      },
+      "submitted": {
+        "type": "int"
+      }
+    }
+  },
+  "audOverdueCount": "{count, plural, =1{1 overdue} other{{count} overdue}}",
+  "@audOverdueCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "audTypeINTERNAL": "Internal audit",
+  "audTypeCOMPLIANCE": "Regulatory compliance",
+  "audTypeSAFETY": "Fire & safety",
+  "audTypeBUYER": "Buyer / customer audit",
+  "audTypeISO": "ISO certification",
+  "audTypeFINANCIAL": "Financial / stock audit",
+  "audTypeENVIRONMENT": "Environmental",
+  "audStatusPLANNED": "Planned",
+  "audStatusIN_PROGRESS": "In progress",
+  "audStatusFOLLOW_UP": "Actions open",
+  "audStatusCLOSED": "Closed",
+  "audStatusCANCELLED": "Cancelled",
+  "audRatingSATISFACTORY": "Satisfactory",
+  "audRatingNEEDS_IMPROVEMENT": "Needs improvement",
+  "audRatingUNSATISFACTORY": "Unsatisfactory",
+  "audSevCRITICAL": "Critical",
+  "audSevMAJOR": "Major",
+  "audSevMINOR": "Minor",
+  "audSevOBSERVATION": "Observation",
+  "audSevHintCRITICAL": "Fix within 7 days — risk to life, licence or a buyer",
+  "audSevHintMAJOR": "Fix within 30 days",
+  "audSevHintMINOR": "Fix within 60 days",
+  "audSevHintOBSERVATION": "No action needed — noted for next time",
+  "audFindStatusOPEN": "Action open",
+  "audFindStatusSUBMITTED": "Fix submitted",
+  "audFindStatusVERIFIED": "Verified",
+  "audFindStatusNOTED": "Noted",
+  "audDue": "Due {date}",
+  "@audDue": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "audOverdue": "Overdue since {date}",
+  "@audOverdue": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "audOwner": "Owner",
+  "audNoOwner": "No owner",
+  "audFieldwork": "Fieldwork",
+  "audLead": "Audit lead",
+  "audBody": "Outside body",
+  "audTeam": "Audit team",
+  "audScope": "Scope",
+  "audResult": "Result",
+  "audScore": "Score {score}/100",
+  "@audScore": {
+    "placeholders": {
+      "score": {}
+    }
+  },
+  "audConclusion": "Conclusion",
+  "audFindings": "Findings",
+  "audNoFindings": "No findings recorded yet.",
+  "audPartial": "You see the findings you own. The audit team sees the full report.",
+  "audCountOpen": "Open",
+  "audCountSubmitted": "Submitted",
+  "audCountVerified": "Verified",
+  "audCountOverdue": "Overdue",
+  "audClause": "Clause or standard",
+  "audArea": "Area",
+  "audRecommendation": "Recommendation",
+  "audResponse": "Response",
+  "audVerifiedBy": "Verified by {name}",
+  "@audVerifiedBy": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "audStageStart": "Planned",
+  "audStageFieldwork": "Fieldwork",
+  "audStageActions": "Corrective actions",
+  "audStageClosed": "Closed",
+  "audActionsLeft": "{count, plural, =0{Nothing left open} =1{1 action open} other{{count} actions open}}",
+  "@audActionsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "audActStart": "Start fieldwork",
+  "audActAddFinding": "Add a finding",
+  "audActComplete": "Finish fieldwork",
+  "audActClose": "Close the audit",
+  "audActCancel": "Cancel audit",
+  "audActSubmit": "Submit my fix",
+  "audActVerify": "Verify",
+  "audActReopen": "Send back",
+  "audActReassign": "Reassign",
+  "audStartHint": "Findings can be recorded once fieldwork has started. The office is told.",
+  "audCloseHint": "Every corrective action is verified. Closing files the audit.",
+  "audCancelHint": "Say why the audit will not happen.",
+  "audSubmitTitle": "Submit your fix",
+  "audSubmitHint": "Say what was done; the auditor verifies it or sends it back.",
+  "audResponseLabel": "What was done",
+  "audVerifyHint": "The action is closed and the owner is told.",
+  "audReopenHint": "Tell the owner what is still missing.",
+  "audChooseOwner": "Who fixes it?",
+  "audOwnerHint": "They see it under Audit · My actions and are reminded when it is overdue.",
+  "audCompleteTitle": "Finish fieldwork",
+  "audCompleteHint": "Give the overall result. Open actions stay with their owners until verified.",
+  "audScoreLabel": "Score out of 100 (optional)",
+  "audConclusionLabel": "Conclusion",
+  "audFindingTitle": "New finding",
+  "audFindingTitleLabel": "What was found",
+  "audFindingTitleHint": "e.g. Fire exit on Level 3 blocked by cartons",
+  "audDetailLabel": "Detail (optional)",
+  "audSeverity": "Severity",
+  "audDueLabel": "Due date",
+  "audSaveFinding": "Record finding",
+  "audErrTitle": "Say briefly what was found.",
+  "audErrOwner": "Choose who fixes it.",
+  "audErrConclusion": "Write a short conclusion.",
+  "audDoneStarted": "Fieldwork started.",
+  "audDoneFinding": "Finding recorded — the owner has been told.",
+  "audDoneCompleted": "Fieldwork finished.",
+  "audDoneClosed": "Audit closed.",
+  "audDoneCancelled": "Audit cancelled.",
+  "audDoneSubmitted": "Fix submitted — the auditor has been told.",
+  "audDoneVerified": "Verified — the action is closed.",
+  "audDoneReopened": "Sent back to the owner.",
+  "audDoneReassigned": "Reassigned — the new owner has been told.",
+  "audEvCreated": "Audit planned",
+  "audEvStarted": "Fieldwork started",
+  "audEvFinding": "Finding recorded",
+  "audEvSubmitted": "Fix submitted",
+  "audEvVerified": "Action verified",
+  "audEvReopened": "Action sent back",
+  "audEvReassigned": "Action reassigned",
+  "audEvCompleted": "Fieldwork finished",
+  "audEvClosed": "Audit closed",
+  "audEvCancelled": "Audit cancelled",
+  "audEvNote": "Note",
+  "audRecommendationOptional": "Recommendation (optional)",
+  "audDetail": "Detail",
   "pcTitle": "Pool car",
   "pcRequestCar": "Request a car",
   "pcTabMine": "My requests",
@@ -636,19 +998,19 @@
   "homeMenuTooltip": "My ABG",
   "homeGlance": "At a glance",
   "homeParcelsSection": "Parcels",
-  "svcSendParcel": "Send parcel",
-  "svcMyParcels": "My parcels",
-  "svcPoolCar": "Pool car",
-  "svcReportIssue": "Report issue",
-  "svcVisitors": "Visitors",
+  "svcAppointment": "Request for Appointment",
+  "svcIncidentRecord": "Incident record",
+  "svcRegulatory": "Regulatory Affairs",
+  "svcAudit": "Audit",
+  "svcOfficeParcel": "Office parcel",
+  "svcVisitorManagement": "Visitor Management",
+  "svcLeave": "Leave apply",
+  "svcPoolCarRequest": "Pool car request",
   "svcTours": "Tour request",
   "svcNotices": "Notice board",
   "svcApprovals": "Approvals",
   "svcScan": "Scan & receive",
-  "svcMyReports": "My reports",
-  "svcLicences": "Licences",
   "svcMyTrips": "My trips",
-  "svcGateDesk": "Gate desk",
   "glanceWaiting": "Parcels waiting",
   "glanceInTransit": "In transit",
   "glanceApprovals": "To approve",
@@ -873,6 +1235,274 @@
   "incEvNote": "Update for you",
   "incEvPhoto": "Photo added",
   "incEvDetails": "Details updated",
+  "kitNoHistory": "Nothing recorded yet.",
+  "kitReasonRequired": "Please give a short reason.",
+  "kitReason": "Reason",
+  "kitNoteOptional": "Note (optional)",
+  "kitNoteLabel": "Note",
+  "kitSearchPeople": "Search by name, ID or designation",
+  "kitTypeToSearch": "Type at least two letters to search the staff directory.",
+  "kitNoMatches": "No one matches that search.",
+  "kitNoAccount": "No app account",
+  "kitChange": "Change",
+  "kitChoose": "Choose",
+  "kitRemove": "Remove",
+  "kitProgress": "Progress",
+  "kitHistory": "History",
+  "kitAddNote": "Add a note",
+  "kitAddNoteHint": "Everyone on this request can read it.",
+  "kitNoteAdded": "Note added.",
+  "kitLatestNote": "Latest note",
+  "kitAll": "All",
+  "kitOpen": "Open",
+  "kitClosed": "Closed",
+  "kitOffice": "Office",
+  "kitOfflineNotice": "You are offline. Nothing was sent — try again when you are connected.",
+  "lvTitle": "Leave",
+  "lvApply": "Apply for leave",
+  "lvMyLeave": "My leave",
+  "lvToApprove": "To approve",
+  "lvBalanceTitle": "Your balance · {year}",
+  "@lvBalanceTitle": {
+    "placeholders": {
+      "year": {}
+    }
+  },
+  "lvLeft": "left",
+  "lvOfTotal": "of {total}",
+  "@lvOfTotal": {
+    "placeholders": {
+      "total": {}
+    }
+  },
+  "lvTakenPending": "{taken} taken · {pending} pending",
+  "@lvTakenPending": {
+    "placeholders": {
+      "taken": {},
+      "pending": {}
+    }
+  },
+  "lvTaken": "{taken} taken",
+  "@lvTaken": {
+    "placeholders": {
+      "taken": {}
+    }
+  },
+  "lvNoLimit": "No yearly limit",
+  "lvAdjusted": "Set by HR",
+  "lvNoRequests": "No leave applications yet",
+  "lvNoRequestsHint": "Apply for casual, sick, earned or other leave. Your head of department and HR approve it here.",
+  "lvNothingToApprove": "Nothing waiting for you",
+  "lvNothingToApproveHint": "Leave applications from your team appear here for your approval.",
+  "lvWaitingCount": "{count, plural, =1{1 application is waiting for you} other{{count} applications are waiting for you}}",
+  "@lvWaitingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "lvTeamAway": "Your team away · next 30 days",
+  "lvTeamNobody": "No one in your team is away in the next 30 days.",
+  "lvOnLeaveNow": "On leave today",
+  "lvOnLeaveBanner": "You are on leave today ({ref}). Enjoy the time off.",
+  "@lvOnLeaveBanner": {
+    "placeholders": {
+      "ref": {}
+    }
+  },
+  "lvHalfDayCount": "½ day",
+  "lvDayCount": "{count, plural, =1{1 day} other{{count} days}}",
+  "@lvDayCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "lvDaysDecimal": "{days} days",
+  "@lvDaysDecimal": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "lvTypeCASUAL": "Casual leave",
+  "lvTypeSICK": "Sick leave",
+  "lvTypeEARNED": "Earned leave",
+  "lvTypeMATERNITY": "Maternity leave",
+  "lvTypePATERNITY": "Paternity leave",
+  "lvTypeUNPAID": "Leave without pay",
+  "lvHintCASUAL": "10 days a year · up to 3 days at a time",
+  "lvHintSICK": "14 days a year · medical certificate for more than 2 days",
+  "lvHintEARNED": "18 days a year · apply at least 3 days ahead",
+  "lvHintMATERNITY": "16 weeks, counted in calendar days",
+  "lvHintPATERNITY": "5 working days around the birth",
+  "lvHintUNPAID": "No balance · up to 30 days, apply 3 days ahead",
+  "lvStatusPENDING_HOD": "Pending HOD approval",
+  "lvStatusPENDING_HR": "Pending HR approval",
+  "lvStatusAPPROVED": "Approved",
+  "lvStatusREJECTED": "Rejected",
+  "lvStatusCANCELLED": "Cancelled",
+  "lvStageSUBMITTED": "Applied",
+  "lvStagePENDING_HOD": "Head of department",
+  "lvStagePENDING_HR": "HR",
+  "lvStageAPPROVED": "Approved",
+  "lvStageCANCELLED": "Cancelled",
+  "lvWaitingFor": "Waiting for {name}",
+  "@lvWaitingFor": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "lvStageRejectedBy": "Rejected by {name}",
+  "@lvStageRejectedBy": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "lvStageCancelledBy": "Cancelled by {name}",
+  "@lvStageCancelledBy": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "lvStageSkipped": "Not needed",
+  "lvAwaitingHOD": "Your approval as head of department",
+  "lvAwaitingHR": "HR approval",
+  "lvHalfDay": "Half day",
+  "lvFIRST_HALF": "First half (morning)",
+  "lvSECOND_HALF": "Second half (afternoon)",
+  "lvFormIntro": "Your head of department approves first, then HR. You are told at each step.",
+  "lvTypeSection": "Type of leave",
+  "lvDatesSection": "Dates",
+  "lvPickDates": "Choose the days",
+  "lvPickDay": "Choose the day",
+  "lvHalfDaySwitch": "Only half a day",
+  "lvCountNote": "The weekly holiday and public holidays are not counted.",
+  "lvCountCalendar": "Counted in calendar days, holidays included.",
+  "lvHolidaysIn": "Public holidays in these dates: {names}",
+  "@lvHolidaysIn": {
+    "placeholders": {
+      "names": {}
+    }
+  },
+  "lvBalanceAfter": "Balance after this: {left} of {total}",
+  "@lvBalanceAfter": {
+    "placeholders": {
+      "left": {},
+      "total": {}
+    }
+  },
+  "lvInsufficient": "You have {left} of {type} left — this needs {need}.",
+  "@lvInsufficient": {
+    "placeholders": {
+      "left": {},
+      "type": {},
+      "need": {}
+    }
+  },
+  "lvTooMany": "{type} is at most {max} in one application.",
+  "@lvTooMany": {
+    "placeholders": {
+      "type": {},
+      "max": {}
+    }
+  },
+  "lvNoticeShort": "{type} needs {days} days' notice — the earliest start is {date}.",
+  "@lvNoticeShort": {
+    "placeholders": {
+      "type": {},
+      "days": {},
+      "date": {}
+    }
+  },
+  "lvBackdate": "{type} can start at most {days} days back.",
+  "@lvBackdate": {
+    "placeholders": {
+      "type": {},
+      "days": {}
+    }
+  },
+  "lvNoWorkingDays": "Those dates are all holidays — there is nothing to take leave for.",
+  "lvReasonLabel": "Reason",
+  "lvReasonHint": "e.g. Family wedding in Sylhet",
+  "lvReliever": "Covering your work (optional)",
+  "lvRelieverEmpty": "No one chosen",
+  "lvChooseReliever": "Who covers your work?",
+  "lvRelieverHint": "Pick a colleague. They are told once the leave is approved.",
+  "lvApprover": "Head of department · approves first",
+  "lvChooseApprover": "Who approves first?",
+  "lvApproverHint": "Usually your line manager. They must be able to sign in to ABG ONE.",
+  "lvApproverMissing": "Your line manager {name} has no app account — choose who approves.",
+  "@lvApproverMissing": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "lvAddress": "Address during leave (optional)",
+  "lvPhone": "Contact number during leave (optional)",
+  "lvMoreSection": "While you are away",
+  "lvSubmit": "Submit application",
+  "lvSubmitted": "{ref} sent for approval.",
+  "@lvSubmitted": {
+    "placeholders": {
+      "ref": {}
+    }
+  },
+  "lvErrDates": "Choose the days of leave.",
+  "lvErrReason": "Say briefly why you need the leave.",
+  "lvErrApprover": "Choose who approves first.",
+  "lvPipeline": "Approval",
+  "lvDetails": "Leave details",
+  "lvTypeLabel": "Type",
+  "lvFirstDay": "First day",
+  "lvLastDay": "Last day",
+  "lvLength": "Length",
+  "lvReasonTitle": "Reason",
+  "lvAddressTitle": "Address during leave",
+  "lvPhoneTitle": "Contact during leave",
+  "lvPeople": "People",
+  "lvApplicant": "Applicant",
+  "lvHod": "Head of department",
+  "lvCovering": "Covering",
+  "lvBalanceCard": "{type} · {year}",
+  "@lvBalanceCard": {
+    "placeholders": {
+      "type": {},
+      "year": {}
+    }
+  },
+  "lvEntitled": "Entitled",
+  "lvUsed": "Taken",
+  "lvPendingLabel": "Pending",
+  "lvAvailable": "Available",
+  "lvSeparation": "You approved this as head of department, so another HR colleague gives the second approval.",
+  "lvRelieverBanner": "{name} asked you to cover their work during this leave.",
+  "@lvRelieverBanner": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "lvActApproveHod": "Send to HR",
+  "lvApproveHodTitle": "Approve and send to HR",
+  "lvActApprove": "Approve",
+  "lvActReject": "Reject",
+  "lvActCancel": "Cancel leave",
+  "lvApproveHodHint": "HR gives the final approval.",
+  "lvApproveHrHint": "This is the final approval; the days come off the balance.",
+  "lvRejectHint": "Tell the applicant why. They can apply again.",
+  "lvCancelHint": "Say why. Your head of department and HR are told, and the days return to your balance.",
+  "lvCancelHrHint": "The applicant is told, and the days return to their balance.",
+  "lvDoneApproved": "Approved — the applicant has been told.",
+  "lvDoneForwarded": "Approved — sent to HR.",
+  "lvDoneRejected": "Rejected — the applicant has been told.",
+  "lvDoneCancelled": "Leave cancelled.",
+  "lvEvSubmitted": "Applied",
+  "lvEvHod": "Approved by head of department",
+  "lvEvApproved": "Approved by HR",
+  "lvEvRejected": "Rejected",
+  "lvEvCancelled": "Cancelled",
+  "lvEvNote": "Note",
   "licTitle": "Licences",
   "licRegister": "Licence register",
   "licReadOnlyNote": "Changes are made by the compliance team in the ABG ONE portal.",

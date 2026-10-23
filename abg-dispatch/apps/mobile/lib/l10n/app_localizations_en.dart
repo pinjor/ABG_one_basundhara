@@ -835,6 +835,414 @@ class LEn extends L {
   String get moreActions => 'More actions';
 
   @override
+  String get aptTitle => 'Appointments';
+
+  @override
+  String get aptRequest => 'Request a meeting';
+
+  @override
+  String get aptMine => 'My requests';
+
+  @override
+  String get aptToAnswer => 'To answer';
+
+  @override
+  String get aptDiary => 'Diary';
+
+  @override
+  String get aptNoRequests => 'No meeting requests yet';
+
+  @override
+  String get aptNoRequestsHint =>
+      'Ask the MD, the Chairman or a head of department for time. Their office confirms or proposes another slot.';
+
+  @override
+  String get aptNothingToAnswer => 'No requests waiting';
+
+  @override
+  String get aptNothingToAnswerHint =>
+      'Meeting requests addressed to you (or, for the executive office, to the MD and Chairman) appear here.';
+
+  @override
+  String get aptDiaryEmpty => 'Nothing confirmed in the next two weeks.';
+
+  @override
+  String aptWaitingCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count requests are waiting for an answer',
+      one: '1 request is waiting for an answer',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aptStatusPENDING => 'Awaiting confirmation';
+
+  @override
+  String get aptStatusPROPOSED => 'New time proposed';
+
+  @override
+  String get aptStatusCONFIRMED => 'Confirmed';
+
+  @override
+  String get aptStatusCOMPLETED => 'Held';
+
+  @override
+  String get aptStatusDECLINED => 'Declined';
+
+  @override
+  String get aptStatusCANCELLED => 'Cancelled';
+
+  @override
+  String get aptPurposeBUSINESS_REVIEW => 'Business review / report';
+
+  @override
+  String get aptPurposeAPPROVAL => 'Approval or signature';
+
+  @override
+  String get aptPurposePROJECT_UPDATE => 'Project update';
+
+  @override
+  String get aptPurposePROPOSAL => 'New proposal';
+
+  @override
+  String get aptPurposePERSONAL => 'Personal / HR matter';
+
+  @override
+  String get aptPurposeCOURTESY => 'Courtesy call';
+
+  @override
+  String get aptPurposeOTHER => 'Other';
+
+  @override
+  String get aptModeIN_PERSON => 'In person';
+
+  @override
+  String get aptModeVIDEO => 'Video call';
+
+  @override
+  String get aptModePHONE => 'Phone call';
+
+  @override
+  String aptMinutes(int count) {
+    return '$count min';
+  }
+
+  @override
+  String get aptUrgent => 'Urgent';
+
+  @override
+  String aptWith(Object name) {
+    return 'With $name';
+  }
+
+  @override
+  String aptFrom(Object name) {
+    return 'From $name';
+  }
+
+  @override
+  String aptAsked(Object when) {
+    return 'Asked for $when';
+  }
+
+  @override
+  String aptProposedFor(Object when) {
+    return 'Proposed: $when';
+  }
+
+  @override
+  String get aptFormIntro =>
+      'The executive office (for the MD and Chairman) or the person you ask confirms the time, proposes another one, or declines.';
+
+  @override
+  String get aptWhoSection => 'Who do you want to meet?';
+
+  @override
+  String get aptChooseHost => 'Choose who to meet';
+
+  @override
+  String get aptHostHint =>
+      'The MD, the Chairman and heads of department are listed first. Search for anyone else.';
+
+  @override
+  String get aptSearchHosts => 'Search by name, designation or department';
+
+  @override
+  String get aptExecutive => 'Executive';
+
+  @override
+  String get aptHeadOfDept => 'Head of department';
+
+  @override
+  String get aptOfficeAnswers => 'The executive office answers for them.';
+
+  @override
+  String get aptAboutSection => 'What is it about?';
+
+  @override
+  String get aptSubjectLabel => 'Subject';
+
+  @override
+  String get aptSubjectHint => 'e.g. Q3 sales review for the steel division';
+
+  @override
+  String get aptAgendaLabel => 'Agenda or background (optional)';
+
+  @override
+  String get aptHowSection => 'How and how long';
+
+  @override
+  String get aptWhenSection => 'When suits you';
+
+  @override
+  String get aptPreferred => 'Preferred time';
+
+  @override
+  String get aptAlternative => 'Alternative time (optional)';
+
+  @override
+  String get aptPickTime => 'Choose a day and time';
+
+  @override
+  String get aptHoursNote => 'Meetings are between 8:00 and 20:00, Dhaka time.';
+
+  @override
+  String get aptAttendees => 'Others joining (optional)';
+
+  @override
+  String get aptAttendeeHint => 'Name, then add';
+
+  @override
+  String get aptAdd => 'Add';
+
+  @override
+  String get aptUrgentSwitch => 'Urgent';
+
+  @override
+  String get aptUrgentHint =>
+      'Only when it cannot wait — the office sees it first.';
+
+  @override
+  String get aptSubmit => 'Send request';
+
+  @override
+  String aptSubmitted(Object ref) {
+    return '$ref sent. You will be told when it is answered.';
+  }
+
+  @override
+  String get aptErrHost => 'Choose who you want to meet.';
+
+  @override
+  String get aptErrSubject => 'Write a short subject.';
+
+  @override
+  String get aptErrTime => 'Choose the preferred day and time.';
+
+  @override
+  String get aptErrPast => 'Choose a time at least 15 minutes from now.';
+
+  @override
+  String get aptErrHours =>
+      'Meetings are between 8:00 and 20:00 and must end by 20:00.';
+
+  @override
+  String get aptErrFar => 'Meetings can be asked for at most 90 days ahead.';
+
+  @override
+  String get aptErrSame =>
+      'The alternative time is the same as the preferred one.';
+
+  @override
+  String get aptMeeting => 'Meeting';
+
+  @override
+  String get aptWhen => 'When';
+
+  @override
+  String get aptLength => 'Length';
+
+  @override
+  String get aptModeLabel => 'How';
+
+  @override
+  String get aptLocation => 'Where';
+
+  @override
+  String get aptPurposeLabel => 'Purpose';
+
+  @override
+  String get aptAgenda => 'Agenda';
+
+  @override
+  String get aptJoining => 'Also joining';
+
+  @override
+  String get aptPeople => 'People';
+
+  @override
+  String get aptRequester => 'Asked by';
+
+  @override
+  String get aptHost => 'Meeting with';
+
+  @override
+  String get aptAnsweredBy => 'Answered by';
+
+  @override
+  String get aptTimesAsked => 'Times asked for';
+
+  @override
+  String get aptPreferredShort => 'Preferred';
+
+  @override
+  String get aptAlternativeShort => 'Alternative';
+
+  @override
+  String get aptClashTitle => 'Clashes with the diary';
+
+  @override
+  String aptClashBody(Object name, Object list) {
+    return '$name already has: $list';
+  }
+
+  @override
+  String aptProposedBanner(Object who, Object when) {
+    return '$who proposed $when instead.';
+  }
+
+  @override
+  String get aptProposedAccept =>
+      'Accept this time, or cancel the request if it does not suit you.';
+
+  @override
+  String aptConfirmedBanner(Object when) {
+    return 'Confirmed for $when.';
+  }
+
+  @override
+  String get aptActConfirm => 'Confirm';
+
+  @override
+  String get aptActPropose => 'Propose a time';
+
+  @override
+  String get aptActReschedule => 'Move the meeting';
+
+  @override
+  String get aptActDecline => 'Decline';
+
+  @override
+  String get aptActAccept => 'Accept the time';
+
+  @override
+  String get aptActCancel => 'Cancel';
+
+  @override
+  String get aptActComplete => 'Mark as held';
+
+  @override
+  String get aptConfirmTitle => 'Confirm the meeting';
+
+  @override
+  String get aptConfirmHint =>
+      'Pick one of the times asked for, add the place, and the requester is told.';
+
+  @override
+  String get aptLocationLabel => 'Place or link (optional)';
+
+  @override
+  String get aptLocationHint => 'e.g. MD\'s office, Level 12';
+
+  @override
+  String get aptProposeTitle => 'Propose another time';
+
+  @override
+  String get aptProposeHint => 'The requester accepts the new time or cancels.';
+
+  @override
+  String get aptNewTime => 'New time';
+
+  @override
+  String get aptProposeReason => 'Why another time (shown to the requester)';
+
+  @override
+  String get aptDeclineHint => 'Tell the requester why. They can ask again.';
+
+  @override
+  String get aptCancelHint => 'Say why. The other side is told.';
+
+  @override
+  String get aptCompleteHint => 'Add a short note of the outcome if useful.';
+
+  @override
+  String get aptSend => 'Send';
+
+  @override
+  String get aptDoneConfirmed => 'Confirmed — the requester has been told.';
+
+  @override
+  String get aptDoneProposed => 'New time sent to the requester.';
+
+  @override
+  String get aptDoneDeclined => 'Declined — the requester has been told.';
+
+  @override
+  String get aptDoneAccepted => 'Accepted — the meeting is confirmed.';
+
+  @override
+  String get aptDoneCancelled => 'Cancelled.';
+
+  @override
+  String get aptDoneCompleted => 'Marked as held.';
+
+  @override
+  String get aptStageAsked => 'Requested';
+
+  @override
+  String get aptStageAnswer => 'Answer';
+
+  @override
+  String get aptStageMeeting => 'Meeting';
+
+  @override
+  String get aptEvSubmitted => 'Requested';
+
+  @override
+  String aptEvProposed(Object when) {
+    return 'New time proposed: $when';
+  }
+
+  @override
+  String get aptEvConfirmed => 'Confirmed';
+
+  @override
+  String get aptEvDeclined => 'Declined';
+
+  @override
+  String get aptEvCancelled => 'Cancelled';
+
+  @override
+  String get aptEvCompleted => 'Held';
+
+  @override
+  String get aptEvNote => 'Note';
+
+  @override
+  String get aptToday => 'Today';
+
+  @override
+  String get aptTomorrow => 'Tomorrow';
+
+  @override
+  String aptFromTo(Object from, Object to) {
+    return 'From $from · for $to';
+  }
+
+  @override
   String get apprTitle => 'Approvals';
 
   @override
@@ -842,7 +1250,7 @@ class LEn extends L {
 
   @override
   String get apprEmptyHint =>
-      'Tour and pool car requests that need your approval appear here.';
+      'Leave, meeting, pool car and tour requests that need you appear here.';
 
   @override
   String get apprAll => 'All';
@@ -918,6 +1326,426 @@ class LEn extends L {
 
   @override
   String get apprDetails => 'Details';
+
+  @override
+  String get apprLeave => 'Leave';
+
+  @override
+  String get apprMeetings => 'Meetings';
+
+  @override
+  String get apprAwaitingHR => 'Your approval as HR';
+
+  @override
+  String get apprAwaitingANSWER => 'Waiting for your answer';
+
+  @override
+  String get apprConfirmMeetingTitle => 'Confirm at the time asked for?';
+
+  @override
+  String get apprDeclineMeetingTitle => 'Decline this meeting?';
+
+  @override
+  String get apprMeetingConfirmed => 'Confirmed — the requester has been told.';
+
+  @override
+  String get apprMeetingDeclined => 'Declined — the requester has been told.';
+
+  @override
+  String get audTitle => 'Audit';
+
+  @override
+  String get audMyActions => 'My actions';
+
+  @override
+  String get audAudits => 'Audits';
+
+  @override
+  String get audNoActions => 'No corrective actions for you';
+
+  @override
+  String get audNoActionsHint =>
+      'When an audit finds something you need to fix, it appears here with its due date.';
+
+  @override
+  String get audNoAudits => 'No audits';
+
+  @override
+  String get audNoAuditsHint => 'Audits planned for your offices appear here.';
+
+  @override
+  String audActionsBanner(int open, int submitted) {
+    return '$open to fix · $submitted with the auditor';
+  }
+
+  @override
+  String audOverdueCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count overdue',
+      one: '1 overdue',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get audTypeINTERNAL => 'Internal audit';
+
+  @override
+  String get audTypeCOMPLIANCE => 'Regulatory compliance';
+
+  @override
+  String get audTypeSAFETY => 'Fire & safety';
+
+  @override
+  String get audTypeBUYER => 'Buyer / customer audit';
+
+  @override
+  String get audTypeISO => 'ISO certification';
+
+  @override
+  String get audTypeFINANCIAL => 'Financial / stock audit';
+
+  @override
+  String get audTypeENVIRONMENT => 'Environmental';
+
+  @override
+  String get audStatusPLANNED => 'Planned';
+
+  @override
+  String get audStatusIN_PROGRESS => 'In progress';
+
+  @override
+  String get audStatusFOLLOW_UP => 'Actions open';
+
+  @override
+  String get audStatusCLOSED => 'Closed';
+
+  @override
+  String get audStatusCANCELLED => 'Cancelled';
+
+  @override
+  String get audRatingSATISFACTORY => 'Satisfactory';
+
+  @override
+  String get audRatingNEEDS_IMPROVEMENT => 'Needs improvement';
+
+  @override
+  String get audRatingUNSATISFACTORY => 'Unsatisfactory';
+
+  @override
+  String get audSevCRITICAL => 'Critical';
+
+  @override
+  String get audSevMAJOR => 'Major';
+
+  @override
+  String get audSevMINOR => 'Minor';
+
+  @override
+  String get audSevOBSERVATION => 'Observation';
+
+  @override
+  String get audSevHintCRITICAL =>
+      'Fix within 7 days — risk to life, licence or a buyer';
+
+  @override
+  String get audSevHintMAJOR => 'Fix within 30 days';
+
+  @override
+  String get audSevHintMINOR => 'Fix within 60 days';
+
+  @override
+  String get audSevHintOBSERVATION => 'No action needed — noted for next time';
+
+  @override
+  String get audFindStatusOPEN => 'Action open';
+
+  @override
+  String get audFindStatusSUBMITTED => 'Fix submitted';
+
+  @override
+  String get audFindStatusVERIFIED => 'Verified';
+
+  @override
+  String get audFindStatusNOTED => 'Noted';
+
+  @override
+  String audDue(Object date) {
+    return 'Due $date';
+  }
+
+  @override
+  String audOverdue(Object date) {
+    return 'Overdue since $date';
+  }
+
+  @override
+  String get audOwner => 'Owner';
+
+  @override
+  String get audNoOwner => 'No owner';
+
+  @override
+  String get audFieldwork => 'Fieldwork';
+
+  @override
+  String get audLead => 'Audit lead';
+
+  @override
+  String get audBody => 'Outside body';
+
+  @override
+  String get audTeam => 'Audit team';
+
+  @override
+  String get audScope => 'Scope';
+
+  @override
+  String get audResult => 'Result';
+
+  @override
+  String audScore(Object score) {
+    return 'Score $score/100';
+  }
+
+  @override
+  String get audConclusion => 'Conclusion';
+
+  @override
+  String get audFindings => 'Findings';
+
+  @override
+  String get audNoFindings => 'No findings recorded yet.';
+
+  @override
+  String get audPartial =>
+      'You see the findings you own. The audit team sees the full report.';
+
+  @override
+  String get audCountOpen => 'Open';
+
+  @override
+  String get audCountSubmitted => 'Submitted';
+
+  @override
+  String get audCountVerified => 'Verified';
+
+  @override
+  String get audCountOverdue => 'Overdue';
+
+  @override
+  String get audClause => 'Clause or standard';
+
+  @override
+  String get audArea => 'Area';
+
+  @override
+  String get audRecommendation => 'Recommendation';
+
+  @override
+  String get audResponse => 'Response';
+
+  @override
+  String audVerifiedBy(Object name) {
+    return 'Verified by $name';
+  }
+
+  @override
+  String get audStageStart => 'Planned';
+
+  @override
+  String get audStageFieldwork => 'Fieldwork';
+
+  @override
+  String get audStageActions => 'Corrective actions';
+
+  @override
+  String get audStageClosed => 'Closed';
+
+  @override
+  String audActionsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count actions open',
+      one: '1 action open',
+      zero: 'Nothing left open',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get audActStart => 'Start fieldwork';
+
+  @override
+  String get audActAddFinding => 'Add a finding';
+
+  @override
+  String get audActComplete => 'Finish fieldwork';
+
+  @override
+  String get audActClose => 'Close the audit';
+
+  @override
+  String get audActCancel => 'Cancel audit';
+
+  @override
+  String get audActSubmit => 'Submit my fix';
+
+  @override
+  String get audActVerify => 'Verify';
+
+  @override
+  String get audActReopen => 'Send back';
+
+  @override
+  String get audActReassign => 'Reassign';
+
+  @override
+  String get audStartHint =>
+      'Findings can be recorded once fieldwork has started. The office is told.';
+
+  @override
+  String get audCloseHint =>
+      'Every corrective action is verified. Closing files the audit.';
+
+  @override
+  String get audCancelHint => 'Say why the audit will not happen.';
+
+  @override
+  String get audSubmitTitle => 'Submit your fix';
+
+  @override
+  String get audSubmitHint =>
+      'Say what was done; the auditor verifies it or sends it back.';
+
+  @override
+  String get audResponseLabel => 'What was done';
+
+  @override
+  String get audVerifyHint => 'The action is closed and the owner is told.';
+
+  @override
+  String get audReopenHint => 'Tell the owner what is still missing.';
+
+  @override
+  String get audChooseOwner => 'Who fixes it?';
+
+  @override
+  String get audOwnerHint =>
+      'They see it under Audit · My actions and are reminded when it is overdue.';
+
+  @override
+  String get audCompleteTitle => 'Finish fieldwork';
+
+  @override
+  String get audCompleteHint =>
+      'Give the overall result. Open actions stay with their owners until verified.';
+
+  @override
+  String get audScoreLabel => 'Score out of 100 (optional)';
+
+  @override
+  String get audConclusionLabel => 'Conclusion';
+
+  @override
+  String get audFindingTitle => 'New finding';
+
+  @override
+  String get audFindingTitleLabel => 'What was found';
+
+  @override
+  String get audFindingTitleHint =>
+      'e.g. Fire exit on Level 3 blocked by cartons';
+
+  @override
+  String get audDetailLabel => 'Detail (optional)';
+
+  @override
+  String get audSeverity => 'Severity';
+
+  @override
+  String get audDueLabel => 'Due date';
+
+  @override
+  String get audSaveFinding => 'Record finding';
+
+  @override
+  String get audErrTitle => 'Say briefly what was found.';
+
+  @override
+  String get audErrOwner => 'Choose who fixes it.';
+
+  @override
+  String get audErrConclusion => 'Write a short conclusion.';
+
+  @override
+  String get audDoneStarted => 'Fieldwork started.';
+
+  @override
+  String get audDoneFinding => 'Finding recorded — the owner has been told.';
+
+  @override
+  String get audDoneCompleted => 'Fieldwork finished.';
+
+  @override
+  String get audDoneClosed => 'Audit closed.';
+
+  @override
+  String get audDoneCancelled => 'Audit cancelled.';
+
+  @override
+  String get audDoneSubmitted => 'Fix submitted — the auditor has been told.';
+
+  @override
+  String get audDoneVerified => 'Verified — the action is closed.';
+
+  @override
+  String get audDoneReopened => 'Sent back to the owner.';
+
+  @override
+  String get audDoneReassigned => 'Reassigned — the new owner has been told.';
+
+  @override
+  String get audEvCreated => 'Audit planned';
+
+  @override
+  String get audEvStarted => 'Fieldwork started';
+
+  @override
+  String get audEvFinding => 'Finding recorded';
+
+  @override
+  String get audEvSubmitted => 'Fix submitted';
+
+  @override
+  String get audEvVerified => 'Action verified';
+
+  @override
+  String get audEvReopened => 'Action sent back';
+
+  @override
+  String get audEvReassigned => 'Action reassigned';
+
+  @override
+  String get audEvCompleted => 'Fieldwork finished';
+
+  @override
+  String get audEvClosed => 'Audit closed';
+
+  @override
+  String get audEvCancelled => 'Audit cancelled';
+
+  @override
+  String get audEvNote => 'Note';
+
+  @override
+  String get audRecommendationOptional => 'Recommendation (optional)';
+
+  @override
+  String get audDetail => 'Detail';
 
   @override
   String get pcTitle => 'Pool car';
@@ -1477,19 +2305,28 @@ class LEn extends L {
   String get homeParcelsSection => 'Parcels';
 
   @override
-  String get svcSendParcel => 'Send parcel';
+  String get svcAppointment => 'Request for Appointment';
 
   @override
-  String get svcMyParcels => 'My parcels';
+  String get svcIncidentRecord => 'Incident record';
 
   @override
-  String get svcPoolCar => 'Pool car';
+  String get svcRegulatory => 'Regulatory Affairs';
 
   @override
-  String get svcReportIssue => 'Report issue';
+  String get svcAudit => 'Audit';
 
   @override
-  String get svcVisitors => 'Visitors';
+  String get svcOfficeParcel => 'Office parcel';
+
+  @override
+  String get svcVisitorManagement => 'Visitor Management';
+
+  @override
+  String get svcLeave => 'Leave apply';
+
+  @override
+  String get svcPoolCarRequest => 'Pool car request';
 
   @override
   String get svcTours => 'Tour request';
@@ -1504,16 +2341,7 @@ class LEn extends L {
   String get svcScan => 'Scan & receive';
 
   @override
-  String get svcMyReports => 'My reports';
-
-  @override
-  String get svcLicences => 'Licences';
-
-  @override
   String get svcMyTrips => 'My trips';
-
-  @override
-  String get svcGateDesk => 'Gate desk';
 
   @override
   String get glanceWaiting => 'Parcels waiting';
@@ -2105,6 +2933,524 @@ class LEn extends L {
 
   @override
   String get incEvDetails => 'Details updated';
+
+  @override
+  String get kitNoHistory => 'Nothing recorded yet.';
+
+  @override
+  String get kitReasonRequired => 'Please give a short reason.';
+
+  @override
+  String get kitReason => 'Reason';
+
+  @override
+  String get kitNoteOptional => 'Note (optional)';
+
+  @override
+  String get kitNoteLabel => 'Note';
+
+  @override
+  String get kitSearchPeople => 'Search by name, ID or designation';
+
+  @override
+  String get kitTypeToSearch =>
+      'Type at least two letters to search the staff directory.';
+
+  @override
+  String get kitNoMatches => 'No one matches that search.';
+
+  @override
+  String get kitNoAccount => 'No app account';
+
+  @override
+  String get kitChange => 'Change';
+
+  @override
+  String get kitChoose => 'Choose';
+
+  @override
+  String get kitRemove => 'Remove';
+
+  @override
+  String get kitProgress => 'Progress';
+
+  @override
+  String get kitHistory => 'History';
+
+  @override
+  String get kitAddNote => 'Add a note';
+
+  @override
+  String get kitAddNoteHint => 'Everyone on this request can read it.';
+
+  @override
+  String get kitNoteAdded => 'Note added.';
+
+  @override
+  String get kitLatestNote => 'Latest note';
+
+  @override
+  String get kitAll => 'All';
+
+  @override
+  String get kitOpen => 'Open';
+
+  @override
+  String get kitClosed => 'Closed';
+
+  @override
+  String get kitOffice => 'Office';
+
+  @override
+  String get kitOfflineNotice =>
+      'You are offline. Nothing was sent — try again when you are connected.';
+
+  @override
+  String get lvTitle => 'Leave';
+
+  @override
+  String get lvApply => 'Apply for leave';
+
+  @override
+  String get lvMyLeave => 'My leave';
+
+  @override
+  String get lvToApprove => 'To approve';
+
+  @override
+  String lvBalanceTitle(Object year) {
+    return 'Your balance · $year';
+  }
+
+  @override
+  String get lvLeft => 'left';
+
+  @override
+  String lvOfTotal(Object total) {
+    return 'of $total';
+  }
+
+  @override
+  String lvTakenPending(Object taken, Object pending) {
+    return '$taken taken · $pending pending';
+  }
+
+  @override
+  String lvTaken(Object taken) {
+    return '$taken taken';
+  }
+
+  @override
+  String get lvNoLimit => 'No yearly limit';
+
+  @override
+  String get lvAdjusted => 'Set by HR';
+
+  @override
+  String get lvNoRequests => 'No leave applications yet';
+
+  @override
+  String get lvNoRequestsHint =>
+      'Apply for casual, sick, earned or other leave. Your head of department and HR approve it here.';
+
+  @override
+  String get lvNothingToApprove => 'Nothing waiting for you';
+
+  @override
+  String get lvNothingToApproveHint =>
+      'Leave applications from your team appear here for your approval.';
+
+  @override
+  String lvWaitingCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count applications are waiting for you',
+      one: '1 application is waiting for you',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get lvTeamAway => 'Your team away · next 30 days';
+
+  @override
+  String get lvTeamNobody => 'No one in your team is away in the next 30 days.';
+
+  @override
+  String get lvOnLeaveNow => 'On leave today';
+
+  @override
+  String lvOnLeaveBanner(Object ref) {
+    return 'You are on leave today ($ref). Enjoy the time off.';
+  }
+
+  @override
+  String get lvHalfDayCount => '½ day';
+
+  @override
+  String lvDayCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String lvDaysDecimal(Object days) {
+    return '$days days';
+  }
+
+  @override
+  String get lvTypeCASUAL => 'Casual leave';
+
+  @override
+  String get lvTypeSICK => 'Sick leave';
+
+  @override
+  String get lvTypeEARNED => 'Earned leave';
+
+  @override
+  String get lvTypeMATERNITY => 'Maternity leave';
+
+  @override
+  String get lvTypePATERNITY => 'Paternity leave';
+
+  @override
+  String get lvTypeUNPAID => 'Leave without pay';
+
+  @override
+  String get lvHintCASUAL => '10 days a year · up to 3 days at a time';
+
+  @override
+  String get lvHintSICK =>
+      '14 days a year · medical certificate for more than 2 days';
+
+  @override
+  String get lvHintEARNED => '18 days a year · apply at least 3 days ahead';
+
+  @override
+  String get lvHintMATERNITY => '16 weeks, counted in calendar days';
+
+  @override
+  String get lvHintPATERNITY => '5 working days around the birth';
+
+  @override
+  String get lvHintUNPAID => 'No balance · up to 30 days, apply 3 days ahead';
+
+  @override
+  String get lvStatusPENDING_HOD => 'Pending HOD approval';
+
+  @override
+  String get lvStatusPENDING_HR => 'Pending HR approval';
+
+  @override
+  String get lvStatusAPPROVED => 'Approved';
+
+  @override
+  String get lvStatusREJECTED => 'Rejected';
+
+  @override
+  String get lvStatusCANCELLED => 'Cancelled';
+
+  @override
+  String get lvStageSUBMITTED => 'Applied';
+
+  @override
+  String get lvStagePENDING_HOD => 'Head of department';
+
+  @override
+  String get lvStagePENDING_HR => 'HR';
+
+  @override
+  String get lvStageAPPROVED => 'Approved';
+
+  @override
+  String get lvStageCANCELLED => 'Cancelled';
+
+  @override
+  String lvWaitingFor(Object name) {
+    return 'Waiting for $name';
+  }
+
+  @override
+  String lvStageRejectedBy(Object name) {
+    return 'Rejected by $name';
+  }
+
+  @override
+  String lvStageCancelledBy(Object name) {
+    return 'Cancelled by $name';
+  }
+
+  @override
+  String get lvStageSkipped => 'Not needed';
+
+  @override
+  String get lvAwaitingHOD => 'Your approval as head of department';
+
+  @override
+  String get lvAwaitingHR => 'HR approval';
+
+  @override
+  String get lvHalfDay => 'Half day';
+
+  @override
+  String get lvFIRST_HALF => 'First half (morning)';
+
+  @override
+  String get lvSECOND_HALF => 'Second half (afternoon)';
+
+  @override
+  String get lvFormIntro =>
+      'Your head of department approves first, then HR. You are told at each step.';
+
+  @override
+  String get lvTypeSection => 'Type of leave';
+
+  @override
+  String get lvDatesSection => 'Dates';
+
+  @override
+  String get lvPickDates => 'Choose the days';
+
+  @override
+  String get lvPickDay => 'Choose the day';
+
+  @override
+  String get lvHalfDaySwitch => 'Only half a day';
+
+  @override
+  String get lvCountNote =>
+      'The weekly holiday and public holidays are not counted.';
+
+  @override
+  String get lvCountCalendar => 'Counted in calendar days, holidays included.';
+
+  @override
+  String lvHolidaysIn(Object names) {
+    return 'Public holidays in these dates: $names';
+  }
+
+  @override
+  String lvBalanceAfter(Object left, Object total) {
+    return 'Balance after this: $left of $total';
+  }
+
+  @override
+  String lvInsufficient(Object left, Object type, Object need) {
+    return 'You have $left of $type left — this needs $need.';
+  }
+
+  @override
+  String lvTooMany(Object type, Object max) {
+    return '$type is at most $max in one application.';
+  }
+
+  @override
+  String lvNoticeShort(Object type, Object days, Object date) {
+    return '$type needs $days days\' notice — the earliest start is $date.';
+  }
+
+  @override
+  String lvBackdate(Object type, Object days) {
+    return '$type can start at most $days days back.';
+  }
+
+  @override
+  String get lvNoWorkingDays =>
+      'Those dates are all holidays — there is nothing to take leave for.';
+
+  @override
+  String get lvReasonLabel => 'Reason';
+
+  @override
+  String get lvReasonHint => 'e.g. Family wedding in Sylhet';
+
+  @override
+  String get lvReliever => 'Covering your work (optional)';
+
+  @override
+  String get lvRelieverEmpty => 'No one chosen';
+
+  @override
+  String get lvChooseReliever => 'Who covers your work?';
+
+  @override
+  String get lvRelieverHint =>
+      'Pick a colleague. They are told once the leave is approved.';
+
+  @override
+  String get lvApprover => 'Head of department · approves first';
+
+  @override
+  String get lvChooseApprover => 'Who approves first?';
+
+  @override
+  String get lvApproverHint =>
+      'Usually your line manager. They must be able to sign in to ABG ONE.';
+
+  @override
+  String lvApproverMissing(Object name) {
+    return 'Your line manager $name has no app account — choose who approves.';
+  }
+
+  @override
+  String get lvAddress => 'Address during leave (optional)';
+
+  @override
+  String get lvPhone => 'Contact number during leave (optional)';
+
+  @override
+  String get lvMoreSection => 'While you are away';
+
+  @override
+  String get lvSubmit => 'Submit application';
+
+  @override
+  String lvSubmitted(Object ref) {
+    return '$ref sent for approval.';
+  }
+
+  @override
+  String get lvErrDates => 'Choose the days of leave.';
+
+  @override
+  String get lvErrReason => 'Say briefly why you need the leave.';
+
+  @override
+  String get lvErrApprover => 'Choose who approves first.';
+
+  @override
+  String get lvPipeline => 'Approval';
+
+  @override
+  String get lvDetails => 'Leave details';
+
+  @override
+  String get lvTypeLabel => 'Type';
+
+  @override
+  String get lvFirstDay => 'First day';
+
+  @override
+  String get lvLastDay => 'Last day';
+
+  @override
+  String get lvLength => 'Length';
+
+  @override
+  String get lvReasonTitle => 'Reason';
+
+  @override
+  String get lvAddressTitle => 'Address during leave';
+
+  @override
+  String get lvPhoneTitle => 'Contact during leave';
+
+  @override
+  String get lvPeople => 'People';
+
+  @override
+  String get lvApplicant => 'Applicant';
+
+  @override
+  String get lvHod => 'Head of department';
+
+  @override
+  String get lvCovering => 'Covering';
+
+  @override
+  String lvBalanceCard(Object type, Object year) {
+    return '$type · $year';
+  }
+
+  @override
+  String get lvEntitled => 'Entitled';
+
+  @override
+  String get lvUsed => 'Taken';
+
+  @override
+  String get lvPendingLabel => 'Pending';
+
+  @override
+  String get lvAvailable => 'Available';
+
+  @override
+  String get lvSeparation =>
+      'You approved this as head of department, so another HR colleague gives the second approval.';
+
+  @override
+  String lvRelieverBanner(Object name) {
+    return '$name asked you to cover their work during this leave.';
+  }
+
+  @override
+  String get lvActApproveHod => 'Send to HR';
+
+  @override
+  String get lvApproveHodTitle => 'Approve and send to HR';
+
+  @override
+  String get lvActApprove => 'Approve';
+
+  @override
+  String get lvActReject => 'Reject';
+
+  @override
+  String get lvActCancel => 'Cancel leave';
+
+  @override
+  String get lvApproveHodHint => 'HR gives the final approval.';
+
+  @override
+  String get lvApproveHrHint =>
+      'This is the final approval; the days come off the balance.';
+
+  @override
+  String get lvRejectHint => 'Tell the applicant why. They can apply again.';
+
+  @override
+  String get lvCancelHint =>
+      'Say why. Your head of department and HR are told, and the days return to your balance.';
+
+  @override
+  String get lvCancelHrHint =>
+      'The applicant is told, and the days return to their balance.';
+
+  @override
+  String get lvDoneApproved => 'Approved — the applicant has been told.';
+
+  @override
+  String get lvDoneForwarded => 'Approved — sent to HR.';
+
+  @override
+  String get lvDoneRejected => 'Rejected — the applicant has been told.';
+
+  @override
+  String get lvDoneCancelled => 'Leave cancelled.';
+
+  @override
+  String get lvEvSubmitted => 'Applied';
+
+  @override
+  String get lvEvHod => 'Approved by head of department';
+
+  @override
+  String get lvEvApproved => 'Approved by HR';
+
+  @override
+  String get lvEvRejected => 'Rejected';
+
+  @override
+  String get lvEvCancelled => 'Cancelled';
+
+  @override
+  String get lvEvNote => 'Note';
 
   @override
   String get licTitle => 'Licences';

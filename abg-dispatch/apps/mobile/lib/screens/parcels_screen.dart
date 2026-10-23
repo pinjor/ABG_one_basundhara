@@ -56,9 +56,21 @@ class _ParcelsScreenState extends State<ParcelsScreen>
     final courier =
         context.watch<SessionController>().profile?.isCourier ?? false;
     final boxes = _boxes(l, courier);
+    final canSend =
+        context.watch<SessionController>().profile?.can('parcel.create') ??
+        false;
     return Scaffold(
+      floatingActionButton: canSend
+          ? FloatingActionButton.extended(
+              onPressed: () => context.push('/create'),
+              backgroundColor: AbgColors.navy,
+              foregroundColor: Colors.white,
+              icon: const Icon(Icons.send_rounded),
+              label: Text(l.sendParcel),
+            )
+          : null,
       appBar: AppBar(
-        title: Text(l.navParcels),
+        title: Text(l.svcOfficeParcel),
         actions: [
           IconButton(
             tooltip: l.newParcel,

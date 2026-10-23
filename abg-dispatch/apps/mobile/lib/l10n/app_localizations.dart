@@ -1633,6 +1633,744 @@ abstract class L {
   /// **'More actions'**
   String get moreActions;
 
+  /// No description provided for @aptTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointments'**
+  String get aptTitle;
+
+  /// No description provided for @aptRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Request a meeting'**
+  String get aptRequest;
+
+  /// No description provided for @aptMine.
+  ///
+  /// In en, this message translates to:
+  /// **'My requests'**
+  String get aptMine;
+
+  /// No description provided for @aptToAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'To answer'**
+  String get aptToAnswer;
+
+  /// No description provided for @aptDiary.
+  ///
+  /// In en, this message translates to:
+  /// **'Diary'**
+  String get aptDiary;
+
+  /// No description provided for @aptNoRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'No meeting requests yet'**
+  String get aptNoRequests;
+
+  /// No description provided for @aptNoRequestsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask the MD, the Chairman or a head of department for time. Their office confirms or proposes another slot.'**
+  String get aptNoRequestsHint;
+
+  /// No description provided for @aptNothingToAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'No requests waiting'**
+  String get aptNothingToAnswer;
+
+  /// No description provided for @aptNothingToAnswerHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting requests addressed to you (or, for the executive office, to the MD and Chairman) appear here.'**
+  String get aptNothingToAnswerHint;
+
+  /// No description provided for @aptDiaryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing confirmed in the next two weeks.'**
+  String get aptDiaryEmpty;
+
+  /// No description provided for @aptWaitingCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 request is waiting for an answer} other{{count} requests are waiting for an answer}}'**
+  String aptWaitingCount(int count);
+
+  /// No description provided for @aptStatusPENDING.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting confirmation'**
+  String get aptStatusPENDING;
+
+  /// No description provided for @aptStatusPROPOSED.
+  ///
+  /// In en, this message translates to:
+  /// **'New time proposed'**
+  String get aptStatusPROPOSED;
+
+  /// No description provided for @aptStatusCONFIRMED.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get aptStatusCONFIRMED;
+
+  /// No description provided for @aptStatusCOMPLETED.
+  ///
+  /// In en, this message translates to:
+  /// **'Held'**
+  String get aptStatusCOMPLETED;
+
+  /// No description provided for @aptStatusDECLINED.
+  ///
+  /// In en, this message translates to:
+  /// **'Declined'**
+  String get aptStatusDECLINED;
+
+  /// No description provided for @aptStatusCANCELLED.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get aptStatusCANCELLED;
+
+  /// No description provided for @aptPurposeBUSINESS_REVIEW.
+  ///
+  /// In en, this message translates to:
+  /// **'Business review / report'**
+  String get aptPurposeBUSINESS_REVIEW;
+
+  /// No description provided for @aptPurposeAPPROVAL.
+  ///
+  /// In en, this message translates to:
+  /// **'Approval or signature'**
+  String get aptPurposeAPPROVAL;
+
+  /// No description provided for @aptPurposePROJECT_UPDATE.
+  ///
+  /// In en, this message translates to:
+  /// **'Project update'**
+  String get aptPurposePROJECT_UPDATE;
+
+  /// No description provided for @aptPurposePROPOSAL.
+  ///
+  /// In en, this message translates to:
+  /// **'New proposal'**
+  String get aptPurposePROPOSAL;
+
+  /// No description provided for @aptPurposePERSONAL.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal / HR matter'**
+  String get aptPurposePERSONAL;
+
+  /// No description provided for @aptPurposeCOURTESY.
+  ///
+  /// In en, this message translates to:
+  /// **'Courtesy call'**
+  String get aptPurposeCOURTESY;
+
+  /// No description provided for @aptPurposeOTHER.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get aptPurposeOTHER;
+
+  /// No description provided for @aptModeIN_PERSON.
+  ///
+  /// In en, this message translates to:
+  /// **'In person'**
+  String get aptModeIN_PERSON;
+
+  /// No description provided for @aptModeVIDEO.
+  ///
+  /// In en, this message translates to:
+  /// **'Video call'**
+  String get aptModeVIDEO;
+
+  /// No description provided for @aptModePHONE.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone call'**
+  String get aptModePHONE;
+
+  /// No description provided for @aptMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} min'**
+  String aptMinutes(int count);
+
+  /// No description provided for @aptUrgent.
+  ///
+  /// In en, this message translates to:
+  /// **'Urgent'**
+  String get aptUrgent;
+
+  /// No description provided for @aptWith.
+  ///
+  /// In en, this message translates to:
+  /// **'With {name}'**
+  String aptWith(Object name);
+
+  /// No description provided for @aptFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From {name}'**
+  String aptFrom(Object name);
+
+  /// No description provided for @aptAsked.
+  ///
+  /// In en, this message translates to:
+  /// **'Asked for {when}'**
+  String aptAsked(Object when);
+
+  /// No description provided for @aptProposedFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Proposed: {when}'**
+  String aptProposedFor(Object when);
+
+  /// No description provided for @aptFormIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'The executive office (for the MD and Chairman) or the person you ask confirms the time, proposes another one, or declines.'**
+  String get aptFormIntro;
+
+  /// No description provided for @aptWhoSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Who do you want to meet?'**
+  String get aptWhoSection;
+
+  /// No description provided for @aptChooseHost.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose who to meet'**
+  String get aptChooseHost;
+
+  /// No description provided for @aptHostHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The MD, the Chairman and heads of department are listed first. Search for anyone else.'**
+  String get aptHostHint;
+
+  /// No description provided for @aptSearchHosts.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name, designation or department'**
+  String get aptSearchHosts;
+
+  /// No description provided for @aptExecutive.
+  ///
+  /// In en, this message translates to:
+  /// **'Executive'**
+  String get aptExecutive;
+
+  /// No description provided for @aptHeadOfDept.
+  ///
+  /// In en, this message translates to:
+  /// **'Head of department'**
+  String get aptHeadOfDept;
+
+  /// No description provided for @aptOfficeAnswers.
+  ///
+  /// In en, this message translates to:
+  /// **'The executive office answers for them.'**
+  String get aptOfficeAnswers;
+
+  /// No description provided for @aptAboutSection.
+  ///
+  /// In en, this message translates to:
+  /// **'What is it about?'**
+  String get aptAboutSection;
+
+  /// No description provided for @aptSubjectLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject'**
+  String get aptSubjectLabel;
+
+  /// No description provided for @aptSubjectHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Q3 sales review for the steel division'**
+  String get aptSubjectHint;
+
+  /// No description provided for @aptAgendaLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Agenda or background (optional)'**
+  String get aptAgendaLabel;
+
+  /// No description provided for @aptHowSection.
+  ///
+  /// In en, this message translates to:
+  /// **'How and how long'**
+  String get aptHowSection;
+
+  /// No description provided for @aptWhenSection.
+  ///
+  /// In en, this message translates to:
+  /// **'When suits you'**
+  String get aptWhenSection;
+
+  /// No description provided for @aptPreferred.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred time'**
+  String get aptPreferred;
+
+  /// No description provided for @aptAlternative.
+  ///
+  /// In en, this message translates to:
+  /// **'Alternative time (optional)'**
+  String get aptAlternative;
+
+  /// No description provided for @aptPickTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a day and time'**
+  String get aptPickTime;
+
+  /// No description provided for @aptHoursNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Meetings are between 8:00 and 20:00, Dhaka time.'**
+  String get aptHoursNote;
+
+  /// No description provided for @aptAttendees.
+  ///
+  /// In en, this message translates to:
+  /// **'Others joining (optional)'**
+  String get aptAttendees;
+
+  /// No description provided for @aptAttendeeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Name, then add'**
+  String get aptAttendeeHint;
+
+  /// No description provided for @aptAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get aptAdd;
+
+  /// No description provided for @aptUrgentSwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Urgent'**
+  String get aptUrgentSwitch;
+
+  /// No description provided for @aptUrgentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Only when it cannot wait — the office sees it first.'**
+  String get aptUrgentHint;
+
+  /// No description provided for @aptSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Send request'**
+  String get aptSubmit;
+
+  /// No description provided for @aptSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'{ref} sent. You will be told when it is answered.'**
+  String aptSubmitted(Object ref);
+
+  /// No description provided for @aptErrHost.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose who you want to meet.'**
+  String get aptErrHost;
+
+  /// No description provided for @aptErrSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a short subject.'**
+  String get aptErrSubject;
+
+  /// No description provided for @aptErrTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the preferred day and time.'**
+  String get aptErrTime;
+
+  /// No description provided for @aptErrPast.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a time at least 15 minutes from now.'**
+  String get aptErrPast;
+
+  /// No description provided for @aptErrHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Meetings are between 8:00 and 20:00 and must end by 20:00.'**
+  String get aptErrHours;
+
+  /// No description provided for @aptErrFar.
+  ///
+  /// In en, this message translates to:
+  /// **'Meetings can be asked for at most 90 days ahead.'**
+  String get aptErrFar;
+
+  /// No description provided for @aptErrSame.
+  ///
+  /// In en, this message translates to:
+  /// **'The alternative time is the same as the preferred one.'**
+  String get aptErrSame;
+
+  /// No description provided for @aptMeeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting'**
+  String get aptMeeting;
+
+  /// No description provided for @aptWhen.
+  ///
+  /// In en, this message translates to:
+  /// **'When'**
+  String get aptWhen;
+
+  /// No description provided for @aptLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Length'**
+  String get aptLength;
+
+  /// No description provided for @aptModeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'How'**
+  String get aptModeLabel;
+
+  /// No description provided for @aptLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Where'**
+  String get aptLocation;
+
+  /// No description provided for @aptPurposeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Purpose'**
+  String get aptPurposeLabel;
+
+  /// No description provided for @aptAgenda.
+  ///
+  /// In en, this message translates to:
+  /// **'Agenda'**
+  String get aptAgenda;
+
+  /// No description provided for @aptJoining.
+  ///
+  /// In en, this message translates to:
+  /// **'Also joining'**
+  String get aptJoining;
+
+  /// No description provided for @aptPeople.
+  ///
+  /// In en, this message translates to:
+  /// **'People'**
+  String get aptPeople;
+
+  /// No description provided for @aptRequester.
+  ///
+  /// In en, this message translates to:
+  /// **'Asked by'**
+  String get aptRequester;
+
+  /// No description provided for @aptHost.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting with'**
+  String get aptHost;
+
+  /// No description provided for @aptAnsweredBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Answered by'**
+  String get aptAnsweredBy;
+
+  /// No description provided for @aptTimesAsked.
+  ///
+  /// In en, this message translates to:
+  /// **'Times asked for'**
+  String get aptTimesAsked;
+
+  /// No description provided for @aptPreferredShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred'**
+  String get aptPreferredShort;
+
+  /// No description provided for @aptAlternativeShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Alternative'**
+  String get aptAlternativeShort;
+
+  /// No description provided for @aptClashTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clashes with the diary'**
+  String get aptClashTitle;
+
+  /// No description provided for @aptClashBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} already has: {list}'**
+  String aptClashBody(Object name, Object list);
+
+  /// No description provided for @aptProposedBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'{who} proposed {when} instead.'**
+  String aptProposedBanner(Object who, Object when);
+
+  /// No description provided for @aptProposedAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept this time, or cancel the request if it does not suit you.'**
+  String get aptProposedAccept;
+
+  /// No description provided for @aptConfirmedBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed for {when}.'**
+  String aptConfirmedBanner(Object when);
+
+  /// No description provided for @aptActConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get aptActConfirm;
+
+  /// No description provided for @aptActPropose.
+  ///
+  /// In en, this message translates to:
+  /// **'Propose a time'**
+  String get aptActPropose;
+
+  /// No description provided for @aptActReschedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Move the meeting'**
+  String get aptActReschedule;
+
+  /// No description provided for @aptActDecline.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get aptActDecline;
+
+  /// No description provided for @aptActAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept the time'**
+  String get aptActAccept;
+
+  /// No description provided for @aptActCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get aptActCancel;
+
+  /// No description provided for @aptActComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as held'**
+  String get aptActComplete;
+
+  /// No description provided for @aptConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the meeting'**
+  String get aptConfirmTitle;
+
+  /// No description provided for @aptConfirmHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick one of the times asked for, add the place, and the requester is told.'**
+  String get aptConfirmHint;
+
+  /// No description provided for @aptLocationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Place or link (optional)'**
+  String get aptLocationLabel;
+
+  /// No description provided for @aptLocationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. MD\'s office, Level 12'**
+  String get aptLocationHint;
+
+  /// No description provided for @aptProposeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Propose another time'**
+  String get aptProposeTitle;
+
+  /// No description provided for @aptProposeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The requester accepts the new time or cancels.'**
+  String get aptProposeHint;
+
+  /// No description provided for @aptNewTime.
+  ///
+  /// In en, this message translates to:
+  /// **'New time'**
+  String get aptNewTime;
+
+  /// No description provided for @aptProposeReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Why another time (shown to the requester)'**
+  String get aptProposeReason;
+
+  /// No description provided for @aptDeclineHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell the requester why. They can ask again.'**
+  String get aptDeclineHint;
+
+  /// No description provided for @aptCancelHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Say why. The other side is told.'**
+  String get aptCancelHint;
+
+  /// No description provided for @aptCompleteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a short note of the outcome if useful.'**
+  String get aptCompleteHint;
+
+  /// No description provided for @aptSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get aptSend;
+
+  /// No description provided for @aptDoneConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed — the requester has been told.'**
+  String get aptDoneConfirmed;
+
+  /// No description provided for @aptDoneProposed.
+  ///
+  /// In en, this message translates to:
+  /// **'New time sent to the requester.'**
+  String get aptDoneProposed;
+
+  /// No description provided for @aptDoneDeclined.
+  ///
+  /// In en, this message translates to:
+  /// **'Declined — the requester has been told.'**
+  String get aptDoneDeclined;
+
+  /// No description provided for @aptDoneAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted — the meeting is confirmed.'**
+  String get aptDoneAccepted;
+
+  /// No description provided for @aptDoneCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled.'**
+  String get aptDoneCancelled;
+
+  /// No description provided for @aptDoneCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked as held.'**
+  String get aptDoneCompleted;
+
+  /// No description provided for @aptStageAsked.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested'**
+  String get aptStageAsked;
+
+  /// No description provided for @aptStageAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer'**
+  String get aptStageAnswer;
+
+  /// No description provided for @aptStageMeeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting'**
+  String get aptStageMeeting;
+
+  /// No description provided for @aptEvSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested'**
+  String get aptEvSubmitted;
+
+  /// No description provided for @aptEvProposed.
+  ///
+  /// In en, this message translates to:
+  /// **'New time proposed: {when}'**
+  String aptEvProposed(Object when);
+
+  /// No description provided for @aptEvConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get aptEvConfirmed;
+
+  /// No description provided for @aptEvDeclined.
+  ///
+  /// In en, this message translates to:
+  /// **'Declined'**
+  String get aptEvDeclined;
+
+  /// No description provided for @aptEvCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get aptEvCancelled;
+
+  /// No description provided for @aptEvCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Held'**
+  String get aptEvCompleted;
+
+  /// No description provided for @aptEvNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get aptEvNote;
+
+  /// No description provided for @aptToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get aptToday;
+
+  /// No description provided for @aptTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get aptTomorrow;
+
+  /// No description provided for @aptFromTo.
+  ///
+  /// In en, this message translates to:
+  /// **'From {from} · for {to}'**
+  String aptFromTo(Object from, Object to);
+
   /// No description provided for @apprTitle.
   ///
   /// In en, this message translates to:
@@ -1648,7 +2386,7 @@ abstract class L {
   /// No description provided for @apprEmptyHint.
   ///
   /// In en, this message translates to:
-  /// **'Tour and pool car requests that need your approval appear here.'**
+  /// **'Leave, meeting, pool car and tour requests that need you appear here.'**
   String get apprEmptyHint;
 
   /// No description provided for @apprAll.
@@ -1776,6 +2514,774 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Details'**
   String get apprDetails;
+
+  /// No description provided for @apprLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave'**
+  String get apprLeave;
+
+  /// No description provided for @apprMeetings.
+  ///
+  /// In en, this message translates to:
+  /// **'Meetings'**
+  String get apprMeetings;
+
+  /// No description provided for @apprAwaitingHR.
+  ///
+  /// In en, this message translates to:
+  /// **'Your approval as HR'**
+  String get apprAwaitingHR;
+
+  /// No description provided for @apprAwaitingANSWER.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for your answer'**
+  String get apprAwaitingANSWER;
+
+  /// No description provided for @apprConfirmMeetingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm at the time asked for?'**
+  String get apprConfirmMeetingTitle;
+
+  /// No description provided for @apprDeclineMeetingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline this meeting?'**
+  String get apprDeclineMeetingTitle;
+
+  /// No description provided for @apprMeetingConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed — the requester has been told.'**
+  String get apprMeetingConfirmed;
+
+  /// No description provided for @apprMeetingDeclined.
+  ///
+  /// In en, this message translates to:
+  /// **'Declined — the requester has been told.'**
+  String get apprMeetingDeclined;
+
+  /// No description provided for @audTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit'**
+  String get audTitle;
+
+  /// No description provided for @audMyActions.
+  ///
+  /// In en, this message translates to:
+  /// **'My actions'**
+  String get audMyActions;
+
+  /// No description provided for @audAudits.
+  ///
+  /// In en, this message translates to:
+  /// **'Audits'**
+  String get audAudits;
+
+  /// No description provided for @audNoActions.
+  ///
+  /// In en, this message translates to:
+  /// **'No corrective actions for you'**
+  String get audNoActions;
+
+  /// No description provided for @audNoActionsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'When an audit finds something you need to fix, it appears here with its due date.'**
+  String get audNoActionsHint;
+
+  /// No description provided for @audNoAudits.
+  ///
+  /// In en, this message translates to:
+  /// **'No audits'**
+  String get audNoAudits;
+
+  /// No description provided for @audNoAuditsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Audits planned for your offices appear here.'**
+  String get audNoAuditsHint;
+
+  /// No description provided for @audActionsBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'{open} to fix · {submitted} with the auditor'**
+  String audActionsBanner(int open, int submitted);
+
+  /// No description provided for @audOverdueCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 overdue} other{{count} overdue}}'**
+  String audOverdueCount(int count);
+
+  /// No description provided for @audTypeINTERNAL.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal audit'**
+  String get audTypeINTERNAL;
+
+  /// No description provided for @audTypeCOMPLIANCE.
+  ///
+  /// In en, this message translates to:
+  /// **'Regulatory compliance'**
+  String get audTypeCOMPLIANCE;
+
+  /// No description provided for @audTypeSAFETY.
+  ///
+  /// In en, this message translates to:
+  /// **'Fire & safety'**
+  String get audTypeSAFETY;
+
+  /// No description provided for @audTypeBUYER.
+  ///
+  /// In en, this message translates to:
+  /// **'Buyer / customer audit'**
+  String get audTypeBUYER;
+
+  /// No description provided for @audTypeISO.
+  ///
+  /// In en, this message translates to:
+  /// **'ISO certification'**
+  String get audTypeISO;
+
+  /// No description provided for @audTypeFINANCIAL.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial / stock audit'**
+  String get audTypeFINANCIAL;
+
+  /// No description provided for @audTypeENVIRONMENT.
+  ///
+  /// In en, this message translates to:
+  /// **'Environmental'**
+  String get audTypeENVIRONMENT;
+
+  /// No description provided for @audStatusPLANNED.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned'**
+  String get audStatusPLANNED;
+
+  /// No description provided for @audStatusIN_PROGRESS.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get audStatusIN_PROGRESS;
+
+  /// No description provided for @audStatusFOLLOW_UP.
+  ///
+  /// In en, this message translates to:
+  /// **'Actions open'**
+  String get audStatusFOLLOW_UP;
+
+  /// No description provided for @audStatusCLOSED.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get audStatusCLOSED;
+
+  /// No description provided for @audStatusCANCELLED.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get audStatusCANCELLED;
+
+  /// No description provided for @audRatingSATISFACTORY.
+  ///
+  /// In en, this message translates to:
+  /// **'Satisfactory'**
+  String get audRatingSATISFACTORY;
+
+  /// No description provided for @audRatingNEEDS_IMPROVEMENT.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs improvement'**
+  String get audRatingNEEDS_IMPROVEMENT;
+
+  /// No description provided for @audRatingUNSATISFACTORY.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsatisfactory'**
+  String get audRatingUNSATISFACTORY;
+
+  /// No description provided for @audSevCRITICAL.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get audSevCRITICAL;
+
+  /// No description provided for @audSevMAJOR.
+  ///
+  /// In en, this message translates to:
+  /// **'Major'**
+  String get audSevMAJOR;
+
+  /// No description provided for @audSevMINOR.
+  ///
+  /// In en, this message translates to:
+  /// **'Minor'**
+  String get audSevMINOR;
+
+  /// No description provided for @audSevOBSERVATION.
+  ///
+  /// In en, this message translates to:
+  /// **'Observation'**
+  String get audSevOBSERVATION;
+
+  /// No description provided for @audSevHintCRITICAL.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix within 7 days — risk to life, licence or a buyer'**
+  String get audSevHintCRITICAL;
+
+  /// No description provided for @audSevHintMAJOR.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix within 30 days'**
+  String get audSevHintMAJOR;
+
+  /// No description provided for @audSevHintMINOR.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix within 60 days'**
+  String get audSevHintMINOR;
+
+  /// No description provided for @audSevHintOBSERVATION.
+  ///
+  /// In en, this message translates to:
+  /// **'No action needed — noted for next time'**
+  String get audSevHintOBSERVATION;
+
+  /// No description provided for @audFindStatusOPEN.
+  ///
+  /// In en, this message translates to:
+  /// **'Action open'**
+  String get audFindStatusOPEN;
+
+  /// No description provided for @audFindStatusSUBMITTED.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix submitted'**
+  String get audFindStatusSUBMITTED;
+
+  /// No description provided for @audFindStatusVERIFIED.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get audFindStatusVERIFIED;
+
+  /// No description provided for @audFindStatusNOTED.
+  ///
+  /// In en, this message translates to:
+  /// **'Noted'**
+  String get audFindStatusNOTED;
+
+  /// No description provided for @audDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date}'**
+  String audDue(Object date);
+
+  /// No description provided for @audOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue since {date}'**
+  String audOverdue(Object date);
+
+  /// No description provided for @audOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get audOwner;
+
+  /// No description provided for @audNoOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'No owner'**
+  String get audNoOwner;
+
+  /// No description provided for @audFieldwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Fieldwork'**
+  String get audFieldwork;
+
+  /// No description provided for @audLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit lead'**
+  String get audLead;
+
+  /// No description provided for @audBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Outside body'**
+  String get audBody;
+
+  /// No description provided for @audTeam.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit team'**
+  String get audTeam;
+
+  /// No description provided for @audScope.
+  ///
+  /// In en, this message translates to:
+  /// **'Scope'**
+  String get audScope;
+
+  /// No description provided for @audResult.
+  ///
+  /// In en, this message translates to:
+  /// **'Result'**
+  String get audResult;
+
+  /// No description provided for @audScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Score {score}/100'**
+  String audScore(Object score);
+
+  /// No description provided for @audConclusion.
+  ///
+  /// In en, this message translates to:
+  /// **'Conclusion'**
+  String get audConclusion;
+
+  /// No description provided for @audFindings.
+  ///
+  /// In en, this message translates to:
+  /// **'Findings'**
+  String get audFindings;
+
+  /// No description provided for @audNoFindings.
+  ///
+  /// In en, this message translates to:
+  /// **'No findings recorded yet.'**
+  String get audNoFindings;
+
+  /// No description provided for @audPartial.
+  ///
+  /// In en, this message translates to:
+  /// **'You see the findings you own. The audit team sees the full report.'**
+  String get audPartial;
+
+  /// No description provided for @audCountOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get audCountOpen;
+
+  /// No description provided for @audCountSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted'**
+  String get audCountSubmitted;
+
+  /// No description provided for @audCountVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get audCountVerified;
+
+  /// No description provided for @audCountOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get audCountOverdue;
+
+  /// No description provided for @audClause.
+  ///
+  /// In en, this message translates to:
+  /// **'Clause or standard'**
+  String get audClause;
+
+  /// No description provided for @audArea.
+  ///
+  /// In en, this message translates to:
+  /// **'Area'**
+  String get audArea;
+
+  /// No description provided for @audRecommendation.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommendation'**
+  String get audRecommendation;
+
+  /// No description provided for @audResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'Response'**
+  String get audResponse;
+
+  /// No description provided for @audVerifiedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified by {name}'**
+  String audVerifiedBy(Object name);
+
+  /// No description provided for @audStageStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned'**
+  String get audStageStart;
+
+  /// No description provided for @audStageFieldwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Fieldwork'**
+  String get audStageFieldwork;
+
+  /// No description provided for @audStageActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Corrective actions'**
+  String get audStageActions;
+
+  /// No description provided for @audStageClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get audStageClosed;
+
+  /// No description provided for @audActionsLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Nothing left open} =1{1 action open} other{{count} actions open}}'**
+  String audActionsLeft(int count);
+
+  /// No description provided for @audActStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start fieldwork'**
+  String get audActStart;
+
+  /// No description provided for @audActAddFinding.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a finding'**
+  String get audActAddFinding;
+
+  /// No description provided for @audActComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish fieldwork'**
+  String get audActComplete;
+
+  /// No description provided for @audActClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close the audit'**
+  String get audActClose;
+
+  /// No description provided for @audActCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel audit'**
+  String get audActCancel;
+
+  /// No description provided for @audActSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit my fix'**
+  String get audActSubmit;
+
+  /// No description provided for @audActVerify.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get audActVerify;
+
+  /// No description provided for @audActReopen.
+  ///
+  /// In en, this message translates to:
+  /// **'Send back'**
+  String get audActReopen;
+
+  /// No description provided for @audActReassign.
+  ///
+  /// In en, this message translates to:
+  /// **'Reassign'**
+  String get audActReassign;
+
+  /// No description provided for @audStartHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Findings can be recorded once fieldwork has started. The office is told.'**
+  String get audStartHint;
+
+  /// No description provided for @audCloseHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Every corrective action is verified. Closing files the audit.'**
+  String get audCloseHint;
+
+  /// No description provided for @audCancelHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Say why the audit will not happen.'**
+  String get audCancelHint;
+
+  /// No description provided for @audSubmitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit your fix'**
+  String get audSubmitTitle;
+
+  /// No description provided for @audSubmitHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Say what was done; the auditor verifies it or sends it back.'**
+  String get audSubmitHint;
+
+  /// No description provided for @audResponseLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'What was done'**
+  String get audResponseLabel;
+
+  /// No description provided for @audVerifyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The action is closed and the owner is told.'**
+  String get audVerifyHint;
+
+  /// No description provided for @audReopenHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell the owner what is still missing.'**
+  String get audReopenHint;
+
+  /// No description provided for @audChooseOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Who fixes it?'**
+  String get audChooseOwner;
+
+  /// No description provided for @audOwnerHint.
+  ///
+  /// In en, this message translates to:
+  /// **'They see it under Audit · My actions and are reminded when it is overdue.'**
+  String get audOwnerHint;
+
+  /// No description provided for @audCompleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish fieldwork'**
+  String get audCompleteTitle;
+
+  /// No description provided for @audCompleteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Give the overall result. Open actions stay with their owners until verified.'**
+  String get audCompleteHint;
+
+  /// No description provided for @audScoreLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Score out of 100 (optional)'**
+  String get audScoreLabel;
+
+  /// No description provided for @audConclusionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Conclusion'**
+  String get audConclusionLabel;
+
+  /// No description provided for @audFindingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New finding'**
+  String get audFindingTitle;
+
+  /// No description provided for @audFindingTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'What was found'**
+  String get audFindingTitleLabel;
+
+  /// No description provided for @audFindingTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Fire exit on Level 3 blocked by cartons'**
+  String get audFindingTitleHint;
+
+  /// No description provided for @audDetailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Detail (optional)'**
+  String get audDetailLabel;
+
+  /// No description provided for @audSeverity.
+  ///
+  /// In en, this message translates to:
+  /// **'Severity'**
+  String get audSeverity;
+
+  /// No description provided for @audDueLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Due date'**
+  String get audDueLabel;
+
+  /// No description provided for @audSaveFinding.
+  ///
+  /// In en, this message translates to:
+  /// **'Record finding'**
+  String get audSaveFinding;
+
+  /// No description provided for @audErrTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Say briefly what was found.'**
+  String get audErrTitle;
+
+  /// No description provided for @audErrOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose who fixes it.'**
+  String get audErrOwner;
+
+  /// No description provided for @audErrConclusion.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a short conclusion.'**
+  String get audErrConclusion;
+
+  /// No description provided for @audDoneStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Fieldwork started.'**
+  String get audDoneStarted;
+
+  /// No description provided for @audDoneFinding.
+  ///
+  /// In en, this message translates to:
+  /// **'Finding recorded — the owner has been told.'**
+  String get audDoneFinding;
+
+  /// No description provided for @audDoneCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Fieldwork finished.'**
+  String get audDoneCompleted;
+
+  /// No description provided for @audDoneClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit closed.'**
+  String get audDoneClosed;
+
+  /// No description provided for @audDoneCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit cancelled.'**
+  String get audDoneCancelled;
+
+  /// No description provided for @audDoneSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix submitted — the auditor has been told.'**
+  String get audDoneSubmitted;
+
+  /// No description provided for @audDoneVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified — the action is closed.'**
+  String get audDoneVerified;
+
+  /// No description provided for @audDoneReopened.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent back to the owner.'**
+  String get audDoneReopened;
+
+  /// No description provided for @audDoneReassigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Reassigned — the new owner has been told.'**
+  String get audDoneReassigned;
+
+  /// No description provided for @audEvCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit planned'**
+  String get audEvCreated;
+
+  /// No description provided for @audEvStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Fieldwork started'**
+  String get audEvStarted;
+
+  /// No description provided for @audEvFinding.
+  ///
+  /// In en, this message translates to:
+  /// **'Finding recorded'**
+  String get audEvFinding;
+
+  /// No description provided for @audEvSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix submitted'**
+  String get audEvSubmitted;
+
+  /// No description provided for @audEvVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Action verified'**
+  String get audEvVerified;
+
+  /// No description provided for @audEvReopened.
+  ///
+  /// In en, this message translates to:
+  /// **'Action sent back'**
+  String get audEvReopened;
+
+  /// No description provided for @audEvReassigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Action reassigned'**
+  String get audEvReassigned;
+
+  /// No description provided for @audEvCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Fieldwork finished'**
+  String get audEvCompleted;
+
+  /// No description provided for @audEvClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit closed'**
+  String get audEvClosed;
+
+  /// No description provided for @audEvCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit cancelled'**
+  String get audEvCancelled;
+
+  /// No description provided for @audEvNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get audEvNote;
+
+  /// No description provided for @audRecommendationOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommendation (optional)'**
+  String get audRecommendationOptional;
+
+  /// No description provided for @audDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Detail'**
+  String get audDetail;
 
   /// No description provided for @pcTitle.
   ///
@@ -2803,35 +4309,53 @@ abstract class L {
   /// **'Parcels'**
   String get homeParcelsSection;
 
-  /// No description provided for @svcSendParcel.
+  /// No description provided for @svcAppointment.
   ///
   /// In en, this message translates to:
-  /// **'Send parcel'**
-  String get svcSendParcel;
+  /// **'Request for Appointment'**
+  String get svcAppointment;
 
-  /// No description provided for @svcMyParcels.
+  /// No description provided for @svcIncidentRecord.
   ///
   /// In en, this message translates to:
-  /// **'My parcels'**
-  String get svcMyParcels;
+  /// **'Incident record'**
+  String get svcIncidentRecord;
 
-  /// No description provided for @svcPoolCar.
+  /// No description provided for @svcRegulatory.
   ///
   /// In en, this message translates to:
-  /// **'Pool car'**
-  String get svcPoolCar;
+  /// **'Regulatory Affairs'**
+  String get svcRegulatory;
 
-  /// No description provided for @svcReportIssue.
+  /// No description provided for @svcAudit.
   ///
   /// In en, this message translates to:
-  /// **'Report issue'**
-  String get svcReportIssue;
+  /// **'Audit'**
+  String get svcAudit;
 
-  /// No description provided for @svcVisitors.
+  /// No description provided for @svcOfficeParcel.
   ///
   /// In en, this message translates to:
-  /// **'Visitors'**
-  String get svcVisitors;
+  /// **'Office parcel'**
+  String get svcOfficeParcel;
+
+  /// No description provided for @svcVisitorManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Visitor Management'**
+  String get svcVisitorManagement;
+
+  /// No description provided for @svcLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave apply'**
+  String get svcLeave;
+
+  /// No description provided for @svcPoolCarRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Pool car request'**
+  String get svcPoolCarRequest;
 
   /// No description provided for @svcTours.
   ///
@@ -2857,29 +4381,11 @@ abstract class L {
   /// **'Scan & receive'**
   String get svcScan;
 
-  /// No description provided for @svcMyReports.
-  ///
-  /// In en, this message translates to:
-  /// **'My reports'**
-  String get svcMyReports;
-
-  /// No description provided for @svcLicences.
-  ///
-  /// In en, this message translates to:
-  /// **'Licences'**
-  String get svcLicences;
-
   /// No description provided for @svcMyTrips.
   ///
   /// In en, this message translates to:
   /// **'My trips'**
   String get svcMyTrips;
-
-  /// No description provided for @svcGateDesk.
-  ///
-  /// In en, this message translates to:
-  /// **'Gate desk'**
-  String get svcGateDesk;
 
   /// No description provided for @glanceWaiting.
   ///
@@ -3930,6 +5436,906 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Details updated'**
   String get incEvDetails;
+
+  /// No description provided for @kitNoHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing recorded yet.'**
+  String get kitNoHistory;
+
+  /// No description provided for @kitReasonRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please give a short reason.'**
+  String get kitReasonRequired;
+
+  /// No description provided for @kitReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get kitReason;
+
+  /// No description provided for @kitNoteOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get kitNoteOptional;
+
+  /// No description provided for @kitNoteLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get kitNoteLabel;
+
+  /// No description provided for @kitSearchPeople.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name, ID or designation'**
+  String get kitSearchPeople;
+
+  /// No description provided for @kitTypeToSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Type at least two letters to search the staff directory.'**
+  String get kitTypeToSearch;
+
+  /// No description provided for @kitNoMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'No one matches that search.'**
+  String get kitNoMatches;
+
+  /// No description provided for @kitNoAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'No app account'**
+  String get kitNoAccount;
+
+  /// No description provided for @kitChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get kitChange;
+
+  /// No description provided for @kitChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose'**
+  String get kitChoose;
+
+  /// No description provided for @kitRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get kitRemove;
+
+  /// No description provided for @kitProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get kitProgress;
+
+  /// No description provided for @kitHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get kitHistory;
+
+  /// No description provided for @kitAddNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a note'**
+  String get kitAddNote;
+
+  /// No description provided for @kitAddNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone on this request can read it.'**
+  String get kitAddNoteHint;
+
+  /// No description provided for @kitNoteAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Note added.'**
+  String get kitNoteAdded;
+
+  /// No description provided for @kitLatestNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest note'**
+  String get kitLatestNote;
+
+  /// No description provided for @kitAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get kitAll;
+
+  /// No description provided for @kitOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get kitOpen;
+
+  /// No description provided for @kitClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get kitClosed;
+
+  /// No description provided for @kitOffice.
+  ///
+  /// In en, this message translates to:
+  /// **'Office'**
+  String get kitOffice;
+
+  /// No description provided for @kitOfflineNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'You are offline. Nothing was sent — try again when you are connected.'**
+  String get kitOfflineNotice;
+
+  /// No description provided for @lvTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave'**
+  String get lvTitle;
+
+  /// No description provided for @lvApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply for leave'**
+  String get lvApply;
+
+  /// No description provided for @lvMyLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'My leave'**
+  String get lvMyLeave;
+
+  /// No description provided for @lvToApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'To approve'**
+  String get lvToApprove;
+
+  /// No description provided for @lvBalanceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your balance · {year}'**
+  String lvBalanceTitle(Object year);
+
+  /// No description provided for @lvLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'left'**
+  String get lvLeft;
+
+  /// No description provided for @lvOfTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'of {total}'**
+  String lvOfTotal(Object total);
+
+  /// No description provided for @lvTakenPending.
+  ///
+  /// In en, this message translates to:
+  /// **'{taken} taken · {pending} pending'**
+  String lvTakenPending(Object taken, Object pending);
+
+  /// No description provided for @lvTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'{taken} taken'**
+  String lvTaken(Object taken);
+
+  /// No description provided for @lvNoLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'No yearly limit'**
+  String get lvNoLimit;
+
+  /// No description provided for @lvAdjusted.
+  ///
+  /// In en, this message translates to:
+  /// **'Set by HR'**
+  String get lvAdjusted;
+
+  /// No description provided for @lvNoRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'No leave applications yet'**
+  String get lvNoRequests;
+
+  /// No description provided for @lvNoRequestsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply for casual, sick, earned or other leave. Your head of department and HR approve it here.'**
+  String get lvNoRequestsHint;
+
+  /// No description provided for @lvNothingToApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing waiting for you'**
+  String get lvNothingToApprove;
+
+  /// No description provided for @lvNothingToApproveHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave applications from your team appear here for your approval.'**
+  String get lvNothingToApproveHint;
+
+  /// No description provided for @lvWaitingCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 application is waiting for you} other{{count} applications are waiting for you}}'**
+  String lvWaitingCount(int count);
+
+  /// No description provided for @lvTeamAway.
+  ///
+  /// In en, this message translates to:
+  /// **'Your team away · next 30 days'**
+  String get lvTeamAway;
+
+  /// No description provided for @lvTeamNobody.
+  ///
+  /// In en, this message translates to:
+  /// **'No one in your team is away in the next 30 days.'**
+  String get lvTeamNobody;
+
+  /// No description provided for @lvOnLeaveNow.
+  ///
+  /// In en, this message translates to:
+  /// **'On leave today'**
+  String get lvOnLeaveNow;
+
+  /// No description provided for @lvOnLeaveBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'You are on leave today ({ref}). Enjoy the time off.'**
+  String lvOnLeaveBanner(Object ref);
+
+  /// No description provided for @lvHalfDayCount.
+  ///
+  /// In en, this message translates to:
+  /// **'½ day'**
+  String get lvHalfDayCount;
+
+  /// No description provided for @lvDayCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day} other{{count} days}}'**
+  String lvDayCount(int count);
+
+  /// No description provided for @lvDaysDecimal.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days'**
+  String lvDaysDecimal(Object days);
+
+  /// No description provided for @lvTypeCASUAL.
+  ///
+  /// In en, this message translates to:
+  /// **'Casual leave'**
+  String get lvTypeCASUAL;
+
+  /// No description provided for @lvTypeSICK.
+  ///
+  /// In en, this message translates to:
+  /// **'Sick leave'**
+  String get lvTypeSICK;
+
+  /// No description provided for @lvTypeEARNED.
+  ///
+  /// In en, this message translates to:
+  /// **'Earned leave'**
+  String get lvTypeEARNED;
+
+  /// No description provided for @lvTypeMATERNITY.
+  ///
+  /// In en, this message translates to:
+  /// **'Maternity leave'**
+  String get lvTypeMATERNITY;
+
+  /// No description provided for @lvTypePATERNITY.
+  ///
+  /// In en, this message translates to:
+  /// **'Paternity leave'**
+  String get lvTypePATERNITY;
+
+  /// No description provided for @lvTypeUNPAID.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave without pay'**
+  String get lvTypeUNPAID;
+
+  /// No description provided for @lvHintCASUAL.
+  ///
+  /// In en, this message translates to:
+  /// **'10 days a year · up to 3 days at a time'**
+  String get lvHintCASUAL;
+
+  /// No description provided for @lvHintSICK.
+  ///
+  /// In en, this message translates to:
+  /// **'14 days a year · medical certificate for more than 2 days'**
+  String get lvHintSICK;
+
+  /// No description provided for @lvHintEARNED.
+  ///
+  /// In en, this message translates to:
+  /// **'18 days a year · apply at least 3 days ahead'**
+  String get lvHintEARNED;
+
+  /// No description provided for @lvHintMATERNITY.
+  ///
+  /// In en, this message translates to:
+  /// **'16 weeks, counted in calendar days'**
+  String get lvHintMATERNITY;
+
+  /// No description provided for @lvHintPATERNITY.
+  ///
+  /// In en, this message translates to:
+  /// **'5 working days around the birth'**
+  String get lvHintPATERNITY;
+
+  /// No description provided for @lvHintUNPAID.
+  ///
+  /// In en, this message translates to:
+  /// **'No balance · up to 30 days, apply 3 days ahead'**
+  String get lvHintUNPAID;
+
+  /// No description provided for @lvStatusPENDING_HOD.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending HOD approval'**
+  String get lvStatusPENDING_HOD;
+
+  /// No description provided for @lvStatusPENDING_HR.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending HR approval'**
+  String get lvStatusPENDING_HR;
+
+  /// No description provided for @lvStatusAPPROVED.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get lvStatusAPPROVED;
+
+  /// No description provided for @lvStatusREJECTED.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get lvStatusREJECTED;
+
+  /// No description provided for @lvStatusCANCELLED.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get lvStatusCANCELLED;
+
+  /// No description provided for @lvStageSUBMITTED.
+  ///
+  /// In en, this message translates to:
+  /// **'Applied'**
+  String get lvStageSUBMITTED;
+
+  /// No description provided for @lvStagePENDING_HOD.
+  ///
+  /// In en, this message translates to:
+  /// **'Head of department'**
+  String get lvStagePENDING_HOD;
+
+  /// No description provided for @lvStagePENDING_HR.
+  ///
+  /// In en, this message translates to:
+  /// **'HR'**
+  String get lvStagePENDING_HR;
+
+  /// No description provided for @lvStageAPPROVED.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get lvStageAPPROVED;
+
+  /// No description provided for @lvStageCANCELLED.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get lvStageCANCELLED;
+
+  /// No description provided for @lvWaitingFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for {name}'**
+  String lvWaitingFor(Object name);
+
+  /// No description provided for @lvStageRejectedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected by {name}'**
+  String lvStageRejectedBy(Object name);
+
+  /// No description provided for @lvStageCancelledBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled by {name}'**
+  String lvStageCancelledBy(Object name);
+
+  /// No description provided for @lvStageSkipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Not needed'**
+  String get lvStageSkipped;
+
+  /// No description provided for @lvAwaitingHOD.
+  ///
+  /// In en, this message translates to:
+  /// **'Your approval as head of department'**
+  String get lvAwaitingHOD;
+
+  /// No description provided for @lvAwaitingHR.
+  ///
+  /// In en, this message translates to:
+  /// **'HR approval'**
+  String get lvAwaitingHR;
+
+  /// No description provided for @lvHalfDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Half day'**
+  String get lvHalfDay;
+
+  /// No description provided for @lvFIRST_HALF.
+  ///
+  /// In en, this message translates to:
+  /// **'First half (morning)'**
+  String get lvFIRST_HALF;
+
+  /// No description provided for @lvSECOND_HALF.
+  ///
+  /// In en, this message translates to:
+  /// **'Second half (afternoon)'**
+  String get lvSECOND_HALF;
+
+  /// No description provided for @lvFormIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Your head of department approves first, then HR. You are told at each step.'**
+  String get lvFormIntro;
+
+  /// No description provided for @lvTypeSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Type of leave'**
+  String get lvTypeSection;
+
+  /// No description provided for @lvDatesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Dates'**
+  String get lvDatesSection;
+
+  /// No description provided for @lvPickDates.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the days'**
+  String get lvPickDates;
+
+  /// No description provided for @lvPickDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the day'**
+  String get lvPickDay;
+
+  /// No description provided for @lvHalfDaySwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Only half a day'**
+  String get lvHalfDaySwitch;
+
+  /// No description provided for @lvCountNote.
+  ///
+  /// In en, this message translates to:
+  /// **'The weekly holiday and public holidays are not counted.'**
+  String get lvCountNote;
+
+  /// No description provided for @lvCountCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Counted in calendar days, holidays included.'**
+  String get lvCountCalendar;
+
+  /// No description provided for @lvHolidaysIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Public holidays in these dates: {names}'**
+  String lvHolidaysIn(Object names);
+
+  /// No description provided for @lvBalanceAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance after this: {left} of {total}'**
+  String lvBalanceAfter(Object left, Object total);
+
+  /// No description provided for @lvInsufficient.
+  ///
+  /// In en, this message translates to:
+  /// **'You have {left} of {type} left — this needs {need}.'**
+  String lvInsufficient(Object left, Object type, Object need);
+
+  /// No description provided for @lvTooMany.
+  ///
+  /// In en, this message translates to:
+  /// **'{type} is at most {max} in one application.'**
+  String lvTooMany(Object type, Object max);
+
+  /// No description provided for @lvNoticeShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{type} needs {days} days\' notice — the earliest start is {date}.'**
+  String lvNoticeShort(Object type, Object days, Object date);
+
+  /// No description provided for @lvBackdate.
+  ///
+  /// In en, this message translates to:
+  /// **'{type} can start at most {days} days back.'**
+  String lvBackdate(Object type, Object days);
+
+  /// No description provided for @lvNoWorkingDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Those dates are all holidays — there is nothing to take leave for.'**
+  String get lvNoWorkingDays;
+
+  /// No description provided for @lvReasonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get lvReasonLabel;
+
+  /// No description provided for @lvReasonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Family wedding in Sylhet'**
+  String get lvReasonHint;
+
+  /// No description provided for @lvReliever.
+  ///
+  /// In en, this message translates to:
+  /// **'Covering your work (optional)'**
+  String get lvReliever;
+
+  /// No description provided for @lvRelieverEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No one chosen'**
+  String get lvRelieverEmpty;
+
+  /// No description provided for @lvChooseReliever.
+  ///
+  /// In en, this message translates to:
+  /// **'Who covers your work?'**
+  String get lvChooseReliever;
+
+  /// No description provided for @lvRelieverHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a colleague. They are told once the leave is approved.'**
+  String get lvRelieverHint;
+
+  /// No description provided for @lvApprover.
+  ///
+  /// In en, this message translates to:
+  /// **'Head of department · approves first'**
+  String get lvApprover;
+
+  /// No description provided for @lvChooseApprover.
+  ///
+  /// In en, this message translates to:
+  /// **'Who approves first?'**
+  String get lvChooseApprover;
+
+  /// No description provided for @lvApproverHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Usually your line manager. They must be able to sign in to ABG ONE.'**
+  String get lvApproverHint;
+
+  /// No description provided for @lvApproverMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Your line manager {name} has no app account — choose who approves.'**
+  String lvApproverMissing(Object name);
+
+  /// No description provided for @lvAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address during leave (optional)'**
+  String get lvAddress;
+
+  /// No description provided for @lvPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact number during leave (optional)'**
+  String get lvPhone;
+
+  /// No description provided for @lvMoreSection.
+  ///
+  /// In en, this message translates to:
+  /// **'While you are away'**
+  String get lvMoreSection;
+
+  /// No description provided for @lvSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit application'**
+  String get lvSubmit;
+
+  /// No description provided for @lvSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'{ref} sent for approval.'**
+  String lvSubmitted(Object ref);
+
+  /// No description provided for @lvErrDates.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the days of leave.'**
+  String get lvErrDates;
+
+  /// No description provided for @lvErrReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Say briefly why you need the leave.'**
+  String get lvErrReason;
+
+  /// No description provided for @lvErrApprover.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose who approves first.'**
+  String get lvErrApprover;
+
+  /// No description provided for @lvPipeline.
+  ///
+  /// In en, this message translates to:
+  /// **'Approval'**
+  String get lvPipeline;
+
+  /// No description provided for @lvDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave details'**
+  String get lvDetails;
+
+  /// No description provided for @lvTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get lvTypeLabel;
+
+  /// No description provided for @lvFirstDay.
+  ///
+  /// In en, this message translates to:
+  /// **'First day'**
+  String get lvFirstDay;
+
+  /// No description provided for @lvLastDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Last day'**
+  String get lvLastDay;
+
+  /// No description provided for @lvLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Length'**
+  String get lvLength;
+
+  /// No description provided for @lvReasonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get lvReasonTitle;
+
+  /// No description provided for @lvAddressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Address during leave'**
+  String get lvAddressTitle;
+
+  /// No description provided for @lvPhoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact during leave'**
+  String get lvPhoneTitle;
+
+  /// No description provided for @lvPeople.
+  ///
+  /// In en, this message translates to:
+  /// **'People'**
+  String get lvPeople;
+
+  /// No description provided for @lvApplicant.
+  ///
+  /// In en, this message translates to:
+  /// **'Applicant'**
+  String get lvApplicant;
+
+  /// No description provided for @lvHod.
+  ///
+  /// In en, this message translates to:
+  /// **'Head of department'**
+  String get lvHod;
+
+  /// No description provided for @lvCovering.
+  ///
+  /// In en, this message translates to:
+  /// **'Covering'**
+  String get lvCovering;
+
+  /// No description provided for @lvBalanceCard.
+  ///
+  /// In en, this message translates to:
+  /// **'{type} · {year}'**
+  String lvBalanceCard(Object type, Object year);
+
+  /// No description provided for @lvEntitled.
+  ///
+  /// In en, this message translates to:
+  /// **'Entitled'**
+  String get lvEntitled;
+
+  /// No description provided for @lvUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Taken'**
+  String get lvUsed;
+
+  /// No description provided for @lvPendingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get lvPendingLabel;
+
+  /// No description provided for @lvAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get lvAvailable;
+
+  /// No description provided for @lvSeparation.
+  ///
+  /// In en, this message translates to:
+  /// **'You approved this as head of department, so another HR colleague gives the second approval.'**
+  String get lvSeparation;
+
+  /// No description provided for @lvRelieverBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} asked you to cover their work during this leave.'**
+  String lvRelieverBanner(Object name);
+
+  /// No description provided for @lvActApproveHod.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to HR'**
+  String get lvActApproveHod;
+
+  /// No description provided for @lvApproveHodTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve and send to HR'**
+  String get lvApproveHodTitle;
+
+  /// No description provided for @lvActApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get lvActApprove;
+
+  /// No description provided for @lvActReject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get lvActReject;
+
+  /// No description provided for @lvActCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel leave'**
+  String get lvActCancel;
+
+  /// No description provided for @lvApproveHodHint.
+  ///
+  /// In en, this message translates to:
+  /// **'HR gives the final approval.'**
+  String get lvApproveHodHint;
+
+  /// No description provided for @lvApproveHrHint.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the final approval; the days come off the balance.'**
+  String get lvApproveHrHint;
+
+  /// No description provided for @lvRejectHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell the applicant why. They can apply again.'**
+  String get lvRejectHint;
+
+  /// No description provided for @lvCancelHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Say why. Your head of department and HR are told, and the days return to your balance.'**
+  String get lvCancelHint;
+
+  /// No description provided for @lvCancelHrHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The applicant is told, and the days return to their balance.'**
+  String get lvCancelHrHint;
+
+  /// No description provided for @lvDoneApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved — the applicant has been told.'**
+  String get lvDoneApproved;
+
+  /// No description provided for @lvDoneForwarded.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved — sent to HR.'**
+  String get lvDoneForwarded;
+
+  /// No description provided for @lvDoneRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected — the applicant has been told.'**
+  String get lvDoneRejected;
+
+  /// No description provided for @lvDoneCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave cancelled.'**
+  String get lvDoneCancelled;
+
+  /// No description provided for @lvEvSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Applied'**
+  String get lvEvSubmitted;
+
+  /// No description provided for @lvEvHod.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved by head of department'**
+  String get lvEvHod;
+
+  /// No description provided for @lvEvApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved by HR'**
+  String get lvEvApproved;
+
+  /// No description provided for @lvEvRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get lvEvRejected;
+
+  /// No description provided for @lvEvCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get lvEvCancelled;
+
+  /// No description provided for @lvEvNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get lvEvNote;
 
   /// No description provided for @licTitle.
   ///

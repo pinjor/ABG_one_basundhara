@@ -1,6 +1,7 @@
 /// Everything waiting for my approval: official tours (as head of department,
-/// HR & Finance or MD / Chairman) and pool car requests (as head of
-/// department), with approve and reject right here.
+/// HR & Finance or MD / Chairman), pool car requests and leave applications
+/// (as head of department or HR) and meeting requests to answer (as the
+/// person asked or the executive office), with approve and reject right here.
 library;
 
 import 'dart:async';
@@ -16,6 +17,9 @@ import '../../theme/theme.dart';
 import '../../theme/tokens.dart';
 import '../../widgets/common.dart';
 import '../../widgets/vocab.dart';
+import '../appointments/appointments.dart' show meetingWhen;
+import '../leave/leave.dart' show leaveDays, leaveTypeLabel, leaveWhen;
+import '../tours/tour_models.dart' show calendarDate;
 
 /// One request waiting for the signed-in person.
 class ApprovalItem {
@@ -35,15 +39,20 @@ class ApprovalItem {
     this.end,
     this.budget,
     this.passengers,
+    this.leaveType,
+    this.days,
+    this.halfDay,
+    this.minutes,
+    this.host,
   });
 
-  /// "tour" or "car".
+  /// "tour", "car", "leave" or "meeting".
   final String kind;
   final String id;
   final String reference;
   final String title;
 
-  /// HOD, VETTING or SANCTION.
+  /// HOD, VETTING, SANCTION, HR or (a meeting) ANSWER.
   final String awaiting;
   final String requester;
   final String? requesterRole;
@@ -55,11 +64,20 @@ class ApprovalItem {
   final DateTime? end;
   final int? budget;
   final int? passengers;
+  final String? leaveType;
+  final double? days;
+  final String? halfDay;
+  final int? minutes;
 
-  String get route => kind == 'tour' ? '/tours/$id' : '/pool-car/$id';
-  String get decisionPath => kind == 'tour'
-      ? '/tours/$id/decision'
-      : '/pool-car/requisitions/$id/decision';
+  /// A meeting: who was asked (the executive office answers for the MD).
+  final String? host;
+
+  String get route => switch (kind) {
+    'tour' => '/tours/$id',
+    'leave' => '/leave/$id',
+    'meeting' => '/appointments/$id',
+    _ => '/pool-car/$id',
+  };
 
   static String? _s(Object? v) => v?.toString();
   static DateTime? _d(Object? v) =>
@@ -113,6 +131,37 @@ class ApprovalItem {
     start: _d(j['pickupAt']),
     passengers: (j['passengerCount'] as num?)?.toInt(),
   );
+
+  factory ApprovalItem.leave(Map j) => ApprovalItem(
+    kind: 'leave',
+    id: j['id'].toString(),
+    reference: _s(j['referenceNumber']) ?? '',
+    title: _s(j['reason']) ?? '',
+    awaiting: _s(j['awaiting']) ?? 'HOD',
+    requester: _who(j, 'applicant'),
+    requesterRole: _role(j, 'applicant'),
+    createdAt: _d(j['createdAt']) ?? DateTime.now(),
+    start: calendarDate(j['startDate']),
+    end: calendarDate(j['endDate']),
+    leaveType: _s(j['type']),
+    days: (j['days'] as num?)?.toDouble(),
+    halfDay: _s(j['halfDay']),
+  );
+
+  factory ApprovalItem.meeting(Map j) => ApprovalItem(
+    kind: 'meeting',
+    id: j['id'].toString(),
+    reference: _s(j['referenceNumber']) ?? '',
+    title: _s(j['subject']) ?? '',
+    awaiting: 'ANSWER',
+    requester: _who(j, 'requester'),
+    requesterRole: _role(j, 'requester'),
+    createdAt: _d(j['createdAt']) ?? DateTime.now(),
+    urgent: j['urgent'] == true,
+    start: _d(j['preferredAt']),
+    minutes: (j['durationMinutes'] as num?)?.toInt(),
+    host: _who(j, 'host'),
+  );
 }
 
 class ApprovalsScreen extends StatefulWidget {
@@ -159,8 +208,10 @@ class _ApprovalsScreenState extends State<ApprovalsScreen> {
       final results = await Future.wait([
         fetch('/tours/approvals', ApprovalItem.tour),
         fetch('/pool-car/approvals', ApprovalItem.car),
+        fetch('/leave/approvals', ApprovalItem.leave),
+        fetch('/appointments/inbox', ApprovalItem.meeting),
       ]);
-      final all = [...results[0], ...results[1]]
+      final all = [for (final r in results) ...r]
         ..sort((a, b) {
           if (a.urgent != b.urgent) return a.urgent ? -1 : 1;
           return a.createdAt.compareTo(b.createdAt);
@@ -183,19 +234,40 @@ class _ApprovalsScreenState extends State<ApprovalsScreen> {
 
   Future<void> _decide(ApprovalItem item, bool approve) async {
     final l = L.of(context);
-    final note = await _askNote(context, approve: approve);
+    final note = await _askNote(
+      context,
+      approve: approve,
+      meeting: item.kind == 'meeting',
+    );
     if (note == null || !mounted) return;
     setState(() => _busy.add(item.id));
+    final api = context.read<ApiClient>();
     try {
-      await context.read<ApiClient>().post(
-        item.decisionPath,
-        body: {
-          'decision': approve ? 'APPROVE' : 'REJECT',
-          if (note.isNotEmpty) 'note': note,
-        },
-      );
+      final body = {if (note.isNotEmpty) 'note': note};
+      switch (item.kind) {
+        // A meeting is confirmed at the time asked for, or declined.
+        case 'meeting':
+          await api.post(
+            '/appointments/${item.id}/${approve ? 'confirm' : 'decline'}',
+            body: body,
+          );
+        default:
+          await api.post(
+            switch (item.kind) {
+              'tour' => '/tours/${item.id}/decision',
+              'leave' => '/leave/${item.id}/decision',
+              _ => '/pool-car/requisitions/${item.id}/decision',
+            },
+            body: {'decision': approve ? 'APPROVE' : 'REJECT', ...body},
+          );
+      }
       if (!mounted) return;
-      showSnack(context, approve ? l.apprApproved : l.apprRejected);
+      showSnack(
+        context,
+        item.kind == 'meeting'
+            ? (approve ? l.apprMeetingConfirmed : l.apprMeetingDeclined)
+            : (approve ? l.apprApproved : l.apprRejected),
+      );
       setState(
         () => _items.removeWhere((i) => i.kind == item.kind && i.id == item.id),
       );
@@ -212,8 +284,7 @@ class _ApprovalsScreenState extends State<ApprovalsScreen> {
     final shown = _items
         .where((i) => _filter == 'all' || i.kind == _filter)
         .toList();
-    final tours = _items.where((i) => i.kind == 'tour').length;
-    final cars = _items.where((i) => i.kind == 'car').length;
+    int n(String kind) => _items.where((i) => i.kind == kind).length;
     return Scaffold(
       appBar: AppBar(title: Text(l.apprTitle)),
       body: RefreshIndicator(
@@ -230,17 +301,21 @@ class _ApprovalsScreenState extends State<ApprovalsScreen> {
           children: [
             Wrap(
               spacing: 8,
+              runSpacing: 8,
               children: [
-                for (final (value, label, n) in [
+                for (final (value, label, count) in [
                   ('all', l.apprAll, _items.length),
-                  ('tour', l.apprTours, tours),
-                  ('car', l.apprPoolCar, cars),
+                  ('leave', l.apprLeave, n('leave')),
+                  ('meeting', l.apprMeetings, n('meeting')),
+                  ('car', l.apprPoolCar, n('car')),
+                  ('tour', l.apprTours, n('tour')),
                 ])
-                  ChoiceChip(
-                    label: Text('$label · $n'),
-                    selected: _filter == value,
-                    onSelected: (_) => setState(() => _filter = value),
-                  ),
+                  if (value == 'all' || count > 0 || _filter == value)
+                    ChoiceChip(
+                      label: Text('$label · $count'),
+                      selected: _filter == value,
+                      onSelected: (_) => setState(() => _filter = value),
+                    ),
               ],
             ),
             const SizedBox(height: 14),
@@ -298,16 +373,53 @@ class _ApprovalCard extends StatelessWidget {
     final l = L.of(context);
     final locale = Localizations.localeOf(context).languageCode;
     final tour = item.kind == 'tour';
+    final meeting = item.kind == 'meeting';
     final awaiting = switch (item.awaiting) {
       'VETTING' => l.apprAwaitingVETTING,
       'SANCTION' => l.apprAwaitingSANCTION,
+      'HR' => l.apprAwaitingHR,
+      'ANSWER' => l.apprAwaitingANSWER,
       _ => l.apprAwaitingHOD,
     };
     final when = item.start == null
         ? null
-        : tour && item.end != null
-        ? '${dayAndTime(item.start!, locale).split(',').first} – ${dayAndTime(item.end!, locale).split(',').first}'
-        : dayAndTime(item.start!, locale);
+        : switch (item.kind) {
+            'leave' => leaveWhen(
+              l,
+              item.start!,
+              item.end ?? item.start!,
+              item.halfDay,
+            ),
+            'meeting' => meetingWhen(l, item.start!, item.minutes ?? 30),
+            'tour' when item.end != null =>
+              '${dayAndTime(item.start!, locale).split(',').first} – ${dayAndTime(item.end!, locale).split(',').first}',
+            _ => dayAndTime(item.start!, locale),
+          };
+    final (IconData icon, Color fg, Color bg) = switch (item.kind) {
+      'tour' => (
+        Icons.flight_takeoff_rounded,
+        const Color(0xFF4B4FC4),
+        const Color(0xFFECEDFB),
+      ),
+      'leave' => (
+        Icons.beach_access_rounded,
+        const Color(0xFFC0466A),
+        const Color(0xFFFBEAF0),
+      ),
+      'meeting' => (
+        Icons.event_rounded,
+        const Color(0xFF8E4EC6),
+        const Color(0xFFF3ECFA),
+      ),
+      _ => (
+        Icons.directions_car_filled_rounded,
+        const Color(0xFF0E8A8A),
+        const Color(0xFFE2F3F3),
+      ),
+    };
+    final title = item.kind == 'leave' && item.leaveType != null
+        ? '${leaveTypeLabel(l, item.leaveType!)} · ${leaveDays(l, item.days ?? 1)}'
+        : item.title;
     return SectionCard(
       padding: const EdgeInsets.all(14),
       onTap: onOpen,
@@ -320,21 +432,8 @@ class _ApprovalCard extends StatelessWidget {
               Container(
                 width: 46,
                 height: 46,
-                decoration: BoxDecoration(
-                  color: tour
-                      ? const Color(0xFFECEDFB)
-                      : const Color(0xFFE2F3F3),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  tour
-                      ? Icons.flight_takeoff_rounded
-                      : Icons.directions_car_filled_rounded,
-                  color: tour
-                      ? const Color(0xFF4B4FC4)
-                      : const Color(0xFF0E8A8A),
-                  size: 23,
-                ),
+                decoration: BoxDecoration(color: bg, shape: BoxShape.circle),
+                child: Icon(icon, color: fg, size: 23),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -342,7 +441,7 @@ class _ApprovalCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      item.title,
+                      title,
                       style: AbgText.bodyStrong.copyWith(fontSize: 15),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -398,6 +497,13 @@ class _ApprovalCard extends StatelessWidget {
           const SizedBox(height: 10),
           if (item.destination != null && item.destination!.isNotEmpty)
             _Line(icon: Icons.place_outlined, text: item.destination!),
+          if (meeting && item.host != null && item.host!.isNotEmpty)
+            _Line(
+              icon: Icons.person_outline_rounded,
+              text: l.aptWith(item.host!),
+            ),
+          if (item.kind == 'leave' && item.title.isNotEmpty)
+            _Line(icon: Icons.notes_rounded, text: '“${item.title}”'),
           if (when != null) _Line(icon: Icons.event_outlined, text: when),
           if (item.budget != null)
             _Line(
@@ -416,7 +522,7 @@ class _ApprovalCard extends StatelessWidget {
                 child: OutlinedButton.icon(
                   onPressed: busy ? null : onReject,
                   icon: const Icon(Icons.close_rounded, size: 18),
-                  label: Text(l.apprReject),
+                  label: Text(meeting ? l.aptActDecline : l.apprReject),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AbgColors.danger,
                   ),
@@ -436,7 +542,7 @@ class _ApprovalCard extends StatelessWidget {
                           ),
                         )
                       : const Icon(Icons.check_rounded, size: 18),
-                  label: Text(l.apprApprove),
+                  label: Text(meeting ? l.aptActConfirm : l.apprApprove),
                 ),
               ),
             ],
@@ -488,7 +594,11 @@ class _Line extends StatelessWidget {
 }
 
 /// Approve: optional note. Reject: a reason is required. Null when cancelled.
-Future<String?> _askNote(BuildContext context, {required bool approve}) {
+Future<String?> _askNote(
+  BuildContext context, {
+  required bool approve,
+  bool meeting = false,
+}) {
   final l = L.of(context);
   final controller = TextEditingController();
   return showDialog<String>(
@@ -498,7 +608,13 @@ Future<String?> _askNote(BuildContext context, {required bool approve}) {
         final text = controller.text.trim();
         final ok = approve || text.length >= 3;
         return AlertDialog(
-          title: Text(approve ? l.apprApproveTitle : l.apprRejectTitle),
+          title: Text(
+            meeting
+                ? (approve
+                      ? l.apprConfirmMeetingTitle
+                      : l.apprDeclineMeetingTitle)
+                : (approve ? l.apprApproveTitle : l.apprRejectTitle),
+          ),
           content: TextField(
             controller: controller,
             autofocus: true,
@@ -519,7 +635,11 @@ Future<String?> _askNote(BuildContext context, {required bool approve}) {
               style: approve
                   ? null
                   : FilledButton.styleFrom(backgroundColor: AbgColors.danger),
-              child: Text(approve ? l.apprApprove : l.apprReject),
+              child: Text(
+                meeting
+                    ? (approve ? l.aptActConfirm : l.aptActDecline)
+                    : (approve ? l.apprApprove : l.apprReject),
+              ),
             ),
           ],
         );

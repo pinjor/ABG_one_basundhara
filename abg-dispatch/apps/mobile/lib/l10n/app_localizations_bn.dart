@@ -836,6 +836,414 @@ class LBn extends L {
   String get moreActions => 'আরও কাজ';
 
   @override
+  String get aptTitle => 'সাক্ষাৎ';
+
+  @override
+  String get aptRequest => 'সাক্ষাতের অনুরোধ';
+
+  @override
+  String get aptMine => 'আমার অনুরোধ';
+
+  @override
+  String get aptToAnswer => 'উত্তর দিতে হবে';
+
+  @override
+  String get aptDiary => 'ডায়েরি';
+
+  @override
+  String get aptNoRequests => 'এখনও কোনো সাক্ষাতের অনুরোধ নেই';
+
+  @override
+  String get aptNoRequestsHint =>
+      'এমডি, চেয়ারম্যান বা বিভাগীয় প্রধানের সময় চান। তাঁদের অফিস নিশ্চিত করবে বা অন্য সময় প্রস্তাব করবে।';
+
+  @override
+  String get aptNothingToAnswer => 'কোনো অনুরোধ অপেক্ষমাণ নেই';
+
+  @override
+  String get aptNothingToAnswerHint =>
+      'আপনার কাছে (এক্সিকিউটিভ অফিসের ক্ষেত্রে এমডি ও চেয়ারম্যানের কাছে) পাঠানো অনুরোধ এখানে দেখাবে।';
+
+  @override
+  String get aptDiaryEmpty => 'আগামী দুই সপ্তাহে কোনো নিশ্চিত সাক্ষাৎ নেই।';
+
+  @override
+  String aptWaitingCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$countটি অনুরোধ উত্তরের অপেক্ষায়',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aptStatusPENDING => 'নিশ্চিতকরণের অপেক্ষায়';
+
+  @override
+  String get aptStatusPROPOSED => 'নতুন সময় প্রস্তাবিত';
+
+  @override
+  String get aptStatusCONFIRMED => 'নিশ্চিত';
+
+  @override
+  String get aptStatusCOMPLETED => 'সম্পন্ন';
+
+  @override
+  String get aptStatusDECLINED => 'অসম্মত';
+
+  @override
+  String get aptStatusCANCELLED => 'বাতিল';
+
+  @override
+  String get aptPurposeBUSINESS_REVIEW => 'ব্যবসায়িক পর্যালোচনা / প্রতিবেদন';
+
+  @override
+  String get aptPurposeAPPROVAL => 'অনুমোদন বা স্বাক্ষর';
+
+  @override
+  String get aptPurposePROJECT_UPDATE => 'প্রকল্পের হালনাগাদ';
+
+  @override
+  String get aptPurposePROPOSAL => 'নতুন প্রস্তাব';
+
+  @override
+  String get aptPurposePERSONAL => 'ব্যক্তিগত / এইচআর বিষয়';
+
+  @override
+  String get aptPurposeCOURTESY => 'সৌজন্য সাক্ষাৎ';
+
+  @override
+  String get aptPurposeOTHER => 'অন্যান্য';
+
+  @override
+  String get aptModeIN_PERSON => 'সরাসরি';
+
+  @override
+  String get aptModeVIDEO => 'ভিডিও কল';
+
+  @override
+  String get aptModePHONE => 'ফোন কল';
+
+  @override
+  String aptMinutes(int count) {
+    return '$count মিনিট';
+  }
+
+  @override
+  String get aptUrgent => 'জরুরি';
+
+  @override
+  String aptWith(Object name) {
+    return '$name এর সাথে';
+  }
+
+  @override
+  String aptFrom(Object name) {
+    return '$name এর কাছ থেকে';
+  }
+
+  @override
+  String aptAsked(Object when) {
+    return 'চাওয়া সময় $when';
+  }
+
+  @override
+  String aptProposedFor(Object when) {
+    return 'প্রস্তাবিত: $when';
+  }
+
+  @override
+  String get aptFormIntro =>
+      'এক্সিকিউটিভ অফিস (এমডি ও চেয়ারম্যানের জন্য) বা যাঁকে অনুরোধ করছেন তিনি সময় নিশ্চিত করবেন, অন্য সময় প্রস্তাব করবেন বা অসম্মতি জানাবেন।';
+
+  @override
+  String get aptWhoSection => 'কার সাথে সাক্ষাৎ করতে চান?';
+
+  @override
+  String get aptChooseHost => 'কার সাথে সাক্ষাৎ, বাছাই করুন';
+
+  @override
+  String get aptHostHint =>
+      'এমডি, চেয়ারম্যান ও বিভাগীয় প্রধানরা প্রথমে আছেন। অন্য কাউকে খুঁজে নিন।';
+
+  @override
+  String get aptSearchHosts => 'নাম, পদবি বা বিভাগ দিয়ে খুঁজুন';
+
+  @override
+  String get aptExecutive => 'নির্বাহী';
+
+  @override
+  String get aptHeadOfDept => 'বিভাগীয় প্রধান';
+
+  @override
+  String get aptOfficeAnswers => 'তাঁর পক্ষে এক্সিকিউটিভ অফিস উত্তর দেবে।';
+
+  @override
+  String get aptAboutSection => 'বিষয় কী?';
+
+  @override
+  String get aptSubjectLabel => 'বিষয়';
+
+  @override
+  String get aptSubjectHint =>
+      'যেমন: স্টিল বিভাগের তৃতীয় প্রান্তিকের বিক্রয় পর্যালোচনা';
+
+  @override
+  String get aptAgendaLabel => 'আলোচ্যসূচি বা প্রেক্ষাপট (ঐচ্ছিক)';
+
+  @override
+  String get aptHowSection => 'কীভাবে ও কতক্ষণ';
+
+  @override
+  String get aptWhenSection => 'কখন সুবিধা';
+
+  @override
+  String get aptPreferred => 'পছন্দের সময়';
+
+  @override
+  String get aptAlternative => 'বিকল্প সময় (ঐচ্ছিক)';
+
+  @override
+  String get aptPickTime => 'দিন ও সময় বাছাই করুন';
+
+  @override
+  String get aptHoursNote => 'সাক্ষাৎ ঢাকা সময় সকাল ৮টা থেকে রাত ৮টার মধ্যে।';
+
+  @override
+  String get aptAttendees => 'আরও যাঁরা থাকবেন (ঐচ্ছিক)';
+
+  @override
+  String get aptAttendeeHint => 'নাম লিখে যোগ করুন';
+
+  @override
+  String get aptAdd => 'যোগ';
+
+  @override
+  String get aptUrgentSwitch => 'জরুরি';
+
+  @override
+  String get aptUrgentHint => 'শুধু অপেক্ষা করা না গেলে — অফিস এটি আগে দেখবে।';
+
+  @override
+  String get aptSubmit => 'অনুরোধ পাঠান';
+
+  @override
+  String aptSubmitted(Object ref) {
+    return '$ref পাঠানো হয়েছে। উত্তর এলে আপনাকে জানানো হবে।';
+  }
+
+  @override
+  String get aptErrHost => 'কার সাথে সাক্ষাৎ করবেন বাছাই করুন।';
+
+  @override
+  String get aptErrSubject => 'সংক্ষেপে বিষয় লিখুন।';
+
+  @override
+  String get aptErrTime => 'পছন্দের দিন ও সময় বাছাই করুন।';
+
+  @override
+  String get aptErrPast => 'এখন থেকে অন্তত ১৫ মিনিট পরের সময় বাছাই করুন।';
+
+  @override
+  String get aptErrHours =>
+      'সাক্ষাৎ সকাল ৮টা থেকে রাত ৮টার মধ্যে এবং রাত ৮টার মধ্যে শেষ হতে হবে।';
+
+  @override
+  String get aptErrFar => 'সর্বোচ্চ ৯০ দিন আগে সাক্ষাৎ চাওয়া যায়।';
+
+  @override
+  String get aptErrSame => 'বিকল্প সময় পছন্দের সময়ের মতোই।';
+
+  @override
+  String get aptMeeting => 'সাক্ষাৎ';
+
+  @override
+  String get aptWhen => 'কখন';
+
+  @override
+  String get aptLength => 'সময়কাল';
+
+  @override
+  String get aptModeLabel => 'কীভাবে';
+
+  @override
+  String get aptLocation => 'কোথায়';
+
+  @override
+  String get aptPurposeLabel => 'উদ্দেশ্য';
+
+  @override
+  String get aptAgenda => 'আলোচ্যসূচি';
+
+  @override
+  String get aptJoining => 'আরও উপস্থিত';
+
+  @override
+  String get aptPeople => 'সংশ্লিষ্ট ব্যক্তি';
+
+  @override
+  String get aptRequester => 'অনুরোধকারী';
+
+  @override
+  String get aptHost => 'সাক্ষাৎ যাঁর সাথে';
+
+  @override
+  String get aptAnsweredBy => 'উত্তর দিয়েছেন';
+
+  @override
+  String get aptTimesAsked => 'চাওয়া সময়';
+
+  @override
+  String get aptPreferredShort => 'পছন্দ';
+
+  @override
+  String get aptAlternativeShort => 'বিকল্প';
+
+  @override
+  String get aptClashTitle => 'ডায়েরির সাথে সংঘাত';
+
+  @override
+  String aptClashBody(Object name, Object list) {
+    return '$name এর ইতিমধ্যে আছে: $list';
+  }
+
+  @override
+  String aptProposedBanner(Object who, Object when) {
+    return '$who এর পরিবর্তে $when প্রস্তাব করেছেন।';
+  }
+
+  @override
+  String get aptProposedAccept =>
+      'এই সময় গ্রহণ করুন, অথবা সুবিধা না হলে অনুরোধ বাতিল করুন।';
+
+  @override
+  String aptConfirmedBanner(Object when) {
+    return '$when এর জন্য নিশ্চিত।';
+  }
+
+  @override
+  String get aptActConfirm => 'নিশ্চিত করুন';
+
+  @override
+  String get aptActPropose => 'অন্য সময় প্রস্তাব';
+
+  @override
+  String get aptActReschedule => 'সময় পরিবর্তন';
+
+  @override
+  String get aptActDecline => 'অসম্মতি';
+
+  @override
+  String get aptActAccept => 'সময় গ্রহণ';
+
+  @override
+  String get aptActCancel => 'বাতিল';
+
+  @override
+  String get aptActComplete => 'সম্পন্ন চিহ্নিত করুন';
+
+  @override
+  String get aptConfirmTitle => 'সাক্ষাৎ নিশ্চিত করুন';
+
+  @override
+  String get aptConfirmHint =>
+      'চাওয়া সময়গুলোর একটি বাছাই করুন, স্থান যোগ করুন; অনুরোধকারীকে জানানো হবে।';
+
+  @override
+  String get aptLocationLabel => 'স্থান বা লিংক (ঐচ্ছিক)';
+
+  @override
+  String get aptLocationHint => 'যেমন: এমডির কক্ষ, ১২ তলা';
+
+  @override
+  String get aptProposeTitle => 'অন্য সময় প্রস্তাব করুন';
+
+  @override
+  String get aptProposeHint =>
+      'অনুরোধকারী নতুন সময় গ্রহণ করবেন বা বাতিল করবেন।';
+
+  @override
+  String get aptNewTime => 'নতুন সময়';
+
+  @override
+  String get aptProposeReason => 'কেন অন্য সময় (অনুরোধকারী দেখবেন)';
+
+  @override
+  String get aptDeclineHint =>
+      'অনুরোধকারীকে কারণ জানান। তিনি আবার অনুরোধ করতে পারবেন।';
+
+  @override
+  String get aptCancelHint => 'কারণ লিখুন। অপর পক্ষকে জানানো হবে।';
+
+  @override
+  String get aptCompleteHint => 'প্রয়োজনে ফলাফলের সংক্ষিপ্ত নোট দিন।';
+
+  @override
+  String get aptSend => 'পাঠান';
+
+  @override
+  String get aptDoneConfirmed => 'নিশ্চিত — অনুরোধকারীকে জানানো হয়েছে।';
+
+  @override
+  String get aptDoneProposed => 'নতুন সময় অনুরোধকারীকে পাঠানো হয়েছে।';
+
+  @override
+  String get aptDoneDeclined => 'অসম্মতি — অনুরোধকারীকে জানানো হয়েছে।';
+
+  @override
+  String get aptDoneAccepted => 'গৃহীত — সাক্ষাৎ নিশ্চিত।';
+
+  @override
+  String get aptDoneCancelled => 'বাতিল হয়েছে।';
+
+  @override
+  String get aptDoneCompleted => 'সম্পন্ন চিহ্নিত হয়েছে।';
+
+  @override
+  String get aptStageAsked => 'অনুরোধ';
+
+  @override
+  String get aptStageAnswer => 'উত্তর';
+
+  @override
+  String get aptStageMeeting => 'সাক্ষাৎ';
+
+  @override
+  String get aptEvSubmitted => 'অনুরোধ করা হয়েছে';
+
+  @override
+  String aptEvProposed(Object when) {
+    return 'নতুন সময় প্রস্তাবিত: $when';
+  }
+
+  @override
+  String get aptEvConfirmed => 'নিশ্চিত';
+
+  @override
+  String get aptEvDeclined => 'অসম্মতি';
+
+  @override
+  String get aptEvCancelled => 'বাতিল';
+
+  @override
+  String get aptEvCompleted => 'সম্পন্ন';
+
+  @override
+  String get aptEvNote => 'মন্তব্য';
+
+  @override
+  String get aptToday => 'আজ';
+
+  @override
+  String get aptTomorrow => 'আগামীকাল';
+
+  @override
+  String aptFromTo(Object from, Object to) {
+    return '$from থেকে · $to এর জন্য';
+  }
+
+  @override
   String get apprTitle => 'অনুমোদন';
 
   @override
@@ -843,7 +1251,7 @@ class LBn extends L {
 
   @override
   String get apprEmptyHint =>
-      'আপনার অনুমোদন প্রয়োজন এমন ট্যুর ও পুল কার অনুরোধ এখানে দেখাবে।';
+      'আপনার অনুমোদন প্রয়োজন এমন ছুটি, সাক্ষাৎ, পুল কার ও ট্যুর অনুরোধ এখানে দেখাবে।';
 
   @override
   String get apprAll => 'সব';
@@ -918,6 +1326,428 @@ class LBn extends L {
 
   @override
   String get apprDetails => 'বিস্তারিত';
+
+  @override
+  String get apprLeave => 'ছুটি';
+
+  @override
+  String get apprMeetings => 'সাক্ষাৎ';
+
+  @override
+  String get apprAwaitingHR => 'এইচআর হিসেবে আপনার অনুমোদন';
+
+  @override
+  String get apprAwaitingANSWER => 'আপনার উত্তরের অপেক্ষায়';
+
+  @override
+  String get apprConfirmMeetingTitle => 'চাওয়া সময়ে নিশ্চিত করবেন?';
+
+  @override
+  String get apprDeclineMeetingTitle => 'এই সাক্ষাতে অসম্মতি জানাবেন?';
+
+  @override
+  String get apprMeetingConfirmed => 'নিশ্চিত — অনুরোধকারীকে জানানো হয়েছে।';
+
+  @override
+  String get apprMeetingDeclined => 'অসম্মতি — অনুরোধকারীকে জানানো হয়েছে।';
+
+  @override
+  String get audTitle => 'অডিট';
+
+  @override
+  String get audMyActions => 'আমার করণীয়';
+
+  @override
+  String get audAudits => 'অডিটসমূহ';
+
+  @override
+  String get audNoActions => 'আপনার জন্য কোনো সংশোধনমূলক কাজ নেই';
+
+  @override
+  String get audNoActionsHint =>
+      'অডিটে আপনার ঠিক করার মতো কিছু পাওয়া গেলে তা নির্ধারিত তারিখসহ এখানে দেখাবে।';
+
+  @override
+  String get audNoAudits => 'কোনো অডিট নেই';
+
+  @override
+  String get audNoAuditsHint => 'আপনার অফিসগুলোর পরিকল্পিত অডিট এখানে দেখাবে।';
+
+  @override
+  String audActionsBanner(int open, int submitted) {
+    return '$openটি ঠিক করতে হবে · $submittedটি অডিটরের কাছে';
+  }
+
+  @override
+  String audOverdueCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$countটি সময় পেরিয়েছে',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get audTypeINTERNAL => 'অভ্যন্তরীণ অডিট';
+
+  @override
+  String get audTypeCOMPLIANCE => 'নিয়ন্ত্রক সম্মতি';
+
+  @override
+  String get audTypeSAFETY => 'অগ্নি ও নিরাপত্তা';
+
+  @override
+  String get audTypeBUYER => 'ক্রেতা / গ্রাহক অডিট';
+
+  @override
+  String get audTypeISO => 'আইএসও সনদ';
+
+  @override
+  String get audTypeFINANCIAL => 'আর্থিক / মজুদ অডিট';
+
+  @override
+  String get audTypeENVIRONMENT => 'পরিবেশগত';
+
+  @override
+  String get audStatusPLANNED => 'পরিকল্পিত';
+
+  @override
+  String get audStatusIN_PROGRESS => 'চলমান';
+
+  @override
+  String get audStatusFOLLOW_UP => 'করণীয় বাকি';
+
+  @override
+  String get audStatusCLOSED => 'সমাপ্ত';
+
+  @override
+  String get audStatusCANCELLED => 'বাতিল';
+
+  @override
+  String get audRatingSATISFACTORY => 'সন্তোষজনক';
+
+  @override
+  String get audRatingNEEDS_IMPROVEMENT => 'উন্নতি প্রয়োজন';
+
+  @override
+  String get audRatingUNSATISFACTORY => 'অসন্তোষজনক';
+
+  @override
+  String get audSevCRITICAL => 'গুরুতর';
+
+  @override
+  String get audSevMAJOR => 'বড়';
+
+  @override
+  String get audSevMINOR => 'ছোট';
+
+  @override
+  String get audSevOBSERVATION => 'পর্যবেক্ষণ';
+
+  @override
+  String get audSevHintCRITICAL =>
+      '৭ দিনের মধ্যে ঠিক করুন — জীবন, লাইসেন্স বা ক্রেতার ঝুঁকি';
+
+  @override
+  String get audSevHintMAJOR => '৩০ দিনের মধ্যে ঠিক করুন';
+
+  @override
+  String get audSevHintMINOR => '৬০ দিনের মধ্যে ঠিক করুন';
+
+  @override
+  String get audSevHintOBSERVATION =>
+      'কোনো পদক্ষেপ লাগবে না — পরের বারের জন্য লিপিবদ্ধ';
+
+  @override
+  String get audFindStatusOPEN => 'করণীয় বাকি';
+
+  @override
+  String get audFindStatusSUBMITTED => 'সমাধান জমা';
+
+  @override
+  String get audFindStatusVERIFIED => 'যাচাইকৃত';
+
+  @override
+  String get audFindStatusNOTED => 'লিপিবদ্ধ';
+
+  @override
+  String audDue(Object date) {
+    return 'নির্ধারিত $date';
+  }
+
+  @override
+  String audOverdue(Object date) {
+    return '$date থেকে সময় পেরিয়েছে';
+  }
+
+  @override
+  String get audOwner => 'দায়িত্বপ্রাপ্ত';
+
+  @override
+  String get audNoOwner => 'দায়িত্বপ্রাপ্ত নেই';
+
+  @override
+  String get audFieldwork => 'মাঠপর্যায়';
+
+  @override
+  String get audLead => 'অডিট প্রধান';
+
+  @override
+  String get audBody => 'বহিঃসংস্থা';
+
+  @override
+  String get audTeam => 'অডিট দল';
+
+  @override
+  String get audScope => 'পরিধি';
+
+  @override
+  String get audResult => 'ফলাফল';
+
+  @override
+  String audScore(Object score) {
+    return 'স্কোর $score/১০০';
+  }
+
+  @override
+  String get audConclusion => 'উপসংহার';
+
+  @override
+  String get audFindings => 'পর্যবেক্ষণসমূহ';
+
+  @override
+  String get audNoFindings => 'এখনও কোনো পর্যবেক্ষণ লিপিবদ্ধ হয়নি।';
+
+  @override
+  String get audPartial =>
+      'আপনি শুধু আপনার দায়িত্বের পর্যবেক্ষণগুলো দেখছেন। পূর্ণ প্রতিবেদন অডিট দল দেখে।';
+
+  @override
+  String get audCountOpen => 'বাকি';
+
+  @override
+  String get audCountSubmitted => 'জমা';
+
+  @override
+  String get audCountVerified => 'যাচাইকৃত';
+
+  @override
+  String get audCountOverdue => 'সময় পেরিয়েছে';
+
+  @override
+  String get audClause => 'ধারা বা মানদণ্ড';
+
+  @override
+  String get audArea => 'এলাকা';
+
+  @override
+  String get audRecommendation => 'সুপারিশ';
+
+  @override
+  String get audResponse => 'জবাব';
+
+  @override
+  String audVerifiedBy(Object name) {
+    return 'যাচাই করেছেন $name';
+  }
+
+  @override
+  String get audStageStart => 'পরিকল্পিত';
+
+  @override
+  String get audStageFieldwork => 'মাঠপর্যায়';
+
+  @override
+  String get audStageActions => 'সংশোধনমূলক কাজ';
+
+  @override
+  String get audStageClosed => 'সমাপ্ত';
+
+  @override
+  String audActionsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$countটি করণীয় বাকি',
+      zero: 'কিছু বাকি নেই',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get audActStart => 'মাঠপর্যায় শুরু';
+
+  @override
+  String get audActAddFinding => 'পর্যবেক্ষণ যোগ';
+
+  @override
+  String get audActComplete => 'মাঠপর্যায় শেষ';
+
+  @override
+  String get audActClose => 'অডিট সমাপ্ত';
+
+  @override
+  String get audActCancel => 'অডিট বাতিল';
+
+  @override
+  String get audActSubmit => 'সমাধান জমা দিন';
+
+  @override
+  String get audActVerify => 'যাচাই';
+
+  @override
+  String get audActReopen => 'ফেরত পাঠান';
+
+  @override
+  String get audActReassign => 'পুনর্বণ্টন';
+
+  @override
+  String get audStartHint =>
+      'মাঠপর্যায় শুরু হলে পর্যবেক্ষণ লিপিবদ্ধ করা যাবে। অফিসকে জানানো হবে।';
+
+  @override
+  String get audCloseHint =>
+      'সব সংশোধনমূলক কাজ যাচাই হয়েছে। সমাপ্ত করলে অডিট নথিভুক্ত হবে।';
+
+  @override
+  String get audCancelHint => 'অডিট কেন হবে না তা লিখুন।';
+
+  @override
+  String get audSubmitTitle => 'আপনার সমাধান জমা দিন';
+
+  @override
+  String get audSubmitHint =>
+      'কী করা হয়েছে লিখুন; অডিটর যাচাই করবেন বা ফেরত পাঠাবেন।';
+
+  @override
+  String get audResponseLabel => 'কী করা হয়েছে';
+
+  @override
+  String get audVerifyHint =>
+      'করণীয়টি বন্ধ হবে এবং দায়িত্বপ্রাপ্তকে জানানো হবে।';
+
+  @override
+  String get audReopenHint => 'দায়িত্বপ্রাপ্তকে কী বাকি আছে জানান।';
+
+  @override
+  String get audChooseOwner => 'কে ঠিক করবেন?';
+
+  @override
+  String get audOwnerHint =>
+      'তিনি অডিট · আমার করণীয়-তে দেখবেন এবং সময় পেরোলে মনে করিয়ে দেওয়া হবে।';
+
+  @override
+  String get audCompleteTitle => 'মাঠপর্যায় শেষ করুন';
+
+  @override
+  String get audCompleteHint =>
+      'সামগ্রিক ফলাফল দিন। খোলা করণীয়গুলো যাচাই না হওয়া পর্যন্ত দায়িত্বপ্রাপ্তদের কাছে থাকবে।';
+
+  @override
+  String get audScoreLabel => '১০০-এর মধ্যে স্কোর (ঐচ্ছিক)';
+
+  @override
+  String get audConclusionLabel => 'উপসংহার';
+
+  @override
+  String get audFindingTitle => 'নতুন পর্যবেক্ষণ';
+
+  @override
+  String get audFindingTitleLabel => 'কী পাওয়া গেছে';
+
+  @override
+  String get audFindingTitleHint =>
+      'যেমন: ৩ তলার অগ্নি নির্গমন পথ কার্টনে আটকানো';
+
+  @override
+  String get audDetailLabel => 'বিস্তারিত (ঐচ্ছিক)';
+
+  @override
+  String get audSeverity => 'গুরুত্ব';
+
+  @override
+  String get audDueLabel => 'নির্ধারিত তারিখ';
+
+  @override
+  String get audSaveFinding => 'পর্যবেক্ষণ লিপিবদ্ধ';
+
+  @override
+  String get audErrTitle => 'সংক্ষেপে কী পাওয়া গেছে লিখুন।';
+
+  @override
+  String get audErrOwner => 'কে ঠিক করবেন বাছাই করুন।';
+
+  @override
+  String get audErrConclusion => 'সংক্ষিপ্ত উপসংহার লিখুন।';
+
+  @override
+  String get audDoneStarted => 'মাঠপর্যায় শুরু হয়েছে।';
+
+  @override
+  String get audDoneFinding =>
+      'পর্যবেক্ষণ লিপিবদ্ধ — দায়িত্বপ্রাপ্তকে জানানো হয়েছে।';
+
+  @override
+  String get audDoneCompleted => 'মাঠপর্যায় শেষ হয়েছে।';
+
+  @override
+  String get audDoneClosed => 'অডিট সমাপ্ত।';
+
+  @override
+  String get audDoneCancelled => 'অডিট বাতিল।';
+
+  @override
+  String get audDoneSubmitted => 'সমাধান জমা — অডিটরকে জানানো হয়েছে।';
+
+  @override
+  String get audDoneVerified => 'যাচাইকৃত — করণীয় বন্ধ।';
+
+  @override
+  String get audDoneReopened => 'দায়িত্বপ্রাপ্তের কাছে ফেরত পাঠানো হয়েছে।';
+
+  @override
+  String get audDoneReassigned =>
+      'পুনর্বণ্টিত — নতুন দায়িত্বপ্রাপ্তকে জানানো হয়েছে।';
+
+  @override
+  String get audEvCreated => 'অডিট পরিকল্পিত';
+
+  @override
+  String get audEvStarted => 'মাঠপর্যায় শুরু';
+
+  @override
+  String get audEvFinding => 'পর্যবেক্ষণ লিপিবদ্ধ';
+
+  @override
+  String get audEvSubmitted => 'সমাধান জমা';
+
+  @override
+  String get audEvVerified => 'করণীয় যাচাইকৃত';
+
+  @override
+  String get audEvReopened => 'করণীয় ফেরত';
+
+  @override
+  String get audEvReassigned => 'করণীয় পুনর্বণ্টিত';
+
+  @override
+  String get audEvCompleted => 'মাঠপর্যায় শেষ';
+
+  @override
+  String get audEvClosed => 'অডিট সমাপ্ত';
+
+  @override
+  String get audEvCancelled => 'অডিট বাতিল';
+
+  @override
+  String get audEvNote => 'মন্তব্য';
+
+  @override
+  String get audRecommendationOptional => 'সুপারিশ (ঐচ্ছিক)';
+
+  @override
+  String get audDetail => 'বিস্তারিত';
 
   @override
   String get pcTitle => 'পুল কার';
@@ -1478,19 +2308,28 @@ class LBn extends L {
   String get homeParcelsSection => 'পার্সেল';
 
   @override
-  String get svcSendParcel => 'পার্সেল পাঠান';
+  String get svcAppointment => 'সাক্ষাতের অনুরোধ';
 
   @override
-  String get svcMyParcels => 'আমার পার্সেল';
+  String get svcIncidentRecord => 'ঘটনা রেকর্ড';
 
   @override
-  String get svcPoolCar => 'পুল কার';
+  String get svcRegulatory => 'নিয়ন্ত্রক বিষয়াদি';
 
   @override
-  String get svcReportIssue => 'সমস্যা জানান';
+  String get svcAudit => 'অডিট';
 
   @override
-  String get svcVisitors => 'ভিজিটর';
+  String get svcOfficeParcel => 'অফিস পার্সেল';
+
+  @override
+  String get svcVisitorManagement => 'ভিজিটর ব্যবস্থাপনা';
+
+  @override
+  String get svcLeave => 'ছুটির আবেদন';
+
+  @override
+  String get svcPoolCarRequest => 'পুল কার অনুরোধ';
 
   @override
   String get svcTours => 'ট্যুর আবেদন';
@@ -1505,16 +2344,7 @@ class LBn extends L {
   String get svcScan => 'স্ক্যান ও গ্রহণ';
 
   @override
-  String get svcMyReports => 'আমার রিপোর্ট';
-
-  @override
-  String get svcLicences => 'লাইসেন্স';
-
-  @override
   String get svcMyTrips => 'আমার ট্রিপ';
-
-  @override
-  String get svcGateDesk => 'গেট ডেস্ক';
 
   @override
   String get glanceWaiting => 'অপেক্ষমাণ পার্সেল';
@@ -2105,6 +2935,520 @@ class LBn extends L {
 
   @override
   String get incEvDetails => 'বিবরণ হালনাগাদ হয়েছে';
+
+  @override
+  String get kitNoHistory => 'এখনও কিছু লিপিবদ্ধ হয়নি।';
+
+  @override
+  String get kitReasonRequired => 'অনুগ্রহ করে সংক্ষেপে কারণ লিখুন।';
+
+  @override
+  String get kitReason => 'কারণ';
+
+  @override
+  String get kitNoteOptional => 'মন্তব্য (ঐচ্ছিক)';
+
+  @override
+  String get kitNoteLabel => 'মন্তব্য';
+
+  @override
+  String get kitSearchPeople => 'নাম, আইডি বা পদবি দিয়ে খুঁজুন';
+
+  @override
+  String get kitTypeToSearch => 'কর্মী তালিকায় খুঁজতে অন্তত দুটি অক্ষর লিখুন।';
+
+  @override
+  String get kitNoMatches => 'এই অনুসন্ধানে কাউকে পাওয়া যায়নি।';
+
+  @override
+  String get kitNoAccount => 'অ্যাপ অ্যাকাউন্ট নেই';
+
+  @override
+  String get kitChange => 'পরিবর্তন';
+
+  @override
+  String get kitChoose => 'বাছাই করুন';
+
+  @override
+  String get kitRemove => 'সরান';
+
+  @override
+  String get kitProgress => 'অগ্রগতি';
+
+  @override
+  String get kitHistory => 'ইতিহাস';
+
+  @override
+  String get kitAddNote => 'মন্তব্য যোগ করুন';
+
+  @override
+  String get kitAddNoteHint => 'এই অনুরোধের সবাই এটি পড়তে পারবেন।';
+
+  @override
+  String get kitNoteAdded => 'মন্তব্য যোগ হয়েছে।';
+
+  @override
+  String get kitLatestNote => 'সর্বশেষ মন্তব্য';
+
+  @override
+  String get kitAll => 'সব';
+
+  @override
+  String get kitOpen => 'চলমান';
+
+  @override
+  String get kitClosed => 'বন্ধ';
+
+  @override
+  String get kitOffice => 'অফিস';
+
+  @override
+  String get kitOfflineNotice =>
+      'আপনি অফলাইনে আছেন। কিছুই পাঠানো হয়নি — সংযোগ পেলে আবার চেষ্টা করুন।';
+
+  @override
+  String get lvTitle => 'ছুটি';
+
+  @override
+  String get lvApply => 'ছুটির আবেদন';
+
+  @override
+  String get lvMyLeave => 'আমার ছুটি';
+
+  @override
+  String get lvToApprove => 'অনুমোদনের জন্য';
+
+  @override
+  String lvBalanceTitle(Object year) {
+    return 'আপনার ছুটির হিসাব · $year';
+  }
+
+  @override
+  String get lvLeft => 'বাকি';
+
+  @override
+  String lvOfTotal(Object total) {
+    return '$total এর মধ্যে';
+  }
+
+  @override
+  String lvTakenPending(Object taken, Object pending) {
+    return '$taken নেওয়া · $pending অপেক্ষমাণ';
+  }
+
+  @override
+  String lvTaken(Object taken) {
+    return '$taken নেওয়া';
+  }
+
+  @override
+  String get lvNoLimit => 'বার্ষিক সীমা নেই';
+
+  @override
+  String get lvAdjusted => 'এইচআর নির্ধারিত';
+
+  @override
+  String get lvNoRequests => 'এখনও কোনো ছুটির আবেদন নেই';
+
+  @override
+  String get lvNoRequestsHint =>
+      'নৈমিত্তিক, অসুস্থতা, অর্জিত বা অন্য ছুটির আবেদন করুন। বিভাগীয় প্রধান ও এইচআর এখানেই অনুমোদন দেবেন।';
+
+  @override
+  String get lvNothingToApprove => 'আপনার জন্য কিছু অপেক্ষমাণ নেই';
+
+  @override
+  String get lvNothingToApproveHint =>
+      'আপনার দলের ছুটির আবেদন অনুমোদনের জন্য এখানে দেখাবে।';
+
+  @override
+  String lvWaitingCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$countটি আবেদন আপনার অপেক্ষায়',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get lvTeamAway => 'আপনার দলের ছুটি · আগামী ৩০ দিন';
+
+  @override
+  String get lvTeamNobody => 'আগামী ৩০ দিনে আপনার দলের কেউ ছুটিতে নেই।';
+
+  @override
+  String get lvOnLeaveNow => 'আজ ছুটিতে';
+
+  @override
+  String lvOnLeaveBanner(Object ref) {
+    return 'আজ আপনি ছুটিতে আছেন ($ref)। ছুটি উপভোগ করুন।';
+  }
+
+  @override
+  String get lvHalfDayCount => 'অর্ধ দিন';
+
+  @override
+  String lvDayCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count দিন',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String lvDaysDecimal(Object days) {
+    return '$days দিন';
+  }
+
+  @override
+  String get lvTypeCASUAL => 'নৈমিত্তিক ছুটি';
+
+  @override
+  String get lvTypeSICK => 'অসুস্থতাজনিত ছুটি';
+
+  @override
+  String get lvTypeEARNED => 'অর্জিত ছুটি';
+
+  @override
+  String get lvTypeMATERNITY => 'মাতৃত্বকালীন ছুটি';
+
+  @override
+  String get lvTypePATERNITY => 'পিতৃত্বকালীন ছুটি';
+
+  @override
+  String get lvTypeUNPAID => 'বিনা বেতনে ছুটি';
+
+  @override
+  String get lvHintCASUAL => 'বছরে ১০ দিন · একবারে সর্বোচ্চ ৩ দিন';
+
+  @override
+  String get lvHintSICK => 'বছরে ১৪ দিন · ২ দিনের বেশি হলে মেডিকেল সার্টিফিকেট';
+
+  @override
+  String get lvHintEARNED => 'বছরে ১৮ দিন · অন্তত ৩ দিন আগে আবেদন';
+
+  @override
+  String get lvHintMATERNITY => '১৬ সপ্তাহ, ক্যালেন্ডার দিন হিসেবে';
+
+  @override
+  String get lvHintPATERNITY => 'সন্তান জন্মের সময় ৫ কর্মদিবস';
+
+  @override
+  String get lvHintUNPAID => 'হিসাব নেই · সর্বোচ্চ ৩০ দিন, ৩ দিন আগে আবেদন';
+
+  @override
+  String get lvStatusPENDING_HOD => 'বিভাগীয় প্রধানের অনুমোদনের অপেক্ষায়';
+
+  @override
+  String get lvStatusPENDING_HR => 'এইচআর অনুমোদনের অপেক্ষায়';
+
+  @override
+  String get lvStatusAPPROVED => 'অনুমোদিত';
+
+  @override
+  String get lvStatusREJECTED => 'প্রত্যাখ্যাত';
+
+  @override
+  String get lvStatusCANCELLED => 'বাতিল';
+
+  @override
+  String get lvStageSUBMITTED => 'আবেদন করা হয়েছে';
+
+  @override
+  String get lvStagePENDING_HOD => 'বিভাগীয় প্রধান';
+
+  @override
+  String get lvStagePENDING_HR => 'এইচআর';
+
+  @override
+  String get lvStageAPPROVED => 'অনুমোদিত';
+
+  @override
+  String get lvStageCANCELLED => 'বাতিল';
+
+  @override
+  String lvWaitingFor(Object name) {
+    return '$name এর অপেক্ষায়';
+  }
+
+  @override
+  String lvStageRejectedBy(Object name) {
+    return '$name প্রত্যাখ্যান করেছেন';
+  }
+
+  @override
+  String lvStageCancelledBy(Object name) {
+    return '$name বাতিল করেছেন';
+  }
+
+  @override
+  String get lvStageSkipped => 'প্রয়োজন হয়নি';
+
+  @override
+  String get lvAwaitingHOD => 'বিভাগীয় প্রধান হিসেবে আপনার অনুমোদন';
+
+  @override
+  String get lvAwaitingHR => 'এইচআর অনুমোদন';
+
+  @override
+  String get lvHalfDay => 'অর্ধ দিবস';
+
+  @override
+  String get lvFIRST_HALF => 'প্রথমার্ধ (সকাল)';
+
+  @override
+  String get lvSECOND_HALF => 'দ্বিতীয়ার্ধ (বিকাল)';
+
+  @override
+  String get lvFormIntro =>
+      'প্রথমে বিভাগীয় প্রধান, পরে এইচআর অনুমোদন দেবেন। প্রতিটি ধাপে আপনাকে জানানো হবে।';
+
+  @override
+  String get lvTypeSection => 'ছুটির ধরন';
+
+  @override
+  String get lvDatesSection => 'তারিখ';
+
+  @override
+  String get lvPickDates => 'দিনগুলো বাছাই করুন';
+
+  @override
+  String get lvPickDay => 'দিন বাছাই করুন';
+
+  @override
+  String get lvHalfDaySwitch => 'শুধু অর্ধ দিন';
+
+  @override
+  String get lvCountNote => 'সাপ্তাহিক ও সরকারি ছুটির দিন গণনা করা হয় না।';
+
+  @override
+  String get lvCountCalendar => 'ছুটির দিনসহ ক্যালেন্ডার দিন হিসেবে গণনা।';
+
+  @override
+  String lvHolidaysIn(Object names) {
+    return 'এই তারিখে সরকারি ছুটি: $names';
+  }
+
+  @override
+  String lvBalanceAfter(Object left, Object total) {
+    return 'এরপর বাকি থাকবে: $total এর মধ্যে $left';
+  }
+
+  @override
+  String lvInsufficient(Object left, Object type, Object need) {
+    return 'আপনার $type বাকি $left — এই আবেদনে লাগবে $need।';
+  }
+
+  @override
+  String lvTooMany(Object type, Object max) {
+    return 'এক আবেদনে $type সর্বোচ্চ $max।';
+  }
+
+  @override
+  String lvNoticeShort(Object type, Object days, Object date) {
+    return '$type এর জন্য $days দিন আগে জানাতে হয় — সবচেয়ে আগে শুরু $date।';
+  }
+
+  @override
+  String lvBackdate(Object type, Object days) {
+    return '$type সর্বোচ্চ $days দিন আগে থেকে শুরু হতে পারে।';
+  }
+
+  @override
+  String get lvNoWorkingDays =>
+      'এই তারিখগুলো সব ছুটির দিন — ছুটি নেওয়ার কিছু নেই।';
+
+  @override
+  String get lvReasonLabel => 'কারণ';
+
+  @override
+  String get lvReasonHint => 'যেমন: সিলেটে পারিবারিক বিয়ে';
+
+  @override
+  String get lvReliever => 'আপনার কাজ দেখবেন (ঐচ্ছিক)';
+
+  @override
+  String get lvRelieverEmpty => 'কাউকে বাছাই করা হয়নি';
+
+  @override
+  String get lvChooseReliever => 'আপনার কাজ কে দেখবেন?';
+
+  @override
+  String get lvRelieverHint =>
+      'একজন সহকর্মী বাছাই করুন। ছুটি অনুমোদনের পর তাঁকে জানানো হবে।';
+
+  @override
+  String get lvApprover => 'বিভাগীয় প্রধান · প্রথমে অনুমোদন দেবেন';
+
+  @override
+  String get lvChooseApprover => 'প্রথমে কে অনুমোদন দেবেন?';
+
+  @override
+  String get lvApproverHint =>
+      'সাধারণত আপনার লাইন ম্যানেজার। তাঁর ABG ONE অ্যাকাউন্ট থাকতে হবে।';
+
+  @override
+  String lvApproverMissing(Object name) {
+    return 'আপনার লাইন ম্যানেজার $name এর অ্যাপ অ্যাকাউন্ট নেই — কে অনুমোদন দেবেন বাছাই করুন।';
+  }
+
+  @override
+  String get lvAddress => 'ছুটিকালীন ঠিকানা (ঐচ্ছিক)';
+
+  @override
+  String get lvPhone => 'ছুটিকালীন যোগাযোগ নম্বর (ঐচ্ছিক)';
+
+  @override
+  String get lvMoreSection => 'আপনার অনুপস্থিতিতে';
+
+  @override
+  String get lvSubmit => 'আবেদন জমা দিন';
+
+  @override
+  String lvSubmitted(Object ref) {
+    return '$ref অনুমোদনের জন্য পাঠানো হয়েছে।';
+  }
+
+  @override
+  String get lvErrDates => 'ছুটির দিন বাছাই করুন।';
+
+  @override
+  String get lvErrReason => 'সংক্ষেপে ছুটির কারণ লিখুন।';
+
+  @override
+  String get lvErrApprover => 'প্রথমে কে অনুমোদন দেবেন বাছাই করুন।';
+
+  @override
+  String get lvPipeline => 'অনুমোদন';
+
+  @override
+  String get lvDetails => 'ছুটির বিবরণ';
+
+  @override
+  String get lvTypeLabel => 'ধরন';
+
+  @override
+  String get lvFirstDay => 'প্রথম দিন';
+
+  @override
+  String get lvLastDay => 'শেষ দিন';
+
+  @override
+  String get lvLength => 'মোট';
+
+  @override
+  String get lvReasonTitle => 'কারণ';
+
+  @override
+  String get lvAddressTitle => 'ছুটিকালীন ঠিকানা';
+
+  @override
+  String get lvPhoneTitle => 'ছুটিকালীন যোগাযোগ';
+
+  @override
+  String get lvPeople => 'সংশ্লিষ্ট ব্যক্তি';
+
+  @override
+  String get lvApplicant => 'আবেদনকারী';
+
+  @override
+  String get lvHod => 'বিভাগীয় প্রধান';
+
+  @override
+  String get lvCovering => 'কাজ দেখবেন';
+
+  @override
+  String lvBalanceCard(Object type, Object year) {
+    return '$type · $year';
+  }
+
+  @override
+  String get lvEntitled => 'প্রাপ্য';
+
+  @override
+  String get lvUsed => 'নেওয়া';
+
+  @override
+  String get lvPendingLabel => 'অপেক্ষমাণ';
+
+  @override
+  String get lvAvailable => 'বাকি';
+
+  @override
+  String get lvSeparation =>
+      'আপনি বিভাগীয় প্রধান হিসেবে অনুমোদন দিয়েছেন, তাই দ্বিতীয় অনুমোদন দেবেন এইচআর-এর অন্য একজন।';
+
+  @override
+  String lvRelieverBanner(Object name) {
+    return 'এই ছুটিতে $name আপনাকে তাঁর কাজ দেখতে বলেছেন।';
+  }
+
+  @override
+  String get lvActApproveHod => 'এইচআর-এ পাঠান';
+
+  @override
+  String get lvApproveHodTitle => 'অনুমোদন দিয়ে এইচআর-এ পাঠান';
+
+  @override
+  String get lvActApprove => 'অনুমোদন';
+
+  @override
+  String get lvActReject => 'প্রত্যাখ্যান';
+
+  @override
+  String get lvActCancel => 'ছুটি বাতিল';
+
+  @override
+  String get lvApproveHodHint => 'চূড়ান্ত অনুমোদন দেবে এইচআর।';
+
+  @override
+  String get lvApproveHrHint =>
+      'এটিই চূড়ান্ত অনুমোদন; দিনগুলো হিসাব থেকে কাটা যাবে।';
+
+  @override
+  String get lvRejectHint =>
+      'আবেদনকারীকে কারণ জানান। তিনি আবার আবেদন করতে পারবেন।';
+
+  @override
+  String get lvCancelHint =>
+      'কারণ লিখুন। বিভাগীয় প্রধান ও এইচআর-কে জানানো হবে এবং দিনগুলো হিসাবে ফিরে আসবে।';
+
+  @override
+  String get lvCancelHrHint =>
+      'আবেদনকারীকে জানানো হবে এবং দিনগুলো তাঁর হিসাবে ফিরে আসবে।';
+
+  @override
+  String get lvDoneApproved => 'অনুমোদিত — আবেদনকারীকে জানানো হয়েছে।';
+
+  @override
+  String get lvDoneForwarded => 'অনুমোদিত — এইচআর-এ পাঠানো হয়েছে।';
+
+  @override
+  String get lvDoneRejected => 'প্রত্যাখ্যাত — আবেদনকারীকে জানানো হয়েছে।';
+
+  @override
+  String get lvDoneCancelled => 'ছুটি বাতিল হয়েছে।';
+
+  @override
+  String get lvEvSubmitted => 'আবেদন করা হয়েছে';
+
+  @override
+  String get lvEvHod => 'বিভাগীয় প্রধান অনুমোদন দিয়েছেন';
+
+  @override
+  String get lvEvApproved => 'এইচআর অনুমোদন দিয়েছে';
+
+  @override
+  String get lvEvRejected => 'প্রত্যাখ্যাত';
+
+  @override
+  String get lvEvCancelled => 'বাতিল';
+
+  @override
+  String get lvEvNote => 'মন্তব্য';
 
   @override
   String get licTitle => 'লাইসেন্স';
